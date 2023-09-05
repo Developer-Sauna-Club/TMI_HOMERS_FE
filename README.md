@@ -2,9 +2,10 @@
 
 ## 프로젝트 세팅 방법
 
-git clone 후 아래 명령어를 입력하면 프로젝트가 세팅되고 실행됩니다.
+다음 명령어를 입력하면 프로젝트가 세팅되고 실행됩니다.
 
 ```bash
+git clone https://github.com/prgrms-fe-devcourse/FEDC4_TmiHomers_OFF.git && cd FEDC4_TmiHomers_OFF
 npm install
 npm run dev
 ```
