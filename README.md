@@ -9,3 +9,22 @@
 | Styling        | <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/> <img src="https://img.shields.io/badge/storybook-FF4785?style=flat-square&logo=storybook&logoColor=white"/> |
 | API            | <img src="https://img.shields.io/badge/axios-5A29E4?style=flat-square&logo=axios&logoColor=white"/> |
 | Code Formatter | <img src="https://img.shields.io/badge/eslint-4B32C3?style=flat-square&logo=eslint&logoColor=white"/> <img src="https://img.shields.io/badge/prettier-F7B93E?style=flat-square&logo=prettier&logoColor=white"/>|
+
+## 멤버
+<table>
+ <tr>
+    <td align="center"><a href="https://github.com/GBAJS754"><img src="https://avatars.githubusercontent.com/GBAJS754" width="130px;" alt=""></a></td>
+    <td align="center"><a href="https://github.com/khakhid"><img src="https://avatars.githubusercontent.com/khakhid" width="130px;" alt=""></a></td>
+    <td align="center"><a href="https://github.com/wukdddang"><img src="https://avatars.githubusercontent.com/wukdddang" width="130px;" alt=""></a></td>
+    <td align="center"><a href="https://github.com/colorkite10"><img src="https://avatars.githubusercontent.com/colorkite10" width="130px;" alt=""></a></td>
+    <td align="center"><a href="https://github.com/DongjaJ"><img src="https://avatars.githubusercontent.com/DongjaJ" width="130px;" alt=""></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/GBAJS754"><b>김다은</b></a></td>
+    <td align="center"><a href="https://github.com/khakhid"><b>신동호</b></a></td>
+    <td align="center"><a href="https://github.com/wukdddang"><b>우창욱<b></b></a></td>
+    <td align="center"><a href="https://github.com/colorkite10"><b>이채연</b></a></td>
+    <td align="center"><a href="https://github.com/DongjaJ"><b>정동환</b></a></td>
+  </tr>
+</table>
+
