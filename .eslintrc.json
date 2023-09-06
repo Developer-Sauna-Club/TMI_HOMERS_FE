@@ -5,13 +5,22 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:react/recommended"
   ],
-  "ignorePatterns": ["dist", "!.storybook"],
+  "ignorePatterns": ["dist", "!.storybook", "!.config"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["react-refresh", "import"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "no-console": "warn",
+    "react/self-closing-comp": "warn",
+    "react/react-in-jsx-scope": "off",
+    "curly": ["error"],
     "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
     "import/order": [
       "error",
@@ -25,7 +34,59 @@
           "sibling",
           "index",
           "unknown"
-        ]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@components/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@constants/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@api/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@context/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@hooks/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@pages/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@stories/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@types/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["@tanstack*"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ]
   }
