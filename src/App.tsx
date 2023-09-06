@@ -14,10 +14,7 @@ import {
   PostList,
 } from './pages';
 
-const MILLISECOND = 1000;
-const SECOND = 60;
-const MINUTE = 5;
-
+const [MILLISECOND, SECOND, MINUTE] = [1000, 60, 5];
 const STALE_TIME = MILLISECOND * SECOND * MINUTE;
 
 const queryClient = new QueryClient({
@@ -27,6 +24,10 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+const Root = () => {
+  return <Outlet />;
+};
 
 const router = createBrowserRouter([
   {
@@ -48,16 +49,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-function Root() {
-  return <Outlet />;
-}
-
-function App() {
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
