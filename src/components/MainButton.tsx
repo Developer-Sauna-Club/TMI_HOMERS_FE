@@ -7,7 +7,7 @@ type MainButtonProps = {
   onClick?: () => void;
 };
 
-const BASE_BUTTON_CLASSES = 'block rounded-[5px] text-[16px] w-[294px] h-[50px]';
+const BASE_BUTTON_CLASSES = 'block rounded-md text-base w-[18.375rem] h-[3.125rem]';
 
 const getModeClasses = (mode: MainButtonProps['mode']) => {
   if (mode === 'filled') {
