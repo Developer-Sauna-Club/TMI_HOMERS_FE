@@ -16,23 +16,23 @@ module.exports = {
     },
     {
       value: 'chore',
-      name: 'chore:\t 빌드 태스크 업데이트, 패키지 매니저를 설정하는 경우',
+      name: 'chore:\t빌드 태스크 업데이트, 패키지 매니저를 설정하는 경우',
     },
     {
       value: 'init',
-      name: 'init:\t 프로젝트 초기 생성',
+      name: 'init:\t프로젝트 초기 생성',
     },
     {
       value: 'rename',
-      name: 'rename:\t 파일 혹은 폴더명 수정하거나 옮기는 경우',
+      name: 'rename:\t파일 혹은 폴더명 수정하거나 옮기는 경우',
     },
     {
       value: 'remove',
-      name: 'remove:\t 파일을 삭제하는 작업만 수행하는 경우',
+      name: 'remove:\t파일을 삭제하는 작업만 수행하는 경우',
     },
     {
       value: 'docs',
-      name: 'docs:\t 문서를 추가하거나 수정하는 경우',
+      name: 'docs:\t문서를 추가하거나 수정하는 경우',
     },
   ],
   allowCustomScopes: false,
