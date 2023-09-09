@@ -8,7 +8,7 @@ type BackButtonProps = {
 const BackButton = ({ type = 'button', onClick, ...props }: BackButtonProps) => {
   return (
     <button
-      className="block bg-grey rounded-md text-base w-[1.625rem] h-[1.625rem]"
+      className="inline-flex items-center justify-center bg-grey rounded-md text-base w-[1.625rem] h-[1.625rem] hover:bg-stone-100"
       type={type}
       onClick={onClick}
       {...props}
