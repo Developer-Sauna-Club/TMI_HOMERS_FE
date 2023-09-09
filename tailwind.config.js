@@ -5,6 +5,9 @@ export default {
     extend: {
       colors: {
         'input-white': '#FFF',
+        'article-highly-liked': '#24736B',
+        'article-img': '#2D2D2D',
+        'profile-bg': '#EEF1F4',
         'lazy-gray': '#C0C1C5',
         'cooled-blue': '#76B7B1',
         'extra-white': '#EFF0EB',
