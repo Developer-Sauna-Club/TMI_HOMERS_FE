@@ -18,6 +18,10 @@ const getTimestamp = (postedDate: ISO8601_STRING) => {
   const now = new Date();
   const diff = now.getTime() - dt.getTime();
 
+  if (isNaN(diff)) {
+    return '알 수 없음';
+  }
+
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
