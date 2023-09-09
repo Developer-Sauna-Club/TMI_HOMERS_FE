@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import type { SignUpFormValues, SignUpParams } from '@/types/signUp';
 import type { User } from '@/types/User';
 import { axiosClient } from './axiosClient';
@@ -10,13 +9,18 @@ type SignUpResponseData = {
   token: string;
 };
 
-export const signUp = async ({ email, password, nickname }: SignUpFormValues) => {
+export const signUp = async ({
+  email,
+  password,
+  nickname,
+}: SignUpFormValues): Promise<SignUpResponseData> => {
   const signUpParams: SignUpParams = {
     email,
     password,
     fullName: nickname,
   };
-  const { data } = await axiosClient.post<AxiosResponse<SignUpResponseData>>(SIGNUP_URL, {
+
+  const { data } = await axiosClient.post<SignUpResponseData>(SIGNUP_URL, {
     ...signUpParams,
   });
   return data;

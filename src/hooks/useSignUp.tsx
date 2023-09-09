@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { signUp } from '@/api/signUp';
+import { setItemToStorage } from '@/utils/localStorage';
+import { useAuthContext } from './useAuthContext';
 
 const useSignUp = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuthContext();
   const { mutate: signUpMutate, isLoading } = useMutation(signUp, {
-    onSuccess: (data) => {
+    onSuccess: ({ user, token }) => {
       // TODO: save the user in the state
-      alert(JSON.stringify(data));
+      alert(JSON.stringify(user));
+      setUser(user);
+      setItemToStorage('token', token);
       navigate('/home');
-    },
-    onError: (error) => {
-      alert(JSON.stringify(error));
     },
   });
   return { signUpMutate, isLoading };
