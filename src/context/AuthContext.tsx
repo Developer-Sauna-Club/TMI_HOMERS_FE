@@ -17,8 +17,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser = async () => {
     try {
-      const user = await checkAuthentication();
-      setUser(user);
+      const fetchedUser = await checkAuthentication();
+      fetchedUser ? setUser(fetchedUser) : setUser(null);
     } catch (error) {
       alert(JSON.stringify(error));
     }
