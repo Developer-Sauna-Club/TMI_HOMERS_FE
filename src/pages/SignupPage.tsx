@@ -21,7 +21,7 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors }, //form 전체의 state, 일괄적으로 업데이트됨
   } = useForm<SignUpForm>({
     mode: 'onChange', //onSubmit 이벤트에서 유효성 검사 진행되고, inputs은 이벤트리스너를 연결하여 다시 자체 유효성 검사를 함
   });
