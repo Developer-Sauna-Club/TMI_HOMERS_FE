@@ -30,11 +30,11 @@ const SignupPage = () => {
     mode: 'onChange',
   });
 
-  const userSignup = async (data: FormValues) => {
+  const userSignup = async ({ email, password, nickname }: FormValues) => {
     const response = await axiosClient.post(SIGNUP_URL, {
-      email: data.email,
-      password: data.password,
-      fullName: data.nickname,
+      email,
+      password,
+      fullName: nickname,
     });
 
     return response.data;
@@ -48,11 +48,11 @@ const SignupPage = () => {
     mutate(data);
   };
 
-  const Placeholders = {
-    email: '이메일을 입력해주세요.',
-    password: '패스워드를 입력해주세요.',
-    passwordConfirm: '패스워드를 한 번 더 입력해주세요.',
-    nickname: '닉네임을 입력해주세요.',
+  const PLACEHOLDERS = {
+    EMAIL: '이메일을 입력해주세요.',
+    PASSWORD: '패스워드를 입력해주세요.',
+    PASSWORD_CONFIRM: '패스워드를 한 번 더 입력해주세요.',
+    NICKNAME: '닉네임을 입력해주세요.',
   };
 
   const ERROR_MESSAGES = {
@@ -71,7 +71,7 @@ const SignupPage = () => {
           <input
             className={inputDefaultStyle}
             type="text"
-            placeholder={Placeholders.email}
+            placeholder={PLACEHOLDERS.EMAIL}
             {...register('email', {
               required: ERROR_MESSAGES.REQUIRED_EMAIL,
             })}
@@ -83,7 +83,7 @@ const SignupPage = () => {
           <input
             className={inputDefaultStyle}
             type="password"
-            placeholder={Placeholders.password}
+            placeholder={PLACEHOLDERS.PASSWORD}
             {...register('password', {
               required: '비밀번호를 입력해주세요.',
               minLength: {
@@ -98,14 +98,14 @@ const SignupPage = () => {
           <input
             className={inputDefaultStyle}
             type="password"
-            placeholder={Placeholders.passwordConfirm}
+            placeholder={PLACEHOLDERS.PASSWORD_CONFIRM}
             {...register('passwordConfirm')}
           />
 
           <span className={spanStyle}>Nickname</span>
           <input
             className={inputDefaultStyle}
-            placeholder={Placeholders.nickname}
+            placeholder={PLACEHOLDERS.NICKNAME}
             {...register('nickname')}
           />
           <button className={buttonStyle} type="submit">
