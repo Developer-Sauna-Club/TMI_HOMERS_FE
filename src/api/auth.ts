@@ -1,4 +1,4 @@
-import type { User } from '@types/User';
+import type { User } from '@/type/User';
 import { getItemFromStorage } from '@utils/localStorage';
 import { axiosClient } from './axiosClient';
 
