@@ -20,10 +20,10 @@ const SignUpPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }, //form 전체의 state, 일괄적으로 업데이트됨
   } = useForm<SignUpForm>({
-    mode: 'onChange', //onSubmit 이벤트에서 유효성 검사 진행되고, inputs은 이벤트리스너를 연결하여 다시 자체 유효성 검사를 함
+    mode: 'onSubmit', //Validation is triggered on the submit event, and inputs attach onChange event listeners to re-validate themselves.
+    //onChange를 쓰면 다수의 리렌더링 발생 가능
   });
 
   /*
@@ -50,6 +50,7 @@ const SignUpPage = () => {
       const response = await axiosClient.get('/users/get-users');
       return response.data;
     },
+    //커스텀 훅으로 분리하는 것 권장
   });
 
   /*
@@ -70,6 +71,7 @@ const SignUpPage = () => {
         fullName: data.nickname,
         password: data.password,
       });
+      //커스텀 훅으로 분리하는 것 권장
 
       return response.data;
     },
@@ -85,10 +87,6 @@ const SignUpPage = () => {
     // data에는 register()로 등록된 input의 각 value가 key-value 형태로 들어옴
     // 즉 input에 입력한 값들이 유효성 검사 통과하고 유효하게 들어오면!!!
   };
-
-  //password라는 이름을 가진 input의 값을 감시한다.
-  const password = watch('password');
-  const passwordConfirm = watch('passwordConfirm');
 
   return (
     <div className="w-1/2 mx-auto">
@@ -132,15 +130,13 @@ const SignUpPage = () => {
           type="password"
           {...register('passwordConfirm', {
             required: '비밀번호 확인은 필수입니다',
+            validate: (value, { password }) => value === password || '비밀번호가 일치하지 않습니다',
           })}
           className="block border-2"
           placeholder="비밀번호 확인"
         />
         {errors.passwordConfirm && (
           <span className="text-red-500">{errors.passwordConfirm.message}</span>
-        )}
-        {password !== passwordConfirm && (
-          <span className="text-red-500">비밀번호가 일치하지 않습니다</span>
         )}
         <input
           type="text"
@@ -160,7 +156,7 @@ const SignUpPage = () => {
         </button>
       </form>
       <div className="h-6 border-2 rounded-md text-center bg-slate-300 my-4">
-        제출결과 {isError ? '회원가입 실패' : isSuccess && '회원가입 성공'}
+        회원가입결과 {isError ? '실패' : isSuccess && '성공'}
       </div>
       <div>
         <h3 className="mb-3">현재 회원가입한 유저들</h3>
