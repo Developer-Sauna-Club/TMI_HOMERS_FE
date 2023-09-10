@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import ErrorText from '@/components/ErrorText';
-import Loader from '@/components/Loader';
-import useSignUp from '@/hooks/useSignUp';
+import ErrorText from '@components/ErrorText';
+import Loader from '@components/Loader';
+import useSignUp from '@hooks/useSignUp';
 
 type SignUpFormValues = {
   email: string;
@@ -25,16 +25,22 @@ const SignUpPage = () => {
   return (
     <div className="flex flex-col items-center">
       <h2 className="">회원가입 페이지</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col font-bold">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col font-bold p-4 px-16">
         <label htmlFor="email" className="font-Cafe24Surround text-footer-icon p-2">
           이메일
         </label>
         <input
-          {...register('email', { required: '이메일은 필수입니다!' })}
+          {...register('email', {
+            required: '이메일은 필수입니다!',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: '이메일 형식에 맞지 않습니다',
+            },
+          })}
           id="email"
           type="email"
           placeholder="이메일을 입력해주세요"
-          className={`w-[18rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
+          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
             errors.email ? 'border-red-600' : ''
           }`}
         />
@@ -45,6 +51,10 @@ const SignUpPage = () => {
         <input
           {...register('password', {
             required: '비밀번호는 필수입니다!',
+            pattern: {
+              value: /^[A-Za-z0-9@$!%*#?&]+$/,
+              message: '영문, 숫자, 특수기호로 입력해주세요!',
+            },
             minLength: {
               value: 8,
               message: '8글자 이상 입력해주세요!',
@@ -53,7 +63,7 @@ const SignUpPage = () => {
           id="password"
           type="password"
           placeholder="비밀번호를 입력해주세요"
-          className={`w-[18rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
+          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
             errors.password ? 'border-red-600' : ''
           }`}
         />
@@ -70,7 +80,7 @@ const SignUpPage = () => {
           id="passwordCheck"
           type="password"
           placeholder="비밀번호를 한번 더 입력해주세요!"
-          className={`w-[18rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
+          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
             errors.passwordCheck ? 'border-red-600' : ''
           }`}
         />
@@ -81,6 +91,10 @@ const SignUpPage = () => {
         <input
           {...register('nickname', {
             required: '닉네임은 필수입니다',
+            pattern: {
+              value: /^[A-Za-z0-9가-힣]+$/,
+              message: '한글, 영문, 숫자로 입력해주세요!',
+            },
             minLength: {
               value: 2,
               message: '2글자 이상으로 입력해주세요!',
@@ -92,7 +106,7 @@ const SignUpPage = () => {
           })}
           id="nickname"
           placeholder="닉네임을 입력해주세요"
-          className={`w-[18rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
+          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
             errors.nickname ? 'border-red-600' : ''
           }`}
         />

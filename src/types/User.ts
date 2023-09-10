@@ -15,12 +15,12 @@ export type User = {
   followers: [];
   following: [
     {
-      _id: '6169e91316cb2265df003c6d';
-      user: '6169e58216cb2265df003bf4';
-      follower: '6169e206aa57d952c6dc1edd';
-      createdAt: '2021-10-15T20:48:19.816Z';
-      updatedAt: '2021-10-15T20:48:19.816Z';
-      __v: 0;
+      _id: string;
+      user: string;
+      follower: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
     },
   ];
   notifications: Notification[];

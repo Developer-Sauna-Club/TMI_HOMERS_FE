@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-import App from '@/App';
 import {
   HomePage,
   LandingPage,
@@ -12,7 +11,8 @@ import {
   ArticleDetailPage,
   NotificationPage,
   ArticlesPage,
-} from '@/pages';
+} from '@pages';
+import App from '@/App';
 
 const router = createBrowserRouter([
   {

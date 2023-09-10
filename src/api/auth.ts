@@ -1,5 +1,5 @@
-import type { User } from '@/types/User';
-import { getItemFromStorage } from '@/utils/localStorage';
+import type { User } from '@types/User';
+import { getItemFromStorage } from '@utils/localStorage';
 import { axiosClient } from './axiosClient';
 
 const CHECK_AUTH_URL = '/auth-user';
