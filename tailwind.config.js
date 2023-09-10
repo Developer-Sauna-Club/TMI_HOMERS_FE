@@ -19,6 +19,8 @@ export default {
         Cafe24Surround: ['Cafe24Surround'],
         Cafe24SurroundAir: ['Cafe24SurroundAir'],
         RixInooAriDuriR: ['RixInooAriDuriR'],
+        Surround: ['Surround'],
+        SurroundAir: ['SurroundAir'],
       },
     },
   },

@@ -25,3 +25,17 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Surround';
+  src: url('/fonts/Cafe24Ssurround-v2.0.woff2');
+  font-weight: noraml;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SurroundAir';
+  src: url('/fonts/Cafe24SsurroundAir-v1.1.woff2');
+  font-weight: noraml;
+  font-style: normal;
+}
