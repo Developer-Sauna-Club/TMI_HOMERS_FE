@@ -15,7 +15,9 @@ const SignUpPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<SignUpForm>();
+  } = useForm<SignUpForm>({
+    mode: 'onChange',
+  });
 
   const createUser = async (data: SignUpForm) => {
     const response = await axiosClient.post('/signup', {
