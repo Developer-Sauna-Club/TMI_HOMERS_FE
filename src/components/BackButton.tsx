@@ -1,19 +1,17 @@
 import { AiOutlineLeft } from 'react-icons/ai';
 
 type BackButtonProps = {
-  type?: 'button';
   onClick?: () => void;
 };
 
-const BackButton = ({ type = 'button', onClick, ...props }: BackButtonProps) => {
+const BackButton = ({ onClick, ...props }: BackButtonProps) => {
   return (
     <button
-      className="inline-flex items-center justify-center bg-grey rounded-md text-base w-[1.625rem] h-[1.625rem] hover:bg-stone-100"
-      type={type}
+      className="inline-flex items-center justify-center rounded-md w-[1.625rem] h-[1.625rem] hover:bg-lazy-gray/50"
       onClick={onClick}
       {...props}
     >
-      <AiOutlineLeft className="icon" size="1.083rem" color="black" />
+      <AiOutlineLeft className="icon" size="1.083rem" color="tricorn-black" />
     </button>
   );
 };
