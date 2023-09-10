@@ -7,6 +7,7 @@ type SignUpFormValues = {
   email: string;
   password: string;
   nickname: string;
+  passwordCheck: string;
 };
 
 const SignUpPage = () => {
@@ -17,14 +18,14 @@ const SignUpPage = () => {
   } = useForm<SignUpFormValues>();
   const { signUpMutate, isLoading } = useSignUp();
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = (data) => {
-    signUpMutate(data);
+  const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
+    signUpMutate({ email, password, nickname });
   };
 
   return (
-    <div>
-      <h2 className="text-center">회원가입 페이지</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center font-bold">
+    <div className="flex flex-col items-center">
+      <h2 className="">회원가입 페이지</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col font-bold">
         <label htmlFor="email" className="font-Cafe24Surround text-footer-icon p-2">
           이메일
         </label>
@@ -57,6 +58,23 @@ const SignUpPage = () => {
           }`}
         />
         {errors.password && <ErrorText text={`${errors.password?.message}`} />}
+        <label htmlFor="passwordCheck" className="font-Cafe24Surround text-footer-icon p-2">
+          비밀번호확인
+        </label>
+        <input
+          {...register('passwordCheck', {
+            required: '비밀번호 확인은 필수입니다!',
+            validate: (value, { password }) =>
+              value === password || '비밀번호와 일치하지 않습니다!',
+          })}
+          id="passwordCheck"
+          type="password"
+          placeholder="비밀번호를 한번 더 입력해주세요!"
+          className={`w-[18rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
+            errors.passwordCheck ? 'border-red-600' : ''
+          }`}
+        />
+        {errors.passwordCheck && <ErrorText text={`${errors.passwordCheck?.message}`} />}
         <label htmlFor="nickname" className="font-Cafe24Surround text-footer-icon p-2">
           닉네임
         </label>
