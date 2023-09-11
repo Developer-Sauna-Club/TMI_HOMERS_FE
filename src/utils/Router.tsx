@@ -12,7 +12,7 @@ import {
   ArticleDetailPage,
   NotificationPage,
   ArticlesPage,
-} from '@/pages';
+} from '@pages/index';
 
 const router = createBrowserRouter([
   {

@@ -15,7 +15,7 @@ export default defineConfig({
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
       { find: '@stories', replacement: path.resolve(__dirname, 'src/stories') },
-      { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
+      { find: '@type', replacement: path.resolve(__dirname, 'src/type') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
     ],
   },
