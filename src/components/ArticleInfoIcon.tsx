@@ -13,20 +13,19 @@ const ModeClasses = {
 };
 
 const ArticleInfoIcon = ({ likes, comments, mode = 'list' }: ArticleInfoIconProps) => {
+  const spanStyle = 'flex items-center text-wall-street text-[0.75rem] h-[0.75rem] ml-0.5';
+  const iconStyle = 'icon w-[0.9rem] fill-lazy-gray';
+
   return (
     <div className={`flex w-[6.25rem] ${ModeClasses[mode]}`}>
       <div className="flex items-center">
-        <HiThumbUp className="icon w-[0.9rem] fill-lazy-gray" />
-        <span className="flex items-center text-wall-street text-[0.75rem] h-[0.75rem]">
-          {likes}
-        </span>
+        <HiThumbUp className={iconStyle} />
+        <span className={spanStyle}>{likes}</span>
       </div>
       <div className="space w-[1rem]" />
       <div className="flex items-center">
-        <BiSolidComment className="icon w-[0.9rem] fill-lazy-gray" />
-        <span className="flex items-center text-wall-street text-[0.75rem] h-[0.75rem]">
-          {comments}
-        </span>
+        <BiSolidComment className={iconStyle} />
+        <span className={spanStyle}>{comments}</span>
       </div>
     </div>
   );
