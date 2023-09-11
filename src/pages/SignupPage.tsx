@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { User } from '@type/User';
 import { axiosClient } from '@api/axiosClient';
 
 type SignUpForm = {
@@ -34,7 +35,7 @@ const SignUpPage = () => {
     return response.data;
   };
 
-  const { data: users, refetch: refetchUsers } = useQuery({
+  const { data: users, refetch: refetchUsers } = useQuery<User[]>({
     queryKey: ['users'],
     queryFn: fetchRegisteredUsers,
   });
