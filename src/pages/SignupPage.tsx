@@ -1,123 +1,126 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import ErrorText from '@components/ErrorText';
-import Loader from '@components/Loader';
-import useSignUp from '@hooks/useSignUp';
+import { useMutation } from '@tanstack/react-query';
+import { axiosClient } from '@/api/axiosClient';
 
-type SignUpFormValues = {
+type FormValues = {
   email: string;
   password: string;
+  passwordConfirm: string;
   nickname: string;
-  passwordCheck: string;
 };
 
-const SignUpPage = () => {
+const SIGNUP_URL = '/signup';
+
+// 공식 문서 예제의 스타일을 가져와 사용
+const inputDefaultStyle = `mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+invalid:border-pink-500 invalid:text-pink-600
+focus:invalid:border-pink-500 focus:invalid:ring-pink-500`;
+const validationErrorStyle = `text-right text-sm font-bold text-red-700`;
+const buttonStyle = `rounded-lg bg-blue-500 px-4 py-2 text-white mt-5 w-[100%] hover:bg-blue-600`;
+const spanStyle = `mt-5 block text-left text-md font-bold text-slate-700`;
+
+const SignupPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormValues>();
-  const { signUpMutate, isLoading } = useSignUp();
+  } = useForm<FormValues>({
+    mode: 'onChange',
+  });
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
-    signUpMutate({ email, password, nickname });
+  const userSignup = async ({ email, password, nickname }: FormValues) => {
+    const response = await axiosClient.post(SIGNUP_URL, {
+      email,
+      password,
+      fullName: nickname,
+    });
+
+    return response.data;
+  };
+
+  const { mutate, isError, isSuccess } = useMutation({
+    mutationFn: userSignup,
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    mutate(data);
+  };
+
+  const PLACEHOLDERS = {
+    EMAIL: '이메일을 입력해주세요.',
+    PASSWORD: '패스워드를 입력해주세요.',
+    PASSWORD_CONFIRM: '패스워드를 한 번 더 입력해주세요.',
+    NICKNAME: '닉네임을 입력해주세요.',
+  };
+
+  const ERROR_MESSAGES = {
+    REQUIRED_EMAIL: '이메일은 필수 입력입니다',
+    REQUIRED_PASSWORD: '패스워드는 필수 입력입니다',
+    SHORT_PASSWORD: '패스워드는 6자 이상이어야 합니다',
+    MISMATCH_PASSWORD: '패스워드가 일치하지 않습니다',
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="">회원가입 페이지</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col font-bold p-4 px-16">
-        <label htmlFor="email" className="font-Cafe24Surround text-footer-icon p-2">
-          이메일
-        </label>
-        <input
-          {...register('email', {
-            required: '이메일은 필수입니다!',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: '이메일 형식에 맞지 않습니다',
-            },
-          })}
-          id="email"
-          type="email"
-          placeholder="이메일을 입력해주세요"
-          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
-            errors.email ? 'border-red-600' : ''
-          }`}
-        />
-        {errors.email && <ErrorText text={`${errors.email?.message}`} />}
-        <label htmlFor="password" className="font-Cafe24Surround text-footer-icon p-2">
-          비밀번호
-        </label>
-        <input
-          {...register('password', {
-            required: '비밀번호는 필수입니다!',
-            pattern: {
-              value: /^[A-Za-z0-9@$!%*#?&]+$/,
-              message: '영문, 숫자, 특수기호로 입력해주세요!',
-            },
-            minLength: {
-              value: 8,
-              message: '8글자 이상 입력해주세요!',
-            },
-          })}
-          id="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
-            errors.password ? 'border-red-600' : ''
-          }`}
-        />
-        {errors.password && <ErrorText text={`${errors.password?.message}`} />}
-        <label htmlFor="passwordCheck" className="font-Cafe24Surround text-footer-icon p-2">
-          비밀번호확인
-        </label>
-        <input
-          {...register('passwordCheck', {
-            required: '비밀번호 확인은 필수입니다!',
-            validate: (value, { password }) =>
-              value === password || '비밀번호와 일치하지 않습니다!',
-          })}
-          id="passwordCheck"
-          type="password"
-          placeholder="비밀번호를 한번 더 입력해주세요!"
-          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
-            errors.passwordCheck ? 'border-red-600' : ''
-          }`}
-        />
-        {errors.passwordCheck && <ErrorText text={`${errors.passwordCheck?.message}`} />}
-        <label htmlFor="nickname" className="font-Cafe24Surround text-footer-icon p-2">
-          닉네임
-        </label>
-        <input
-          {...register('nickname', {
-            required: '닉네임은 필수입니다',
-            pattern: {
-              value: /^[A-Za-z0-9가-힣]+$/,
-              message: '한글, 영문, 숫자로 입력해주세요!',
-            },
-            minLength: {
-              value: 2,
-              message: '2글자 이상으로 입력해주세요!',
-            },
-            maxLength: {
-              value: 10,
-              message: '10글자 이하로 입력해주세요!',
-            },
-          })}
-          id="nickname"
-          placeholder="닉네임을 입력해주세요"
-          className={`w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir ${
-            errors.nickname ? 'border-red-600' : ''
-          }`}
-        />
-        {errors.nickname && <ErrorText text={`${errors.nickname?.message}`} />}
-        <button className="mt-2 p-2" disabled={isLoading}>
-          {isLoading && <Loader />}
-          {!isLoading && '회원가입'}
-        </button>
-      </form>
+    <div className="block w-[50%] h-full text-center m-auto">
+      <div className="">
+        <h1 className="font-bold text-lg text-center">회원가입 테스트</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <span className={spanStyle}>E-mail</span>
+          <input
+            className={inputDefaultStyle}
+            type="text"
+            placeholder={PLACEHOLDERS.EMAIL}
+            {...register('email', {
+              required: ERROR_MESSAGES.REQUIRED_EMAIL,
+            })}
+          />
+
+          {errors.email && <p className={validationErrorStyle}>{errors.email.message}</p>}
+
+          <span className={spanStyle}>Password</span>
+          <input
+            className={inputDefaultStyle}
+            type="password"
+            placeholder={PLACEHOLDERS.PASSWORD}
+            {...register('password', {
+              required: '비밀번호를 입력해주세요.',
+              minLength: {
+                value: 6,
+                message: ERROR_MESSAGES.SHORT_PASSWORD,
+              },
+            })}
+          />
+
+          {errors.password && <p className={validationErrorStyle}>{errors.password.message}</p>}
+
+          <input
+            className={inputDefaultStyle}
+            type="password"
+            placeholder={PLACEHOLDERS.PASSWORD_CONFIRM}
+            {...register('passwordConfirm')}
+          />
+
+          <span className={spanStyle}>Nickname</span>
+          <input
+            className={inputDefaultStyle}
+            placeholder={PLACEHOLDERS.NICKNAME}
+            {...register('nickname')}
+          />
+          <button className={buttonStyle} type="submit">
+            회원가입
+          </button>
+        </form>
+      </div>
+      <div className="mt-5">
+        <h1 className="font-bold text-white">결과</h1>
+        <p className={isError ? 'text-red-600' : 'text-green-600'}>
+          {isError ? '회원가입 실패' : isSuccess && '회원가입 성공'}
+        </p>
+      </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignupPage;
