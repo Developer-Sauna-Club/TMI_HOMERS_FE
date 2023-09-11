@@ -3,11 +3,12 @@ import { createPortal } from 'react-dom';
 // import { createPortal } from 'react-dom';
 
 type ModalProps = {
+  isAlert?: boolean;
   onClose?: () => void;
+  onConfirm?: () => void;
   children?: ReactNode;
   title: string;
   body?: string;
-  mode?: 'confirm' | 'alert';
   warning?: boolean;
   confirmLabel?: string;
 };
@@ -19,8 +20,8 @@ const Backdrop = () => {
 
 const ModalOverlay: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="fixed top-[35vh] left-[8.5%] w-[83%] bg-white rounded-lg p-[1rem] shadow-lg z-30 ">
-      <div className="flex flex-col items-center justify-between mt-5">{children}</div>
+    <div className="fixed top-[35vh] left-[8.5%] min-w-[83%] max-w-[50%] bg-white rounded-lg pt-[1rem] shadow-xl z-30 ">
+      <div className="flex flex-col items-center justify-between">{children}</div>
     </div>
   );
 };
@@ -32,30 +33,44 @@ const Modal = ({
   body,
   warning = false,
   confirmLabel = '확인',
+  onConfirm,
+  onClose,
 }: ModalProps) => {
-  const TITLE_CLASS = 'font-Surround text-[1.25rem] text-tricorn-black';
-  const BODY_CLASS = 'font-SurroundAir text-base text-footer-icon mt-3';
+  const TITLE_CLASS = 'font-Cafe24Surround text-[1.25rem] text-tricorn-black';
+  const BODY_CLASS = 'font-Cafe24SurroundAir text-base text-footer-icon whitespace-pre-line';
+
   const BUTTON_CONTAINER_CLASS =
-    'flex justify-center items-center w-[10.8rem] h-[3.88rem] w-full h-full';
-  const BUTTON_BASE_CLASS = 'font-SurroundAir text-wall-street';
-  const CONFIRM_BUTTON_CLASS =
-    'w-[6.25rem] h-[2.25rem] rounded-full hover:bg-opacity-75 transform transition duration-100 focus:scale-95 font-Surround';
-  const WARNING_CLASSES = warning ? `bg-red-600` : `bg-green-600`;
+    'flex justify-evenly items-center w-[10.8rem] h-[3.88rem] w-full h-full';
+
+  const BUTTON_BASE_CLASS = 'w-[6.25rem] h-[2.25rem] font-Cafe24SurroundAir text-wall-street';
+  const BUTTON_TRANSITION_CLASS = 'transform transition duration-300 active:scale-90';
+  const CONFIRM_BUTTON_CLASS = 'font-Cafe24Surround rounded-full hover:bg-opacity-75';
+
+  const WARNING_CLASSES = warning ? `bg-error-red` : `bg-cooled-blue`;
+
   return (
     <>
       {createPortal(<Backdrop />, portalElement)}
       {createPortal(
         <ModalOverlay>
-          <div className="flex flex-col items-center h-full w-full">
-            <p className={TITLE_CLASS}>{title}</p>
-            <p className={BODY_CLASS}>{body}</p>
+          <div className="text-center">
+            <div className="flex flex-col gap-[1rem]">
+              <p className={TITLE_CLASS}>{title}</p>
+              <p className={BODY_CLASS}>{body}</p>
+            </div>
           </div>
           <div className="flex border-t border-profile-bg w-[95%] justify-around items-center mt-5">
-            <div className={BUTTON_CONTAINER_CLASS}>
-              <button className={BUTTON_BASE_CLASS}>취소</button>
-            </div>
-            <div className={BUTTON_CONTAINER_CLASS}>
-              <button className={`${CONFIRM_BUTTON_CLASS} ${WARNING_CLASSES} text-white`}>
+            <div className={`${BUTTON_CONTAINER_CLASS} h-[3.875rem]`}>
+              <button
+                className={`${BUTTON_BASE_CLASS} ${BUTTON_TRANSITION_CLASS}`}
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button
+                className={`${BUTTON_BASE_CLASS} ${CONFIRM_BUTTON_CLASS} ${BUTTON_TRANSITION_CLASS} ${WARNING_CLASSES} text-white`}
+                onClick={onConfirm}
+              >
                 {confirmLabel}
               </button>
             </div>
