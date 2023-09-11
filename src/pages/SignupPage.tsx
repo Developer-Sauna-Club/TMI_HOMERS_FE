@@ -11,7 +11,7 @@ type Data = {
   fullName: string;
 };
 
-const Signup = () => {
+const SignUpPage = () => {
   const {
     register,
     handleSubmit,
@@ -120,4 +120,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUpPage;
