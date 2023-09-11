@@ -14,6 +14,8 @@ export default {
         'wall-street': '#697279',
         'footer-icon': '#455154',
         'tricorn-black': '#2D2D2D',
+        'tertiory-gray': '#9BA5B7',
+        'primary-black': '#141619',
       },
       fontFamily: {
         Cafe24Surround: ['Cafe24Surround'],
