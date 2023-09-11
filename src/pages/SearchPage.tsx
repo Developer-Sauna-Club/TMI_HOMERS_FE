@@ -1,26 +1,13 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { User } from '@type/User';
-import { axiosClient } from '@api/axiosClient';
+import useDebounce from '@hooks/useDebounce';
+import useSearch from '@hooks/useSearch';
+
+const DEBOUNCE_DELAY = 100;
 
 const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
-
-  const fetchRegisteredUsers = async (query: string) => {
-    if (!query) {
-      return [];
-    }
-    const response = await axiosClient.get(`/search/users/${query}`);
-    return response.data;
-  };
-
-  const { data: users } = useQuery<User[]>(
-    [searchQuery],
-    () => fetchRegisteredUsers(searchQuery!),
-    {
-      enabled: !!searchQuery, // searchQuery가 존재하는 경우에만 쿼리를 실행
-    },
-  );
+  const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
+  const { data: users } = useSearch(debouncedSearchQuery);
 
   return (
     <>
@@ -34,7 +21,7 @@ const SearchPage = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         {users?.map((user) => (
-          <div key={user._id} className="cursor-pointer hover:">
+          <div key={user._id} className="cursor-pointer">
             <span>
               {user.fullName} {user.email}
             </span>
