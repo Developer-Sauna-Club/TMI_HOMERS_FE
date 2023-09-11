@@ -13,6 +13,7 @@ const useSearch = (query: string) => {
 
   return useQuery<User[]>(['searchUsers', query], () => fetchRegisteredUsers(query), {
     enabled: !!query,
+    staleTime: 1000 * 60 * 1,
   });
 };
 

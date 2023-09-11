@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import useSearch from '@hooks/useSearch';
 
 const DEBOUNCE_DELAY = 100;
 
 const SearchPage = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
   const { data: users } = useSearch(debouncedSearchQuery);
 
@@ -16,13 +17,21 @@ const SearchPage = () => {
       </h2>
       <div className="w-1/2 h-40 pt-8 mx-auto overflow-y-scroll text-center border-2 border-red-700">
         <input
+          ref={inputRef}
           className="border-2"
           placeholder="검색합시당"
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         {users?.map((user) => (
           <div key={user._id} className="cursor-pointer">
-            <span>
+            <span
+              onClick={() => {
+                setSearchQuery(user.fullName);
+                if (inputRef.current) {
+                  inputRef.current.value = user.fullName;
+                }
+              }}
+            >
               {user.fullName} {user.email}
             </span>
           </div>
