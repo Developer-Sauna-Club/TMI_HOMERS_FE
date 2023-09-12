@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Subscribe from '@/components/Subscribe';
+import SubscribeInfo from '@/components/SubscribeInfo';
 
 const meta = {
-  title: 'Subscribe',
-  component: Subscribe,
+  title: 'SubscribeInfo',
+  component: SubscribeInfo,
   tags: ['autodocs'],
   argTypes: {
     subscriber: { control: 'number' },
