@@ -1,74 +1,34 @@
 import { BiSolidComment, BiImageAlt } from 'react-icons/bi';
 import { BsFire } from 'react-icons/bs';
 import { HiThumbUp } from 'react-icons/hi';
+import { getTimeDelta } from '@utils/getTimeDelta';
 
-type ISO8601_STRING = string;
 type ArticleProps = {
   title: string;
   nickname: string;
-  postedDate: ISO8601_STRING;
+  postedDate: string;
   hasImage: boolean;
   likes: number;
   comments: number;
 };
 
-const getTimestamp = (postedDate: ISO8601_STRING) => {
-  const dt = new Date(postedDate);
-  const now = new Date();
-  const diff = now.getTime() - dt.getTime();
-
-  if (isNaN(diff)) {
-    return '알 수 없음';
-  }
-
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(months / 12);
-
-  let result = '';
-
-  switch (true) {
-    case seconds < 60:
-      result = `${seconds}초 전`;
-      break;
-    case minutes < 60:
-      result = `${minutes}분 전`;
-      break;
-    case hours < 24:
-      result = `${hours}시간 전`;
-      break;
-    case days < 30:
-      result = `${days}일 전`;
-      break;
-    case months < 12:
-      result = `${months}달 전`;
-      break;
-    default:
-      result = `${years}년 전`;
-  }
-
-  return result;
-};
-
 const Article = ({ title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
-  const timestamp = getTimestamp(postedDate);
+  const timestamp = getTimeDelta(postedDate);
   const isHighlyLiked = likes >= 15;
+  const TITLE_MAX_LENGTH = 20;
 
   return (
-    <div className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] font-Cafe24SurroundAir">
+    <div className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] font-Cafe24SurroundAir mx-auto">
       <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center">
+        <div className="flex">
           {isHighlyLiked && (
-            <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1rem] h-[1rem]" />
+            <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
           )}
-          <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[16.625rem]">
-            {title}
+          <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem]">
+            {title.length > TITLE_MAX_LENGTH ? `${title.slice(0, TITLE_MAX_LENGTH)}...` : title}
           </h1>
           {hasImage && (
-            <BiImageAlt className="text-article-img dark:text-extra-white w-[1rem] h-[1rem] ml-[0.25rem]" />
+            <BiImageAlt className="text-article-img dark:text-extra-white w-[1.2rem] h-[1.2rem] ml-[0.25rem]" />
           )}
         </div>
         <span className="text-lazy-gray text-[0.3rem]">{timestamp}</span>
