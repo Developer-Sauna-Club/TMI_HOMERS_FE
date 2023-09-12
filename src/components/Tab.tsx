@@ -13,9 +13,10 @@ const childrenToArray = (children: React.ReactNode, ...types: string[]): React.R
 type TabProps = {
   children: React.ReactNode;
   active?: boolean;
+  maxWidth?: string;
 };
 
-const Tab = ({ children, active }: TabProps) => {
+const Tab = ({ children, active, maxWidth: width }: TabProps) => {
   const [currentActive, setCurrentActive] = useState(() => {
     if (active) {
       return active;
@@ -45,8 +46,8 @@ const Tab = ({ children, active }: TabProps) => {
 
   return (
     <div>
-      <div className="flex items-center">{items}</div>
-      <div>{activeItem?.props.children}</div>
+      <div className="flex">{items}</div>
+      <div style={{ maxWidth: `${width}rem` }}>{activeItem?.props.children}</div>
     </div>
   );
 };
