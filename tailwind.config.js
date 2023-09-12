@@ -15,6 +15,7 @@ export default {
         'footer-icon': '#455154',
         'tricorn-black': '#2D2D2D',
         'error-red': '#CE395F',
+        'light-violet': '#75609E',
         'tertiory-gray': '#9BA5B7',
         'primary-black': '#141619',
       },
