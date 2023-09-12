@@ -1,6 +1,6 @@
 type HeaderTextProps = {
   size?: 'small' | 'normal' | 'large';
-  label: 'string';
+  label: string;
 };
 
 const HeaderText = ({ size = 'normal', label }: HeaderTextProps) => {
