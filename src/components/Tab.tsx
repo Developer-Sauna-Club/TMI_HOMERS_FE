@@ -16,7 +16,7 @@ type TabProps = {
   maxWidth?: string;
 };
 
-const Tab = ({ children, active, maxWidth: width }: TabProps) => {
+const Tab = ({ children, active, maxWidth }: TabProps) => {
   const [currentActive, setCurrentActive] = useState(() => {
     if (active) {
       return active;
@@ -47,7 +47,7 @@ const Tab = ({ children, active, maxWidth: width }: TabProps) => {
   return (
     <div>
       <div className="flex">{items}</div>
-      <div style={{ maxWidth: `${width}rem` }}>{activeItem?.props.children}</div>
+      <div style={{ maxWidth: `${maxWidth}rem` }}>{activeItem?.props.children}</div>
     </div>
   );
 };
