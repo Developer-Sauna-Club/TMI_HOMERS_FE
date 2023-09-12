@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Comment from '@/components/Comment';
+import Comment from '@components/Comment';
 
 const meta = {
   title: 'Comment',
