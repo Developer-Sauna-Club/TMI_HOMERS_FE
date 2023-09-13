@@ -1,5 +1,5 @@
-import { SignUpFormValues, SignUpParams } from '@/types/signUp';
-import type { User } from '@/types/User';
+import type { SignUpFormValues, SignUpParams } from '@/type/signUp';
+import type { User } from '@/type/User';
 import { axiosClient } from './axiosClient';
 
 const SIGNUP_URL = '/signup';
@@ -9,16 +9,15 @@ type SignUpResponseData = {
   token: string;
 };
 
-// 회원가입하는 api
 export const signUp = async ({
   email,
   password,
-  fullName,
+  nickname,
 }: SignUpFormValues): Promise<SignUpResponseData> => {
   const signUpParams: SignUpParams = {
     email,
     password,
-    fullName,
+    fullName: nickname,
   };
 
   const { data } = await axiosClient.post<SignUpResponseData>(SIGNUP_URL, {

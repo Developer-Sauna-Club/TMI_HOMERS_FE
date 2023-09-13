@@ -9,11 +9,35 @@ type Data = {
   fullName: string;
 };
 
-const Signup = () => {
-  // <Data> 이거없으면 errors에 타입 에러 많이 나네... 중요!
-  const methods = useForm<Data>();
-  const { handleSubmit } = methods;
-  const { mutate } = useSignUp();
+const SignUpPage = () => {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+      password_confirm: '',
+      fullName: '',
+    },
+    mode: 'all',
+  });
+
+  const { mutate, isLoading } = useMutation(
+    (data: Data) => {
+      return axiosClient.post(SIGNUP, data);
+    },
+    {
+      onSuccess(data) {
+        alert(data);
+      },
+      onError(err) {
+        alert(err);
+      },
+    },
+  );
 
   const onSubmit: SubmitHandler<Data> = (data) => {
     mutate(data);
@@ -66,4 +90,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUpPage;
