@@ -1,37 +1,24 @@
-import { useQuery } from '@tanstack/react-query';
 import { Post } from '@type/Post';
-import { AxiosResponse } from 'axios';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
-import { axiosClient } from '@api/axiosClient';
 import Article from '@components/Article';
 import HeaderText from '@components/HeaderText';
+import Loader from '@components/Loader';
 import Tab from '@components/Tab';
-import { HOTTEST_ARTICLE_LIKES_THRESHOLD, CHANNEL_ID } from '@constants/Article';
 import { TabConstants } from '@constants/Tab';
+import { useArticles } from '@hooks/useArticles';
+import { useFilteredArticles } from '@hooks/useFilteredArticles';
 
 const ArticlesPage = () => {
-  const getArticles = async () => {
-    const response = await axiosClient.get(`/posts/channel/${CHANNEL_ID}`);
-    return response;
-  };
-
-  const { data } = useQuery<AxiosResponse<Post[]>>(['articles'], getArticles);
+  const { data, isFetching } = useArticles();
   const articles = data?.data;
 
-  const filterArticles = (tabFilter: TabConstants) => {
-    if (tabFilter === TabConstants.HOTTEST) {
-      return articles?.filter((article) => article.likes.length >= HOTTEST_ARTICLE_LIKES_THRESHOLD);
-    } else if (tabFilter === TabConstants.SUBSCRIBED) {
-      // TODO: 현재 사용자의 정보가 있어야 한다. (User 타입의 following)
-    } else {
-      return articles;
-    }
-  };
+  const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
+  // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
+  // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);
 
-  const renderArticles = (tabFilter: TabConstants) => {
-    const filteredArticles = filterArticles(tabFilter);
-    return filteredArticles?.map((article) => {
+  const renderArticles = (articles: Post[] | undefined) => {
+    return articles?.map((article) => {
       const { _id, title, author, createdAt, likes, image, comments } = article;
       const { fullName } = author;
       try {
@@ -39,6 +26,7 @@ const ArticlesPage = () => {
         return (
           <Article
             key={_id}
+            id={_id}
             title={articleTitle}
             nickname={`@${fullName}`}
             postedDate={createdAt}
@@ -62,7 +50,8 @@ const ArticlesPage = () => {
         </div>
         <Tab>
           <Tab.Item title={`${TabConstants.NEWEST}`} index="item1" width="8.625">
-            {renderArticles(TabConstants.NEWEST)}
+            {isFetching && <Loader />}
+            {renderArticles(newestArticles)}
           </Tab.Item>
           <Tab.Item
             title={`${TabConstants.HOTTEST}`}
@@ -70,9 +59,10 @@ const ArticlesPage = () => {
             icon={<BsFire className="w-[1.5rem] h-[1.5rem]" />}
             width="8.625"
           >
-            {/* {renderArticles(TabConstants.HOTTEST)} */}
+            {/* {renderArticles(hottestArticles)} */}
             <Article
               title="(더미)이거슨 뜨거운 글이여."
+              id={Math.random().toString()}
               nickname="@hot-guy"
               postedDate="2023-09-03T14:00:00.000Z"
               hasImage={true}
@@ -86,14 +76,8 @@ const ArticlesPage = () => {
             icon={<MdStars className="w-[1.7rem] h-[1.7rem]" />}
             width="8.625"
           >
-            <Article
-              title="(더미)구독한 채널의 게시글이 없습니다."
-              nickname=""
-              postedDate=""
-              hasImage={false}
-              likes={0}
-              comments={0}
-            />
+            {/* {renderArticles(subscribedArticles)} */}
+            <div className="font-Cafe24SurroundAir">구독한 사람이 없습니다.</div>
           </Tab.Item>
         </Tab>
       </header>
