@@ -12,8 +12,7 @@ type NewArticleForm = {
 
 const NewArticlePage = () => {
   const CHANNEL_ID = '64fac2e729260903240d2dab';
-  const TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1MDA3NDliOWZhZTk1MmFhMGNmYTJmOCIsImVtYWlsIjoiZG5yODg3NEBuYXZlci5jb20ifSwiaWF0IjoxNjk0NTY4NjAzfQ.cDVQjvcePndQnC8sN5O65e4B_NQjW2TElsujoqkcoOY';
+  const TOKEN = '';
   const methods = useForm<NewArticleForm>();
   const queryClient = useQueryClient();
 
