@@ -27,12 +27,12 @@ const ArticlesPage = () => {
           <Article
             key={_id}
             id={_id}
-            title={articleTitle}
-            nickname={`@${fullName}`}
+            title={articleTitle ? articleTitle : '제목이 없습니다.'}
+            nickname={fullName ? `@${fullName}` : ''}
             postedDate={createdAt}
             hasImage={image !== undefined}
-            likes={likes.length}
-            comments={comments.length}
+            likes={likes?.length || 0}
+            comments={comments?.length || 0}
           />
         );
       } catch (error) {
