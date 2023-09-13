@@ -1,8 +1,6 @@
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { axiosClient } from '@/api/axiosClient';
-
-const SIGNUP = '/signup';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
+import FormInput from '@/components/FormInput';
+import useSignUp from '@/hooks/useSignUp';
 
 type Data = {
   email: string;
@@ -41,18 +39,17 @@ const SignUpPage = () => {
     },
   );
 
-  const onSubmit = (data: Data) => {
+  const onSubmit: SubmitHandler<Data> = (data) => {
     mutate(data);
   };
 
   return (
-    <>
+    <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>이메일</label>
-        <input
+        <FormInput
+          name="email"
           placeholder="email"
-          className="border-2 border-black"
-          {...register('email', {
+          registerOptions={{
             required: {
               value: true,
               message: '이메일을 입력해주세요',
@@ -61,15 +58,12 @@ const SignUpPage = () => {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: '이메일 형식에 맞지 않습니다',
             },
-          })}
+          }}
         />
-        <p className="text-red-600">{errors.email?.message}</p>
-        <hr />
-        <label>비밀번호</label>
-        <input
+        <FormInput
+          name="password"
           placeholder="password"
-          className="border-2 border-black"
-          {...register('password', {
+          registerOptions={{
             required: {
               value: true,
               message: '비밀번호를 입력해주세요',
@@ -78,45 +72,21 @@ const SignUpPage = () => {
               value: 8,
               message: '8글자 이상 입력해주세요',
             },
-          })}
+          }}
         />
-        <p className="text-red-600">{errors.password?.message}</p>
-        <hr />
-        <label>비밀번호 확인</label>
-        <input
-          placeholder="password_confirm"
-          className="border-2 border-black"
-          {...register('password_confirm', {
-            required: {
-              value: true,
-              message: '비밀번호를 입력해주세요',
-            },
-            minLength: {
-              value: 8,
-              message: '8글자 이상 입력해주세요',
-            },
-            validate: (value) => value === getValues('password') || '비밀번호가 일치하지 않습니다',
-          })}
-        />
-        <p className="text-red-600">{errors.password_confirm?.message}</p>
-        <hr />
-        <label>이름</label>
-        <input
+        <FormInput
+          name="fullName"
           placeholder="fullName"
-          className="border-2 border-black"
-          {...register('fullName', {
+          registerOptions={{
             required: {
               value: true,
               message: '이름을 입력하세요',
             },
-          })}
+          }}
         />
-        <p className="text-red-600">{errors.fullName?.message}</p>
-        <hr />
-        {isLoading && <p>로딩중..</p>}
         <input type="submit" />
       </form>
-    </>
+    </FormProvider>
   );
 };
 
