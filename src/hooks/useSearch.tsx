@@ -4,9 +4,6 @@ import { axiosClient } from '@api/axiosClient';
 
 const useSearch = (query: string) => {
   const fetchRegisteredUsers = async (query: string) => {
-    if (!query) {
-      return [];
-    }
     const response = await axiosClient.get(`/search/users/${query}`);
     return response.data;
   };
