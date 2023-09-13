@@ -40,7 +40,6 @@ const NewArticlePage = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <FormInput
             name="title"
-            label="제목"
             registerOptions={{
               maxLength: {
                 value: 20,
@@ -49,10 +48,9 @@ const NewArticlePage = () => {
             }}
             placeholder="제목을 작성하세요"
           />
-          <FormInput name="image" label="사진" type="file" placeholder="사진 업로드" />
+          <FormInput name="image" type="file" placeholder="사진 업로드" />
           <FormInput
             name="body"
-            label="내용"
             registerOptions={{
               maxLength: {
                 value: 500,
