@@ -3,12 +3,35 @@ import Skeleton from '@components/Skeleton';
 
 const meta = {
   title: 'Skeleton',
-  component: Skeleton.Paragraph,
+  component: Skeleton.UserSkeleton,
+  tags: ['autodocs'],
+  argTypes: {
+    line: { control: 'number' },
+    height: { control: 'number' },
+    size: { control: 'number' },
+  },
+  args: {
+    line: 3,
+    height: 1.4,
+    size: 3,
+  },
 } as Meta;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
+
+export const Paragraph: Story = {
+  render: (args) => <Skeleton.Paragraph {...args} />,
+  argTypes: {
+    line: { control: 'number' },
+    height: { control: 'number' },
+  },
+  args: {
+    line: 3,
+    height: 1.4,
+  },
+};
 
 export const Box: Story = {
   render: (args) => <Skeleton.Box {...args} />,
