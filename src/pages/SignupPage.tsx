@@ -20,7 +20,7 @@ const SignUpPage = () => {
   };
   const navigate = useNavigate();
 
-  const handleClickLoginLink = () => {
+  const handleClickLoginButton = () => {
     navigate('/login');
   };
 
@@ -30,7 +30,7 @@ const SignUpPage = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col items-center font-bold gap-4"
+          className="flex flex-col items-center font-bold gap-8"
         >
           <div className="w-full">
             <FormInput
@@ -95,14 +95,14 @@ const SignUpPage = () => {
               placeholder="닉네임을 입력해주세요"
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <MainButton label="회원가입" type="submit" isLoading={isLoading} />
-            <p
-              className="p-2 self-end hover:underline hover:opacity-75"
-              onClick={handleClickLoginLink}
-            >
-              로그인 페이지로 이동
-            </p>
+            <MainButton
+              label="로그인"
+              type="button"
+              mode="outlined"
+              onClick={handleClickLoginButton}
+            />
           </div>
         </form>
       </FormProvider>
