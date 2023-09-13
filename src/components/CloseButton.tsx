@@ -5,7 +5,7 @@ type CloseButtonProps = {
   onClick?: () => void;
 };
 
-const BASE_BUTTON_CLASSES = 'block bg-transparent rounded-md hover:bg-lazy-gray/50';
+const BASE_BUTTON_CLASSES = 'block bg-transparent rounded-md cursor-pointer hover:bg-lazy-gray/50';
 
 const ModeClasses = {
   large: 'w-[1.083rem] h-[1.083rem] fill-tricorn-black',

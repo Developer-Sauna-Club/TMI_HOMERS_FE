@@ -3,7 +3,11 @@ type ErrorTextProps = {
 };
 
 const ErrorText = ({ text }: ErrorTextProps) => {
-  return <small className="text-red-600 p-2">{text}</small>;
+  return (
+    <small className="self-end p-1 text-error-red font-light font-Cafe24SurroundAir text-xs">
+      {text}
+    </small>
+  );
 };
 
 export default ErrorText;
