@@ -1,10 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import { BiSolidComment, BiImageAlt } from 'react-icons/bi';
 import { BsFire } from 'react-icons/bs';
 import { HiThumbUp } from 'react-icons/hi';
-import { HOTTEST_ARTICLE_LIKES_THRESHOLD, ARTICLE_TITLE_MAX_LENGTH } from '@constants/Article';
+import {
+  HOTTEST_ARTICLE_LIKES_THRESHOLD,
+  ARTICLE_TITLE_MAX_LENGTH,
+  ROUTES,
+} from '@constants/Article';
 import { getTimeDelta } from '@utils/getTimeDelta';
 
 type ArticleProps = {
+  id: string;
   title: string;
   nickname: string;
   postedDate: string;
@@ -13,12 +19,16 @@ type ArticleProps = {
   comments: number;
 };
 
-const Article = ({ title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
+const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
+  const navigate = useNavigate();
   const timestamp = getTimeDelta(postedDate);
   const isHighlyLiked = likes >= HOTTEST_ARTICLE_LIKES_THRESHOLD;
 
   return (
-    <div className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto">
+    <div
+      onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
+      className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
+    >
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
           {isHighlyLiked && (
