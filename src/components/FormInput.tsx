@@ -1,18 +1,17 @@
 import { RegisterOptions, useFormContext } from 'react-hook-form';
-import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import ErrorText from './ErrorText';
 
-
-type FormInputProps =  {
+type FormInputProps = {
   name: string;
   label: string;
   placeholder: string;
   type?: string;
   registerOptions?: RegisterOptions;
-  isPassword?:boolean;
-  toggleShowPassword?:()=>void;
-  showPassword?:boolean;
-  showToggleButton?:boolean;
+  isPassword?: boolean;
+  toggleShowPassword?: () => void;
+  showPassword?: boolean;
+  showToggleButton?: boolean;
 };
 
 const defaultInputClass =
@@ -27,7 +26,7 @@ const FormInput = ({
   isPassword = false,
   toggleShowPassword,
   showPassword = false,
-  showToggleButton=false,
+  showToggleButton = false,
   ...props
 }: FormInputProps) => {
   const {
@@ -40,17 +39,25 @@ const FormInput = ({
       <label htmlFor={name} className="font-Cafe24Surround text-footer-icon p-2">
         {label}
       </label>
-      <div className='relative'>
-      <input
-        className={`${defaultInputClass}
+      <div className="relative">
+        <input
+          className={`${defaultInputClass}
             ${errors[name] ? 'border-error-red' : ''}`}
-        id={name}
-        placeholder={placeholder}
-        type={type}
-        {...register(name, registerOptions)}
-        {...props}
-      />
-      {isPassword && showToggleButton && <button className='absolute right-4 top-1/2 -translate-y-1/2' onClick={toggleShowPassword} type='button'>{showPassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}</button>}
+          id={name}
+          placeholder={placeholder}
+          type={type}
+          {...register(name, registerOptions)}
+          {...props}
+        />
+        {isPassword && showToggleButton && (
+          <button
+            className="absolute right-4 top-1/2 -translate-y-1/2"
+            onClick={toggleShowPassword}
+            type="button"
+          >
+            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+          </button>
+        )}
       </div>
       {errors[name] && <ErrorText text={errors[name]?.message as string} />}
     </div>
