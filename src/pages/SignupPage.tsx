@@ -53,6 +53,9 @@ const SignUpPage = () => {
     signUpMutate({ email, password, nickname });
   };
 
+  const {watch,trigger} = methods
+  const [password,passwordCheck] = [watch(PASSWORD),watch(PASSWORD_CHECK)]
+
   return (
     <div className="flex flex-col items-center">
       <h2 className="">회원가입 페이지</h2>
@@ -86,12 +89,16 @@ const SignUpPage = () => {
                 value: 8,
                 message: ERROR_MESSAGE.SHORT_PASSWORD,
               },
+              onChange:async()=>{
+                await trigger(PASSWORD);
+              }
             }}
             type={showPassword ? 'text':'password'}
             placeholder={PLACEHOLDER.PASSWORD}
             isPassword={true}
             showPassword={showPassword}
             toggleShowPassword={()=>setShowPassword(prev=>!prev)}
+            showToggleButton={!!password}
           />
           <FormInput
             name={PASSWORD_CHECK}
@@ -99,13 +106,17 @@ const SignUpPage = () => {
             registerOptions={{
               required: ERROR_MESSAGE.INVALID_PASSWORD_CHECK,
               validate: (value, { password }) =>
-                value === password || ERROR_MESSAGE.INVALID_PASSWORD_CHECK
+                value === password || ERROR_MESSAGE.INVALID_PASSWORD_CHECK,
+              onChange:async()=>{
+                  await trigger(PASSWORD_CHECK);
+                }
             }}
-            type={showPassword ? 'password' : 'text'}
+            type={showPassword ? 'text' : 'password'}
             placeholder={PLACEHOLDER.PASSWORD_CHECK}
             isPassword={true}
             showPassword={showPassword}
             toggleShowPassword={()=>setShowPassword(prev=>!prev)}
+            showToggleButton={!!passwordCheck}
           />
           <FormInput
             name={NICKNAME}

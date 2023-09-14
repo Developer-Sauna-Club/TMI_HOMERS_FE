@@ -9,10 +9,10 @@ type FormInputProps =  {
   placeholder: string;
   type?: string;
   registerOptions?: RegisterOptions;
-  onChange?: () => void;
   isPassword?:boolean;
   toggleShowPassword?:()=>void;
-  showPassword?:boolean
+  showPassword?:boolean;
+  showToggleButton?:boolean;
 };
 
 const defaultInputClass =
@@ -24,16 +24,17 @@ const FormInput = ({
   placeholder,
   type = 'text',
   registerOptions,
-  onChange,
   isPassword = false,
   toggleShowPassword,
   showPassword = false,
+  showToggleButton=false,
   ...props
 }: FormInputProps) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
+
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="font-Cafe24Surround text-footer-icon p-2">
@@ -47,10 +48,9 @@ const FormInput = ({
         placeholder={placeholder}
         type={type}
         {...register(name, registerOptions)}
-        onChange={onChange}
         {...props}
       />
-      {isPassword && <button className='absolute right-4 top-1/2 -translate-y-1/2' onClick={toggleShowPassword} type='button'>{showPassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}</button>}
+      {isPassword && showToggleButton && <button className='absolute right-4 top-1/2 -translate-y-1/2' onClick={toggleShowPassword} type='button'>{showPassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}</button>}
       </div>
       {errors[name] && <ErrorText text={errors[name]?.message as string} />}
     </div>
