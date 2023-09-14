@@ -1,83 +1,71 @@
+import { AiFillHome } from 'react-icons/ai';
+import { BiSolidUserCircle } from 'react-icons/bi';
+import { BsFillBellFill } from 'react-icons/bs';
+import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
+import { RiQuillPenFill } from 'react-icons/ri';
+
+enum NavConstants {
+  HOME = '홈',
+  NEWS = '뉴스',
+  NOTICE = '알림',
+  MYPAGE = 'MY',
+}
+
+const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center group';
+const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
+const ICON_COLOR = 'text-footer-icon group-hover:text-cooled-blue';
+const BASE_TEXT_STYLE = 'text-sm text-footer-icon  group-hover:text-cooled-blue';
+
 const BottomNavigation = () => {
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-      <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-        <button
-          type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        >
-          <svg
-            className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+    <div className="flex items-center justify-evenly  w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
+      <button className={BASE_BUTTON_STYLE}>
+        <span className={BASE_ICON_STYLE}>
+          <AiFillHome className={ICON_COLOR} size="2rem" aria-hidden="true" fill="currentColor" />
+        </span>
+        <span className={BASE_TEXT_STYLE}>{NavConstants.HOME}</span>
+      </button>
+
+      <button className={BASE_BUTTON_STYLE}>
+        <span className={BASE_ICON_STYLE}>
+          <HiChatBubbleLeftEllipsis
+            className={ICON_COLOR}
             aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
+            size="2rem"
             fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-          </svg>
-          <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-            Home
-          </span>
-        </button>
-        <button
-          type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        >
-          <svg
-            className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+          />
+        </span>
+        <span className={BASE_TEXT_STYLE}>{NavConstants.NEWS}</span>
+      </button>
+
+      <button className={`${BASE_BUTTON_STYLE}position: relative px-5`}>
+        <span className="flex items-center justify-center position: absolute -bottom-1 w-[3.5rem] h-[3.5rem] bg-cooled-blue rounded-full drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out delay-150 hover:scale-110">
+          <RiQuillPenFill className="text-white" size="2rem" fill="currentColor" />
+        </span>
+      </button>
+
+      <button className={BASE_BUTTON_STYLE}>
+        <span className={BASE_ICON_STYLE}>
+          <BsFillBellFill
+            className={ICON_COLOR}
             aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
+            size="2rem"
             fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z" />
-            <path d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z" />
-          </svg>
-          <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-            Wallet
-          </span>
-        </button>
-        <button
-          type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        >
-          <svg
-            className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+          />
+        </span>
+        <span className={BASE_TEXT_STYLE}>{NavConstants.NOTICE}</span>
+      </button>
+      <button className={BASE_BUTTON_STYLE}>
+        <span className={BASE_ICON_STYLE}>
+          <BiSolidUserCircle
+            className={ICON_COLOR}
             aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"
-            />
-          </svg>
-          <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-            Settings
-          </span>
-        </button>
-        <button
-          type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        >
-          <svg
-            className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
+            size="2rem"
             fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-          </svg>
-          <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-            Profile
-          </span>
-        </button>
-      </div>
+          />
+        </span>
+        <span className={BASE_TEXT_STYLE}>{NavConstants.MYPAGE}</span>
+      </button>
     </div>
   );
 };
