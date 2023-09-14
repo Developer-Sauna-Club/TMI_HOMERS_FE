@@ -87,7 +87,7 @@ const SignUpPage = () => {
                 message: ERROR_MESSAGE.SHORT_PASSWORD,
               },
             }}
-            type={showPassword ? 'password' : 'text'}
+            type={showPassword ? 'text':'password'}
             placeholder={PLACEHOLDER.PASSWORD}
             isPassword={true}
             showPassword={showPassword}
