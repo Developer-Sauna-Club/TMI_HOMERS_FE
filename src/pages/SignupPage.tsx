@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import FormInput from '@components/FormInput';
 import Loader from '@components/Loader';
@@ -10,7 +11,7 @@ type SignUpFormValues = {
   passwordCheck: string;
 };
 
-const [EMAIL,PASSWORD,PASSWORD_CHECK,NICKNAME]= ['email',
+const [EMAIL,PASSWORD,PASSWORD_CHECK,NICKNAME]: (keyof SignUpFormValues)[]= ['email',
 'password',
 'passwordCheck',
 'nickname']
@@ -45,7 +46,9 @@ const ERROR_MESSAGE:{[key:string]:string}={
 
 const SignUpPage = () => {
   const methods = useForm<SignUpFormValues>();
+  const [showPassword, setShowPassword] = useState(false);
   const { signUpMutate, isLoading } = useSignUp();
+
   const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
     signUpMutate({ email, password, nickname });
   };
@@ -84,8 +87,11 @@ const SignUpPage = () => {
                 message: ERROR_MESSAGE.SHORT_PASSWORD,
               },
             }}
-            type="password"
+            type={showPassword ? 'password' : 'text'}
             placeholder={PLACEHOLDER.PASSWORD}
+            isPassword={true}
+            showPassword={showPassword}
+            toggleShowPassword={()=>setShowPassword(prev=>!prev)}
           />
           <FormInput
             name={PASSWORD_CHECK}
@@ -93,10 +99,13 @@ const SignUpPage = () => {
             registerOptions={{
               required: ERROR_MESSAGE.INVALID_PASSWORD_CHECK,
               validate: (value, { password }) =>
-                value === password || ERROR_MESSAGE.INVALID_PASSWORD
+                value === password || ERROR_MESSAGE.INVALID_PASSWORD_CHECK
             }}
-            type="password"
-            placeholder={PLACEHOLDER.PASSWORD}
+            type={showPassword ? 'password' : 'text'}
+            placeholder={PLACEHOLDER.PASSWORD_CHECK}
+            isPassword={true}
+            showPassword={showPassword}
+            toggleShowPassword={()=>setShowPassword(prev=>!prev)}
           />
           <FormInput
             name={NICKNAME}
