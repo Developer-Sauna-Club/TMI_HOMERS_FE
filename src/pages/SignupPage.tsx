@@ -1,7 +1,9 @@
 import {useState} from 'react'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import MainButton from '@/components/MainButton';
 import FormInput from '@components/FormInput';
-import Loader from '@components/Loader';
+import Header from '@components/HeaderText';
 import useSignUp from '@hooks/useSignUp';
 
 type SignUpFormValues = {
@@ -52,18 +54,24 @@ const SignUpPage = () => {
   const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
     signUpMutate({ email, password, nickname });
   };
+  const navigate = useNavigate();
+
+  const handleClickLoginButton = () => {
+    navigate('/login');
+  };
 
   const {watch,trigger} = methods
   const [password,passwordCheck] = [watch(PASSWORD),watch(PASSWORD_CHECK)]
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="">회원가입 페이지</h2>
+    <div className="flex flex-col items-center h-[100vh]">
+      <Header size="large" label="회원 가입" />
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col font-bold p-4 px-16"
+          className="flex flex-col items-center font-bold gap-8"
         >
+         <div className="w-full">
           <FormInput
             name={EMAIL}
             label={INPUT_LABEL.EMAIL}
@@ -138,10 +146,16 @@ const SignUpPage = () => {
             }}
             placeholder={PLACEHOLDER.NICKNAME}
           />
-          <button className="mt-2 p-2" disabled={isLoading}>
-            {isLoading && <Loader />}
-            {!isLoading && '회원가입'}
-          </button>
+          </div>
+          <div className="flex flex-col gap-4">
+            <MainButton label="회원가입" type="submit" isLoading={isLoading} />
+            <MainButton
+              label="로그인"
+              type="button"
+              mode="outlined"
+              onClick={handleClickLoginButton}
+            />
+          </div>
         </form>
       </FormProvider>
     </div>

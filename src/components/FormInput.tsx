@@ -16,7 +16,7 @@ type FormInputProps =  {
 };
 
 const defaultInputClass =
-  'w-[18.325rem] p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir';
+  'max-w-[18.325rem] w-full  p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir';
 
 const FormInput = ({
   name,
@@ -36,7 +36,7 @@ const FormInput = ({
   } = useFormContext();
 
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex flex-col justify-center">
       <label htmlFor={name} className="font-Cafe24Surround text-footer-icon p-2">
         {label}
       </label>

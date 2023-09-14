@@ -14,6 +14,9 @@ const useSignUp = () => {
       setItemToStorage('token', token);
       navigate('/home');
     },
+    onError: (error) => {
+      alert(JSON.stringify(error));
+    },
   });
   return { signUpMutate, isLoading };
 };
