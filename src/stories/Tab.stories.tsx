@@ -72,6 +72,7 @@ export const TitleAndNicknameTab = () => {
         </Tab.Item>
       </Tab>
     </Router>
+
   );
 };
 

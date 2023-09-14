@@ -7,6 +7,7 @@ import {
   ARTICLE_TITLE_MAX_LENGTH,
   ROUTES,
 } from '@constants/Article';
+
 import { getTimeDelta } from '@utils/getTimeDelta';
 
 type ArticleProps = {
@@ -29,6 +30,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
       onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
       className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
     >
+
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
           {isHighlyLiked && (
@@ -38,6 +40,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
             {title.length > ARTICLE_TITLE_MAX_LENGTH
               ? `${title.slice(0, ARTICLE_TITLE_MAX_LENGTH)}...`
               : title}
+
           </h1>
           {hasImage && (
             <BiImageAlt className="text-article-img dark:text-extra-white w-[1.2rem] h-[1.2rem] ml-[0.25rem]" />
