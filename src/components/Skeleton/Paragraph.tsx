@@ -1,19 +1,14 @@
-import { v4 } from 'uuid';
+import type { UserSkeletonProps } from './UserSkeleton';
 import Box from './Box';
 
-type ParagraphProps = {
-  line?: number;
-  height?: number;
-};
-
-const Paragraph = ({ line = 2, height }: ParagraphProps) => {
+const Paragraph = ({ line = 2, height }: Omit<UserSkeletonProps, "size">) => {
   return (
     <div className="w-full">
       {Array.from(Array(line), (_, index) =>
         index !== line - 1 ? (
-          <Box height={height} key={v4()} />
+          <Box height={height} key={index} />
         ) : (
-          <Box height={height} width={60} key={v4()} />
+          <Box height={height} width={60} key={index} />
         ),
       )}
     </div>

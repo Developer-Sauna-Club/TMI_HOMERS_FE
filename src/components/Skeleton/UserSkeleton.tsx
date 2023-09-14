@@ -1,7 +1,7 @@
 import Circle from './Circle';
 import Paragraph from './Paragraph';
 
-type UserSkeletonProps = {
+export type UserSkeletonProps = {
   line?: number;
   size?: number;
   height?: number;

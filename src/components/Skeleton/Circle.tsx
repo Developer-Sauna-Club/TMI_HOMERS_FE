@@ -1,10 +1,7 @@
+import type { UserSkeletonProps } from './UserSkeleton';
 import Base from './Base';
 
-type CircleProps = {
-  size?: number;
-};
-
-const Circle = ({ size = 3, ...props }: CircleProps) => {
+const Circle = ({ size = 3, ...props }: Pick<UserSkeletonProps, "size">) => {
   return (
     <Base>
       <div
