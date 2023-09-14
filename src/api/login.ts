@@ -13,7 +13,7 @@ type LoginResponseData = {
   token: string;
 };
 
-export const Login = async ({ email, password }: LoginParams): Promise<LoginResponseData> => {
+export const login = async ({ email, password }: LoginParams): Promise<LoginResponseData> => {
   const loginParams: LoginParams = {
     email,
     password,
