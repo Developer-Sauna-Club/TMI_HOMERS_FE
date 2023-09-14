@@ -7,10 +7,9 @@ type TabItemProps = {
   icon?: React.ReactNode;
   width: string;
   children: React.ReactNode;
-  onClick?: () => void;
 };
 
-const TabItem = ({ title, active, icon, width, onClick }: TabItemProps) => {
+const TabItem = ({ title, active, icon, width }: TabItemProps) => {
   const activeText = active ? 'text-cooled-blue' : 'text-lazy-gray';
   return (
     <div
@@ -18,7 +17,6 @@ const TabItem = ({ title, active, icon, width, onClick }: TabItemProps) => {
       className={`inline-block cursor-pointer mb-2 font-Cafe24Surround ${
         active ? 'border-b-2 border-cooled-blue text-cooled-blue' : 'border-b-2'
       }`}
-      onClick={onClick}
     >
       <div className="flex items-center justify-center mb-1 h-[1.5rem] text-lazy-gray">
         {icon && <span className={`mb-1 ${activeText}`}>{icon}</span>}
