@@ -10,6 +10,39 @@ type SignUpFormValues = {
   passwordCheck: string;
 };
 
+const [EMAIL,PASSWORD,PASSWORD_CHECK,NICKNAME]= ['email',
+'password',
+'passwordCheck',
+'nickname']
+
+const INPUT_LABEL:{[key:string]:string} = {
+  EMAIL:'이메일',
+  PASSWORD:'비밀번호',
+  PASSWORD_CHECK:'비밀번호 확인',
+  NICKNAME:'닉네임'
+}
+
+const PLACEHOLDER:{[key:string]:string}={
+  EMAIL: "이메일을 입력해주세요",
+  PASSWORD: "비밀번호를 입력해주세요",
+  PASSWORD_CHECK:"비밀번호를 한번 더 입력해주세요",
+  NICKNAME:"닉네임을 입력해주세요"
+}
+
+const ERROR_MESSAGE:{[key:string]:string}={
+  EMPTY_EMAIL: '이메일은 필수입니다!',
+  INVALID_EMAIL:'이메일 형식에 맞지 않습니다!',
+  EMPTY_PASSWORD:'비밀번호는 필수입니다!',
+  INVALID_PASSWORD:'영문, 숫자, 특수기호로 입력해주세요!',
+  SHORT_PASSWORD:'8글자 이상 입력해주세요!',
+  EMPTY_PASSWORD_CHECK: '비밀번호 확인은 필수입니다!', 
+  INVALID_PASSWORD_CHECK:'비밀번호와 일치하지 않습니다!',
+  EMPTY_NICKNAME:'닉네임은 필수입니다!',
+  INVALID_NICKNAME:'한글, 영문, 숫자로 입력해주세요!',
+  SHORT_NICKNAME:'2글자 이상으로 입력해주세요!',
+  LONG_NICKNAME:'10글자 이하로 입력해주세요!'
+}
+
 const SignUpPage = () => {
   const methods = useForm<SignUpFormValues>();
   const { signUpMutate, isLoading } = useSignUp();
@@ -26,65 +59,64 @@ const SignUpPage = () => {
           className="flex flex-col font-bold p-4 px-16"
         >
           <FormInput
-            name="email"
-            label="이메일"
+            name={EMAIL}
+            label={INPUT_LABEL.EMAIL}
             registerOptions={{
-              required: '이메일은 필수입니다!',
+              required: ERROR_MESSAGE.EMPTY_EMAIL,
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: '이메일 형식에 맞지 않습니다!',
+                message: ERROR_MESSAGE.INVALID_EMAIL,
               },
             }}
-            type="email"
-            placeholder="이메일을 입력해주세요"
+            placeholder={PLACEHOLDER.EMAIL}
           />
           <FormInput
-            name="password"
-            label="비밀번호"
+            name={PASSWORD}
+            label={INPUT_LABEL.PASSWORD}
             registerOptions={{
-              required: '비밀번호는 필수입니다!',
+              required: ERROR_MESSAGE.EMPTY_PASSWORD,
               pattern: {
                 value: /^[A-Za-z0-9@$!%*#?&]+$/,
-                message: '영문, 숫자, 특수기호로 입력해주세요!',
+                message: ERROR_MESSAGE.INVALID_PASSWORD,
               },
               minLength: {
                 value: 8,
-                message: '8글자 이상 입력해주세요!',
+                message: ERROR_MESSAGE.SHORT_PASSWORD,
               },
             }}
             type="password"
-            placeholder="비밀번호를 입력해주세요"
+            placeholder={PLACEHOLDER.PASSWORD}
           />
           <FormInput
-            name="passwordCheck"
-            label="비밀번호확인"
+            name={PASSWORD_CHECK}
+            label={INPUT_LABEL.PASSWORD_CHECK}
             registerOptions={{
-              required: '비밀번호 확인은 필수입니다!',
+              required: ERROR_MESSAGE.INVALID_PASSWORD_CHECK,
               validate: (value, { password }) =>
-                value === password || '비밀번호와 일치하지 않습니다!',
+                value === password || ERROR_MESSAGE.INVALID_PASSWORD
             }}
             type="password"
-            placeholder="비밀번호를 한번 더 입력해주세요!"
+            placeholder={PLACEHOLDER.PASSWORD}
           />
           <FormInput
-            name="nickname"
-            label="닉네임"
+            name={NICKNAME}
+            label={INPUT_LABEL.NICKNAME}
             registerOptions={{
-              required: '닉네임은 필수입니다!',
+              required: ERROR_MESSAGE.EMPTY_NICKNAME,
               pattern: {
                 value: /^[A-Za-z0-9가-힣]+$/,
-                message: '한글, 영문, 숫자로 입력해주세요!',
+                message: ERROR_MESSAGE.INVALID_NICKNAME,
               },
               minLength: {
                 value: 2,
-                message: '2글자 이상으로 입력해주세요!',
+                message: ERROR_MESSAGE.SHORT_NICKNAME,
               },
               maxLength: {
                 value: 10,
-                message: '10글자 이하로 입력해주세요!',
+                message: ERROR_MESSAGE.LONG_NICKNAME,
               },
             }}
-            placeholder="닉네임을 입력해주세요"
+            placeholder={PLACEHOLDER.NICKNAME}
           />
           <button className="mt-2 p-2" disabled={isLoading}>
             {isLoading && <Loader />}
