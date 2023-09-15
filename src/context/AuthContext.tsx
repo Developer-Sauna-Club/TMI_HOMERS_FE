@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import type { User } from '@/type/User';
+import { removeItemFromStorage } from '@/utils/localStorage';
 import { checkAuthentication } from '@api/auth';
 
 type AuthContextValues = {
@@ -18,7 +19,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const fetchUser = async () => {
     try {
       const fetchedUser = await checkAuthentication();
-      fetchedUser ? setUser(fetchedUser) : setUser(null);
+      if(fetchedUser){
+        setUser(fetchedUser)
+      }else{
+        setUser(null)
+        removeItemFromStorage('token')
+      }
     } catch (error) {
       alert(JSON.stringify(error));
     }
