@@ -5,7 +5,9 @@ import Article from '@components/Article';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
+import TabItem from '@components/TabItem';
 import { TabConstants } from '@constants/Tab';
+import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
 
@@ -42,46 +44,66 @@ const ArticlesPage = () => {
   };
 
   return (
-    <section className="max-w-[25.875rem] mx-auto mt-[2.75rem]">
-      <header className="flex flex-col">
-        <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
-          <HeaderText label="뉴스" />
-          <MdOutlineSearch className="w-[1.8rem] h-[1.8rem]" />
-        </div>
-        <Tab>
-          <Tab.Item title={`${TabConstants.NEWEST}`} index="item1" width="8.625">
-            {isFetching && <Loader />}
-            {renderArticles(newestArticles)}
-          </Tab.Item>
-          <Tab.Item
-            title={`${TabConstants.HOTTEST}`}
-            index="item2"
-            icon={<BsFire className="w-[1.5rem] h-[1.5rem]" />}
-            width="8.625"
-          >
-            {/* {renderArticles(hottestArticles)} */}
+    <TabContextProvider>
+      <section className="max-w-[25.875rem] mx-auto fixed">
+        <header className="flex flex-col bg-white pt-[2.75rem]">
+          <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
+            <HeaderText label="뉴스" />
+            <MdOutlineSearch className="w-[1.8rem] h-[1.8rem]" />
+          </div>
+          <Tab
+            active="item1"
+            maxWidth="25.875"
+            tabItems={[
+              { title: `${TabConstants.NEWEST}`, width: '8.625' },
+              {
+                title: `${TabConstants.HOTTEST}`,
+                icon: <BsFire className="w-[1.3rem] h-[1.3rem]" />,
+                width: '8.625',
+              },
+              {
+                title: `${TabConstants.SUBSCRIBED}`,
+                icon: <MdStars className="w-[1.5rem] h-[1.5rem]" />,
+                width: '8.625',
+              },
+            ]}
+          />
+        </header>
+        <article>
+          <TabItem title={`${TabConstants.NEWEST}`} index="item1">
+            {isFetching ? (
+              <div className="flex justify-center">
+                <Loader />
+              </div>
+            ) : (
+              renderArticles(newestArticles)
+            )}
+          </TabItem>
+          <TabItem title={`${TabConstants.HOTTEST}`} index="item2">
             <Article
-              title="(더미)이거슨 뜨거운 글이여."
-              id={Math.random().toString()}
-              nickname="@hot-guy"
-              postedDate="2023-09-03T14:00:00.000Z"
-              hasImage={true}
+              id="1"
+              title="(임시)이거슨 뜨겁다."
+              nickname="@hot-guys"
+              postedDate="2023-09-14T09:28:39.390Z"
+              hasImage={false}
               likes={15}
-              comments={3}
+              comments={42}
             />
-          </Tab.Item>
-          <Tab.Item
-            title={`${TabConstants.SUBSCRIBED}`}
-            index="item3"
-            icon={<MdStars className="w-[1.7rem] h-[1.7rem]" />}
-            width="8.625"
-          >
-            {/* {renderArticles(subscribedArticles)} */}
-            <div className="font-Cafe24SurroundAir">구독한 사람이 없습니다.</div>
-          </Tab.Item>
-        </Tab>
-      </header>
-    </section>
+          </TabItem>
+          <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item3">
+            <Article
+              id="1"
+              title="(임시)이거슨 구독이다."
+              nickname="@sub-scriber"
+              postedDate="2023-09-14T09:28:39.390Z"
+              hasImage={false}
+              likes={12}
+              comments={42}
+            />
+          </TabItem>
+        </article>
+      </section>
+    </TabContextProvider>
   );
 };
 
