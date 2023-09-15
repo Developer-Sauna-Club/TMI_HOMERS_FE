@@ -14,6 +14,9 @@ const useLogin = () => {
       setItemToStorage('token', token);
       navigate('/home');
     },
+    onError: () => {
+      alert('이메일과 비밀번호를 확인해주세요!');
+    },
   });
   return { loginMutate, isLoading };
 };
