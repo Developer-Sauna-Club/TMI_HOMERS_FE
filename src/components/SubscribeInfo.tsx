@@ -15,15 +15,19 @@ const SubscribeInfo = ({ subscriber, subscribing }: SubscribeProps) => {
 
   return (
     <div className="flex items-center font-Cafe24SurroundAir text-wall-street">
-      <span className="mr-1 font-Cafe24Surround text-footer-icon">
-        {formatThousandToK(subscriber)}
+      <span className="cursor-pointer">
+        <span className="cursor-pointer mr-1 font-Cafe24Surround text-footer-icon">
+          {formatThousandToK(subscriber)}
+        </span>
+        명의 구독자
       </span>
-      명의 구독자
       <div className="w-[0.1rem] h-[1rem] bg-extra-white inline-block ml-[1rem] mr-[1rem]" />
-      <span className="mr-1 font-Cafe24Surround text-footer-icon">
-        {formatThousandToK(subscribing)}
+      <span className="cursor-pointer">
+        <span className="mr-1 font-Cafe24Surround text-footer-icon">
+          {formatThousandToK(subscribing)}
+        </span>
+        명을 구독중
       </span>
-      명을 구독중
     </div>
   );
 };

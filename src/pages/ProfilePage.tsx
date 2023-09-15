@@ -1,7 +1,9 @@
+import { useLocation } from 'react-router-dom';
 import { Post } from '@type/Post';
 import Article from '@components/Article';
 import Avatar from '@components/Avatar';
 import BackButton from '@components/BackButton';
+import BottomNavigation from '@components/BottomNavigation';
 import Loader from '@components/Loader';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
@@ -14,6 +16,9 @@ import { useFilteredArticles } from '@hooks/useFilteredArticles';
 const ProfilePage = () => {
   const { data, isFetching } = useArticles();
   const articles = data?.data;
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const lastSegment = pathSegments[pathSegments.length - 1];
 
   const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
   const renderArticles = (articles: Post[] | undefined) => {
@@ -47,25 +52,29 @@ const ProfilePage = () => {
           <header className="z-50">
             <div className="flex flex-start justify-between">
               <BackButton />
-              <div className="h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]">
+              <div className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]">
                 로그아웃
               </div>
             </div>
             <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
               <div className="flex flex-col items-center">
+                {/* 유저 정보를 불러와서 렌더링 */}
                 <div>
                   <Avatar width={8} profileImage="" isLoggedIn={true} />
                 </div>
                 <div className="flex items-center mt-2 mb-[0.3rem]">
                   <span className="w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
+                    {/* 유저 정보를 불러와서 렌더링 */}
                     홍길동1234
                   </span>
                   <span className="w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
+                    {/* 유저 정보를 불러와서 렌더링 */}
                     기자
                   </span>
                 </div>
                 <SubscribeInfo subscriber={32} subscribing={24} />
                 <span className="text-center px-[2.8rem] mt-[1rem]">
+                  {/* 유저 정보를 불러와서 렌더링 */}
                   안녕하세요? 저는 홍길동입니다. 저는 홍길동입니다. 저는 홍길동입니다. 저는
                 </span>
               </div>
@@ -78,7 +87,7 @@ const ProfilePage = () => {
               ]}
             />
           </header>
-          <div className="overflow-y-auto max-h-[38rem]">
+          <div className="overflow-y-auto max-h-[52rem]">
             <article>
               <TabItem title="작성한 기사" index="item1">
                 {/* User(사용자)의 기사가 들어와야 합니다! 일단 임시로 useArticles에서 가져오겠습니당 */}
@@ -97,6 +106,8 @@ const ProfilePage = () => {
           </div>
         </TabContextProvider>
       </section>
+      {/* 라우터로 주소 받아도 될듯 */}
+      <BottomNavigation currentPage={`/${lastSegment}`} />
     </div>
   );
 };
