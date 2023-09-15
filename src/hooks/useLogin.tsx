@@ -9,7 +9,7 @@ const useLogin = () => {
   const { setUser } = useAuthContext();
   const { mutate: loginMutate, isLoading } = useMutation(login, {
     onSuccess: ({ user, token }) => {
-      alert(JSON.stringify(user));
+      alert(JSON.stringify(user)); //TODO Toast 메세지로 성공 알리기?
       setUser(user);
       setItemToStorage('token', token);
       navigate('/home');
