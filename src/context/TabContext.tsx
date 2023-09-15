@@ -1,13 +1,19 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 interface TabContextProps {
-  currentActive: string;
-  setCurrentActive: React.Dispatch<React.SetStateAction<string>>;
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TabContext = createContext<TabContextProps>({
-  currentActive: '',
-  setCurrentActive: () => {},
+  activeTab: '',
+  setActiveTab: () => {},
 });
+
+export const TabContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [activeTab, setActiveTab] = useState('item1');
+
+  return <TabContext.Provider value={{ activeTab, setActiveTab }}>{children}</TabContext.Provider>;
+};
 
 export default TabContext;
