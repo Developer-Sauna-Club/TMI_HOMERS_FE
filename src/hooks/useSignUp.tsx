@@ -9,11 +9,13 @@ const useSignUp = () => {
   const { setUser } = useAuthContext();
   const { mutate: signUpMutate, isLoading } = useMutation(signUp, {
     onSuccess: ({ user, token }) => {
-      // TODO: save the user in the state
       alert(JSON.stringify(user));
       setUser(user);
       setItemToStorage('token', token);
       navigate('/home');
+    },
+    onError: (error) => {
+      alert(JSON.stringify(error));
     },
   });
   return { signUpMutate, isLoading };
