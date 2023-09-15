@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { BsFillBellFill } from 'react-icons/bs';
@@ -11,60 +12,86 @@ enum NavConstants {
   MYPAGE = 'MY',
 }
 
-const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center group';
+const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center';
 const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
-const ICON_COLOR = 'text-footer-icon group-hover:text-cooled-blue';
-const BASE_TEXT_STYLE = 'text-sm text-footer-icon  group-hover:text-cooled-blue';
+const BUTTON_COLOR = 'text-footer-icon';
+const ACTIVE_COLOR = 'text-cooled-blue';
 
-const BottomNavigation = () => {
+type BottomNavigationProp = {
+  currentPage: string;
+};
+
+const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
+  const navigate = useNavigate();
+
   return (
     <div className="fixed bottom-0 flex items-center justify-evenly  w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
-      <button className={BASE_BUTTON_STYLE}>
+      <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
-          <AiFillHome className={ICON_COLOR} size="2rem" aria-hidden="true" fill="currentColor" />
+          <AiFillHome
+            className={`${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}
+            size="2rem"
+            aria-hidden="true"
+            fill="currentColor"
+          />
         </span>
-        <span className={BASE_TEXT_STYLE}>{NavConstants.HOME}</span>
+        <span className={`text-sm ${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+          {NavConstants.HOME}
+        </span>
       </button>
-
-      <button className={BASE_BUTTON_STYLE}>
+      <button name="news" onClick={() => navigate('/news')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <HiChatBubbleLeftEllipsis
-            className={ICON_COLOR}
+            className={`${currentPage === '/news' ? ACTIVE_COLOR : BUTTON_COLOR}`}
             aria-hidden="true"
             size="2rem"
             fill="currentColor"
           />
         </span>
-        <span className={BASE_TEXT_STYLE}>{NavConstants.NEWS}</span>
+        <span className={`text-sm ${currentPage === '/news' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+          {NavConstants.NEWS}
+        </span>
       </button>
 
-      <button className={`${BASE_BUTTON_STYLE}position: relative px-5`}>
+      <button
+        name="news-create"
+        onClick={() => navigate('/news/create')}
+        className={`${BASE_BUTTON_STYLE}position: relative px-5`}
+      >
         <span className="flex items-center justify-center position: absolute -bottom-1 w-[3.5rem] h-[3.5rem] bg-cooled-blue rounded-full drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out delay-150 hover:scale-110">
           <RiQuillPenFill className="text-white" size="2rem" fill="currentColor" />
         </span>
       </button>
 
-      <button className={BASE_BUTTON_STYLE}>
+      <button
+        name="notification"
+        onClick={() => navigate('/notification')}
+        className={BASE_BUTTON_STYLE}
+      >
         <span className={BASE_ICON_STYLE}>
           <BsFillBellFill
-            className={ICON_COLOR}
+            className={`${currentPage === '/notification' ? ACTIVE_COLOR : BUTTON_COLOR}`}
             aria-hidden="true"
             size="2rem"
             fill="currentColor"
           />
         </span>
-        <span className={BASE_TEXT_STYLE}>{NavConstants.NOTICE}</span>
+        <span className={`text-sm ${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+          {NavConstants.NOTICE}
+        </span>
       </button>
-      <button className={BASE_BUTTON_STYLE}>
+      <button name="profile" onClick={() => navigate('/profile')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <BiSolidUserCircle
-            className={ICON_COLOR}
+            className={`${currentPage === '/profile' ? ACTIVE_COLOR : BUTTON_COLOR}`}
             aria-hidden="true"
             size="2rem"
             fill="currentColor"
           />
         </span>
-        <span className={BASE_TEXT_STYLE}>{NavConstants.MYPAGE}</span>
+        <span className={`text-sm ${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+          {NavConstants.MYPAGE}
+        </span>
       </button>
     </div>
   );
