@@ -9,7 +9,7 @@ export const checkAuthentication = async () => {
   if (token) {
     const { data } = await axiosClient.get<User>(CHECK_AUTH_URL, {
       headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
