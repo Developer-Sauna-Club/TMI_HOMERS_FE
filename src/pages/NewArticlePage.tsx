@@ -7,7 +7,7 @@ import { axiosClient } from '@/api/axiosClient';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
-import { DROPDOWN_OPTIONS, TITLE_MAX_LENGTH } from '@/constants/NewArticle';
+import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 
 const CHANNEL_ID = '64fac2e729260903240d2dab';
 const TOKEN =
@@ -126,14 +126,14 @@ const NewArticlePage = () => {
               </select>
               <input
                 {...register('title', {
-                  required: '제목을 입력해주세요',
+                  required: MESSAGE.TITLE_REQUIRED,
                   minLength: {
-                    value: 2,
-                    message: '2글자 이상 입력해주세요',
+                    value: LENGTH_LIMIT.TITLE_MIN,
+                    message: MESSAGE.TITLE_MINLENGTH,
                   },
                   maxLength: {
-                    value: 20,
-                    message: '20자 이내로 입력해주세요',
+                    value: LENGTH_LIMIT.TITLE_MAX,
+                    message: MESSAGE.TITLE_MAXLENGTH,
                   },
                   onChange: (e) => {
                     handleTitleCount(e);
@@ -142,8 +142,8 @@ const NewArticlePage = () => {
                   },
                 })}
                 value={selectedText}
-                placeholder="제목을 작성해주세요"
-                maxLength={20}
+                placeholder={MESSAGE.TITLE_REQUIRED}
+                maxLength={LENGTH_LIMIT.TITLE_MAX}
                 className="block w-full pb-2 outline-none"
               />
             </div>
@@ -153,9 +153,9 @@ const NewArticlePage = () => {
               )}
               <span
                 className={`text-xs ${
-                  titleCount > TITLE_MAX_LENGTH ? 'text-error-red' : 'text-lazy-gray'
+                  titleCount > LENGTH_LIMIT.TITLE_MAX ? 'text-error-red' : 'text-lazy-gray'
                 }`}
-              >{`${titleCount}/20`}</span>
+              >{`${titleCount}/${LENGTH_LIMIT.TITLE_MAX}`}</span>
             </div>
             <div className="block">
               {image && (
@@ -167,19 +167,19 @@ const NewArticlePage = () => {
               )}
               <textarea
                 {...register('body', {
-                  required: '내용을 입력해주세요',
+                  required: MESSAGE.CONTENT_REQUIRED,
                   onChange: handleResizeTextareaHeight,
                   minLength: {
-                    value: 2,
-                    message: '2글자 이상 입력해주세요',
+                    value: LENGTH_LIMIT.CONTENT_MIN,
+                    message: MESSAGE.CONTENT_MINLENGTH,
                   },
                   maxLength: {
-                    value: 500,
-                    message: '500자 이내로 입력해주세요',
+                    value: LENGTH_LIMIT.CONTENT_MAX,
+                    message: MESSAGE.CONTENT_MAXLENGTH,
                   },
                 })}
-                placeholder="내용을 작성해주세요"
-                maxLength={500}
+                placeholder={MESSAGE.CONTENT_REQUIRED}
+                maxLength={LENGTH_LIMIT.CONTENT_MAX}
                 className="overflow-hidden outline-none resize-none h-[20rem] w-full"
               />
               {errors?.body && (
