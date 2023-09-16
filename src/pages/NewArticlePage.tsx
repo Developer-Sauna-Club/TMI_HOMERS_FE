@@ -1,46 +1,17 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { axiosClient } from '@/api/axiosClient';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
-
-const CHANNEL_ID = '64fac2e729260903240d2dab';
-const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1MDU0MzhmOWZhZTk1MmFhMGNmYjViOSIsImVtYWlsIjoiY3l0ZXN0QG5hdmVyLmNvbSJ9LCJpYXQiOjE2OTQ4NDM3OTF9.K0yj-8NtLbEeE9rzKz7Yutbvndc__n8rjLHF1pw_rh4';
+import { useArticle } from '@/hooks/useArticle';
 
 type FormValue = {
   title: string;
   body: string;
   image: File;
-};
-
-const saveArticle = async ({ title, body, image }: FormValue) => {
-  const formData = new FormData();
-  formData.append('title', JSON.stringify({ title: title, body: body }));
-  formData.append('channelId', CHANNEL_ID);
-  formData.append('image', image);
-
-  await axiosClient.post('/posts/create', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `bearer ${TOKEN}`,
-    },
-  });
-};
-
-const useArticle = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation(saveArticle, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['search']);
-    },
-  });
 };
 
 const NewArticlePage = () => {
@@ -53,7 +24,7 @@ const NewArticlePage = () => {
     handleSubmit,
     trigger,
     formState: { errors },
-  } = useForm<FormValue>();
+  } = useForm();
   const addArticle = useArticle();
   const [image, setImage] = useState<File | null>(null);
 
@@ -190,7 +161,7 @@ const NewArticlePage = () => {
           <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
             <label
               htmlFor="file_input"
-              className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md"
+              className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
             >
               <AiOutlinePlus size="1.5rem" />
             </label>
