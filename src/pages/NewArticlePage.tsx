@@ -8,7 +8,7 @@ import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 
-type FormValue = {
+type FormValueType = {
   title: string;
   body: string;
   image: File;
@@ -24,11 +24,11 @@ const NewArticlePage = () => {
     handleSubmit,
     trigger,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValueType>();
   const addArticle = useArticle();
   const [image, setImage] = useState<File | null>(null);
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
+  const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
       addArticle.mutate({ ...data, image });
       alert(JSON.stringify(data));
