@@ -119,7 +119,7 @@ const NewArticlePage = () => {
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
             <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
-              <select onChange={handleTitleSelect} className="pb-2 mr-2 outline-none">
+              <select onChange={handleTitleSelect} className="pb-2 mr-2 outline-none text-xs">
                 {dropdownOptions.map((option, index) => (
                   <option key={index} value={option}>
                     {option}
