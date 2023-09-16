@@ -7,8 +7,7 @@ import { axiosClient } from '@/api/axiosClient';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
-
-const dropdownOptions = ['선택', '[충격] ', '[속보] ', '[헉!] '];
+import { DROPDOWN_OPTIONS, TITLE_MAX_LENGTH } from '@/constants/NewArticle';
 
 const CHANNEL_ID = '64fac2e729260903240d2dab';
 const TOKEN =
@@ -48,7 +47,6 @@ const NewArticlePage = () => {
   const navigate = useNavigate();
   const [selectedText, setSelectedText] = useState('');
   const [titleCount, setTitleCount] = useState(0);
-  const isTitleOverLimit = titleCount > 20;
 
   const {
     register,
@@ -61,7 +59,7 @@ const NewArticlePage = () => {
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
     try {
-      addArticle.mutate(data);
+      addArticle.mutate({ ...data, image });
       alert(JSON.stringify(data));
     } catch (error) {
       alert(error);
@@ -120,7 +118,7 @@ const NewArticlePage = () => {
           <div className="max-w-[22.625rem] mx-auto w-full">
             <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
               <select onChange={handleTitleSelect} className="pb-2 mr-2 outline-none text-xs">
-                {dropdownOptions.map((option, index) => (
+                {DROPDOWN_OPTIONS.map((option, index) => (
                   <option key={index} value={option}>
                     {option}
                   </option>
@@ -154,7 +152,9 @@ const NewArticlePage = () => {
                 <span className="text-xs text-error-red mr-3">{errors.title.message}</span>
               )}
               <span
-                className={`text-xs ${isTitleOverLimit ? 'text-error-red' : 'text-lazy-gray'}`}
+                className={`text-xs ${
+                  titleCount > TITLE_MAX_LENGTH ? 'text-error-red' : 'text-lazy-gray'
+                }`}
               >{`${titleCount}/20`}</span>
             </div>
             <div className="block">
