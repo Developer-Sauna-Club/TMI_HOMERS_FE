@@ -8,6 +8,8 @@ import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 
+const dropdownOptions = ['선택', '[충격] ', '[속보] ', '[헉!] '];
+
 const CHANNEL_ID = '64fac2e729260903240d2dab';
 const TOKEN =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1MDU0MzhmOWZhZTk1MmFhMGNmYjViOSIsImVtYWlsIjoiY3l0ZXN0QG5hdmVyLmNvbSJ9LCJpYXQiOjE2OTQ4NDM3OTF9.K0yj-8NtLbEeE9rzKz7Yutbvndc__n8rjLHF1pw_rh4';
@@ -44,6 +46,7 @@ const useArticle = () => {
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
+  const [selectedText, setSelectedText] = useState('');
   const [titleCount, setTitleCount] = useState(0);
   const isTitleOverLimit = titleCount > 20;
 
@@ -61,7 +64,7 @@ const NewArticlePage = () => {
       addArticle.mutate(data);
       alert(JSON.stringify(data));
     } catch (error) {
-      alert('error남');
+      alert(error);
     }
   };
 
@@ -82,6 +85,17 @@ const NewArticlePage = () => {
 
   const handleTitleCount = (event: ChangeEvent<HTMLInputElement>) => {
     setTitleCount(event.target.value.length);
+  };
+
+  const handleTitleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    const selectedText = event.target.value;
+
+    if (selectedText === '선택') {
+      setSelectedText('');
+      return;
+    } else {
+      setSelectedText(selectedText);
+    }
   };
 
   return (
@@ -105,6 +119,13 @@ const NewArticlePage = () => {
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
             <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
+              <select onChange={handleTitleSelect} className="pb-2 mr-2 outline-none">
+                {dropdownOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               <input
                 {...register('title', {
                   required: '제목을 입력해주세요',
@@ -119,8 +140,10 @@ const NewArticlePage = () => {
                   onChange: (e) => {
                     handleTitleCount(e);
                     trigger('title');
+                    setSelectedText(e.target.value);
                   },
                 })}
+                value={selectedText}
                 placeholder="제목을 작성해주세요"
                 maxLength={20}
                 className="block w-full pb-2 outline-none"
@@ -139,7 +162,7 @@ const NewArticlePage = () => {
                 <img
                   className="block w-[3rem] pb-2"
                   src={URL.createObjectURL(image)}
-                  alt="preview"
+                  alt="thumbnail"
                 />
               )}
               <textarea
