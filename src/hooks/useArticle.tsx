@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { saveArticle } from '@/api/saveArticle';
+import { saveArticle } from '@api/saveArticle';
 
 export const useArticle = () => {
   const queryClient = useQueryClient();
