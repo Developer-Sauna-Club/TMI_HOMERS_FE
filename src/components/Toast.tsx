@@ -8,6 +8,12 @@ type ToastProps = {
   onClick?: () => void;
 };
 
+const TOAST_ICON = {
+  info: <AiFillInfoCircle size={24} className="fill-wall-street" />,
+  success: <AiFillCheckCircle size={24} className="fill-cooled-blue" />,
+  error: <BiSolidErrorCircle size={24} className="fill-error-red" />,
+};
+
 const BORDER_COLOR_CLASSES = {
   info: 'border-lazy-gray',
   success: 'border-cooled-blue',
@@ -15,23 +21,12 @@ const BORDER_COLOR_CLASSES = {
 };
 
 const Toast = ({ mode = 'info', children = 'default content', onClick }: ToastProps) => {
-  const ToastIcon = ({ mode }: { mode?: 'info' | 'success' | 'error' }) => {
-    const ICON_SIZE = 24;
-    if (mode === 'success') {
-      return <AiFillCheckCircle size={ICON_SIZE} className="fill-cooled-blue" />;
-    } else if (mode === 'error') {
-      return <BiSolidErrorCircle size={ICON_SIZE} className="fill-error-red" />;
-    } else {
-      return <AiFillInfoCircle size={ICON_SIZE} className="fill-wall-street" />;
-    }
-  };
-
   return (
     <div className="toast toast-top mt-10 toast-center cursor-pointer" onClick={onClick}>
       <div
         className={`flex flex-start rounded-lg p-3 gap-2 items-center bg-white border ${BORDER_COLOR_CLASSES[mode]} shadow-md`}
       >
-        <ToastIcon mode={mode} />
+        {TOAST_ICON[mode]}
         <p className="text-wall-street font-Cafe24SurroundAir text-[0.825rem] font-bold tracking-tighter mr-1 whitespace-pre">
           {children}
         </p>
