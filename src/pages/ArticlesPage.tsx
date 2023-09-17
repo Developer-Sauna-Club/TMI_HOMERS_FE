@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
@@ -23,12 +23,29 @@ const ArticlesPage = () => {
 
   const navigate = useNavigate();
   const articleTagRef = useRef<HTMLDivElement>(null);
+  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
 
   const scrollToTop = () => {
     if (articleTagRef.current) {
       articleTagRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    const currentRef = articleTagRef.current;
+    const handleScroll = () => {
+      const scrollPosition = currentRef?.scrollTop || 0;
+      if (scrollPosition > 0) {
+        setShowScrollToTopButton(true);
+      } else {
+        setShowScrollToTopButton(false);
+      }
+    };
+    currentRef?.addEventListener('scroll', handleScroll);
+    return () => {
+      currentRef?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <TabContextProvider>
@@ -68,7 +85,7 @@ const ArticlesPage = () => {
                 <Loader />
               </div>
             ) : (
-              Articles(newestArticles)
+              <Articles articles={newestArticles} />
             )}
           </TabItem>
           <TabItem title={`${TabConstants.HOTTEST}`} index="item2">
@@ -95,7 +112,10 @@ const ArticlesPage = () => {
           </TabItem>
           <button
             onClick={scrollToTop}
-            className="absolute p-2 flex items-center justify-center text-white w-[3.5rem] h-[3.5rem] bg-cooled-blue drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out duration-100 hover:scale-110 active:scale-90 rounded-full bottom-24 right-4"
+            disabled={!showScrollToTopButton}
+            className={`absolute p-2 flex items-center justify-center text-white w-[3.5rem] h-[3.5rem] bg-cooled-blue drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition-opacity duration-300 ease-in-out ${
+              showScrollToTopButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            } rounded-full bottom-24 right-4`}
           >
             <AiOutlineArrowUp className="w-[1.5rem] h-[1.5rem]" />
           </button>
