@@ -1,7 +1,11 @@
 import { Post } from '@type/Post';
 import Article from './Article';
 
-const Articles = (articles: Post[]) => {
+type ArticlesProps = {
+  articles: Post[];
+};
+
+const Articles = ({ articles }: ArticlesProps) => {
   return articles?.map((article) => {
     const { _id, title, author, createdAt, likes, image, comments } = article;
     const { fullName } = author;
