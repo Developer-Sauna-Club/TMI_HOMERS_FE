@@ -9,7 +9,7 @@ const useSignUp = () => {
   const { setUser } = useAuthContext();
   const { mutate: signUpMutate, isLoading } = useMutation(signUp, {
     onSuccess: ({ user, token }) => {
-      alert(JSON.stringify(user));
+      alert('회원가입에 성공하셨습니다!');
       setUser(user);
       setItemToStorage('token', token);
       navigate('/home');
@@ -18,6 +18,7 @@ const useSignUp = () => {
       alert(JSON.stringify(error));
     },
   });
+
   return { signUpMutate, isLoading };
 };
 
