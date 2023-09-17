@@ -5,7 +5,7 @@ import Notice from '@/components/Notice';
 
 const NoNotification = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <div className="flex-grow flex flex-col justify-center items-center gap-4">
       <div className="w-20 h-20 rounded-full bg-cooled-blue">
         <AiOutlineBell className="w-10 h-10 translate-x-1/2 translate-y-1/2 text-white" />
       </div>
@@ -17,7 +17,7 @@ const NoNotification = () => {
 };
 
 const NotificationPage = () => {
-  const data = [1];
+  const data = [];
   return (
     <div className="flex flex-col h-screen bg-white">
       <header className="pl-6 pt-6 flex-none">
