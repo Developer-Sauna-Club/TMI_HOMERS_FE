@@ -1,10 +1,11 @@
 import { AiOutlineBell } from 'react-icons/ai';
+import BottomNavigation from '@/components/BottomNavigation';
 import HeaderText from '@/components/HeaderText';
 import Notice from '@/components/Notice';
 
 const NoNotification = () => {
   return (
-    <div className="flex flex-col justify-center items-center  gap-4">
+    <div className="flex flex-col justify-center items-center gap-4">
       <div className="w-20 h-20 rounded-full bg-cooled-blue">
         <AiOutlineBell className="w-10 h-10 translate-x-1/2 translate-y-1/2 text-white" />
       </div>
@@ -16,16 +17,16 @@ const NoNotification = () => {
 };
 
 const NotificationPage = () => {
-  const data = [];
+  const data = [1];
   return (
-    <div className="grid grid-rows-[1fr_8fr_1fr] h-[100vh] bg-white">
-      <header className="pl-6 pt-10">
+    <div className="flex flex-col h-screen bg-white">
+      <header className="pl-6 pt-6 flex-none">
         <HeaderText label="알림" />
       </header>
       {data.length === 0 ? (
         NoNotification()
       ) : (
-        <div className="flex flex-col items-center my-4 px-4 py-4 gap-4 overflow-y-scroll">
+        <div className="flex-grow flex flex-col items-center p-4 gap-4 overflow-y-scroll">
           <Notice
             nickname="Jeaya"
             message="Jeaya님이 회원님의 뉴스를 응원합니다."
@@ -88,7 +89,9 @@ const NotificationPage = () => {
           />
         </div>
       )}
-      <footer className="">푸터</footer>
+      <div className="flex w-full justify-center flex-none">
+        <BottomNavigation currentPage="/noticication" />
+      </div>
     </div>
   );
 };
