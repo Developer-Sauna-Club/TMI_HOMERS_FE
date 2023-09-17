@@ -78,7 +78,7 @@ const ArticlesPage = () => {
             ]}
           />
         </header>
-        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto pb-[4.75rem] ">
+        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto">
           <TabItem title={`${TabConstants.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
@@ -120,7 +120,9 @@ const ArticlesPage = () => {
             <AiOutlineArrowUp className="w-[1.5rem] h-[1.5rem]" />
           </button>
         </article>
-        <BottomNavigation currentPage="/news" />
+        <div>
+          <BottomNavigation currentPage="/news" />
+        </div>
       </section>
     </TabContextProvider>
   );

@@ -25,7 +25,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-evenly  w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
+    <div className="flex items-center justify-evenly w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
       <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
