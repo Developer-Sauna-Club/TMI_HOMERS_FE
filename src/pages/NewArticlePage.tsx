@@ -8,6 +8,9 @@ import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 
+// TODO: image 타입 맞춰주기
+// TODO: 사용자 로그인 정보 불러오기
+
 type FormValueType = {
   title: string;
   body: string;
