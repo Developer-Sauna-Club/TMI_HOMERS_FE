@@ -1,6 +1,9 @@
-import { Post } from '@type/Post';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
+import BottomNavigation from '@/components/BottomNavigation';
 import Article from '@components/Article';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
@@ -10,46 +13,52 @@ import { TabConstants } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
+import Articles from './ArticlesPage/Articles';
 
 const ArticlesPage = () => {
-  const { data, isFetching } = useArticles();
-  const articles = data?.data;
-
+  const { data: articles, isFetching } = useArticles();
   const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
   // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
   // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);
 
-  const renderArticles = (articles: Post[] | undefined) => {
-    return articles?.map((article) => {
-      const { _id, title, author, createdAt, likes, image, comments } = article;
-      const { fullName } = author;
-      try {
-        const { title: articleTitle } = JSON.parse(title);
-        return (
-          <Article
-            key={_id}
-            id={_id}
-            title={articleTitle ? articleTitle : '제목이 없습니다.'}
-            nickname={fullName ? `@${fullName}` : ''}
-            postedDate={createdAt}
-            hasImage={image !== undefined}
-            likes={likes?.length || 0}
-            comments={comments?.length || 0}
-          />
-        );
-      } catch (error) {
-        // TODO: title의 JSON.stringify가 제대로 되지 않은 경우 어떻게 처리할까...
-      }
-    });
+  const navigate = useNavigate();
+  const articleTagRef = useRef<HTMLDivElement>(null);
+  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
+
+  const scrollToTop = () => {
+    if (articleTagRef.current) {
+      articleTagRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
+
+  useEffect(() => {
+    const currentRef = articleTagRef.current;
+    const handleScroll = () => {
+      const scrollPosition = currentRef?.scrollTop || 0;
+      if (scrollPosition > 0) {
+        setShowScrollToTopButton(true);
+      } else {
+        setShowScrollToTopButton(false);
+      }
+    };
+    currentRef?.addEventListener('scroll', handleScroll);
+    return () => {
+      currentRef?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <TabContextProvider>
-      <section className="max-w-[25.875rem] mx-auto fixed">
+      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
         <header className="flex flex-col bg-white pt-[2.75rem]">
           <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
-            <MdOutlineSearch className="w-[1.8rem] h-[1.8rem]" />
+            <MdOutlineSearch
+              className="w-[1.8rem] h-[1.8rem] cursor-pointer"
+              onClick={() => {
+                navigate('/search');
+              }}
+            />
           </div>
           <Tab
             active="item1"
@@ -69,14 +78,14 @@ const ArticlesPage = () => {
             ]}
           />
         </header>
-        <article>
+        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto pb-[4.75rem] ">
           <TabItem title={`${TabConstants.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
                 <Loader />
               </div>
             ) : (
-              renderArticles(newestArticles)
+              <Articles articles={newestArticles} />
             )}
           </TabItem>
           <TabItem title={`${TabConstants.HOTTEST}`} index="item2">
@@ -101,7 +110,17 @@ const ArticlesPage = () => {
               comments={42}
             />
           </TabItem>
+          <button
+            onClick={scrollToTop}
+            disabled={!showScrollToTopButton}
+            className={`absolute p-2 flex items-center justify-center text-white w-[3.5rem] h-[3.5rem] bg-cooled-blue drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition-opacity duration-300 ease-in-out ${
+              showScrollToTopButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            } rounded-full bottom-24 right-4`}
+          >
+            <AiOutlineArrowUp className="w-[1.5rem] h-[1.5rem]" />
+          </button>
         </article>
+        <BottomNavigation currentPage="/news" />
       </section>
     </TabContextProvider>
   );
