@@ -1,10 +1,10 @@
 import { useTabContext } from '@hooks/useTabContext';
 
-type TabItemProps {
+type TabItemProps = {
   title: string;
   index: string;
   children: React.ReactNode;
-}
+};
 
 const TabItem = ({ index, children }: TabItemProps) => {
   const { activeTab } = useTabContext();
