@@ -4,8 +4,8 @@ import type { User } from '@/type/User';
 import { axiosClient } from './axiosClient';
 const SEARCH_URL = '/search';
 
-export const searchKeyword = async ({ type = 'all', keyword }: SearchParams) => {
-  const { data } = await axiosClient.get<(User | Post)[]>(`${SEARCH_URL}/${type}/${keyword}`);
+export const searchKeyword = async ({ keyword }: SearchParams) => {
+  const { data } = await axiosClient.get<(User | Post)[]>(`${SEARCH_URL}/all/${keyword}`);
 
   return data;
 };
