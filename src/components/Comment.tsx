@@ -1,3 +1,4 @@
+import { getTimeStamp } from '@/utils/getTimeStamp';
 import Avatar from './Avatar';
 import CloseButton from './CloseButton';
 
@@ -8,20 +9,8 @@ type CommentProps = {
   active: boolean;
 };
 
-const getTimestamp = (postedDate: string) => {
-  const dt = new Date(postedDate);
-  const [year, month, date, hours, minutes] = [
-    dt.getFullYear().toString().slice(-2),
-    dt.getMonth() + 1,
-    dt.getDate(),
-    dt.getHours(),
-    dt.getMinutes(),
-  ];
-  return `${year}/${month}/${date} ${hours}:${minutes}`;
-};
-
 const Comment = ({ nickname, content, postedDate, active }: CommentProps) => {
-  const timestamp = getTimestamp(postedDate);
+  const timestamp = getTimeStamp(postedDate);
 
   return (
     <div className="flex justify-center items-center w-[23rem] min-h-[6rem] p-1">
