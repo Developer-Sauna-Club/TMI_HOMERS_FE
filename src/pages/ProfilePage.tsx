@@ -14,8 +14,7 @@ import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
 
 const ProfilePage = () => {
-  const { data, isFetching } = useArticles();
-  const articles = data?.data;
+  const { data: articles, isFetching } = useArticles();
   const location = useLocation();
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
@@ -50,7 +49,7 @@ const ProfilePage = () => {
       <section className="fixed max-w-[25.875rem] mx-auto mt-[3.75rem] font-Cafe24SurroundAir">
         <TabContextProvider>
           <header className="z-50">
-            <div className="flex flex-start justify-between">
+            <div className="flex justify-between flex-start">
               <BackButton />
               <div className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]">
                 로그아웃
