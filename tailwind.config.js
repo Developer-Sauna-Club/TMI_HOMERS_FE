@@ -24,6 +24,9 @@ export default {
         Cafe24SurroundAir: ['Cafe24SurroundAir'],
       },
     },
+    letterSpacing: {
+      tighter: '-0.15rem',
+    },
   },
   // eslint-disable-next-line no-undef
   plugins: [require('daisyui')],
