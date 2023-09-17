@@ -5,12 +5,12 @@ import { BsFillBellFill } from 'react-icons/bs';
 import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { RiQuillPenFill } from 'react-icons/ri';
 
-enum NavConstants {
-  HOME = '홈',
-  NEWS = '뉴스',
-  NOTICE = '알림',
-  MYPAGE = 'MY',
-}
+const NavConstants = {
+  HOME: '홈',
+  NEWS: '뉴스',
+  NOTICE: '알림',
+  MYPAGE: 'MY',
+};
 
 const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center';
 const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
@@ -25,7 +25,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed bottom-0 flex items-center justify-evenly  w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
+    <div className="flex items-center justify-evenly  w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
       <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
@@ -75,7 +75,9 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             fill="currentColor"
           />
         </span>
-        <span className={`text-sm ${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+        <span
+          className={`text-sm ${currentPage === '/notification' ? ACTIVE_COLOR : BUTTON_COLOR}`}
+        >
           {NavConstants.NOTICE}
         </span>
       </button>
@@ -88,7 +90,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             fill="currentColor"
           />
         </span>
-        <span className={`text-sm ${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+        <span className={`text-sm ${currentPage === '/profile' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
           {NavConstants.MYPAGE}
         </span>
       </button>
