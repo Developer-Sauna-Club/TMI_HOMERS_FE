@@ -97,6 +97,9 @@ export const updatePost = async ({
 export const deletePost = async (id: string) => {
   const DELETE_POST_URL = '/posts/delete';
 
-  const { data } = await axiosClient.delete(DELETE_POST_URL, { id });
-  return data;
+  return await axiosClient.delete(DELETE_POST_URL, {
+    data: {
+      id,
+    },
+  });
 };
