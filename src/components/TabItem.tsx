@@ -1,6 +1,6 @@
 import { useTabContext } from '@hooks/useTabContext';
 
-interface TabItemProps {
+type TabItemProps {
   title: string;
   index: string;
   children: React.ReactNode;
