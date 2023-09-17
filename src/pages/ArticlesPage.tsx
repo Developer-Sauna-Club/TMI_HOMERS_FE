@@ -59,6 +59,7 @@ const ArticlesPage = () => {
                 navigate('/search');
               }}
             />
+
           </div>
           <Tab
             active="item1"
@@ -79,6 +80,7 @@ const ArticlesPage = () => {
           />
         </header>
         <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto pb-[4.75rem] ">
+
           <TabItem title={`${TabConstants.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
