@@ -8,8 +8,8 @@ import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 
-// TODO: image 타입 맞춰주기
 // TODO: 사용자 로그인 정보 불러오기
+// TODO: 작성한 게시물 id값 불러오기
 
 type FormValueType = {
   title: string;
@@ -33,8 +33,8 @@ const NewArticlePage = () => {
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
-      addArticle.mutate({ ...data, image });
       alert(JSON.stringify(data));
+      addArticle.mutate({ ...data, image });
     } catch (error) {
       alert(error);
     }
