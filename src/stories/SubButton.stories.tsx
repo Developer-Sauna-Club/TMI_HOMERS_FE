@@ -22,19 +22,17 @@ const meta = {
       options: ['fill', 'outline'],
       control: 'radio',
     },
-    width: {
-      control: 'number',
+    size: {
+      options: ['small', 'medium', 'large'],
+      control: 'radio',
     },
-    height: {
-      control: 'number',
-    },
+    label: { control: 'text' },
   },
   args: {
-    children: '응원하기',
     radius: 'small',
     weight: 'air',
-    width: 8,
-    height: 3,
+    type: 'fill',
+    label: '팔로우',
   },
 } as Meta;
 
