@@ -62,7 +62,6 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
           <RiQuillPenFill className="text-white" size="2rem" fill="currentColor" />
         </span>
       </button>
-
       <button
         name="notification"
         onClick={() => navigate('/notification')}
