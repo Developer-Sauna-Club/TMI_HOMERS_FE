@@ -5,7 +5,6 @@ import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
 import BottomNavigation from '@/components/BottomNavigation';
 import Article from '@components/Article';
-import Articles from '@components/Articles';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
@@ -14,6 +13,7 @@ import { TabConstants } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
+import Articles from './ArticlesPage/Articles';
 
 const ArticlesPage = () => {
   const { data: articles, isFetching } = useArticles();
@@ -59,7 +59,6 @@ const ArticlesPage = () => {
                 navigate('/search');
               }}
             />
-
           </div>
           <Tab
             active="item1"
@@ -80,7 +79,6 @@ const ArticlesPage = () => {
           />
         </header>
         <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto pb-[4.75rem] ">
-
           <TabItem title={`${TabConstants.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">

@@ -1,5 +1,5 @@
 import { Post } from '@type/Post';
-import Article from './Article';
+import Article from '@components/Article';
 
 type ArticlesProps = {
   articles: Post[];
