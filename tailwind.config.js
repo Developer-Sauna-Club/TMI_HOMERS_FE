@@ -22,6 +22,7 @@ export default {
       fontFamily: {
         Cafe24Surround: ['Cafe24Surround'],
         Cafe24SurroundAir: ['Cafe24SurroundAir'],
+        Pretendard: ['Pretendard'],
       },
     },
     letterSpacing: {
