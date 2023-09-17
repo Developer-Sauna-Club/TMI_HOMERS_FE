@@ -1,6 +1,6 @@
 import { useTabContext } from '@hooks/useTabContext';
 
-interface TabItemProps {
+type TabItemProps {
   title: string;
   index: string;
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface TabItemProps {
 
 const TabItem = ({ index, children }: TabItemProps) => {
   const { activeTab } = useTabContext();
-  return <div className="overflow-y-auto max-h-[41rem]">{activeTab === index && children}</div>;
+  return <div>{activeTab === index && children}</div>;
 };
 
 export default TabItem;

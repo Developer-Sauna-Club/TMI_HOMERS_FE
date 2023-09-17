@@ -1,4 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { Meta } from '@storybook/react';
 import BottomNavigation from '@components/BottomNavigation';
 
 const meta = {
@@ -9,6 +10,10 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
+export const Default = () => {
+  return (
+    <Router>
+      <BottomNavigation currentPage="/home" />
+    </Router>
+  );
+};
