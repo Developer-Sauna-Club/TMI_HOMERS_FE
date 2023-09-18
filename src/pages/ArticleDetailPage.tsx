@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import ArticleDetail from '@/components/ArticleDetail';
@@ -10,6 +11,7 @@ import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const { data: article, isFetching } = useArticleDetail();
+  const navigate = useNavigate();
 
   if (isFetching) {
     return <Loader />;
@@ -24,7 +26,7 @@ const ArticleDetailPage = () => {
       <div className="flex justify-center" />
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
-          <BackButton />
+          <BackButton onClick={() => navigate(-1)} />
           <div id="isMine" className="flex items-center justify-between w-[3rem]">
             <button type="button" name="edit">
               <FiEdit className="w-[1rem] h-[1rem]" />
@@ -46,7 +48,7 @@ const ArticleDetailPage = () => {
             <ArticleInfoIcon likes={likes.length} comments={comments.length} mode="post" />
           </div>
         </div>
-        <div className="mt-[10%] mb-[5%] border-b-[0.01rem] border-lazy-gray" />
+        <div className="banner mt-[10%] mb-[5%] border-b-[0.01rem] border-lazy-gray" />
       </section>
       <section>
         {comments.length === 0 ? (
