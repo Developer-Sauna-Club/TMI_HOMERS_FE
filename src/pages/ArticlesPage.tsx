@@ -31,7 +31,7 @@ const ArticlesPage = () => {
 
   return (
     <TabContextProvider>
-      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
+      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative dark:bg-[#1D232A]">
         <header className="flex flex-col bg-white pt-[2.75rem] dark:bg-[#1D232A]">
           <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
