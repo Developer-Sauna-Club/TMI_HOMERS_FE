@@ -10,3 +10,4 @@ export { default as ProfilePage } from './ProfilePage';
 export { default as SearchPage } from './SearchPage';
 export { default as SignUpPage } from './SignupPage';
 export { default as ProfileEditPage } from './ProfileEditPage';
+export { default as ChangePasswordPage } from './ChangePasswordPage';

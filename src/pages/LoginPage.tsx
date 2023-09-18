@@ -60,7 +60,7 @@ const LoginPage = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 p-4 px-16 font-bold"
+          className="flex flex-col font-bold p-4 gap-5"
         >
           <div>
             <FormInput

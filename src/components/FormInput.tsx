@@ -15,7 +15,7 @@ type FormInputProps = {
 };
 
 const defaultInputClass =
-  'max-w-[18.325rem] w-full  p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir';
+  'max-w-[18.325rem] w-full  p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir font-normal';
 
 const FormInput = ({
   name,
