@@ -21,6 +21,7 @@ const ArticlesPage = () => {
     id: API.CHANNEL_ID,
     type: 'channel',
   });
+
   const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
   // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
   // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);

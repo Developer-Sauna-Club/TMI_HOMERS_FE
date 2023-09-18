@@ -8,4 +8,5 @@ export { default as ArticlesPage } from './ArticlesPage';
 export { default as ArticleDetailPage } from './ArticleDetailPage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as SearchPage } from './SearchPage';
-export { default as SignupPage } from './SignupPage';
+export { default as SignUpPage } from './SignupPage';
+export { default as ProfileEditPage } from './ProfileEditPage';

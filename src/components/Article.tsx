@@ -44,7 +44,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
             <BiImageAlt className="text-article-img dark:text-extra-white w-[1.2rem] h-[1.2rem] ml-[0.25rem]" />
           )}
         </div>
-        <span className="text-lazy-gray text-[0.3rem]">{timestamp}</span>
+        <span className="text-lazy-gray text-[0.75rem]">{timestamp}</span>
       </div>
       <div className="flex justify-between h-[0.75rem]">
         <div className="flex items-center h-full">
@@ -61,7 +61,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
             <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{comments}</span>
           </div>
         </div>
-        <span className="text-wall-street text-[0.375rem] ">{nickname}</span>
+        <span className="text-wall-street text-[0.75rem] ">{nickname}</span>
       </div>
     </div>
   );
