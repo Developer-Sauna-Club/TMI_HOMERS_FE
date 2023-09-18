@@ -5,6 +5,7 @@ type SubButtonProps = {
   size?: 'small' | 'medium' | 'large';
   type: 'fill' | 'outline';
   label: string;
+  onClick?: () => void;
 };
 
 const OUTLINE_TYPE = {
@@ -41,13 +42,18 @@ const SubButton = ({
   radius = 'small',
   type,
   size = 'medium',
+  onClick,
   ...props
 }: SubButtonProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
   return (
     <button
       className={`btn btn-sm normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
         type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
       } ${BUTTON_SIZE[size]}`}
+      onClick={handleClick}
       {...props}
     >
       {label}

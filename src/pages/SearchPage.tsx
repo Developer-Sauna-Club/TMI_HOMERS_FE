@@ -1,10 +1,12 @@
-import { useForm } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
 import { MdOutlineSearch } from 'react-icons/md';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 import SearchResult from '@/components/SearchResult';
 import Skeleton from '@/components/Skeleton';
 import UserSkeleton from '@/components/Skeleton/UserSkeleton';
+import SubButton from '@/components/SubButton';
+import { setItemToStorage, getItemFromStorage } from '@/utils/localStorage';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { TabConstants } from '@constants/Tab';
@@ -15,12 +17,30 @@ import useSearch from '@hooks/useSearch';
 const INPUT_CLASS =
   'w-[23.375rem] w-full p-3.5 bg-input-white outline-none  placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';
 const numberOfSkeletons = 6;
+const MAX_RECENT_SEARCHES = 6;
 
 const SearchPage = () => {
-  const { register, watch } = useForm();
-  const keyword = watch('keyword');
+  const [keyword, setKeyword] = useState('');
   const debouncedKeyword = useDebounceValue(keyword, 1000);
-  const { data, isFetching } = useSearch({ keyword: debouncedKeyword });
+  const { data, isFetching, isSuccess } = useSearch({ keyword: debouncedKeyword });
+
+  const recentResult: string[] = useMemo(() => {
+    const recentResultString = getItemFromStorage('recent');
+    return recentResultString ? JSON.parse(recentResultString) : [];
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const isDuplication = recentResult.every((item) => item !== debouncedKeyword);
+      isDuplication && recentResult.unshift(debouncedKeyword);
+      recentResult.length > MAX_RECENT_SEARCHES && recentResult.pop();
+      setItemToStorage('recent', JSON.stringify(recentResult));
+    }
+  }, [isSuccess, debouncedKeyword, recentResult]);
+
+  const handleRecentResult = (keyword: string) => {
+    setKeyword(keyword);
+  };
 
   return (
     <TabContextProvider>
@@ -37,7 +57,10 @@ const SearchPage = () => {
                 <input
                   className={INPUT_CLASS}
                   placeholder="검색어를 입력해주세요"
-                  {...register('keyword')}
+                  value={keyword}
+                  onChange={(e) => {
+                    handleRecentResult(e.target.value);
+                  }}
                 />
               </form>
               <div className="pt-[1.63rem]">
@@ -80,6 +103,26 @@ const SearchPage = () => {
             )}
           </TabItem>
         </article>
+        {!data && (
+          <footer className="mb-8">
+            <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
+            <hr className="mt-2 mb-5" />
+            <div className="flex gap-2 flex-wrap">
+              {recentResult.map((item, index) => (
+                <div key={index}>
+                  <SubButton
+                    size="medium"
+                    radius="medium"
+                    label={item}
+                    color="blue"
+                    type="outline"
+                    onClick={() => handleRecentResult(item)}
+                  />
+                </div>
+              ))}
+            </div>
+          </footer>
+        )}
       </section>
     </TabContextProvider>
   );
