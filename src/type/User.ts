@@ -27,6 +27,7 @@ export type User = {
   messages: Message[];
   _id: string;
   fullName: string;
+  username: string;
   email: string;
   createdAt: string;
   updatedAt: string;
