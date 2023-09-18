@@ -15,7 +15,6 @@ export const useArticleDetail = () => {
     },
     {
       staleTime: 1000 * 5,
-      cacheTime: 1000 * 5,
     },
   );
 
