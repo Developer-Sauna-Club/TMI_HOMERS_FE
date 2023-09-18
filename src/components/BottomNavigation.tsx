@@ -92,12 +92,8 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
       <button
         name="profile"
         onClick={() => {
-          if (userId) {
-            navigate(`/profile/${userId}`);
-          } else {
-            navigate('/login');
-            return;
-          }
+        const nextUrl = userId ? `/profile/${userId}` : '/login'
+        navigate(nextUrl)
         }}
         className={BASE_BUTTON_STYLE}
       >
