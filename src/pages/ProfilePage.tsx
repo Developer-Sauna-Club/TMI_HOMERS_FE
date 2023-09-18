@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { axiosClient } from '@/api/axiosClient';
 import getUserInfo from '@/api/getUserInfo';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
@@ -18,35 +19,40 @@ import UserArticles from './ProfilePage/UserArticles';
 
 const ProfilePage = () => {
   const location = useLocation();
-  const { user } = useAuthContext();
   const navigate = useNavigate();
+  const { user } = useAuthContext();
+  const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
-  const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   const [areYouProfileUser, setAreYouProfileUser] = useState(false);
-  const [externalUser, setExternalUser] = useState<User | null>(null);
   const [activeUser, setActiveUser] = useState<User | null>(null);
+
+  const {
+    data: externalUser,
+    isError,
+    isLoading,
+  } = useQuery(['userInfo', lastSegment], () => getUserInfo(lastSegment), {
+    enabled: !areYouProfileUser,
+  });
 
   useEffect(() => {
     if (user) {
       setAreYouProfileUser(user._id === lastSegment);
-      setActiveUser(() => (areYouProfileUser ? user : externalUser));
+      setActiveUser(areYouProfileUser ? user : externalUser);
     }
   }, [user, lastSegment, areYouProfileUser, externalUser]);
 
   useEffect(() => {
-    if (!areYouProfileUser) {
-      getUserInfo(lastSegment)
-        .then((res) => {
-          setExternalUser(res.data);
-        })
-        .catch(() => {
-          navigate('/404');
-        });
+    if (isError) {
+      navigate('/404');
     }
-  }, [areYouProfileUser, lastSegment, navigate]);
+  }, [isError, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir">

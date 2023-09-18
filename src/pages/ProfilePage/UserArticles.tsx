@@ -2,7 +2,11 @@ import Loader from '@/components/Loader';
 import { useArticles } from '@/hooks/useArticles';
 import Articles from '../ArticlesPage/Articles';
 
-const UserArticles = ({ userId }: { userId: string }) => {
+type UserArticlesProps = {
+  userId: string;
+};
+
+const UserArticles = ({ userId }: UserArticlesProps) => {
   const { data: userArticles, isFetching } = useArticles({
     id: userId,
     type: 'user',
