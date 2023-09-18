@@ -3,11 +3,12 @@ import { FiEdit } from 'react-icons/fi';
 import ArticleDetail from '@/components/ArticleDetail';
 import ArticleInfoIcon from '@/components/ArticleInfoIcon';
 import BackButton from '@/components/BackButton';
+import Loader from '@/components/Loader';
 import SubButton from '@/components/SubButton';
 import { useArticleDetail } from '@/hooks/useArticleDetail';
 
 const ArticleDetailPage = () => {
-  const { data: article } = useArticleDetail();
+  const { data: article, isFetching } = useArticleDetail();
 
   const { title, author, createdAt, likes, image, comments } = article!;
   const { fullName } = author;
@@ -27,18 +28,24 @@ const ArticleDetailPage = () => {
             </button>
           </div>
         </div>
-        <div>
-          <ArticleDetail nickname={fullName} postedDate={createdAt} />
-          <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
-          <div className="flex justify-center items-center">
-            {image && <img src={image} className="w-[10rem] m-5" />}
+        {isFetching ? (
+          <div className="flex justify-center">
+            <Loader />
           </div>
-          <div className="text-base">{articleBody}</div>
-          <div className="flex justify-between mt-6">
-            <SubButton label="응원하기" color="blue" type="outline" />
-            <ArticleInfoIcon likes={likes.length} comments={comments.length} mode="post" />
+        ) : (
+          <div>
+            <ArticleDetail nickname={fullName} postedDate={createdAt} />
+            <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
+            <div className="flex justify-center items-center">
+              {image && <img src={image} className="w-[10rem] m-5" />}
+            </div>
+            <div className="text-base">{articleBody}</div>
+            <div className="flex justify-between mt-6">
+              <SubButton label="응원하기" color="blue" type="outline" />
+              <ArticleInfoIcon likes={likes.length} comments={comments.length} mode="post" />
+            </div>
           </div>
-        </div>
+        )}
         <div className="my-[10%] border-b-[0.01rem] border-lazy-gray" />
       </section>
     </div>

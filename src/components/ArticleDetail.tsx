@@ -17,7 +17,9 @@ const ArticleDetail = ({ nickname, postedDate }: ArticleDetailProps) => {
             <Avatar width={2.5} profileImage="" isLoggedIn={false} />
           </div>
           <div className="ml-3 w-[19.62rem]">
-            <div className="cursor-pointer text-base">{nickname}</div>
+            <div className="text-base">
+              <span className="cursor-pointer">{nickname}</span>
+            </div>
             <div className="text-wall-street text-[10px]">{timestamp}</div>
           </div>
         </div>
