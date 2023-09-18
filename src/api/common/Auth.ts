@@ -52,6 +52,6 @@ export const login = async ({ email, password }: LoginParams): Promise<LoginResp
 };
 
 export const checkAuthentication = async () => {
-  const response = await axiosClient.get<User>(CHECK_AUTH_URL);
-  return response.data;
+  const { data } = await axiosClient.get<User>(CHECK_AUTH_URL);
+  return data;
 };
