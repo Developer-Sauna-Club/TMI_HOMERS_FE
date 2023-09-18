@@ -1,16 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const useScrollToTop = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
 
-  // eslint 경고 발생해서 useCallback 사용 (react-hooks/exhaustive-deps)
-  const scrollToTop = useCallback(() => {
+  const scrollToTop = () => {
     if (ref.current) {
       ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [ref]);
-
+  };
   useEffect(() => {
     if (ref.current) {
       const currentRef = ref.current;
@@ -27,7 +25,7 @@ const useScrollToTop = () => {
         currentRef?.removeEventListener('scroll', handleScroll);
       };
     }
-  }, [ref, showScrollToTopButton, scrollToTop]);
+  }, [ref]);
 
   return { ref, showScrollToTopButton, scrollToTop };
 };
