@@ -2,15 +2,15 @@ import { Outlet } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 
 const TempNavBar = () => {
-  const ANCHOR_CLASS = 'border-b border-gray-200 no-underline hover:text-cooled-blue';
+  const ANCHOR_CLASS = 'border-gray-200 no-underline hover:text-cooled-blue';
   return (
-    <header className="absolute w-[20px] h-[20px] top-[20%] z-50">
+    <header className="absolute w-[20px] h-[20px] top-[10%] z-50">
       <div className="bg-white border gap-1 flex flex-col mb-3 rounded-r-xl">
         <a className={ANCHOR_CLASS} href="/news">
           뉴스
         </a>
         <a className={ANCHOR_CLASS} href="/signUp">
-          회원가입
+          가입
         </a>
         <a className={ANCHOR_CLASS} href="/login">
           로그인
@@ -29,6 +29,9 @@ const TempNavBar = () => {
         </a>
         <a className={ANCHOR_CLASS} href="/profile/edit">
           프로필수정
+        </a>
+        <a className={ANCHOR_CLASS} href="/password">
+          비번변경
         </a>
       </div>
     </header>

@@ -13,6 +13,7 @@ import {
   NotificationPage,
   ArticlesPage,
   ProfileEditPage,
+  ChangePasswordPage,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: 'news/:postId', element: <ArticleDetailPage /> },
       { path: 'notification', element: <NotificationPage /> },
       { path: 'profile/edit', element: <ProfileEditPage /> },
+      { path: 'password', element: <ChangePasswordPage /> },
     ],
   },
 ]);
