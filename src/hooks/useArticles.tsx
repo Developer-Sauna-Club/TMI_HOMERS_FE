@@ -8,17 +8,21 @@ type UseArticlesProps = {
   type: 'user' | 'channel';
 };
 
+const ARTICLES_STALE_TIME = 1000 * 60;
+
 export const useArticles = ({ id, type }: UseArticlesProps) => {
   const { data = [], isFetching } = useQuery<Post[]>(
     ['articles', id, type],
     async () => {
-     const requestUrl = type === 'user' ? `${API.ARTICLES_URL}${API.AUTHOR_URL}/${id}` : 
-    `${API.ARTICLES_URL}${API.CHANNEL_URL}/${id}`
-    const  { data } = await axiosClient.get(requestUrl);
-    return data;
+      const requestUrl =
+        type === 'user'
+          ? `${API.ARTICLES_URL}${API.AUTHOR_URL}/${id}`
+          : `${API.ARTICLES_URL}${API.CHANNEL_URL}/${id}`;
+      const { data } = await axiosClient.get(requestUrl);
+      return data;
     },
     {
-      staleTime: 1000 * 60,
+      staleTime: ARTICLES_STALE_TIME,
     },
   );
 

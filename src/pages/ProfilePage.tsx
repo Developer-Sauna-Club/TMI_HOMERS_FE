@@ -55,7 +55,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir">
+    <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative">
       <TabContextProvider>
         <header>
           <div className="flex justify-between flex-start px-[1.87rem]">
@@ -103,7 +103,7 @@ const ProfilePage = () => {
             ]}
           />
         </header>
-        <article ref={ref} className="overflow-y-auto flex-grow">
+        <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem title="작성한 기사" index="item1">
             {activeUser && activeUser.posts.length > 0 ? (
               <UserArticles userId={activeUser._id} />
@@ -124,12 +124,12 @@ const ProfilePage = () => {
               </div>
             )}
           </TabItem>
+          <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
         </article>
       </TabContextProvider>
       <div>
         <BottomNavigation currentPage={`/profile/${lastSegment}`} />
       </div>
-      <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
     </section>
   );
 };
