@@ -10,3 +10,13 @@ export type SearchParams = {
 export type SearchData = {
   data: (User | Post)[] | undefined;
 };
+
+export type RecentResultParams = {
+  isSuccess: boolean;
+  keyword: string;
+};
+
+export type UserListItemParams = {
+  id: string;
+  fullName: string;
+};
