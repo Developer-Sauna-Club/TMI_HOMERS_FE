@@ -3,17 +3,25 @@ import { Post } from '@type/Post';
 import { axiosClient } from '@api/axiosClient';
 import { API } from '@constants/Article';
 
-export const useArticles = () => {
+type UseArticlesProps = {
+  id?: string;
+  type: 'user' | 'channel';
+};
+
+export const useArticles = ({ id, type }: UseArticlesProps) => {
   const { data = [], isFetching } = useQuery<Post[]>(
-    ['articles'],
+    ['articles', id, type],
     async () => {
-      const response = await axiosClient.get(
-        `${API.ARTICLES_URL}${API.CHANNEL_URL}/${API.CHANNEL_ID}`,
-      );
-      return response.data;
+      if (type === 'user') {
+        const response = await axiosClient.get(`${API.ARTICLES_URL}${API.AUTHOR_URL}/${id}`);
+        return response.data;
+      } else {
+        const response = await axiosClient.get(`${API.ARTICLES_URL}${API.CHANNEL_URL}/${id}`);
+        return response.data;
+      }
     },
     {
-      staleTime: 1000 * 1,
+      staleTime: 1000 * 60,
     },
   );
 
