@@ -4,7 +4,7 @@ import { removeItemFromStorage } from '@/utils/localStorage';
 import { checkAuthentication } from '@api/auth';
 
 type AuthContextValues = {
-  user: User | null;
+  user: User | null | undefined;
   setUser: (user: User | null) => void;
 };
 
@@ -14,16 +14,16 @@ export const AuthContext = createContext<AuthContextValues>({
 });
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>();
 
   const fetchUser = async () => {
     try {
       const fetchedUser = await checkAuthentication();
-      if(fetchedUser){
-        setUser(fetchedUser)
-      }else{
-        setUser(null)
-        removeItemFromStorage('token')
+      if (fetchedUser) {
+        setUser(fetchedUser);
+      } else {
+        setUser(null);
+        removeItemFromStorage('token');
       }
     } catch (error) {
       alert(JSON.stringify(error));
