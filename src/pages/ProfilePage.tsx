@@ -33,7 +33,7 @@ const ProfilePage = () => {
   const {
     data: externalUser,
     isError,
-    isLoading,
+    isFetching,
   } = useQuery(['userInfo', lastSegment], () => getUserInfo(lastSegment), {
     enabled: !areYouProfileUser,
   });
@@ -53,14 +53,6 @@ const ProfilePage = () => {
       navigate('/404');
     }
   }, [isError, navigate]);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center w-screen h-screen">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <TabContextProvider>
@@ -120,6 +112,11 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem title="작성한 기사" index="item1">
+            {isFetching && (
+              <div className="flex items-center justify-center">
+                <Loader />
+              </div>
+            )}
             {currentProfileUser && currentProfileUser.posts.length > 0 ? (
               <UserArticles userId={currentProfileUser._id} />
             ) : (
@@ -129,6 +126,11 @@ const ProfilePage = () => {
             )}
           </TabItem>
           <TabItem title="응원한 기사" index="item2">
+            {isFetching && (
+              <div className="flex items-center justify-center">
+                <Loader />
+              </div>
+            )}
             {currentProfileUser && currentProfileUser.likes.length > 0 ? (
               currentProfileUser.likes.map((likeArticle) => (
                 <LikeArticles key={likeArticle.post} likeArticle={likeArticle} />
