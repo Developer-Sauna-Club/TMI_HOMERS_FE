@@ -7,15 +7,20 @@ import BackButton from '@/components/BackButton';
 import Loader from '@/components/Loader';
 import SubButton from '@/components/SubButton';
 import { useArticleDetail } from '@/hooks/useArticleDetail';
+//import { useAuthContext } from '@/hooks/useAuthContext';
+import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const { data: article, isFetching } = useArticleDetail();
+  //const { user } = useAuthContext();
   const navigate = useNavigate();
 
   if (isFetching) {
     return <Loader />;
   }
+
+  //console.log(user);
 
   const { title, author, createdAt, likes, image, comments } = article!;
   const { fullName } = author;
@@ -59,6 +64,7 @@ const ArticleDetailPage = () => {
           <Comments comments={comments} />
         )}
       </section>
+      <CommentInput />
     </div>
   );
 };
