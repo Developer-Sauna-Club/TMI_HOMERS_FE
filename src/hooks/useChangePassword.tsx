@@ -7,7 +7,7 @@ const useChangePassword = () => {
   const { mutate: changePasswordMutate, isLoading } = useMutation(updatePassword, {
     onSuccess: () => {
       alert('비밀번호가 성공적으로 변경되었습니다.');
-      navigate(-1);
+      navigate('/home', { replace: true });
     },
     onError: (error) => {
       alert(JSON.stringify(error));

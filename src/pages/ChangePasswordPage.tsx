@@ -36,7 +36,6 @@ const ERROR_MESSAGE = {
 const ChangePasswordPage = () => {
   const methods = useForm<PasswordFormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordCheck, setShowPasswordCheck] = useState(false);
   const { changePasswordMutate, isLoading } = useChangePassword();
 
   const onSubmit: SubmitHandler<PasswordFormValues> = ({ password }) => {
@@ -95,11 +94,11 @@ const ChangePasswordPage = () => {
                   await trigger(PASSWORD_CHECK);
                 },
               }}
-              type={showPasswordCheck ? 'text' : 'password'}
+              type={showPassword ? 'text' : 'password'}
               placeholder={PLACEHOLDER.PASSWORD_CHECK}
               isPassword={true}
-              showPassword={showPasswordCheck}
-              toggleShowPassword={() => setShowPasswordCheck((prev) => !prev)}
+              showPassword={showPassword}
+              toggleShowPassword={() => setShowPassword((prev) => !prev)}
               showToggleButton={!!passwordCheck}
             />
           </div>
