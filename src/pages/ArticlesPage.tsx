@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
 import BottomNavigation from '@/components/BottomNavigation';
+import { API } from '@/constants/Article';
+import useScrollToTop from '@/hooks/useScrollToTop';
 import Article from '@components/Article';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
@@ -16,41 +17,22 @@ import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import Articles from './ArticlesPage/Articles';
 
 const ArticlesPage = () => {
-  const { data: articles, isFetching } = useArticles();
+  const { data: articles, isFetching } = useArticles({
+    id: API.CHANNEL_ID,
+    type: 'channel',
+  });
+
   const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
   // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
   // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);
 
   const navigate = useNavigate();
-  const articleTagRef = useRef<HTMLDivElement>(null);
-  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
-
-  const scrollToTop = () => {
-    if (articleTagRef.current) {
-      articleTagRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  useEffect(() => {
-    const currentRef = articleTagRef.current;
-    const handleScroll = () => {
-      const scrollPosition = currentRef?.scrollTop || 0;
-      if (scrollPosition > 0) {
-        setShowScrollToTopButton(true);
-      } else {
-        setShowScrollToTopButton(false);
-      }
-    };
-    currentRef?.addEventListener('scroll', handleScroll);
-    return () => {
-      currentRef?.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const { ref: articleTagRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   return (
     <TabContextProvider>
       <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
-        <header className="flex flex-col bg-white pt-[2.75rem]">
+        <header className="flex flex-col bg-white pt-[2.75rem] dark:bg-[#1D232A]">
           <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
             <MdOutlineSearch
@@ -78,7 +60,7 @@ const ArticlesPage = () => {
             ]}
           />
         </header>
-        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto pb-[4.75rem] ">
+        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto">
           <TabItem title={`${TabConstants.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
@@ -120,7 +102,9 @@ const ArticlesPage = () => {
             <AiOutlineArrowUp className="w-[1.5rem] h-[1.5rem]" />
           </button>
         </article>
-        <BottomNavigation currentPage="/news" />
+        <div>
+          <BottomNavigation currentPage="/news" />
+        </div>
       </section>
     </TabContextProvider>
   );

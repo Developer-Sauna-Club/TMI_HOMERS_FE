@@ -10,7 +10,7 @@ const HeaderText = ({ size = 'normal', label }: HeaderTextProps) => {
     normal: 'text-[2rem]',
     large: 'text-[2.5rem]',
   };
-  return <h1 className={`${TEXT_BASE_CLASS} ${TEXT_SIZE_CLASS[size]}`}>{label}</h1>;
+  return <h1 className={`dark:text-white ${TEXT_BASE_CLASS} ${TEXT_SIZE_CLASS[size]}`}>{label}</h1>;
 };
 
 export default HeaderText;

@@ -1,113 +1,136 @@
-import { useLocation } from 'react-router-dom';
-import { Post } from '@type/Post';
-import Article from '@components/Article';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { axiosClient } from '@/api/axiosClient';
+import getUserInfo from '@/api/getUserInfo';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import useScrollToTop from '@/hooks/useScrollToTop';
+import { User } from '@/type/User';
 import Avatar from '@components/Avatar';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
-import Loader from '@components/Loader';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
-import { TabConstants } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
-import { useArticles } from '@hooks/useArticles';
-import { useFilteredArticles } from '@hooks/useFilteredArticles';
+import LikeArticles from './ProfilePage/LikeArticles';
+import UserArticles from './ProfilePage/UserArticles';
 
 const ProfilePage = () => {
-  const { data: articles, isFetching } = useArticles();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuthContext();
+  const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
+
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
 
-  const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
-  const renderArticles = (articles: Post[] | undefined) => {
-    return articles?.map((article) => {
-      const { _id, title, author, createdAt, likes, image, comments } = article;
-      const { fullName } = author;
-      try {
-        const { title: articleTitle } = JSON.parse(title);
-        return (
-          <Article
-            key={_id}
-            id={_id}
-            title={articleTitle ? articleTitle : '제목이 없습니다.'}
-            nickname={fullName ? `@${fullName}` : ''}
-            postedDate={createdAt}
-            hasImage={image !== undefined}
-            likes={likes?.length || 0}
-            comments={comments?.length || 0}
-          />
-        );
-      } catch (error) {
-        // TODO: title의 JSON.stringify가 제대로 되지 않은 경우 어떻게 처리할까...
-      }
-    });
-  };
+  const [areYouProfileUser, setAreYouProfileUser] = useState(false);
+  const [activeUser, setActiveUser] = useState<User | null>(null);
+
+  const {
+    data: externalUser,
+    isError,
+    isLoading,
+  } = useQuery(['userInfo', lastSegment], () => getUserInfo(lastSegment), {
+    enabled: !areYouProfileUser,
+  });
+
+  useEffect(() => {
+    if (user) {
+      setAreYouProfileUser(user._id === lastSegment);
+      setActiveUser(areYouProfileUser ? user : externalUser);
+    }
+  }, [user, lastSegment, areYouProfileUser, externalUser]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/404');
+    }
+  }, [isError, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="flex justify-center min-h-screen">
-      <section className="fixed max-w-[25.875rem] mx-auto mt-[3.75rem] font-Cafe24SurroundAir">
-        <TabContextProvider>
-          <header className="z-50">
-            <div className="flex justify-between flex-start">
-              <BackButton />
-              <div className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]">
-                로그아웃
-              </div>
+    <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative">
+      <TabContextProvider>
+        <header>
+          <div className="flex justify-between flex-start px-[1.87rem]">
+            <BackButton
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+            <div
+              onClick={() => {
+                axiosClient.post('/logout');
+              }}
+              className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]"
+            >
+              로그아웃
             </div>
-            <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
-              <div className="flex flex-col items-center">
-                {/* 유저 정보를 불러와서 렌더링 */}
-                <div>
-                  <Avatar width={8} profileImage="" isLoggedIn={true} />
-                </div>
-                <div className="flex items-center mt-2 mb-[0.3rem]">
-                  <span className="w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
-                    {/* 유저 정보를 불러와서 렌더링 */}
-                    홍길동1234
-                  </span>
-                  <span className="w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
-                    {/* 유저 정보를 불러와서 렌더링 */}
-                    기자
-                  </span>
-                </div>
-                <SubscribeInfo subscriber={32} subscribing={24} />
-                <span className="text-center px-[2.8rem] mt-[1rem]">
-                  {/* 유저 정보를 불러와서 렌더링 */}
-                  안녕하세요? 저는 홍길동입니다. 저는 홍길동입니다. 저는 홍길동입니다. 저는
+          </div>
+          <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
+            <div className="flex flex-col items-center">
+              <div>
+                <Avatar width={8} profileImage="" isLoggedIn={areYouProfileUser} />
+              </div>
+              <div className="flex items-center mt-2 mb-[0.3rem]">
+                <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
+                  {activeUser?.fullName}
+                </span>
+                <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
+                  기자
                 </span>
               </div>
+              <SubscribeInfo
+                subscriber={activeUser ? activeUser.followers.length : 0}
+                subscribing={activeUser ? activeUser.comments.length : 0}
+              />
+              <span className="text-center px-[2.8rem] mt-[1rem]">
+                {activeUser ? activeUser.username : '자기소개가 없습니다.'}
+              </span>
             </div>
-            <Tab
-              maxWidth="25.875"
-              tabItems={[
-                { title: '작성한 기사', width: '12.9375' },
-                { title: '응원한 기사', width: '12.9375' },
-              ]}
-            />
-          </header>
-          <div className="overflow-y-auto max-h-[52rem]">
-            <article>
-              <TabItem title="작성한 기사" index="item1">
-                {/* User(사용자)의 기사가 들어와야 합니다! 일단 임시로 useArticles에서 가져오겠습니당 */}
-                {isFetching ? (
-                  <div className="flex justify-center">
-                    <Loader />
-                  </div>
-                ) : (
-                  renderArticles(newestArticles)
-                )}
-              </TabItem>
-              <TabItem title="응원한 기사" index="item2">
-                응원한 기사
-              </TabItem>
-            </article>
           </div>
-        </TabContextProvider>
-      </section>
-      {/* 라우터로 주소 받아도 될듯 */}
-      <BottomNavigation currentPage={`/${lastSegment}`} />
-    </div>
+          <Tab
+            maxWidth="25.875"
+            tabItems={[
+              { title: '작성한 기사', width: '12.9375' },
+              { title: '응원한 기사', width: '12.9375' },
+            ]}
+          />
+        </header>
+        <article ref={ref} className="flex-grow overflow-y-auto">
+          <TabItem title="작성한 기사" index="item1">
+            {activeUser && activeUser.posts.length > 0 ? (
+              <UserArticles userId={activeUser._id} />
+            ) : (
+              <div className="flex justify-center">
+                <span className="text-center text-lazy-gray">작성한 기사가 없습니다.</span>
+              </div>
+            )}
+          </TabItem>
+          <TabItem title="응원한 기사" index="item2">
+            {activeUser && activeUser.likes.length > 0 ? (
+              activeUser.likes.map((likeArticle) => (
+                <LikeArticles key={likeArticle.post} likeArticle={likeArticle} />
+              ))
+            ) : (
+              <div className="flex justify-center">
+                <span className="text-center text-lazy-gray">응원한 기사가 없습니다.</span>
+              </div>
+            )}
+          </TabItem>
+          <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
+        </article>
+      </TabContextProvider>
+      <div>
+        <BottomNavigation currentPage={`/profile/${lastSegment}`} />
+      </div>
+    </section>
   );
 };
 
