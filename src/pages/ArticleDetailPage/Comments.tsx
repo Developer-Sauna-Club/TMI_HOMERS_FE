@@ -1,5 +1,5 @@
-import Comment from '@/components/Comment';
-import { Comment as CommentType } from '@/type/Comment';
+import { Comment as CommentType } from '@type/Comment';
+import Comment from '@components/Comment';
 
 type CommentsProps = {
   comments: CommentType[];

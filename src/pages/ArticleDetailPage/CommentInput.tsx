@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiQuillPenFill } from 'react-icons/ri';
-import Avatar from '@/components/Avatar';
+import Avatar from '@components/Avatar';
 
 type FormValueType = {
   comment: string;

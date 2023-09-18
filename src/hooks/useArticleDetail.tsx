@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { axiosClient } from '@/api/axiosClient';
-import { Post } from '@/type/Post';
+import { Post } from '@type/Post';
+import { axiosClient } from '@api/axiosClient';
 
 export const useArticleDetail = () => {
   const { pathname: url } = useLocation();

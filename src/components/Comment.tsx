@@ -1,4 +1,4 @@
-import { getTimeStamp } from '@/utils/getTimeStamp';
+import { getTimeStamp } from '@utils/getTimeStamp';
 import Avatar from './Avatar';
 import CloseButton from './CloseButton';
 
