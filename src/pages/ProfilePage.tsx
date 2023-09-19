@@ -30,13 +30,13 @@ const ProfilePage = () => {
   const [areYouProfileUser, setAreYouProfileUser] = useState(false);
   const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
 
-  const {
-    data: externalUser,
-    isError,
-    isFetching,
-  } = useQuery(['userInfo', lastSegment], () => getUserInfo(lastSegment), {
-    enabled: !areYouProfileUser,
-  });
+  const { data: externalUser, isFetching } = useQuery(
+    ['userInfo', lastSegment],
+    () => getUserInfo(lastSegment),
+    {
+      enabled: !areYouProfileUser,
+    },
+  );
 
   useEffect(() => {
     if (user) {
@@ -47,12 +47,6 @@ const ProfilePage = () => {
       setCurrentProfileUser(externalUser);
     }
   }, [user, lastSegment, areYouProfileUser, externalUser]);
-
-  useEffect(() => {
-    if (isError) {
-      navigate('/404');
-    }
-  }, [isError, navigate]);
 
   return (
     <TabContextProvider>
@@ -80,7 +74,7 @@ const ProfilePage = () => {
             <div className="flex flex-col items-center">
               <div
                 onClick={() => {
-                  navigate(`/profile/edit/${lastSegment}`);
+                  navigate(`/profile/edit`);
                 }}
               >
                 <Avatar width={8} profileImage="" isLoggedIn={areYouProfileUser} />

@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       { path: 'news/create', element: <NewArticlePage /> },
       { path: 'news/:postId', element: <ArticleDetailPage /> },
       { path: 'notification', element: <NotificationPage /> },
-      { path: 'profile/edit/:userId', element: <ProfileEditPage /> },
+      { path: 'profile/edit', element: <ProfileEditPage /> },
       { path: 'password', element: <ChangePasswordPage /> },
     ],
   },
