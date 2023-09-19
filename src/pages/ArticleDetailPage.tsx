@@ -18,6 +18,7 @@ const ArticleDetailPage = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
+  const [likesCount, setLikesCount] = useState(article?.likes.length);
 
   if (isFetching) {
     return <Loader />;
@@ -30,8 +31,25 @@ const ArticleDetailPage = () => {
   const isLoginUser = user ? true : false;
 
   const handleLikePost = () => {
-    likePushed ? deleteLikePost(_id) : likePost(_id);
-    setLikePushed((prevLikePushed) => !prevLikePushed);
+    if (user && likePushed) {
+      //좋아요 취소
+      try {
+        deleteLikePost(user._id);
+        setLikePushed(false);
+        setLikesCount((prevCount) => (prevCount ? prevCount - 1 : likes.length - 1));
+      } catch (error) {
+        //console.error('좋아요 취소 실패', error);
+      }
+    } else {
+      //좋아요 누름름
+      try {
+        likePost(_id);
+        setLikePushed(true);
+        setLikesCount((prevCount) => (prevCount ? prevCount + 1 : likes.length + 1));
+      } catch (error) {
+        //console.error('좋아요 실패!', error);
+      }
+    }
   };
 
   return (
@@ -66,7 +84,11 @@ const ArticleDetailPage = () => {
               color="blue"
               type={likePushed ? 'fill' : 'outline'}
             />
-            <ArticleInfoIcon likes={likes.length} comments={comments.length} mode="post" />
+            <ArticleInfoIcon
+              likes={likesCount ? likesCount : likes.length}
+              comments={comments.length}
+              mode="post"
+            />
           </div>
         </div>
         <div className="banner mt-[10%] mb-[5%] border-b-[0.01rem] border-lazy-gray" />
