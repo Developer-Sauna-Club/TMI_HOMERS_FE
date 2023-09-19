@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
 import { fetchUserPosts } from '@/api/common/Post';
 import BottomNavigation from '@/components/BottomNavigation';
-import { API } from '@/constants/Article';
+import { API, ARTICLE_FETCH_LIMIT } from '@/constants/Article';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { Follow } from '@/type/Follow';
-import { Post } from '@/type/Post';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
@@ -19,6 +19,7 @@ import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import Articles from './ArticlesPage/Articles';
+import InfiniteScroll from './ArticlesPage/InfiniteScroll';
 
 const ArticlesPage = () => {
   const { data: articles, isFetching } = useArticles({
@@ -28,51 +29,45 @@ const ArticlesPage = () => {
 
   const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles);
   const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles);
-  const [offset, setOffset] = useState(0);
-  const [canFetchMore, setCanFetchMore] = useState(true);
   const [followingUsers, setFollowingUsers] = useState<Follow[]>([]);
-  const [followingArticles, setFollowingArticles] = useState<Post[]>([]);
+
+  const fetchFollowingArticles = useCallback(
+    async ({ pageParam = 0 }) => {
+      const newArticles = await Promise.all(
+        followingUsers.map((user) =>
+          fetchUserPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT, authorId: user.user }),
+        ),
+      );
+
+      return newArticles.flat();
+    },
+    [followingUsers],
+  );
+
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['followingArticles', followingUsers],
+    fetchFollowingArticles,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length < ARTICLE_FETCH_LIMIT) {
+          return undefined;
+        }
+        return pages.length * ARTICLE_FETCH_LIMIT;
+      },
+      enabled: followingUsers.length > 0,
+    },
+  );
 
   const { user } = useAuthContext();
+
+  const navigate = useNavigate();
+  const { ref: scrollRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   useEffect(() => {
     if (user) {
       setFollowingUsers(user.following);
     }
   }, [user, followingUsers]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 500 &&
-        canFetchMore
-      ) {
-        setOffset((prevOffset) => prevOffset + 10);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [canFetchMore]);
-
-  useEffect(() => {
-    if (followingUsers.length > 0 && canFetchMore) {
-      followingUsers.forEach((article) => {
-        fetchUserPosts({ offset, limit: 10, authorId: article.user }).then((userInfo) => {
-          if (userInfo.length < 10) {
-            setCanFetchMore(false);
-          }
-          userInfo.forEach((article) => {
-            setFollowingArticles((prev) => [...prev, article]);
-          });
-        });
-      });
-    }
-  }, [followingUsers, canFetchMore, offset]);
-
-  const navigate = useNavigate();
-  const { ref: articleTagRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   return (
     <TabContextProvider>
@@ -105,7 +100,7 @@ const ArticlesPage = () => {
             ]}
           />
         </header>
-        <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto">
+        <article ref={scrollRef} className="flex-grow gap-4 overflow-y-auto">
           <TabItem title={`${TAB_CONSTANTS.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
@@ -119,7 +114,8 @@ const ArticlesPage = () => {
             <Articles articles={hottestArticles} />
           </TabItem>
           <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item3">
-            <Articles articles={followingArticles} />
+            <Articles articles={data?.pages.flat() || []} />
+            <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
           </TabItem>
           <button
             onClick={scrollToTop}
