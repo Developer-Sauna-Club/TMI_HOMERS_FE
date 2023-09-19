@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import { deleteLikePost, likePost } from '@/api/common/Like';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
@@ -15,16 +17,22 @@ const ArticleDetailPage = () => {
   const { data: article, isFetching } = useArticleDetail();
   const { user } = useAuthContext();
   const navigate = useNavigate();
+  const [likePushed, setLikePushed] = useState(false);
 
   if (isFetching) {
     return <Loader />;
   }
 
-  const { title, author, createdAt, likes, image, comments } = article!;
+  const { _id, title, author, createdAt, likes, image, comments } = article!;
   const { fullName, _id: postUserId } = author;
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
   const isMyPost = user ? user._id === postUserId : false;
   const isLoginUser = user ? true : false;
+
+  const handleLikePost = () => {
+    likePushed ? deleteLikePost(_id) : likePost(_id);
+    setLikePushed((prevLikePushed) => !prevLikePushed);
+  };
 
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black border-2">
@@ -52,7 +60,12 @@ const ArticleDetailPage = () => {
           </div>
           <div className="text-base">{articleBody}</div>
           <div className="flex justify-between mt-6">
-            <SubButton label="응원하기" color="blue" type="outline" />
+            <SubButton
+              label="응원하기"
+              onClick={() => handleLikePost()}
+              color="blue"
+              type={likePushed ? 'fill' : 'outline'}
+            />
             <ArticleInfoIcon likes={likes.length} comments={comments.length} mode="post" />
           </div>
         </div>
@@ -67,7 +80,7 @@ const ArticleDetailPage = () => {
           <Comments comments={comments} />
         )}
       </section>
-      {isLoginUser && <CommentInput />}
+      {isLoginUser && <CommentInput postId={_id} />}
     </div>
   );
 };

@@ -5,6 +5,7 @@ type SubButtonProps = {
   size?: 'small' | 'medium' | 'large';
   type: 'fill' | 'outline';
   label: string;
+  onClick?: () => void;
 };
 
 const OUTLINE_TYPE = {

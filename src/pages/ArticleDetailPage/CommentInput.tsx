@@ -1,12 +1,17 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiQuillPenFill } from 'react-icons/ri';
+import { createComment } from '@/api/common/Comment';
 import Avatar from '@components/Avatar';
+
+type CommentInputProps = {
+  postId: string;
+};
 
 type FormValueType = {
   comment: string;
 };
 
-const CommentInput = () => {
+const CommentInput = ({ postId }: CommentInputProps) => {
   const {
     register,
     handleSubmit,
@@ -16,6 +21,7 @@ const CommentInput = () => {
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
       alert(JSON.stringify(data));
+      createComment({ ...data, postId });
     } catch (error) {
       alert(error);
     }
