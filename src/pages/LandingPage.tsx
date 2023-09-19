@@ -18,9 +18,11 @@ const LandingPage = () => {
   };
 
   if (user === undefined) {
-    <div className="flex justify-center items-center w-full h-screen">
-      <Loader size="lg" />
-    </div>;
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <Loader size="lg" />
+      </div>
+    );
   }
 
   if (user === null) {

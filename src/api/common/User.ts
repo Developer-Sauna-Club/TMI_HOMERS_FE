@@ -28,18 +28,12 @@ export const updateProfileImage = async (image: File) => {
   const UPDATE_IMAGE_URL = '/users/upload-photo';
   const formData = new FormData();
   formData.append('image', image);
+  formData.append('isCover', JSON.stringify(false));
 
-  const { data } = await axiosClient.post<User>(
-    UPDATE_IMAGE_URL,
-    {
-      ...formData,
-      isCover: false,
+  const { data } = await axiosClient.post<User>(UPDATE_IMAGE_URL, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    },
-  );
+  });
   return data;
 };
