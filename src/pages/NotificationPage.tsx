@@ -5,11 +5,11 @@ import Notice from '@/components/Notice';
 
 const NoNotification = () => {
   return (
-    <div className="flex-grow flex flex-col justify-center items-center gap-4">
+    <div className="flex flex-col items-center justify-center flex-grow gap-4">
       <div className="w-20 h-20 rounded-full bg-cooled-blue">
-        <AiOutlineBell className="w-10 h-10 translate-x-1/2 translate-y-1/2 text-white" />
+        <AiOutlineBell className="w-10 h-10 text-white translate-x-1/2 translate-y-1/2" />
       </div>
-      <p className="text-wall-street font-Cafe24SurroundAir text-2xl font-light">
+      <p className="text-2xl font-light text-wall-street font-Cafe24SurroundAir">
         받은 알림이 없습니다.
       </p>
     </div>
@@ -20,13 +20,13 @@ const NotificationPage = () => {
   const data = [];
   return (
     <div className="flex flex-col h-screen bg-white">
-      <header className="pl-6 pt-6 flex-none">
+      <header className="flex-none pt-6 pl-6">
         <HeaderText label="알림" />
       </header>
       {data.length === 0 ? (
         NoNotification()
       ) : (
-        <div className="flex-grow flex flex-col items-center p-4 gap-4 overflow-y-scroll">
+        <div className="flex flex-col items-center flex-grow gap-4 p-4 overflow-y-scroll">
           <Notice
             nickname="Jeaya"
             message="Jeaya님이 회원님의 뉴스를 응원합니다."
@@ -89,8 +89,8 @@ const NotificationPage = () => {
           />
         </div>
       )}
-      <div className="flex w-full justify-center flex-none">
-        <BottomNavigation currentPage="/noticication" />
+      <div className="flex justify-center flex-none w-full">
+        <BottomNavigation currentPage="/notification" />
       </div>
     </div>
   );
