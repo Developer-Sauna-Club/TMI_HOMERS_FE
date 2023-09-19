@@ -1,4 +1,5 @@
 import type { SearchData } from '@type/search';
+import { SearchType } from '@constants/Search';
 import useFilteredSearchResult from '@hooks/useFilteredSearchResult';
 import { useTabContext } from '@hooks/useTabContext';
 import Article from './Article';
@@ -25,7 +26,7 @@ const SearchResultList = ({ data }: SearchData) => {
   return (
     filteredData &&
     filteredData.map((searchResult, index) => {
-      if (activeTab === 'item1' && 'title' in searchResult) {
+      if (activeTab === 'item1' && SearchType.TITLE in searchResult) {
         const { _id, title, author, createdAt, likes, image, comments } = searchResult;
         const { fullName } = author;
         const { title: articleTitle } = title ? JSON.parse(title) : { title: '' };
@@ -43,7 +44,7 @@ const SearchResultList = ({ data }: SearchData) => {
             />
           </div>
         );
-      } else if (activeTab === 'item2' && 'role' in searchResult) {
+      } else if (activeTab === 'item2' && SearchType.ROLE in searchResult) {
         const { _id, fullName } = searchResult;
         return (
           <div key={_id}>

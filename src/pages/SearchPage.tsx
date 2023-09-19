@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { MdOutlineSearch } from 'react-icons/md';
-import SearchSkeleton from '@/components/SearchSkeleton';
-import useRecentResult from '@/hooks/useRecentResult';
 import CloseButton from '@components/CloseButton';
 import HeaderText from '@components/HeaderText';
 import SearchResultList from '@components/SearchResultList';
+import SearchSkeleton from '@components/SearchSkeleton';
 import SubButton from '@components/SubButton';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
+import { DEBOUNCE_TIME, MINIMUM__DATA } from '@constants/Search';
 import { TabConstants } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useDebounceValue from '@hooks/useDebounce';
+import useRecentResult from '@hooks/useRecentResult';
 import useSearch from '@hooks/useSearch';
 
 const INPUT_CLASS =
@@ -18,7 +19,7 @@ const INPUT_CLASS =
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
-  const debouncedKeyword = useDebounceValue(keyword, 1000);
+  const debouncedKeyword = useDebounceValue(keyword, DEBOUNCE_TIME);
   const { data, isFetching, isSuccess } = useSearch({ keyword: debouncedKeyword });
   const recentResult = useRecentResult({ isSuccess, keyword: debouncedKeyword });
   const handleRecentResult = (keyword: string) => {
@@ -74,7 +75,7 @@ const SearchPage = () => {
             )}
           </TabItem>
         </article>
-        {(!data || data.length <= 3) && !isFetching && (
+        {(!data || data.length <= MINIMUM__DATA) && !isFetching && (
           <footer className="mb-8">
             <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
             <hr className="mt-2 mb-5" />
