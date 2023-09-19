@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
+import { fetchUserPosts } from '@/api/common/Post';
 import BottomNavigation from '@/components/BottomNavigation';
 import { API } from '@/constants/Article';
+import { useAuthContext } from '@/hooks/useAuthContext';
 import useScrollToTop from '@/hooks/useScrollToTop';
-import Article from '@components/Article';
+import { Follow } from '@/type/Follow';
+import { Post } from '@/type/Post';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
@@ -23,8 +27,49 @@ const ArticlesPage = () => {
   });
 
   const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
-  // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
-  // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);
+  const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
+  const [offset, setOffset] = useState(0);
+  const [canFetchMore, setCanFetchMore] = useState(true);
+  const [followingUsers, setFollowingUsers] = useState<Follow[]>([]);
+  const [followingArticles, setFollowingArticles] = useState<Post[]>([]);
+
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      setFollowingUsers(user.following);
+    }
+  }, [user, followingUsers]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 500 &&
+        canFetchMore
+      ) {
+        setOffset((prevOffset) => prevOffset + 10);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [canFetchMore]);
+
+  useEffect(() => {
+    if (followingUsers.length > 0 && canFetchMore) {
+      followingUsers.forEach((article) => {
+        fetchUserPosts({ offset, limit: 10, authorId: article.user }).then((userInfo) => {
+          if (userInfo.length < 10) {
+            setCanFetchMore(false);
+          }
+          userInfo.forEach((article) => {
+            setFollowingArticles((prev) => [...prev, article]);
+          });
+        });
+      });
+    }
+  }, [followingUsers, canFetchMore, offset]);
 
   const navigate = useNavigate();
   const { ref: articleTagRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
@@ -71,26 +116,10 @@ const ArticlesPage = () => {
             )}
           </TabItem>
           <TabItem title={`${TabConstants.HOTTEST}`} index="item2">
-            <Article
-              id="1"
-              title="(임시)이거슨 뜨겁다."
-              nickname="@hot-guys"
-              postedDate="2023-09-14T09:28:39.390Z"
-              hasImage={false}
-              likes={15}
-              comments={42}
-            />
+            <Articles articles={hottestArticles} />
           </TabItem>
           <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item3">
-            <Article
-              id="1"
-              title="(임시)이거슨 구독이다."
-              nickname="@sub-scriber"
-              postedDate="2023-09-14T09:28:39.390Z"
-              hasImage={false}
-              likes={12}
-              comments={42}
-            />
+            <Articles articles={followingArticles} />
           </TabItem>
           <button
             onClick={scrollToTop}
