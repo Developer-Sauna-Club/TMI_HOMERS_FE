@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 const useScrollToTop = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
 
   const scrollToTop = () => {

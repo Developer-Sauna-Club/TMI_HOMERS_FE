@@ -47,7 +47,7 @@ const ArticleDetailPage = () => {
         <div>
           <ArticleDetail nickname={fullName} postedDate={createdAt} />
           <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
           </div>
           <div className="text-base">{articleBody}</div>

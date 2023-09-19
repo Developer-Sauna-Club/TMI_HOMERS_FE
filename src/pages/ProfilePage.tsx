@@ -89,7 +89,7 @@ const ProfilePage = () => {
               </div>
               <SubscribeInfo
                 subscriber={currentProfileUser ? currentProfileUser.followers.length : 0}
-                subscribing={currentProfileUser ? currentProfileUser.comments.length : 0}
+                subscribing={currentProfileUser ? currentProfileUser.following.length : 0}
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
