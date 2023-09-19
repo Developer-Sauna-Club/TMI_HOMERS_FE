@@ -67,7 +67,6 @@ const ArticleDetailPage = () => {
 
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto mb-9 h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black border-2">
-      <div className="flex justify-center" />
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />
