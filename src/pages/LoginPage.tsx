@@ -53,7 +53,7 @@ const LoginPage = () => {
   const password = watch(PASSWORD);
 
   return (
-    <div className="flex flex-col items-center w-[100vw] h-[100vh] justify-center">
+    <div className="flex flex-col items-center w-[100vw] h-[100vh] justify-center dark:bg-[#1D232A]">
       <div className=" absolute top-[12%]">
         <HeaderText label="로그인" />
       </div>
@@ -105,7 +105,7 @@ const LoginPage = () => {
             <MainButton label="회원가입" mode="outlined" onClick={handleClickSignUpButton} />
             <button
               onClick={handleClickHomeButton}
-              className="mt-5 font-Cafe24SurroundAir text-base text-lazy-gray hover:text-wall-street"
+              className="mt-5 text-base font-Cafe24SurroundAir text-lazy-gray hover:text-wall-street"
             >
               홈으로 가기
             </button>

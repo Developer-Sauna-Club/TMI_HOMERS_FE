@@ -1,10 +1,12 @@
 import { SignUpParams } from '@/type/signUp';
 import { SignUpFormValues } from '@/type/signUp';
 import type { User } from '@/type/User';
+import { removeItemFromStorage } from '@/utils/localStorage';
 import { axiosClient } from '../axiosClient';
 
 const SIGNUP_URL = '/signup';
 const LOGIN_URL = '/login';
+const LOGOUT_URL = '/logout';
 const CHECK_AUTH_URL = '/auth-user';
 
 type SignUpResponseData = {
@@ -49,6 +51,11 @@ export const login = async ({ email, password }: LoginParams): Promise<LoginResp
     ...loginParams,
   });
   return data;
+};
+
+export const logout = () => {
+  axiosClient.post(LOGOUT_URL);
+  removeItemFromStorage('token');
 };
 
 export const checkAuthentication = async () => {

@@ -9,22 +9,23 @@ const useScrollToTop = () => {
       ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-
   useEffect(() => {
-    const currentRef = ref.current;
-    const handleScroll = () => {
-      const scrollPosition = currentRef?.scrollTop || 0;
-      if (scrollPosition > 0) {
-        setShowScrollToTopButton(true);
-      } else {
-        setShowScrollToTopButton(false);
-      }
-    };
-    currentRef?.addEventListener('scroll', handleScroll);
-    return () => {
-      currentRef?.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    if (ref.current) {
+      const currentRef = ref.current;
+      const handleScroll = () => {
+        const scrollPosition = currentRef?.scrollTop || 0;
+        if (scrollPosition > 0) {
+          setShowScrollToTopButton(true);
+        } else {
+          setShowScrollToTopButton(false);
+        }
+      };
+      currentRef?.addEventListener('scroll', handleScroll);
+      return () => {
+        currentRef?.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [ref]);
 
   return { ref, showScrollToTopButton, scrollToTop };
 };
