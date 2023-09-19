@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
@@ -17,16 +17,18 @@ import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const { data: article, isFetching, addComment } = useArticleDetail();
-  // const postId=getPostId()
-  // const articleDetail=fetchPost(postId)
-
-  //#TODO isFetching 문제 해결해야 함
-  //#TODO 좋아요 누른 포스트의 경우 버튼이 활성화되어 있어야 함
-
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
   const [likesCount, setLikesCount] = useState(article?.likes.length);
+
+  useEffect(() => {
+    // user가 로드되었을 때 isPostLiked 설정
+    if (user) {
+      const isPostLiked = user.likes.some((like) => like.post === article?._id);
+      setLikePushed(isPostLiked);
+    }
+  }, [user, article]);
 
   if (isFetching) {
     return <Loader />;
@@ -38,7 +40,6 @@ const ArticleDetailPage = () => {
 
   const isMyPost = user ? user._id === postUserId : false;
   const isLoginUser = user ? true : false;
-  //const isPostLiked = user ? likes.some((like) => like.user === user._id) : false;
 
   const handleLikePost = async () => {
     if (user && likePushed) {
