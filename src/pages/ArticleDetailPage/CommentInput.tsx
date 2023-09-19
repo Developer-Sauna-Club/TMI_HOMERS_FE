@@ -1,9 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiQuillPenFill } from 'react-icons/ri';
-import { createComment } from '@/api/common/Comment';
+import { CommentParams } from '@/api/common/Comment';
 import Avatar from '@components/Avatar';
 
 type CommentInputProps = {
+  onAddComment: (comment: CommentParams) => void;
   postId: string;
 };
 
@@ -11,7 +12,7 @@ type FormValueType = {
   comment: string;
 };
 
-const CommentInput = ({ postId }: CommentInputProps) => {
+const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
   const {
     register,
     handleSubmit,
@@ -20,8 +21,12 @@ const CommentInput = ({ postId }: CommentInputProps) => {
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
-      alert(JSON.stringify(data));
-      createComment({ ...data, postId });
+      // alert(JSON.stringify(data));
+      const newComment = {
+        ...data,
+        postId,
+      };
+      onAddComment(newComment);
     } catch (error) {
       alert(error);
     }
@@ -31,10 +36,10 @@ const CommentInput = ({ postId }: CommentInputProps) => {
     <div className="fixed bottom-2 flex justify-center items-center max-w-[24.875rem] w-full max-h-[3.75rem] h-full rounded-2xl bg-[#EEF1F4] font-Cafe24SurroundAir">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between w-[23rem]">
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <Avatar width={1.5} profileImage="" isLoggedIn={false} />
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <input
               {...register('comment', {
                 required: '댓글을 작성해주세요',
@@ -48,7 +53,7 @@ const CommentInput = ({ postId }: CommentInputProps) => {
               maxLength={200}
             />
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <button className="outline-none cursor-pointer">
               <RiQuillPenFill className="fill-cooled-blue w-[1.5rem] h-[1.5rem]" />
             </button>

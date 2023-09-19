@@ -1,22 +1,34 @@
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Post } from '@type/Post';
-import { axiosClient } from '@api/axiosClient';
+import { CommentParams, createComment } from '@/api/common/Comment';
+import { fetchPost } from '@/api/common/Post';
 
 export const useArticleDetail = () => {
+  const queryClient = useQueryClient();
   const { pathname: url } = useLocation();
-  const postId = url.split('/').pop();
+  const postId = url.split('/').pop() || '';
 
   const { data, isFetching } = useQuery<Post>(
     ['article', postId],
     async () => {
-      const response = await axiosClient.get(`/posts/${postId}`);
-      return response.data;
+      const response = await fetchPost(postId);
+      return response;
     },
     {
       staleTime: 1000 * 5,
     },
   );
 
-  return { data, isFetching };
+  const commentMutation = useMutation(createComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['article', postId]);
+    },
+  });
+
+  const addComment = (newComment: CommentParams) => {
+    commentMutation.mutate({ ...newComment, postId });
+  };
+
+  return { data, isFetching, addComment };
 };

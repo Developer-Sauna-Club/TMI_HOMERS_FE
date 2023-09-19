@@ -14,7 +14,7 @@ import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
-  const { data: article, isFetching } = useArticleDetail();
+  const { data: article, isFetching, addComment } = useArticleDetail();
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
@@ -73,7 +73,7 @@ const ArticleDetailPage = () => {
         <div>
           <ArticleDetail nickname={fullName} postedDate={createdAt} />
           <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
           </div>
           <div className="text-base">{articleBody}</div>
@@ -102,7 +102,7 @@ const ArticleDetailPage = () => {
           <Comments comments={comments} />
         )}
       </section>
-      {isLoginUser && <CommentInput postId={_id} />}
+      {isLoginUser && <CommentInput onAddComment={addComment} postId={_id} />}
     </div>
   );
 };
