@@ -127,7 +127,7 @@ const ArticleDetailPage = () => {
           </div>
         ) : (
           <div className="mb-[10rem]">
-            <Comments comments={comments} />
+            <Comments comments={comments} userId={user ? user._id : null} />
           </div>
         )}
       </section>
