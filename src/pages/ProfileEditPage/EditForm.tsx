@@ -1,13 +1,11 @@
 import { ChangeEvent, useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { updateProfileImage } from '@/api/common/User';
-import { updateUser } from '@/api/common/UserSettings';
 import MainButton from '@/components/MainButton';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useEditProfile from '@/hooks/useEditProfile';
 import { User } from '@/type/User';
 
 type FormValue = {
@@ -17,22 +15,6 @@ type FormValue = {
 
 type EditFormProps = {
   user: User;
-};
-
-const useEditProfile = () => {
-  const navigate = useNavigate();
-  const { setUser } = useAuthContext();
-  const { mutate: editProfile, isLoading } = useMutation(updateUser, {
-    onSuccess: (user) => {
-      alert('회원정보가 수정되었습니다');
-      setUser(user);
-      navigate(`/profile/${user._id}`);
-    },
-    onError: (error) => {
-      alert(JSON.stringify(error));
-    },
-  });
-  return { editProfile, isLoading };
 };
 
 const EditForm = ({ user }: EditFormProps) => {
