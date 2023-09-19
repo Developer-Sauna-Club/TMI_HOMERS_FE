@@ -32,7 +32,7 @@ const BORDER_RADIUS = {
 const BUTTON_SIZE = {
   small: 'px-4 h-[1.9rem] min-h-[1.9rem] text-[0.8rem]',
   medium: 'px-[1.3rem]h-[2.3rem] min-h-[2.3rem] text-[0.8rem]',
-  large: 'px-[2.1rem] text-[1.1rem] h-[2.3rem] `min-h-[2.3rem]',
+  large: 'px-[2.1rem] text-[1.1rem] h-[2.3rem] min-h-[2.3rem]',
 };
 
 const SubButton = ({
@@ -50,7 +50,7 @@ const SubButton = ({
   };
   return (
     <button
-      className={`btn btn-sm normal-case${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
+      className={`btn btn-sm normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
         type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
       } ${BUTTON_SIZE[size]}`}
       onClick={handleClick}
