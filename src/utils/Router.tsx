@@ -4,7 +4,7 @@ import {
   HomePage,
   LandingPage,
   NotFoundPage,
-  SignupPage,
+  SignUpPage,
   SearchPage,
   ProfilePage,
   LoginPage,
@@ -12,6 +12,8 @@ import {
   ArticleDetailPage,
   NotificationPage,
   ArticlesPage,
+  ProfileEditPage,
+  ChangePasswordPage,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -22,14 +24,16 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: 'home', element: <HomePage /> },
-      { path: 'signup', element: <SignupPage /> },
+      { path: 'signUp', element: <SignUpPage /> },
       { path: 'search', element: <SearchPage /> },
-      { path: 'profile', element: <ProfilePage /> },
+      { path: 'profile/:userId', element: <ProfilePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'news', element: <ArticlesPage /> },
       { path: 'news/create', element: <NewArticlePage /> },
       { path: 'news/:postId', element: <ArticleDetailPage /> },
       { path: 'notification', element: <NotificationPage /> },
+      { path: 'profile/edit', element: <ProfileEditPage /> },
+      { path: 'password', element: <ChangePasswordPage /> },
     ],
   },
 ]);

@@ -1,4 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { Meta } from '@storybook/react';
 import Article from '@components/Article';
 
 const meta = {
@@ -6,6 +7,7 @@ const meta = {
   component: Article,
   tags: ['autodocs'],
   argTypes: {
+    id: { control: 'text' },
     title: { control: 'text' },
     nickname: { control: 'text' },
     postedDate: { control: 'text' },
@@ -13,17 +15,23 @@ const meta = {
     likes: { control: 'number' },
     comments: { control: 'number' },
   },
-  args: {
-    title: '되겠냐?',
-    nickname: '@khakhiD',
-    postedDate: '2023-08-29T09:28:39.390Z',
-    hasImage: true,
-    likes: 0,
-    comments: 1,
-  },
 } as Meta;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+// type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default = () => {
+  return (
+    <Router>
+      <Article
+        title="되겠냐?"
+        id="1"
+        nickname="@khakhiD"
+        postedDate="2023-08-29T09:28:39.390Z"
+        hasImage={true}
+        likes={0}
+        comments={1}
+      />
+    </Router>
+  );
+};

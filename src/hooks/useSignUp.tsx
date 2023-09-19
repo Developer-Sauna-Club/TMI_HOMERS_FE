@@ -9,13 +9,16 @@ const useSignUp = () => {
   const { setUser } = useAuthContext();
   const { mutate: signUpMutate, isLoading } = useMutation(signUp, {
     onSuccess: ({ user, token }) => {
-      // TODO: save the user in the state
-      alert(JSON.stringify(user));
+      alert('회원가입에 성공하셨습니다!');
       setUser(user);
       setItemToStorage('token', token);
       navigate('/home');
     },
+    onError: (error) => {
+      alert(JSON.stringify(error));
+    },
   });
+
   return { signUpMutate, isLoading };
 };
 
