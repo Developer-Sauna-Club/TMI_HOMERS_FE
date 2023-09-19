@@ -28,6 +28,9 @@ export default {
     letterSpacing: {
       tighter: '-0.15rem',
     },
+    boxShadow: {
+      'article-container': '0px 2px 5px 0px rgba(0, 0, 0, 0.25)',
+    },
   },
   // eslint-disable-next-line no-undef
   plugins: [require('daisyui')],

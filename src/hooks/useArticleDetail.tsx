@@ -8,7 +8,7 @@ export const useArticleDetail = () => {
   const postId = url.split('/').pop();
 
   const { data, isFetching } = useQuery<Post>(
-    ['article'],
+    ['article', postId],
     async () => {
       const response = await axiosClient.get(`/posts/${postId}`);
       return response.data;
