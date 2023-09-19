@@ -8,7 +8,7 @@ import SubButton from '@components/SubButton';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { DEBOUNCE_TIME, MINIMUM__DATA } from '@constants/Search';
-import { TabConstants } from '@constants/Tab';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useDebounceValue from '@hooks/useDebounce';
 import useRecentResult from '@hooks/useRecentResult';
@@ -36,7 +36,7 @@ const SearchPage = () => {
           </div>
           <div className="flex justify-center">
             <div className="bg-white w-[23.375rem] rounded-lg">
-              <form className="flex relative items-center ">
+              <form className="relative flex items-center ">
                 <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4" />
                 <input
                   className={INPUT_CLASS}
@@ -51,8 +51,8 @@ const SearchPage = () => {
                 <Tab
                   maxWidth="23.375"
                   tabItems={[
-                    { title: `${TabConstants.ARTICLE_TITLE}`, width: '11.6875' },
-                    { title: `${TabConstants.NICKNAME}`, width: '11.6875' },
+                    { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
+                    { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
                   ]}
                 />
               </div>
@@ -60,14 +60,14 @@ const SearchPage = () => {
           </div>
         </header>
         <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
-          <TabItem title={`${TabConstants.ARTICLE_TITLE}`} index="item1">
+          <TabItem title={`${TAB_CONSTANTS.ARTICLE_TITLE}`} index="item1">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'title'} />
             ) : (
               <SearchResultList data={data} />
             )}
           </TabItem>
-          <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item2">
+          <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item2">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'user'} />
             ) : (
@@ -79,7 +79,7 @@ const SearchPage = () => {
           <footer className="mb-8">
             <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
             <hr className="mt-2 mb-5" />
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               {recentResult.map((item, index) => (
                 <div key={index}>
                   <SubButton
