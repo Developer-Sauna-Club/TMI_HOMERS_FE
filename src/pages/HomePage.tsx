@@ -8,14 +8,14 @@ const CHARACTER_SRC = '/img/character.png';
 
 const HomePage = () => {
   return (
-    <div className="relative flex justify-center w-full overflow-y-scroll">
-      <div className="w-full max-w-md flex flex-col gap-36 shrink-0">
-        <div className="bg-cooled-blue h-[375px] mb-10">
-          <div className="flex h-[180px] justify-between px-10 items-center">
+    <div className="relative flex flex-col justify-center items-center overflow-hidden">
+      <div className="w-full max-w-md flex flex-col gap-36 overflow-y-scroll">
+        <section className="bg-cooled-blue h-[375px] mb-10">
+          <header className="flex h-[180px] justify-between px-10 items-center">
             <HeaderText label="홈" />
             <MdOutlineSearch size="24" className="text-tricorn-black" />
-          </div>
-          <div className="relative w-full h-[304px] gap-2 flex justify-center">
+          </header>
+          <section className="relative w-full h-[304px] gap-2 flex justify-center">
             <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
               <div className="flex items-center">
                 <HiFire size="24" className="text-article-highly-liked" />
@@ -67,10 +67,9 @@ const HomePage = () => {
                 alt="character"
               />
             </div>
-          </div>
-        </div>
-
-        <div className=" bg-white flex flex-col justify-center gap-6 flex-grow">
+          </section>
+        </section>
+        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow">
           <div className="bg-emerald-300 w-[280px] h-20 self-center" />
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
@@ -140,13 +139,22 @@ const HomePage = () => {
                 likes={0}
                 comments={1}
               />
+              <Article
+                title="되겠냐?"
+                id="1"
+                nickname="@khakhiD"
+                postedDate="2023-08-29T09:28:39.390Z"
+                hasImage={true}
+                likes={0}
+                comments={1}
+              />
             </ul>
           </div>
-        </div>
-        <div className="fixed bottom-0 flex-none justify-center items-center">
-          <BottomNavigation currentPage="/home" />
-        </div>
+        </section>
       </div>
+      <footer className="sticky bottom-0 flex-none justify-center items-center">
+        <BottomNavigation currentPage="/home" />
+      </footer>
     </div>
   );
 };
