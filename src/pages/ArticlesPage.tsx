@@ -10,7 +10,7 @@ import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
-import { TabConstants } from '@constants/Tab';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
@@ -22,7 +22,7 @@ const ArticlesPage = () => {
     type: 'channel',
   });
 
-  const newestArticles = useFilteredArticles(TabConstants.NEWEST, articles);
+  const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles);
   // const hottestArticles = useFilteredArticles(TabConstants.HOTTEST, articles);
   // const subscribedArticles = useFilteredArticles(TabConstants.SUBSCRIBED, articles);
 
@@ -31,7 +31,7 @@ const ArticlesPage = () => {
 
   return (
     <TabContextProvider>
-      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
+      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative dark:bg-[#1D232A]">
         <header className="flex flex-col bg-white pt-[2.75rem] dark:bg-[#1D232A]">
           <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
@@ -46,14 +46,14 @@ const ArticlesPage = () => {
             active="item1"
             maxWidth="25.875"
             tabItems={[
-              { title: `${TabConstants.NEWEST}`, width: '8.625' },
+              { title: `${TAB_CONSTANTS.NEWEST}`, width: '8.625' },
               {
-                title: `${TabConstants.HOTTEST}`,
+                title: `${TAB_CONSTANTS.HOTTEST}`,
                 icon: <BsFire className="w-[1.3rem] h-[1.3rem]" />,
                 width: '8.625',
               },
               {
-                title: `${TabConstants.SUBSCRIBED}`,
+                title: `${TAB_CONSTANTS.SUBSCRIBED}`,
                 icon: <MdStars className="w-[1.5rem] h-[1.5rem]" />,
                 width: '8.625',
               },
@@ -61,7 +61,7 @@ const ArticlesPage = () => {
           />
         </header>
         <article ref={articleTagRef} className="flex-grow gap-4 overflow-y-auto">
-          <TabItem title={`${TabConstants.NEWEST}`} index="item1">
+          <TabItem title={`${TAB_CONSTANTS.NEWEST}`} index="item1">
             {isFetching ? (
               <div className="flex justify-center">
                 <Loader />
@@ -70,7 +70,7 @@ const ArticlesPage = () => {
               <Articles articles={newestArticles} />
             )}
           </TabItem>
-          <TabItem title={`${TabConstants.HOTTEST}`} index="item2">
+          <TabItem title={`${TAB_CONSTANTS.HOTTEST}`} index="item2">
             <Article
               id="1"
               title="(임시)이거슨 뜨겁다."
@@ -81,7 +81,7 @@ const ArticlesPage = () => {
               comments={42}
             />
           </TabItem>
-          <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item3">
+          <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item3">
             <Article
               id="1"
               title="(임시)이거슨 구독이다."

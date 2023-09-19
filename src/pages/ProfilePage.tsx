@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { axiosClient } from '@/api/axiosClient';
+import { logout } from '@/api/common/Auth';
 import getUserInfo from '@/api/getUserInfo';
+import Loader from '@/components/Loader';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import useScrollToTop from '@/hooks/useScrollToTop';
@@ -20,43 +21,36 @@ import UserArticles from './ProfilePage/UserArticles';
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
 
   const [areYouProfileUser, setAreYouProfileUser] = useState(false);
-  const [activeUser, setActiveUser] = useState<User | null>(null);
+  const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
 
-  const {
-    data: externalUser,
-    isError,
-    isLoading,
-  } = useQuery(['userInfo', lastSegment], () => getUserInfo(lastSegment), {
-    enabled: !areYouProfileUser,
-  });
+  const { data: externalUser, isFetching } = useQuery(
+    ['userInfo', lastSegment],
+    () => getUserInfo(lastSegment),
+    {
+      enabled: !areYouProfileUser,
+    },
+  );
 
   useEffect(() => {
     if (user) {
       setAreYouProfileUser(user._id === lastSegment);
-      setActiveUser(areYouProfileUser ? user : externalUser);
+      setCurrentProfileUser(areYouProfileUser ? user : externalUser);
+    } else {
+      setAreYouProfileUser(false);
+      setCurrentProfileUser(externalUser);
     }
   }, [user, lastSegment, areYouProfileUser, externalUser]);
 
-  useEffect(() => {
-    if (isError) {
-      navigate('/404');
-    }
-  }, [isError, navigate]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative">
-      <TabContextProvider>
+    <TabContextProvider>
+      <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative dark:bg-[#1D232A]">
         <header>
           <div className="flex justify-between flex-start px-[1.87rem]">
             <BackButton
@@ -64,34 +58,41 @@ const ProfilePage = () => {
                 navigate(-1);
               }}
             />
-            <div
-              onClick={() => {
-                axiosClient.post('/logout');
-              }}
-              className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]"
-            >
-              로그아웃
-            </div>
+            {areYouProfileUser && (
+              <div
+                onClick={() => {
+                  logout();
+                  setUser(null);
+                }}
+                className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]"
+              >
+                로그아웃
+              </div>
+            )}
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
             <div className="flex flex-col items-center">
-              <div>
+              <div
+                onClick={() => {
+                  navigate(`/profile/edit`);
+                }}
+              >
                 <Avatar width={8} profileImage="" isLoggedIn={areYouProfileUser} />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
-                  {activeUser?.fullName}
+                  {currentProfileUser?.fullName}
                 </span>
                 <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
                   기자
                 </span>
               </div>
               <SubscribeInfo
-                subscriber={activeUser ? activeUser.followers.length : 0}
-                subscribing={activeUser ? activeUser.comments.length : 0}
+                subscriber={currentProfileUser ? currentProfileUser.followers.length : 0}
+                subscribing={currentProfileUser ? currentProfileUser.comments.length : 0}
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
-                {activeUser ? activeUser.username : '자기소개가 없습니다.'}
+                {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
               </span>
             </div>
           </div>
@@ -105,8 +106,13 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem title="작성한 기사" index="item1">
-            {activeUser && activeUser.posts.length > 0 ? (
-              <UserArticles userId={activeUser._id} />
+            {isFetching && (
+              <div className="flex items-center justify-center">
+                <Loader />
+              </div>
+            )}
+            {currentProfileUser && currentProfileUser.posts.length > 0 ? (
+              <UserArticles userId={currentProfileUser._id} />
             ) : (
               <div className="flex justify-center">
                 <span className="text-center text-lazy-gray">작성한 기사가 없습니다.</span>
@@ -114,8 +120,13 @@ const ProfilePage = () => {
             )}
           </TabItem>
           <TabItem title="응원한 기사" index="item2">
-            {activeUser && activeUser.likes.length > 0 ? (
-              activeUser.likes.map((likeArticle) => (
+            {isFetching && (
+              <div className="flex items-center justify-center">
+                <Loader />
+              </div>
+            )}
+            {currentProfileUser && currentProfileUser.likes.length > 0 ? (
+              currentProfileUser.likes.map((likeArticle) => (
                 <LikeArticles key={likeArticle.post} likeArticle={likeArticle} />
               ))
             ) : (
@@ -126,11 +137,11 @@ const ProfilePage = () => {
           </TabItem>
           <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
         </article>
-      </TabContextProvider>
-      <div>
-        <BottomNavigation currentPage={`/profile/${lastSegment}`} />
-      </div>
-    </section>
+        <div>
+          <BottomNavigation currentPage={`/profile/${lastSegment}`} />
+        </div>
+      </section>
+    </TabContextProvider>
   );
 };
 
