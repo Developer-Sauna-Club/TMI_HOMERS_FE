@@ -12,7 +12,7 @@ type Props = {
 const BG_OVERLAY_CLASS = 'fixed top-0 left-0 right-0 bottom-0 z-50 bg-black bg-opacity-40';
 
 const MODAL_BASE_CLASS =
-  'fixed flex justify-center top-[50%] left-[50%] pt-[16px] min-w-[300px] max-w-[70%] rounded-xl overflow-hidden bg-white dark:bg-tricorn-black -translate-x-1/2 -translate-y-1/2 z-50';
+  'animate-modalZoomIn origin-left fixed flex justify-center top-[50%] left-[50%] pt-[16px] min-w-[300px] max-w-[70%] rounded-xl overflow-hidden bg-white dark:bg-tricorn-black -translate-x-1/2 -translate-y-1/2 z-50';
 const MODAL_CONTENT_CLASS = 'w-[90%] flex flex-col justify-center';
 
 const BUTTON_COLOR_CLASSES = {
