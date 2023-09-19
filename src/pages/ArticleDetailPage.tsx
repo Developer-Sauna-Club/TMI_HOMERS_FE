@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { deleteLikePost, likePost } from '@/api/common/Like';
+//import { fetchPost } from '@/api/common/Post';
+//import { getPostId } from '@/utils/getPostId';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
@@ -15,6 +17,12 @@ import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const { data: article, isFetching, addComment } = useArticleDetail();
+  // const postId=getPostId()
+  // const articleDetail=fetchPost(postId)
+
+  //#TODO isFetching 문제 해결해야 함
+  //#TODO 좋아요 누른 포스트의 경우 버튼이 활성화되어 있어야 함
+
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
@@ -27,33 +35,38 @@ const ArticleDetailPage = () => {
   const { _id, title, author, createdAt, likes, image, comments } = article!;
   const { fullName, _id: postUserId } = author;
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
+
   const isMyPost = user ? user._id === postUserId : false;
   const isLoginUser = user ? true : false;
+  //const isPostLiked = user ? likes.some((like) => like.user === user._id) : false;
 
-  const handleLikePost = () => {
+  const handleLikePost = async () => {
     if (user && likePushed) {
-      //좋아요 취소
       try {
-        deleteLikePost(user._id);
+        const likeByUser = likes.find((like) => like.user === user._id);
+        if (likeByUser) {
+          await deleteLikePost(likeByUser._id);
+        }
         setLikePushed(false);
         setLikesCount((prevCount) => (prevCount ? prevCount - 1 : likes.length - 1));
       } catch (error) {
-        //console.error('좋아요 취소 실패', error);
+        alert(error);
       }
-    } else {
-      //좋아요 누름름
+    } else if (user && !likePushed) {
       try {
-        likePost(_id);
+        await likePost(_id);
         setLikePushed(true);
         setLikesCount((prevCount) => (prevCount ? prevCount + 1 : likes.length + 1));
       } catch (error) {
-        //console.error('좋아요 실패!', error);
+        alert(error);
       }
+    } else {
+      alert('로그인 후에 누를 수 있습니다!');
     }
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black border-2">
+    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto mb-9 h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black border-2">
       <div className="flex justify-center" />
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
@@ -78,12 +91,14 @@ const ArticleDetailPage = () => {
           </div>
           <div className="text-base">{articleBody}</div>
           <div className="flex justify-between mt-6">
-            <SubButton
-              label="응원하기"
-              onClick={() => handleLikePost()}
-              color="blue"
-              type={likePushed ? 'fill' : 'outline'}
-            />
+            {user && (
+              <SubButton
+                label="응원하기"
+                onClick={() => handleLikePost()}
+                color="blue"
+                type={likePushed ? 'fill' : 'outline'}
+              />
+            )}
             <ArticleInfoIcon
               likes={likesCount ? likesCount : likes.length}
               comments={comments.length}
