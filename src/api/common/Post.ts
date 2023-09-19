@@ -97,9 +97,20 @@ export const updatePost = async ({
 export const deletePost = async (id: string) => {
   const DELETE_POST_URL = '/posts/delete';
 
-  return await axiosClient.delete(DELETE_POST_URL, {
-    data: {
-      id,
-    },
-  });
+  try {
+    const response = await axiosClient.delete(DELETE_POST_URL, {
+      data: {
+        id,
+      },
+    });
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    alert(error);
+    return false;
+  }
 };

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { deleteLikePost, likePost } from '@/api/common/Like';
-//import { fetchPost } from '@/api/common/Post';
-//import { getPostId } from '@/utils/getPostId';
+import { deletePost } from '@/api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
@@ -66,6 +65,19 @@ const ArticleDetailPage = () => {
     }
   };
 
+  const handleDeletePost = async () => {
+    try {
+      const deleted = await deletePost(_id);
+      if (deleted) {
+        navigate('/news');
+      } else {
+        alert('게시물 삭제에 실패했습니다');
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto mb-9 h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black">
       <section className="post-field max-w-[22rem] w-full">
@@ -77,7 +89,7 @@ const ArticleDetailPage = () => {
               <button type="button" name="edit">
                 <FiEdit className="w-[1rem] h-[1rem]" />
               </button>
-              <button type="button" name="delete">
+              <button type="button" name="delete" onClick={handleDeletePost}>
                 <BsTrash className="w-[1rem] h-[1rem]" />
               </button>
             </div>
