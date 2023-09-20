@@ -1,12 +1,28 @@
+import { useNavigate } from 'react-router-dom';
 import { HiFire } from 'react-icons/hi';
 import { MdOutlineSearch } from 'react-icons/md';
-import Article from '@components/Article';
+import Loader from '@/components/Loader';
+import { API } from '@/constants/Article';
+import { TAB_CONSTANTS } from '@/constants/Tab';
+import { useArticles } from '@/hooks/useArticles';
+import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
+import Articles from './ArticlesPage/Articles';
 
 const CHARACTER_SRC = '/img/character.png';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const { data: articles, isFetching } = useArticles({
+    id: API.CHANNEL_ID,
+    type: 'channel',
+  });
+
+  const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles).slice(0, 6);
+  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles).slice(0, 4);
+
   return (
     <div className="relative flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full max-w-md flex flex-col gap-36 overflow-y-scroll">
@@ -20,47 +36,21 @@ const HomePage = () => {
               <div className="flex items-center">
                 <HiFire size="24" className="text-article-highly-liked" />
                 <h2 className="flex-none text-tricorn-black font-Cafe24Surround text-lg font-bold">
-                  뜨거운 뉴스
+                  <span onClick={() => navigate('/news')} className="cursor-pointer">
+                    뜨거운 뉴스
+                  </span>
                 </h2>
               </div>
               <div className="bg-white text-black w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
-                <Article
-                  title="되겠냐?"
-                  id="1"
-                  nickname="@khakhiD"
-                  postedDate="2023-08-29T09:28:39.390Z"
-                  hasImage={true}
-                  likes={0}
-                  comments={1}
-                />
-                <Article
-                  title="되겠냐?"
-                  id="1"
-                  nickname="@khakhiD"
-                  postedDate="2023-08-29T09:28:39.390Z"
-                  hasImage={true}
-                  likes={0}
-                  comments={1}
-                />
-
-                <Article
-                  title="되겠냐?"
-                  id="1"
-                  nickname="@khakhiD"
-                  postedDate="2023-08-29T09:28:39.390Z"
-                  hasImage={true}
-                  likes={0}
-                  comments={1}
-                />
-                <Article
-                  title="되겠냐?"
-                  id="1"
-                  nickname="@khakhiD"
-                  postedDate="2023-08-29T09:28:39.390Z"
-                  hasImage={true}
-                  likes={0}
-                  comments={1}
-                />
+                <div>
+                  {isFetching ? (
+                    <div className="flex justify-center">
+                      <Loader />
+                    </div>
+                  ) : (
+                    <Articles articles={hottestArticles} />
+                  )}
+                </div>
               </div>
               <img
                 src={CHARACTER_SRC}
@@ -71,103 +61,22 @@ const HomePage = () => {
           </section>
         </section>
         <section className=" bg-white flex flex-col justify-center gap-6 flex-grow">
-          <div className="bg-emerald-300 w-[280px] h-20 self-center" />
+          {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
-              최신 이야기
+              <span onClick={() => navigate('/news')} className="cursor-pointer">
+                최신 이야기
+              </span>
             </h2>
-            <ul>
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-              <Article
-                title="되겠냐?"
-                id="1"
-                nickname="@khakhiD"
-                postedDate="2023-08-29T09:28:39.390Z"
-                hasImage={true}
-                likes={0}
-                comments={1}
-              />
-            </ul>
+            <div>
+              {isFetching ? (
+                <div className="flex justify-center">
+                  <Loader />
+                </div>
+              ) : (
+                <Articles articles={newestArticles} />
+              )}
+            </div>
           </div>
         </section>
       </div>
