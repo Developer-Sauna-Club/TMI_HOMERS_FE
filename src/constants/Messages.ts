@@ -28,4 +28,5 @@ export const TOAST_MESSAGES = {
   CHANGE_PASSWORD_FAILED: '비밀번호 변경 도중 오류가 발생했어요.',
 
   AUTH_USER_FAILED: '유저 정보를 받아오는데 실패했어요.',
+  NEED_AUTH: '로그인이 필요해요.',
 };

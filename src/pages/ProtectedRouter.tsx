@@ -1,9 +1,12 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
+import { TOAST_MESSAGES } from '@/constants/Messages';
 import useAuthQuery from '@/hooks/useAuthQuery';
+import { useToastContext } from '@/hooks/useToastContext';
 import { LoadingPage } from '.';
 
 const ProtectedRouter = ({ children }: { children: ReactNode }) => {
+  const { showToast } = useToastContext();
   const {
     userQuery: { data: user, isLoading },
   } = useAuthQuery();
@@ -13,7 +16,7 @@ const ProtectedRouter = ({ children }: { children: ReactNode }) => {
   }
 
   if (!user) {
-    alert('권한이 필요한 페이지입니다');
+    showToast(TOAST_MESSAGES.NEED_AUTH, 'info');
     return <Navigate to="/login" replace />;
   }
 
