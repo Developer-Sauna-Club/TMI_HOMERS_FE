@@ -7,11 +7,11 @@ export const followUser = async (userId: string) => {
   return data;
 };
 
-export const unFollowUser = async (userId: string) => {
+export const unFollowUser = async (id: string) => {
   const UN_FOLLOW_URL = '/follow/delete';
   const { data } = await axiosClient.delete<Follow>(UN_FOLLOW_URL, {
     data: {
-      userId,
+      id,
     },
   });
   return data;
