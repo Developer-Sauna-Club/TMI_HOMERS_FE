@@ -5,7 +5,7 @@ import { ToastContextProvider } from './context/ToastContext';
 const TempNavBar = () => {
   const ANCHOR_CLASS = 'border-gray-200 no-underline hover:text-cooled-blue';
   return (
-    <header className="absolute w-[20px] h-[20px] top-[10%] z-50">
+    <header className="hidden absolute w-[20px] h-[20px] top-[10%] z-50">
       <div className="bg-white border gap-1 flex flex-col mb-3 rounded-r-xl">
         <a className={ANCHOR_CLASS} href="/news">
           뉴스
