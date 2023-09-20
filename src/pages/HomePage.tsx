@@ -3,6 +3,7 @@ import { HiFire } from 'react-icons/hi';
 import { MdOutlineSearch } from 'react-icons/md';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
+import { MESSAGE, POST_COUNT } from '@/constants/Home';
 import { TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
@@ -20,16 +21,22 @@ const HomePage = () => {
     type: 'channel',
   });
 
-  const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles).slice(0, 6);
-  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles).slice(0, 4);
+  const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles).slice(
+    0,
+    POST_COUNT.NEWEST,
+  );
+  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles).slice(
+    0,
+    POST_COUNT.HOTTEST,
+  );
 
   return (
     <div className="relative flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full max-w-md flex flex-col gap-36 overflow-y-scroll">
         <section className="bg-cooled-blue h-[375px] mb-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
-            <HeaderText label="홈" />
-            <MdOutlineSearch size="24" className="text-tricorn-black" />
+            <HeaderText label={MESSAGE.HOME} />
+            <MdOutlineSearch size="24" className="text-tricorn-black cursor-pointer" />
           </header>
           <section className="relative w-full h-[304px] gap-2 flex justify-center">
             <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
@@ -37,7 +44,7 @@ const HomePage = () => {
                 <HiFire size="24" className="text-article-highly-liked" />
                 <h2 className="flex-none text-tricorn-black font-Cafe24Surround text-lg font-bold">
                   <span onClick={() => navigate('/news')} className="cursor-pointer">
-                    뜨거운 뉴스
+                    {MESSAGE.HOTTEST_NEWS}
                   </span>
                 </h2>
               </div>
@@ -65,7 +72,7 @@ const HomePage = () => {
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
               <span onClick={() => navigate('/news')} className="cursor-pointer">
-                최신 이야기
+                {MESSAGE.NEWEST}
               </span>
             </h2>
             <div>
