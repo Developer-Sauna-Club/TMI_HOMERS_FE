@@ -1,21 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { TOAST_MESSAGES } from '@/constants/ToastMessages';
 import { login } from '@api/login';
 import { setItemToStorage } from '@utils/localStorage';
 import { useAuthContext } from './useAuthContext';
+import { useToastContext } from './useToastContext';
 
 const useLogin = () => {
   const navigate = useNavigate();
   const { setUser } = useAuthContext();
+  const { showToast } = useToastContext();
+
   const { mutate: loginMutate, isLoading } = useMutation(login, {
     onSuccess: ({ user, token }) => {
-      alert(JSON.stringify(user)); //TODO Toast 메세지로 성공 알리기?
       setUser(user);
       setItemToStorage('token', token);
+      showToast(TOAST_MESSAGES.LOGIN_SUCCESS, 'success');
       navigate('/home');
     },
     onError: () => {
-      alert('이메일과 비밀번호를 확인해주세요!');
+      showToast(TOAST_MESSAGES.LOGIN_FAILED, 'error');
     },
   });
   return { loginMutate, isLoading };
