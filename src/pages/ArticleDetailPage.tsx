@@ -100,14 +100,12 @@ const ArticleDetailPage = () => {
           </div>
           <div className="text-base">{articleBody}</div>
           <div className="flex justify-between mt-6">
-            {user && (
-              <SubButton
-                label="응원하기"
-                onClick={() => handleLikePost()}
-                color="blue"
-                type={likePushed ? 'fill' : 'outline'}
-              />
-            )}
+            <SubButton
+              label="응원하기"
+              onClick={() => handleLikePost()}
+              color="blue"
+              type={likePushed ? 'fill' : 'outline'}
+            />
             <ArticleInfoIcon
               likes={likesCount ? likesCount : likes.length}
               comments={comments.length}
