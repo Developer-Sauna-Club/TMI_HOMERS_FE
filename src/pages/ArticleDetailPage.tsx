@@ -66,12 +66,8 @@ const ArticleDetailPage = () => {
 
   const handleDeletePost = async () => {
     try {
-      const deleted = await deletePost(_id);
-      if (deleted) {
-        navigate('/news');
-      } else {
-        alert('게시물 삭제에 실패했습니다');
-      }
+      await deletePost(_id);
+      navigate('/news');
     } catch (error) {
       alert(error);
     }

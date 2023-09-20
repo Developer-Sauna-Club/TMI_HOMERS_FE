@@ -21,17 +21,13 @@ const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
   } = useForm<FormValueType>();
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
-    try {
-      // alert(JSON.stringify(data));
-      const newComment = {
-        ...data,
-        postId,
-      };
-      onAddComment(newComment);
-      reset();
-    } catch (error) {
-      alert(error);
-    }
+    // alert(JSON.stringify(data));
+    const newComment = {
+      ...data,
+      postId,
+    };
+    onAddComment(newComment);
+    reset();
   };
 
   return (
