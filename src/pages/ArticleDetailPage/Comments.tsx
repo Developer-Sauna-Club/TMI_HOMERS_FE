@@ -28,7 +28,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
 
   return commentList?.map((comment_post) => {
     const { _id, comment, author, createdAt } = comment_post;
-    const { fullName, _id: authorId } = author;
+    const { fullName, _id: authorId, image: authorImage } = author;
     const isMyComment = userId === authorId;
 
     try {
@@ -40,6 +40,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
           postedDate={createdAt}
           nickname={fullName}
           active={isMyComment}
+          profileImage={authorImage ? authorImage : ''}
           onDelete={(commentId) => handleDeleteComment(commentId)}
         />
       );

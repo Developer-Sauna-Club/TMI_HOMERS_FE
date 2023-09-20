@@ -4,9 +4,10 @@ import Avatar from './Avatar';
 type ArticleDetailProps = {
   nickname: string;
   postedDate: string;
+  profileImage: string;
 };
 
-const ArticleDetail = ({ nickname, postedDate }: ArticleDetailProps) => {
+const ArticleDetail = ({ nickname, postedDate, profileImage }: ArticleDetailProps) => {
   const timestamp = getTimeStamp(postedDate);
 
   return (
@@ -14,7 +15,7 @@ const ArticleDetail = ({ nickname, postedDate }: ArticleDetailProps) => {
       <div className="flex flex-col w-[22.125rem]">
         <div className="flex w-[22.125rem] h-[1.5rem]">
           <div className="icon cursor-pointer">
-            <Avatar width={2.5} profileImage="" isLoggedIn={false} />
+            <Avatar width={2.5} profileImage={profileImage} isLoggedIn={false} />
           </div>
           <div className="ml-3 w-[19.62rem]">
             <div className="text-base">

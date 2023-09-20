@@ -8,10 +8,19 @@ type CommentProps = {
   content: string;
   postedDate: string;
   active: boolean;
+  profileImage: string;
   onDelete: (commentId: string) => void;
 };
 
-const Comment = ({ commentId, nickname, content, postedDate, active, onDelete }: CommentProps) => {
+const Comment = ({
+  commentId,
+  nickname,
+  content,
+  postedDate,
+  active,
+  profileImage,
+  onDelete,
+}: CommentProps) => {
   const timestamp = getTimeStamp(postedDate);
 
   return (
@@ -19,7 +28,7 @@ const Comment = ({ commentId, nickname, content, postedDate, active, onDelete }:
       <div className="flex flex-col w-[20rem]  font-Cafe24SurroundAir">
         <div className="flex w-[20rem] h-[1.5rem]">
           <div className="icon cursor-pointer">
-            <Avatar width={1.5} profileImage="" isLoggedIn={false} />
+            <Avatar width={1.5} profileImage={profileImage} isLoggedIn={false} />
           </div>
           <div className="ml-2 w-[18rem] text-wall-street text-base">
             <span className="text-sm cursor-pointer">{nickname}</span>

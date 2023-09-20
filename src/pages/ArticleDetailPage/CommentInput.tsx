@@ -7,13 +7,14 @@ import Avatar from '@components/Avatar';
 type CommentInputProps = {
   onAddComment: (comment: CommentParams) => void;
   postId: string;
+  userImage: string;
 };
 
 type FormValueType = {
   comment: string;
 };
 
-const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
+const CommentInput = ({ onAddComment, postId, userImage }: CommentInputProps) => {
   const {
     register,
     handleSubmit,
@@ -36,7 +37,7 @@ const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between w-[23rem]">
           <div className="flex items-center justify-center">
-            <Avatar width={1.5} profileImage="" isLoggedIn={false} />
+            <Avatar width={1.5} profileImage={userImage} isLoggedIn={false} />
           </div>
           <div className="flex items-center justify-center">
             <input

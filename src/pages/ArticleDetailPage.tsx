@@ -36,7 +36,7 @@ const ArticleDetailPage = () => {
   }
 
   const { _id, title, author, createdAt, likes, image, comments } = article!;
-  const { fullName, _id: postUserId } = author;
+  const { fullName, _id: postUserId, image: authorProfileImage } = author;
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
 
   const isMyPost = user ? user._id === postUserId : false;
@@ -94,7 +94,11 @@ const ArticleDetailPage = () => {
           )}
         </div>
         <div>
-          <ArticleDetail nickname={fullName} postedDate={createdAt} />
+          <ArticleDetail
+            nickname={fullName}
+            postedDate={createdAt}
+            profileImage={authorProfileImage ? authorProfileImage : ''}
+          />
           <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
           <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
@@ -127,7 +131,13 @@ const ArticleDetailPage = () => {
           </div>
         )}
       </section>
-      {isLoginUser && <CommentInput onAddComment={addComment} postId={_id} />}
+      {isLoginUser && (
+        <CommentInput
+          onAddComment={addComment}
+          postId={_id}
+          userImage={user ? (user.image ? user.image : '') : ''}
+        />
+      )}
     </div>
   );
 };
