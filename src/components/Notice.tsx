@@ -18,7 +18,7 @@ const Notice = ({
   profileImage,
 }: NoticeProps) => {
   return (
-    <div className="flex flex-col gap-2 bg-input-white w-96 shadow-lg rounded-xl px-4 py-6">
+    <div className="flex flex-col gap-2 bg-input-white w-5/6 max-w-sm shadow-lg rounded-xl px-4 py-5">
       <div className="flex justify-between items-center">
         <div className="flex gap-1 items-center">
           <Avatar width={1.5} isLoggedIn={false} profileImage={profileImage} />
@@ -28,7 +28,11 @@ const Notice = ({
       </div>
       <div className="flex justify-between items-center gap-4">
         <p className="text-primary-black font-Cafe24SurroundAir text-sm font-light">{message}</p>
-        {isShowButton && <button>{buttonLabel}</button>}
+        {isShowButton && (
+          <button className="btn bg-cooled-blue border-none hover:bg-cooled-blue hover:bg-opacity-75 text-input-white btn-active ">
+            {buttonLabel}
+          </button>
+        )}
       </div>
     </div>
   );

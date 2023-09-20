@@ -1,57 +1,56 @@
-import React, { useMemo, useState } from 'react';
-import TabItem from './TabItem';
+import React, { useEffect } from 'react';
+import { useTabContext } from '@hooks/useTabContext';
 
-const childrenToArray = (children: React.ReactNode, ...types: string[]): React.ReactElement[] => {
-  return React.Children.toArray(children).reduce<React.ReactElement[]>((acc, element) => {
-    if (React.isValidElement(element) && types.includes(element.props.__TYPE)) {
-      acc.push(element);
-    }
-    return acc;
-  }, []);
+type TabItemProps = {
+  title: string;
+  width: string;
+  icon?: React.ReactNode;
+  onClick?: () => void;
 };
 
 type TabProps = {
-  children: React.ReactNode;
-  active?: boolean;
-  maxWidth?: string;
+  active?: string;
+  maxWidth: string;
+  defaultTab?: string;
+  tabItems: TabItemProps[];
 };
 
-const Tab = ({ children, active, maxWidth }: TabProps) => {
-  const [currentActive, setCurrentActive] = useState(() => {
+const Tab = ({ active, maxWidth, defaultTab, tabItems }: TabProps) => {
+  const { activeTab, setActiveTab } = useTabContext();
+  const activeIndex = Number(activeTab.slice(-1)) - 1;
+
+  useEffect(() => {
     if (active) {
-      return active;
-    } else {
-      const index = childrenToArray(children, 'Tab.Item')[0].props.index;
-      return index;
+      setActiveTab(active);
+    } else if (defaultTab) {
+      setActiveTab(defaultTab);
     }
-  });
-
-  const items = useMemo(() => {
-    return childrenToArray(children, 'Tab.Item').map((element) => {
-      return React.cloneElement(element, {
-        ...element.props,
-        key: element.props.index,
-        active: element.props.index === currentActive,
-        onClick: () => {
-          setCurrentActive(element.props.index);
-        },
-      });
-    });
-  }, [children, currentActive]);
-
-  const activeItem = useMemo(
-    () => items.find((element) => currentActive === element.props.index),
-    [currentActive, items],
-  );
+  }, [active, setActiveTab, defaultTab]);
 
   return (
-    <div>
-      <div className="flex">{items}</div>
-      <div style={{ maxWidth: `${maxWidth}rem` }}>{activeItem?.props.children}</div>
+    <div className="flex" style={{ maxWidth: `${maxWidth}rem` }}>
+      {tabItems.map((tabItem, index) => (
+        <div
+          key={index}
+          style={{ width: `${tabItem.width}rem` }}
+          className={`font-Cafe24Surround cursor-pointer flex items-center justify-center h-[2.5rem] text-[1.125rem] border-b-2 ${
+            activeIndex === index ? 'text-cooled-blue border-cooled-blue' : 'text-lazy-gray'
+          }`}
+          onClick={() => {
+            tabItem.onClick?.();
+            setActiveTab(`item${index + 1}`);
+          }}
+        >
+          <span className={`${activeIndex === index ? 'text-cooled-blue' : 'text-lazy-gray'}`}>
+            {tabItem.icon}
+          </span>
+          <span className={`${activeIndex === index ? 'text-cooled-blue' : 'text-lazy-gray'}`}>
+            {tabItem.title}
+          </span>
+        </div>
+      ))}
     </div>
   );
 };
-
-Tab.Item = TabItem;
 
 export default Tab;

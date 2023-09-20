@@ -4,7 +4,7 @@ import {
   HomePage,
   LandingPage,
   NotFoundPage,
-  SignupPage,
+  SignUpPage,
   SearchPage,
   ProfilePage,
   LoginPage,
@@ -12,6 +12,9 @@ import {
   ArticleDetailPage,
   NotificationPage,
   ArticlesPage,
+  ProfileEditPage,
+  ChangePasswordPage,
+  ProtectedRouter,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -22,14 +25,51 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: 'home', element: <HomePage /> },
-      { path: 'signup', element: <SignupPage /> },
+      { path: 'signUp', element: <SignUpPage /> },
       { path: 'search', element: <SearchPage /> },
-      { path: 'profile', element: <ProfilePage /> },
+      {
+        path: 'profile/:userId',
+        element: (
+          <ProtectedRouter>
+            <ProfilePage />
+          </ProtectedRouter>
+        ),
+      },
       { path: 'login', element: <LoginPage /> },
       { path: 'news', element: <ArticlesPage /> },
-      { path: 'news/create', element: <NewArticlePage /> },
+      {
+        path: 'news/create',
+        element: (
+          <ProtectedRouter>
+            <NewArticlePage />
+          </ProtectedRouter>
+        ),
+      },
       { path: 'news/:postId', element: <ArticleDetailPage /> },
-      { path: 'notification', element: <NotificationPage /> },
+      {
+        path: 'notification',
+        element: (
+          <ProtectedRouter>
+            <NotificationPage />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: 'profile/edit',
+        element: (
+          <ProtectedRouter>
+            <ProfileEditPage />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: 'password',
+        element: (
+          <ProtectedRouter>
+            <ChangePasswordPage />
+          </ProtectedRouter>
+        ),
+      },
     ],
   },
 ]);

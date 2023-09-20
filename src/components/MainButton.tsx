@@ -4,7 +4,7 @@ type MainButtonProps = {
   label: string;
   mode?: 'filled' | 'outlined';
   type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
+  onClick?: VoidFunction;
   isLoading?: boolean;
 };
 

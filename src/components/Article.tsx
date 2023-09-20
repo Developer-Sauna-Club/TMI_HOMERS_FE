@@ -28,9 +28,8 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
   return (
     <div
       onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
-      className="max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
+      className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto dark:bg-[#1D232A]"
     >
-
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
           {isHighlyLiked && (
@@ -40,13 +39,12 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
             {title.length > ARTICLE_TITLE_MAX_LENGTH
               ? `${title.slice(0, ARTICLE_TITLE_MAX_LENGTH)}...`
               : title}
-
           </h1>
           {hasImage && (
             <BiImageAlt className="text-article-img dark:text-extra-white w-[1.2rem] h-[1.2rem] ml-[0.25rem]" />
           )}
         </div>
-        <span className="text-lazy-gray text-[0.3rem]">{timestamp}</span>
+        <span className="text-lazy-gray text-[0.75rem]">{timestamp}</span>
       </div>
       <div className="flex justify-between h-[0.75rem]">
         <div className="flex items-center h-full">
@@ -63,7 +61,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
             <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{comments}</span>
           </div>
         </div>
-        <span className="text-wall-street text-[0.375rem] ">{nickname}</span>
+        <span className="text-wall-street text-[0.75rem] ">{nickname}</span>
       </div>
     </div>
   );

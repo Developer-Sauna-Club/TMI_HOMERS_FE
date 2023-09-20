@@ -4,7 +4,7 @@ type HeaderTextProps = {
 };
 
 const HeaderText = ({ size = 'normal', label }: HeaderTextProps) => {
-  const TEXT_BASE_CLASS = 'font-Cafe24Surround text-tricorn-black inline-block';
+  const TEXT_BASE_CLASS = 'font-Cafe24Surround text-tricorn-black inline-block dark:text-white';
   const TEXT_SIZE_CLASS = {
     small: 'text-[1.75rem]',
     normal: 'text-[2rem]',

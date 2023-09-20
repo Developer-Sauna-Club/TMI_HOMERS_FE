@@ -1,20 +1,28 @@
 import { useQuery } from '@tanstack/react-query';
 import { Post } from '@type/Post';
-import { AxiosResponse } from 'axios';
 import { axiosClient } from '@api/axiosClient';
 import { API } from '@constants/Article';
 
-export const useArticles = () => {
-  const { data, isFetching } = useQuery<AxiosResponse<Post[]>>(
-    ['articles'],
+type UseArticlesProps = {
+  id?: string;
+  type: 'user' | 'channel';
+};
+
+const ARTICLES_STALE_TIME = 1000 * 60;
+
+export const useArticles = ({ id, type }: UseArticlesProps) => {
+  const { data = [], isFetching } = useQuery<Post[]>(
+    ['articles', id, type],
     async () => {
-      const response = await axiosClient.get(
-        `${API.ARTICLES_URL}${API.CHANNEL_URL}/${API.CHANNEL_ID}`,
-      );
-      return response;
+      const requestUrl =
+        type === 'user'
+          ? `${API.ARTICLES_URL}${API.AUTHOR_URL}/${id}`
+          : `${API.ARTICLES_URL}${API.CHANNEL_URL}/${id}`;
+      const { data } = await axiosClient.get(requestUrl);
+      return data;
     },
     {
-      staleTime: 1000 * 5,
+      staleTime: ARTICLES_STALE_TIME,
     },
   );
 
