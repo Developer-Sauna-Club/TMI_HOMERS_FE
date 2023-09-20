@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { BiImageAdd } from 'react-icons/bi';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
@@ -9,9 +9,6 @@ import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle'
 import { useArticle } from '@/hooks/useArticle';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import { User } from '@/type/User';
-
-// TODO: 사용자 로그인 정보 불러오기
-// TODO: 작성한 게시물 id값 불러오기
 
 type FormValueType = {
   title: string;
@@ -77,7 +74,7 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue text-tricorn-black font-Cafe24SurroundAir">
+    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
           <HeaderText size="normal" label="글쓰기" />
@@ -85,7 +82,7 @@ const NewArticlePage = () => {
         </div>
       </header>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col h-[48.5rem]  bg-white rounded-t-3xl">
+        <div className="flex flex-col h-[48.5rem]  bg-white dark:bg-tricorn-black rounded-t-3xl">
           <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
             <Avatar
               width={2.5}
@@ -101,7 +98,10 @@ const NewArticlePage = () => {
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
             <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
-              <select onChange={handleTitleSelect} className="pb-2 mr-2 outline-none text-xs">
+              <select
+                onChange={handleTitleSelect}
+                className="pb-3 mr-2 outline-none text-xs dark:text-extra-white dark:bg-tricorn-black"
+              >
                 {DROPDOWN_OPTIONS.map((option, index) => (
                   <option key={index} value={option}>
                     {option}
@@ -128,7 +128,7 @@ const NewArticlePage = () => {
                 value={selectedText}
                 placeholder={MESSAGE.TITLE_REQUIRED}
                 maxLength={LENGTH_LIMIT.TITLE_MAX}
-                className="block w-full pb-2 outline-none"
+                className="block w-full pb-2 outline-none dark: bg-tricorn-black"
               />
             </div>
             <div className="flex justify-end w-full">
@@ -164,7 +164,7 @@ const NewArticlePage = () => {
                 })}
                 placeholder={MESSAGE.CONTENT_REQUIRED}
                 maxLength={LENGTH_LIMIT.CONTENT_MAX}
-                className="overflow-hidden outline-none resize-none h-[20rem] w-full"
+                className="overflow-hidden outline-none resize-none h-[20rem] w-full dark: bg-tricorn-black"
               />
               {errors?.body && (
                 <span className="text-xs text-error-red mr-3">{errors.body.message}</span>
@@ -176,7 +176,7 @@ const NewArticlePage = () => {
               htmlFor="file_input"
               className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
             >
-              <AiOutlinePlus size="1.5rem" />
+              <BiImageAdd size="1.2rem" />
             </label>
             <input
               id="file_input"
