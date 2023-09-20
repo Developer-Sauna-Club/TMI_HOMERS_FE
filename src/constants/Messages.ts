@@ -9,8 +9,8 @@ export const TOAST_MESSAGES = {
   LOGOUT_SUCCESS: '로그아웃되었어요.',
   LOGOUT_FAILED: '로그아웃에 실패했어요.',
 
-  POST_ARTICLE_SUCESS: '작성되었어요.',
-  POST_ARTICLE_FAILED: '작성 요청 중 오류가 발생했어요.',
+  POST_SUCESS: '작성되었어요.',
+  POST_FAILED: '작성 요청 중 오류가 발생했어요.',
 
   DELETE_ARTCILE_SUCESS: '정상적으로 삭제되었어요.',
   DELETE_ARTICLE_FAILED: '삭제 요청 중 오류가 발생했어요.',

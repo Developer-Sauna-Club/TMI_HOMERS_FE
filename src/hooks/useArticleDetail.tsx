@@ -28,7 +28,7 @@ export const useArticleDetail = () => {
       queryClient.invalidateQueries(['article', postId]);
     },
     onError: () => {
-      showToast(TOAST_MESSAGES.DELETE_COMMENT_FAILED, 'error');
+      showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
 

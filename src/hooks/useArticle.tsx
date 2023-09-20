@@ -12,11 +12,11 @@ export const useArticle = () => {
   return useMutation(saveArticle, {
     onSuccess: () => {
       queryClient.invalidateQueries(['search']);
-      showToast(TOAST_MESSAGES.POST_ARTICLE_SUCESS, 'success');
+      showToast(TOAST_MESSAGES.POST_SUCESS, 'success');
       navigate('/news');
     },
     onError: () => {
-      showToast(TOAST_MESSAGES.POST_ARTICLE_FAILED, 'error');
+      showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
 };
