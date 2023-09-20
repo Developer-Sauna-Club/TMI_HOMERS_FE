@@ -15,7 +15,58 @@ import useAuthQuery from '@hooks/useAuthQuery';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (
+  localStorage.theme === 'dark' ||
+  (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+
+// Whenever the user explicitly chooses light mode
+localStorage.theme = 'light';
+
+// Whenever the user explicitly chooses dark mode
+localStorage.theme = 'dark';
+
+// Whenever the user explicitly chooses to respect the OS preference
+localStorage.removeItem('theme');
+
 const ArticleDetailPage = () => {
+  const localStorageCheker = (): boolean => {
+    if (!localStorage.theme) {
+      return false;
+    }
+    return localStorage.theme === 'dark' ? true : false;
+  };
+  const [dark, setDark] = useState(localStorageCheker());
+  const darkSetButton = () => {
+    setDark((state) => {
+      const update = !state;
+      if (update) {
+        localStorage.theme = 'dark';
+      } else {
+        localStorage.theme = 'light';
+      }
+      return update;
+    });
+  };
+
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [dark]);
+
+  //-----------------------------------------------------
+
   const {
     userQuery: { data: user },
   } = useAuthQuery();
@@ -77,7 +128,10 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto mb-9 h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black">
+    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto pb-9 min-h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir bg-white dark:bg-tricorn-black text-tricorn-black dark:text-extra-white">
+      <button type="button" onClick={darkSetButton}>
+        {dark ? '현재 Dark모드' : '현재 light모드'}
+      </button>
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />

@@ -11,7 +11,7 @@ const ArticleDetail = ({ nickname, postedDate, profileImage }: ArticleDetailProp
   const timestamp = getTimeStamp(postedDate);
 
   return (
-    <div className="flex justify-center items-center w-[23rem] min-h-[5rem] p-1 font-Cafe24SurroundAir text-tricorn-black">
+    <div className="flex justify-center items-center w-[23rem] min-h-[5rem] p-1 font-Cafe24SurroundAir text-tricorn-black dark:text-extra-white">
       <div className="flex flex-col w-[22.125rem]">
         <div className="flex w-[22.125rem] h-[1.5rem]">
           <div className="icon cursor-pointer">

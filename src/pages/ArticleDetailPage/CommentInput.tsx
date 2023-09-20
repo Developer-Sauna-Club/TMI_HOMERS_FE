@@ -33,7 +33,7 @@ const CommentInput = ({ onAddComment, postId, userImage }: CommentInputProps) =>
   };
 
   return (
-    <div className="fixed bottom-2 flex justify-center items-center max-w-[24.875rem] w-full max-h-[3.75rem] h-full rounded-2xl bg-[#EEF1F4] font-Cafe24SurroundAir">
+    <div className="fixed bottom-2 flex justify-center items-center max-w-[24.875rem] w-full max-h-[3.75rem] h-full rounded-2xl bg-[#EEF1F4] dark:bg-lazy-gray font-Cafe24SurroundAir dark:text-tricorn-black">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between w-[23rem]">
           <div className="flex items-center justify-center">
@@ -48,7 +48,7 @@ const CommentInput = ({ onAddComment, postId, userImage }: CommentInputProps) =>
                   message: MESSAGE.COMMENT_MAXLENGTH,
                 },
               })}
-              className="w-[18rem] bg-[#EEF1F4] outline-none"
+              className="w-[18rem] bg-[#EEF1F4] dark:bg-lazy-gray outline-none"
               placeholder={MESSAGE.COMMENT_PLACEHOLDER}
               maxLength={LENGTH_LIMIT.COMMENT_MAX}
             />
