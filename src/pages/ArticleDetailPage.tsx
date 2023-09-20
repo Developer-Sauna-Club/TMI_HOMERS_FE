@@ -126,7 +126,7 @@ const ArticleDetailPage = () => {
           </div>
         )}
       </section>
-      {isLoginUser && <CommentInput onAddComment={addComment} postId={_id} />}
+      {isLoginUser && <CommentInput onAddComment={addComment} postId={_id} userId={postUserId} />}
     </div>
   );
 };

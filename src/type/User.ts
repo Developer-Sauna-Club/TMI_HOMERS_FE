@@ -1,5 +1,6 @@
 import type { Like } from './Like';
 import type { Message } from './Message';
+import type { Notification } from './Notification';
 import type { Post } from './Post';
 
 export type User = {
