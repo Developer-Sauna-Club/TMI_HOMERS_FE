@@ -36,7 +36,7 @@ const Toast = ({ mode = 'info', message = 'default content', onClick }: ToastPro
   return (
     <Portal>
       <div
-        className="toast toast-top mt-10 toast-center cursor-pointer w-[75%] max-w-[90%] drop-shadow-md"
+        className="toast toast-top mt-10 toast-center cursor-pointer w-[75%] max-w-[90%] drop-shadow-md z-[100]"
         onClick={handleToastClick}
       >
         <div
