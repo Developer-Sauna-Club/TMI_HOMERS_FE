@@ -98,6 +98,7 @@ const ProfilePage = () => {
           </div>
           <Tab
             maxWidth="25.875"
+            defaultTab="item1"
             tabItems={[
               { title: '작성한 기사', width: '12.9375' },
               { title: '응원한 기사', width: '12.9375' },
@@ -105,7 +106,7 @@ const ProfilePage = () => {
           />
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
-          <TabItem title="작성한 기사" index="item1">
+          <TabItem index="item1">
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />
@@ -119,7 +120,7 @@ const ProfilePage = () => {
               </div>
             )}
           </TabItem>
-          <TabItem title="응원한 기사" index="item2">
+          <TabItem index="item2">
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />

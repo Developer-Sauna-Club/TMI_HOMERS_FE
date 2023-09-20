@@ -50,6 +50,7 @@ const SearchPage = () => {
               <div className="pt-[1.63rem]">
                 <Tab
                   maxWidth="23.375"
+                  defaultTab="item1"
                   tabItems={[
                     { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
                     { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
@@ -60,14 +61,14 @@ const SearchPage = () => {
           </div>
         </header>
         <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
-          <TabItem title={`${TAB_CONSTANTS.ARTICLE_TITLE}`} index="item1">
+          <TabItem index="item1">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'title'} />
             ) : (
               <SearchResultList data={data} />
             )}
           </TabItem>
-          <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item2">
+          <TabItem index="item2">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'user'} />
             ) : (

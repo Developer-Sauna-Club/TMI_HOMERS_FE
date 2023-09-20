@@ -11,18 +11,21 @@ type TabItemProps = {
 type TabProps = {
   active?: string;
   maxWidth: string;
+  defaultTab?: string;
   tabItems: TabItemProps[];
 };
 
-const Tab = ({ active, maxWidth, tabItems }: TabProps) => {
+const Tab = ({ active, maxWidth, defaultTab, tabItems }: TabProps) => {
   const { activeTab, setActiveTab } = useTabContext();
   const activeIndex = Number(activeTab.slice(-1)) - 1;
 
   useEffect(() => {
     if (active) {
       setActiveTab(active);
+    } else if (defaultTab) {
+      setActiveTab(defaultTab);
     }
-  }, [active, setActiveTab]);
+  }, [active, setActiveTab, defaultTab]);
 
   return (
     <div className="flex" style={{ maxWidth: `${maxWidth}rem` }}>
