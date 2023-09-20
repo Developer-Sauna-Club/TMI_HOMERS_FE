@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Comment as CommentType } from '@type/Comment';
 import { deleteComment } from '@/api/common/Comment';
 import Comment from '@components/Comment';
@@ -24,7 +24,11 @@ const Comments = ({ comments, userId }: CommentsProps) => {
     }
   };
 
-  return comments?.map((comment_post) => {
+  useEffect(() => {
+    setCommentList(comments);
+  }, [comments]);
+
+  return commentList?.map((comment_post) => {
     const { _id, comment, author, createdAt } = comment_post;
     const { fullName, _id: authorId } = author;
     const isMyComment = userId === authorId;
