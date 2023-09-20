@@ -1,6 +1,6 @@
 import { useNavigate, Navigate } from 'react-router-dom';
 import MainButton from '@/components/MainButton';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import { LoadingPage } from '@pages/index';
 
 const LOGO_SRC = '/img/logo.svg';
@@ -11,17 +11,19 @@ const START_BUTTON_CONTENT = '시작하기';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user, isLoading },
+  } = useAuthQuery();
 
   const handleClickStartButton = () => {
     navigate('/home');
   };
 
-  if (user === undefined) {
+  if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (user === null) {
+  if (!user) {
     return (
       <div className="w-full h-[100vh] flex flex-col items-center justify-center bg-white">
         <div className="flex flex-col justify-center items-center gap-3 select-none">

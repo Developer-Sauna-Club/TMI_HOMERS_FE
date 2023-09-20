@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { AuthContextProvider } from './context/AuthContext';
 
 const TempNavBar = () => {
   const ANCHOR_CLASS = 'border-gray-200 no-underline hover:text-cooled-blue';
@@ -40,10 +39,10 @@ const TempNavBar = () => {
 
 const App = () => {
   return (
-    <AuthContextProvider>
+    <>
       <TempNavBar />
       <Outlet />
-    </AuthContextProvider>
+    </>
   );
 };
 

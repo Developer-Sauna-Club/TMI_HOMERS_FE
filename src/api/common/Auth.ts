@@ -1,7 +1,6 @@
 import { SignUpParams } from '@/type/signUp';
 import { SignUpFormValues } from '@/type/signUp';
 import type { User } from '@/type/User';
-import { removeItemFromStorage } from '@/utils/localStorage';
 import { axiosClient } from '../axiosClient';
 
 const SIGNUP_URL = '/signup';
@@ -53,12 +52,13 @@ export const login = async ({ email, password }: LoginParams): Promise<LoginResp
   return data;
 };
 
-export const logout = () => {
-  axiosClient.post(LOGOUT_URL);
-  removeItemFromStorage('token');
+export const logout = async () => {
+  await axiosClient.post(LOGOUT_URL);
 };
 
+type EmptyUser = '';
+
 export const checkAuthentication = async () => {
-  const { data } = await axiosClient.get<User>(CHECK_AUTH_URL);
+  const { data } = await axiosClient.get<User | EmptyUser>(CHECK_AUTH_URL);
   return data;
 };

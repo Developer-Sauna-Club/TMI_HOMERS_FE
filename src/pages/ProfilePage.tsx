@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { logout } from '@/api/common/Auth';
 import getUserInfo from '@/api/getUserInfo';
 import Loader from '@/components/Loader';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { User } from '@/type/User';
 import Avatar from '@components/Avatar';
@@ -21,7 +20,6 @@ import UserArticles from './ProfilePage/UserArticles';
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, setUser } = useAuthContext();
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
 
   const pathSegments = location.pathname.split('/');
@@ -37,6 +35,11 @@ const ProfilePage = () => {
       enabled: !areYouProfileUser,
     },
   );
+
+  const {
+    userQuery: { data: user },
+    logoutQuery: { mutate: logoutMutate },
+  } = useAuthQuery();
 
   useEffect(() => {
     if (user) {
@@ -61,8 +64,7 @@ const ProfilePage = () => {
             {areYouProfileUser && (
               <div
                 onClick={() => {
-                  logout();
-                  setUser(null);
+                  logoutMutate();
                 }}
                 className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]"
               >

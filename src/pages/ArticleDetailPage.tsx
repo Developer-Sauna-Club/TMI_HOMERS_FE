@@ -1,19 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
 import { useArticleDetail } from '@hooks/useArticleDetail';
-import { useAuthContext } from '@hooks/useAuthContext';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const { data: article, isFetching } = useArticleDetail();
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const navigate = useNavigate();
 
   if (isFetching) {
