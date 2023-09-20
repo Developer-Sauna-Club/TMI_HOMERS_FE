@@ -5,7 +5,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
-import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
+import { DROPDOWN_OPTIONS, ETC, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import { User } from '@/type/User';
@@ -77,7 +77,7 @@ const NewArticlePage = () => {
     <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
-          <HeaderText size="normal" label="글쓰기" />
+          <HeaderText size="normal" label={ETC.HEADER_WRITE} />
           <CloseButton onClick={() => navigate(-1)} />
         </div>
       </header>
@@ -93,7 +93,7 @@ const NewArticlePage = () => {
               <span className="font-Cafe24Surround">{fullName}</span>
             </div>
             <button className="w-[6rem] h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer">
-              작성하기
+              {ETC.BUTTON_WRITE}
             </button>
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">

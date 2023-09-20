@@ -30,3 +30,8 @@ export const MESSAGE = {
   CONTENT_MINLENGTH: '2글자 이상 입력해주세요',
   CONTENT_MAXLENGTH: '500자 이내로 입력해주세요',
 };
+
+export const ETC = {
+  HEADER_WRITE: '글쓰기',
+  BUTTON_WRITE: '작성하기',
+};
