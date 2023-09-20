@@ -43,7 +43,7 @@ const Toast = ({ mode = 'info', message = 'default content', onClick }: ToastPro
           className={`flex flex-start rounded-lg p-3 gap-2 items-center bg-white border ${BORDER_COLOR_CLASSES[mode]} w-full`}
         >
           {TOAST_ICON[mode]}
-          <p className="text-wall-street font-Cafe24SurroundAir w-full text-[0.825rem] font-bold mr-1 whitespace-pre-line tracking-toast text-center">
+          <p className="text-wall-street font-Cafe24SurroundAir w-full text-[0.9rem] font-bold mr-1 whitespace-pre-line tracking-toast text-center">
             {message}
           </p>
         </div>
