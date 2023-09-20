@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import { deleteLikePost, likePost } from '@/api/common/Like';
-import { deletePost } from '@/api/common/Post';
-import useAuthQuery from '@/hooks/useAuthQuery';
+import { BUTTON, MESSAGE } from '@/constants/ArticleDetail';
+import { deleteLikePost, likePost } from '@api/common/Like';
+import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
 import { useArticleDetail } from '@hooks/useArticleDetail';
+import useAuthQuery from '@hooks/useAuthQuery';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
@@ -101,7 +102,7 @@ const ArticleDetailPage = () => {
           <div className="text-base">{articleBody}</div>
           <div className="flex justify-between mt-6">
             <SubButton
-              label="응원하기"
+              label={BUTTON.CHEER_UP}
               onClick={() => handleLikePost()}
               color="blue"
               type={likePushed ? 'fill' : 'outline'}
@@ -118,7 +119,7 @@ const ArticleDetailPage = () => {
       <section>
         {comments.length === 0 ? (
           <div className="flex justify-start w-[22rem] mt-[3%]">
-            <span className="text-xs text-gray-400">댓글이 없습니다</span>
+            <span className="text-xs text-gray-400">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
           <div className="mb-[10rem]">

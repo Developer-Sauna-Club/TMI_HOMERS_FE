@@ -16,8 +16,6 @@ const Comments = ({ comments, userId }: CommentsProps) => {
       await deleteComment(commentId);
       const updatedComments = commentList.filter((comment) => comment._id !== commentId);
       setCommentList(updatedComments);
-      //console.log(commentList);
-
       alert('댓글 삭제 완료');
     } catch (error) {
       alert(error);

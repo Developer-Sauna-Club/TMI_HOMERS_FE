@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiQuillPenFill } from 'react-icons/ri';
 import { CommentParams } from '@/api/common/Comment';
+import { LENGTH_LIMIT, MESSAGE } from '@/constants/ArticleDetail';
 import Avatar from '@components/Avatar';
 
 type CommentInputProps = {
@@ -40,15 +41,15 @@ const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
           <div className="flex items-center justify-center">
             <input
               {...register('comment', {
-                required: '댓글을 작성해주세요',
+                required: MESSAGE.COMMENT_REQUIRED,
                 maxLength: {
-                  value: 200,
-                  message: '200자 이내로 입력해주세요',
+                  value: LENGTH_LIMIT.COMMENT_MAX,
+                  message: MESSAGE.COMMENT_MAXLENGTH,
                 },
               })}
               className="w-[18rem] bg-[#EEF1F4] outline-none"
-              placeholder="댓글을 작성해주세요."
-              maxLength={200}
+              placeholder={MESSAGE.COMMENT_PLACEHOLDER}
+              maxLength={LENGTH_LIMIT.COMMENT_MAX}
             />
           </div>
           <div className="flex items-center justify-center">
