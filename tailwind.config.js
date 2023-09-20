@@ -36,6 +36,7 @@ export default {
     },
     letterSpacing: {
       tighter: '-0.15rem',
+      toast: '-0.05rem',
     },
     boxShadow: {
       'article-container': '0px 2px 5px 0px rgba(0, 0, 0, 0.25)',
