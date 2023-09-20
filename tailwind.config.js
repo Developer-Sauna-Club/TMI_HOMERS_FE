@@ -24,6 +24,15 @@ export default {
         Cafe24SurroundAir: ['Cafe24SurroundAir'],
         Pretendard: ['Pretendard'],
       },
+      keyframes: {
+        zoomin: {
+          from: { transform: 'scale(0) translate(-50%, -50%)' },
+          to: { transform: 'scale(1) translate(-50%, -50%)' },
+        },
+      },
+      animation: {
+        modalZoomIn: 'zoomin 200ms ease-in-out',
+      },
     },
     letterSpacing: {
       tighter: '-0.15rem',

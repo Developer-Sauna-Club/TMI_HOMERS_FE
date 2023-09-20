@@ -9,8 +9,9 @@ type UserInformation = {
   username: string;
 };
 
-export const updateUser = async (data: UserInformation) => {
-  await axiosClient.put<User>(UPDATE_USER, data);
+export const updateUser = async (userInformation: UserInformation) => {
+  const { data } = await axiosClient.put<User>(UPDATE_USER, userInformation);
+  return data;
 };
 
 export const updatePassword = async (password: string) => {

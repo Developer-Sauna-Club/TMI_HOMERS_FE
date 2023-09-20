@@ -1,8 +1,12 @@
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import type { User } from '@/type/User';
 import EditForm from './ProfileEditPage/EditForm';
 
 const ProfileEditPage = () => {
+  const { user } = useAuthContext();
+
   return (
     <section className="grid grid-rows-[1fr_8fr] h-screen bg-white overflow-y-auto dark:bg-[#1D232A]">
       <header className="flex justify-center w-full">
@@ -11,7 +15,7 @@ const ProfileEditPage = () => {
           <CloseButton />
         </div>
       </header>
-      <EditForm />
+      <EditForm user={user! as User} />
     </section>
   );
 };
