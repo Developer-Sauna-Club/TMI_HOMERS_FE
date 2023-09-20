@@ -9,7 +9,7 @@ import SubButton from '@components/SubButton';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { DEBOUNCE_TIME, MINIMUM__DATA } from '@constants/Search';
-import { TabConstants } from '@constants/Tab';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useDebounceValue from '@hooks/useDebounce';
 import useRecentResult from '@hooks/useRecentResult';
@@ -51,38 +51,37 @@ const SearchPage = () => {
               <div className="pt-[1.63rem]">
                 <Tab
                   maxWidth="23.375"
+                  defaultTab="item1"
                   tabItems={[
-                    { title: `${TabConstants.ARTICLE_TITLE}`, width: '11.6875' },
-                    { title: `${TabConstants.NICKNAME}`, width: '11.6875' },
+                    { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
+                    { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
                   ]}
                 />
               </div>
             </div>
           </div>
         </header>
-        {data && (
-          <article className="overflow-y-auto pt-4">
-            <TabItem title={`${TabConstants.ARTICLE_TITLE}`} index="item1">
-              {isFetching ? (
-                <SearchSkeleton SkeletonType={'title'} />
-              ) : (
-                <SearchResultList data={data} />
-              )}
-            </TabItem>
-            <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item2">
-              {isFetching ? (
-                <SearchSkeleton SkeletonType={'user'} />
-              ) : (
-                <SearchResultList data={data} />
-              )}
-            </TabItem>
-          </article>
-        )}
+        <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
+          <TabItem index="item1">
+            {isFetching ? (
+              <SearchSkeleton SkeletonType={'title'} />
+            ) : (
+              <SearchResultList data={data} />
+            )}
+          </TabItem>
+          <TabItem index="item2">
+            {isFetching ? (
+              <SearchSkeleton SkeletonType={'user'} />
+            ) : (
+              <SearchResultList data={data} />
+            )}
+          </TabItem>
+        </article>
         {(!data || data.length <= MINIMUM__DATA) && !isFetching && (
           <footer className="mb-8 mt-8 ml-[1.9rem] mr-[1.56rem]">
             <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
             <hr className="mt-2 mb-5" />
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               {recentResult.map((item, index) => (
                 <div key={index}>
                   <SubButton

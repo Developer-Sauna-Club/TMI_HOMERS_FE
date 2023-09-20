@@ -1,7 +1,7 @@
 import { Comment } from '@/type/Comment';
 import { axiosClient } from '../axiosClient';
 
-type CommentParams = {
+export type CommentParams = {
   comment: string;
   postId: string;
 };
