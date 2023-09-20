@@ -42,6 +42,7 @@ const HomePage = () => {
                   likes={0}
                   comments={1}
                 />
+
                 <Article
                   title="되겠냐?"
                   id="1"
@@ -148,11 +149,29 @@ const HomePage = () => {
                 likes={0}
                 comments={1}
               />
+              <Article
+                title="되겠냐?"
+                id="1"
+                nickname="@khakhiD"
+                postedDate="2023-08-29T09:28:39.390Z"
+                hasImage={true}
+                likes={0}
+                comments={1}
+              />
+              <Article
+                title="되겠냐?"
+                id="1"
+                nickname="@khakhiD"
+                postedDate="2023-08-29T09:28:39.390Z"
+                hasImage={true}
+                likes={0}
+                comments={1}
+              />
             </ul>
           </div>
         </section>
       </div>
-      <footer className="sticky bottom-0 flex-none justify-center items-center">
+      <footer className="fixed bottom-0 flex-none justify-center items-center">
         <BottomNavigation currentPage="/home" />
       </footer>
     </div>
