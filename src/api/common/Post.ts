@@ -96,10 +96,10 @@ export const updatePost = async ({
 
 export const deletePost = async (id: string) => {
   const DELETE_POST_URL = '/posts/delete';
-
-  return await axiosClient.delete(DELETE_POST_URL, {
+  const response = await axiosClient.delete(DELETE_POST_URL, {
     data: {
       id,
     },
   });
+  return response;
 };

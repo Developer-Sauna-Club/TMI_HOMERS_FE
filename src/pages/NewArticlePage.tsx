@@ -7,6 +7,7 @@ import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 // TODO: 사용자 로그인 정보 불러오기
 // TODO: 작성한 게시물 id값 불러오기
@@ -19,8 +20,16 @@ type FormValueType = {
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
+  const { user } = useAuthContext();
   const [selectedText, setSelectedText] = useState('');
   const [titleCount, setTitleCount] = useState(0);
+
+  if (!user) {
+    alert('로그인 후 글을 쓸 수 있습니다!');
+    navigate('/home');
+  }
+
+  const { fullName, image: profileImage } = user!;
 
   const {
     register,
@@ -33,7 +42,6 @@ const NewArticlePage = () => {
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
-      alert(JSON.stringify(data));
       addArticle.mutate({ ...data, image });
     } catch (error) {
       alert(error);
@@ -71,7 +79,7 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue font-Cafe24SurroundAir">
+    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue text-tricorn-black font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
           <HeaderText size="normal" label="글쓰기" />
@@ -81,9 +89,13 @@ const NewArticlePage = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col h-[48.5rem]  bg-white rounded-t-3xl">
           <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
-            <Avatar width={2.5} profileImage="" isLoggedIn={false} />
+            <Avatar
+              width={2.5}
+              profileImage={profileImage ? profileImage : ''}
+              isLoggedIn={false}
+            />
             <div className="flex w-[12.5rem]">
-              <span className="font-Cafe24Surround">닉네임</span>
+              <span className="font-Cafe24Surround">{fullName}</span>
             </div>
             <button className="w-[6rem] h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer">
               작성하기
