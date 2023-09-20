@@ -29,6 +29,7 @@ const ProfilePage = () => {
 
   const [areYouProfileUser, setAreYouProfileUser] = useState(false);
   const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
+  const [userImage, setUserImage] = useState('');
 
   const { data: externalUser, isFetching } = useQuery(
     ['userInfo', lastSegment],
@@ -42,9 +43,11 @@ const ProfilePage = () => {
     if (user) {
       setAreYouProfileUser(user._id === lastSegment);
       setCurrentProfileUser(areYouProfileUser ? user : externalUser);
+      setUserImage(areYouProfileUser ? user.image : externalUser?.image);
     } else {
       setAreYouProfileUser(false);
       setCurrentProfileUser(externalUser);
+      setUserImage(externalUser?.image);
     }
   }, [user, lastSegment, areYouProfileUser, externalUser]);
 
@@ -77,7 +80,7 @@ const ProfilePage = () => {
                   navigate(`/profile/edit`);
                 }}
               >
-                <Avatar width={8} profileImage="" isLoggedIn={areYouProfileUser} />
+                <Avatar width={8} profileImage={userImage} isLoggedIn={areYouProfileUser} />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
