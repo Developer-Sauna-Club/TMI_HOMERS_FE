@@ -17,9 +17,9 @@ const SearchResultList = ({ data }: SearchData) => {
         const { title: articleTitle } = title ? JSON.parse(title) : { title: '' };
         return (
           <div key={_id}>
-            <span className="font-Cafe24SurroundAir">
-              {index === 0 && `${filteredData?.length}건의 검색결과`}
-            </span>
+            {index === 0 && (
+              <span className="font-Cafe24Surround  text-[0.875rem] ml-6">{`${filteredData?.length}건의 검색결과`}</span>
+            )}
             <Article
               id={_id}
               title={articleTitle ? articleTitle : '제목이 없습니다.'}
@@ -35,9 +35,9 @@ const SearchResultList = ({ data }: SearchData) => {
         const { _id, fullName, image } = searchResult;
         return (
           <div key={_id}>
-            <span className="font-Cafe24SurroundAir">
-              {index === 0 && `${filteredData?.length}건의 검색결과`}
-            </span>
+            {index === 0 && (
+              <span className="font-Cafe24Surround  text-[0.875rem] ml-6">{`${filteredData?.length}건의 검색결과`}</span>
+            )}
             <UserListItem fullName={fullName} id={_id} image={image ? image : ''} />
           </div>
         );

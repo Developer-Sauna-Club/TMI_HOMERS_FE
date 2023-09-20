@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { followUser, unFollowUser } from '@/api/common/Follow';
 import { UserListItemParams } from '@/type/search';
+import { User } from '@/type/User';
 import { ARTICLE_TITLE_MAX_LENGTH } from '@constants/Article';
 import { useAuthContext } from '@hooks/useAuthContext';
 import Avatar from './Avatar';
@@ -12,7 +13,6 @@ const SEARCH_RESULT_CLASS =
 const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
-
   const handleUnFollowing = (id: string) => {
     const userId = user?.following.find(({ user }) => user === id);
     if (userId) {
@@ -20,9 +20,18 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
     }
   };
   const handleFollowing = (id: string) => {
-    followUser(id);
+    if (id) {
+      followUser(id);
+    }
+    //TODO : 비회원일때 팔로우 버튼을 클릭했을시 Not authorized 오류 처리
   };
-
+  const isFollowing = (user: User | undefined | null) => {
+    if (user) {
+      return user.following.every(({ user }) => user !== id);
+    } else {
+      return true;
+    }
+  };
   return (
     <div key={id} className={`${SEARCH_RESULT_CLASS}`}>
       <div
@@ -38,7 +47,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
             : fullName}
         </div>
       </div>
-      {user?.following.every(({ user }) => user !== id) ? (
+      {isFollowing(user) ? (
         <SubButton
           key={id}
           label="팔로우"
