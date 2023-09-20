@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { followUser, unFollowUser } from '@/api/common/Follow';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import { UserListItemParams } from '@/type/search';
 import { User } from '@/type/User';
 import { ARTICLE_TITLE_MAX_LENGTH } from '@constants/Article';
-import { useAuthContext } from '@hooks/useAuthContext';
 import Avatar from './Avatar';
 import SubButton from './SubButton';
 
@@ -11,9 +11,14 @@ const SEARCH_RESULT_CLASS =
   'cursor-pointer max-w-[22.375rem] mb-[0.8rem] mt-[0.5rem] mx-auto flex items-center justify-between font-Cafe24SurroundAir pl-4 pr-3 pb-[0.625rem] pt-[0.25rem]';
 
 const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const navigate = useNavigate();
   const handleUnFollowing = (id: string) => {
+    if (!user) {
+      return;
+    }
     const userId = user?.following.find(({ user }) => user === id);
     if (userId) {
       unFollowUser(userId._id);
@@ -25,7 +30,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
     }
     //TODO : 비회원일때 팔로우 버튼을 클릭했을시 Not authorized 오류 처리
   };
-  const isFollowing = (user: User | undefined | null) => {
+  const isFollowing = (user: User | undefined | '') => {
     if (user) {
       return user.following.every(({ user }) => user !== id);
     } else {

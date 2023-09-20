@@ -7,7 +7,7 @@ import { MdOutlineSearch, MdStars } from 'react-icons/md';
 import { fetchUserPosts } from '@/api/common/Post';
 import BottomNavigation from '@/components/BottomNavigation';
 import { API, ARTICLE_FETCH_LIMIT } from '@/constants/Article';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { Follow } from '@/type/Follow';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
@@ -36,7 +36,9 @@ const ArticlesPage = () => {
     getItemFromStorage(LOCAL_STORAGE_CURRENT_TAB_KEY) || 'item1',
   );
 
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const navigate = useNavigate();
 
   const { ref: scrollRef, showScrollToTopButton, scrollToTop } = useScrollToTop();

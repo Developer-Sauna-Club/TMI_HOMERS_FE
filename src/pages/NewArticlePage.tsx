@@ -7,7 +7,8 @@ import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
+import { User } from '@/type/User';
 
 // TODO: 사용자 로그인 정보 불러오기
 // TODO: 작성한 게시물 id값 불러오기
@@ -20,16 +21,13 @@ type FormValueType = {
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const [selectedText, setSelectedText] = useState('');
   const [titleCount, setTitleCount] = useState(0);
 
-  if (!user) {
-    alert('로그인 후 글을 쓸 수 있습니다!');
-    navigate('/home');
-  }
-
-  const { fullName, image: profileImage } = user!;
+  const { fullName, image: profileImage } = user! as User;
 
   const {
     register,
