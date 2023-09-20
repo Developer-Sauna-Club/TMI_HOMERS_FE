@@ -1,12 +1,12 @@
 import type { Post } from '@/type/Post';
 import { axiosClient } from '../axiosClient';
 
-type InfinitiyScrollParams = {
+type InfinityScrollParams = {
   offset: number;
   limit: number;
 };
 
-export const fetchAllPosts = async ({ offset, limit }: Partial<InfinitiyScrollParams>) => {
+export const fetchAllPosts = async ({ offset, limit }: Partial<InfinityScrollParams>) => {
   const FETCH_ALL_POSTS_URL = '/posts/channel/64fac2e729260903240d2dab';
 
   const { data } = await axiosClient.get<Post[]>(FETCH_ALL_POSTS_URL, {
@@ -19,7 +19,7 @@ export const fetchUserPosts = async ({
   offset,
   limit,
   authorId,
-}: Partial<InfinitiyScrollParams> & { authorId: string }) => {
+}: Partial<InfinityScrollParams> & { authorId: string }) => {
   const FETCH_USER_POSTS_URL = `/posts/author/${authorId}`;
 
   const { data } = await axiosClient.get<Post[]>(FETCH_USER_POSTS_URL, {

@@ -36,7 +36,7 @@ const SearchPage = () => {
           </div>
           <div className="flex justify-center">
             <div className="bg-white w-[23.375rem] rounded-lg">
-              <form className="flex relative items-center ">
+              <form className="relative flex items-center ">
                 <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4" />
                 <input
                   className={INPUT_CLASS}
@@ -50,6 +50,7 @@ const SearchPage = () => {
               <div className="pt-[1.63rem]">
                 <Tab
                   maxWidth="23.375"
+                  defaultTab="item1"
                   tabItems={[
                     { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
                     { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
@@ -60,14 +61,14 @@ const SearchPage = () => {
           </div>
         </header>
         <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
-          <TabItem title={`${TAB_CONSTANTS.ARTICLE_TITLE}`} index="item1">
+          <TabItem index="item1">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'title'} />
             ) : (
               <SearchResultList data={data} />
             )}
           </TabItem>
-          <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item2">
+          <TabItem index="item2">
             {isFetching ? (
               <SearchSkeleton SkeletonType={'user'} />
             ) : (
@@ -79,7 +80,7 @@ const SearchPage = () => {
           <footer className="mb-8">
             <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
             <hr className="mt-2 mb-5" />
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               {recentResult.map((item, index) => (
                 <div key={index}>
                   <SubButton

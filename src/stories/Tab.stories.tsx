@@ -22,6 +22,7 @@ export const Default = () => {
       <TabContextProvider>
         <Tab
           maxWidth="25.875"
+          defaultTab="item1"
           tabItems={[
             { title: `${TAB_CONSTANTS.NEWEST}`, width: '8.625' },
             {
@@ -36,10 +37,10 @@ export const Default = () => {
             },
           ]}
         />
-        <TabItem title={`${TAB_CONSTANTS.NEWEST}`} index="item1">
+        <TabItem index="item1">
           <Loader />
         </TabItem>
-        <TabItem title={`${TAB_CONSTANTS.HOTTEST}`} index="item2">
+        <TabItem index="item2">
           <Article
             id="1"
             title="(임시)이거슨 뜨겁다."
@@ -50,7 +51,7 @@ export const Default = () => {
             comments={42}
           />
         </TabItem>
-        <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item3">
+        <TabItem index="item3">
           <Article
             id="1"
             title="(임시)이거슨 구독이다."
@@ -72,15 +73,16 @@ export const TitleAndNicknameTab = () => {
       <TabContextProvider>
         <Tab
           maxWidth="23.375"
+          defaultTab="item1"
           tabItems={[
             { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
             { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
           ]}
         />
-        <TabItem title={`${TAB_CONSTANTS.NEWEST}`} index="item1">
+        <TabItem index="item1">
           <Loader />
         </TabItem>
-        <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item2">
+        <TabItem index="item2">
           <ErrorText text="아직 구독한 사용자가 없습니다." />
         </TabItem>
       </TabContextProvider>
@@ -94,15 +96,16 @@ export const SubscribeTab = () => {
       <TabContextProvider>
         <Tab
           maxWidth="23.375"
+          defaultTab="item1"
           tabItems={[
             { title: `${TAB_CONSTANTS.SUBSCRIBER}`, width: '11.6875' },
             { title: `${TAB_CONSTANTS.SUBSCRIBING}`, width: '11.6875' },
           ]}
         />
-        <TabItem title={`${TAB_CONSTANTS.SUBSCRIBER}`} index="item1">
+        <TabItem index="item1">
           <Loader />
         </TabItem>
-        <TabItem title={`${TAB_CONSTANTS.SUBSCRIBING}`} index="item2">
+        <TabItem index="item2">
           <Article
             id="1"
             title="(임시)이거슨 구독이다."
