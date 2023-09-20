@@ -36,7 +36,7 @@ const SearchPage = () => {
           </div>
           <div className="flex justify-center">
             <div className="bg-white w-[23.375rem] rounded-lg">
-              <form className="flex relative items-center ">
+              <form className="flex relative items-center " onSubmit={(e) => e.preventDefault()}>
                 <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4" />
                 <input
                   className={INPUT_CLASS}
@@ -59,24 +59,26 @@ const SearchPage = () => {
             </div>
           </div>
         </header>
-        <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
-          <TabItem title={`${TabConstants.ARTICLE_TITLE}`} index="item1">
-            {isFetching ? (
-              <SearchSkeleton SkeletonType={'title'} />
-            ) : (
-              <SearchResultList data={data} />
-            )}
-          </TabItem>
-          <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item2">
-            {isFetching ? (
-              <SearchSkeleton SkeletonType={'user'} />
-            ) : (
-              <SearchResultList data={data} />
-            )}
-          </TabItem>
-        </article>
+        {data && (
+          <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
+            <TabItem title={`${TabConstants.ARTICLE_TITLE}`} index="item1">
+              {isFetching ? (
+                <SearchSkeleton SkeletonType={'title'} />
+              ) : (
+                <SearchResultList data={data} />
+              )}
+            </TabItem>
+            <TabItem title={`${TabConstants.SUBSCRIBED}`} index="item2">
+              {isFetching ? (
+                <SearchSkeleton SkeletonType={'user'} />
+              ) : (
+                <SearchResultList data={data} />
+              )}
+            </TabItem>
+          </article>
+        )}
         {(!data || data.length <= MINIMUM__DATA) && !isFetching && (
-          <footer className="mb-8">
+          <footer className="mb-8 mt-8">
             <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
             <hr className="mt-2 mb-5" />
             <div className="flex gap-2 flex-wrap">

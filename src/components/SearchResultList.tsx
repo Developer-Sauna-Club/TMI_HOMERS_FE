@@ -5,21 +5,6 @@ import { useTabContext } from '@hooks/useTabContext';
 import Article from './Article';
 import UserListItem from './UserListItem';
 
-// 분리하는 거 고민..
-const SearchResultString = ({
-  index,
-  filteredData,
-}: {
-  index: number;
-  filteredData: SearchData['data'];
-}) => {
-  return (
-    <span className="font-Cafe24SurroundAir">
-      {index === 0 && `${filteredData?.length}건의 검색결과`}
-    </span>
-  );
-};
-
 const SearchResultList = ({ data }: SearchData) => {
   const { activeTab } = useTabContext();
   const filteredData = useFilteredSearchResult({ data });
@@ -32,7 +17,9 @@ const SearchResultList = ({ data }: SearchData) => {
         const { title: articleTitle } = title ? JSON.parse(title) : { title: '' };
         return (
           <div key={_id}>
-            {SearchResultString({ index, filteredData })}
+            <span className="font-Cafe24SurroundAir">
+              {index === 0 && `${filteredData?.length}건의 검색결과`}
+            </span>
             <Article
               id={_id}
               title={articleTitle ? articleTitle : '제목이 없습니다.'}
@@ -45,11 +32,13 @@ const SearchResultList = ({ data }: SearchData) => {
           </div>
         );
       } else if (activeTab === 'item2' && SearchType.ROLE in searchResult) {
-        const { _id, fullName } = searchResult;
+        const { _id, fullName, image } = searchResult;
         return (
           <div key={_id}>
-            {SearchResultString({ index, filteredData })}
-            <UserListItem fullName={fullName} id={_id} />
+            <span className="font-Cafe24SurroundAir">
+              {index === 0 && `${filteredData?.length}건의 검색결과`}
+            </span>
+            <UserListItem fullName={fullName} id={_id} image={image ? image : ''} />
           </div>
         );
       }

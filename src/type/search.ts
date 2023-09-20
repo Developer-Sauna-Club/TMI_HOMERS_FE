@@ -17,4 +17,5 @@ export type RecentResultParams = {
 export type UserListItemParams = {
   id: string;
   fullName: string;
+  image: string;
 };
