@@ -1,27 +1,31 @@
 import React, { useEffect } from 'react';
 import { useTabContext } from '@hooks/useTabContext';
 
-type TabItem = {
+type TabItemProps = {
   title: string;
   width: string;
   icon?: React.ReactNode;
+  onClick?: () => void;
 };
 
 type TabProps = {
   active?: string;
   maxWidth: string;
-  tabItems: TabItem[];
+  defaultTab?: string;
+  tabItems: TabItemProps[];
 };
 
-const Tab = ({ active, maxWidth, tabItems }: TabProps) => {
+const Tab = ({ active, maxWidth, defaultTab, tabItems }: TabProps) => {
   const { activeTab, setActiveTab } = useTabContext();
   const activeIndex = Number(activeTab.slice(-1)) - 1;
 
   useEffect(() => {
     if (active) {
       setActiveTab(active);
+    } else if (defaultTab) {
+      setActiveTab(defaultTab);
     }
-  }, [active, setActiveTab]);
+  }, [active, setActiveTab, defaultTab]);
 
   return (
     <div className="flex" style={{ maxWidth: `${maxWidth}rem` }}>
@@ -32,7 +36,10 @@ const Tab = ({ active, maxWidth, tabItems }: TabProps) => {
           className={`font-Cafe24Surround cursor-pointer flex items-center justify-center h-[2.5rem] text-[1.125rem] border-b-2 ${
             activeIndex === index ? 'text-cooled-blue border-cooled-blue' : 'text-lazy-gray'
           }`}
-          onClick={() => setActiveTab(`item${index + 1}`)}
+          onClick={() => {
+            tabItem.onClick?.();
+            setActiveTab(`item${index + 1}`);
+          }}
         >
           <span className={`${activeIndex === index ? 'text-cooled-blue' : 'text-lazy-gray'}`}>
             {tabItem.icon}

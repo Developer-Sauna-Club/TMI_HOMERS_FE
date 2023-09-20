@@ -9,7 +9,7 @@ export const searchUsers = async (query: string) => {
 };
 
 export const searchAllResults = async (query: string) => {
-  const SEARCH_ALL_RESULTS_URL = `/search/${query}`;
+  const SEARCH_ALL_RESULTS_URL = `/search/all/${query}`;
   const { data } = await axiosClient.get<(User | Post)[]>(SEARCH_ALL_RESULTS_URL);
   return data;
 };

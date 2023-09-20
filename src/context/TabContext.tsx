@@ -11,7 +11,7 @@ const TabContext = createContext<TabContextProps>({
 });
 
 export const TabContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [activeTab, setActiveTab] = useState('item1');
+  const [activeTab, setActiveTab] = useState('');
 
   return <TabContext.Provider value={{ activeTab, setActiveTab }}>{children}</TabContext.Provider>;
 };

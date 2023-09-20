@@ -7,11 +7,11 @@ export const likePost = async (postId: string) => {
   return data;
 };
 
-export const deleteLikePost = async (postId: string) => {
+export const deleteLikePost = async (id: string) => {
   const LIKE_POST_URL = '/likes/delete';
   const { data } = await axiosClient.delete<Like>(LIKE_POST_URL, {
     data: {
-      postId,
+      id,
     },
   });
   return data;

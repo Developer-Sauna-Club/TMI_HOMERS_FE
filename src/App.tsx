@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { ToastContextProvider } from './context/ToastContext';
 
 const TempNavBar = () => {
   const ANCHOR_CLASS = 'border-gray-200 no-underline hover:text-cooled-blue';
@@ -39,10 +40,10 @@ const TempNavBar = () => {
 
 const App = () => {
   return (
-    <>
-      <TempNavBar />
-      <Outlet />
-    </>
+      <ToastContextProvider>
+        <TempNavBar />
+        <Outlet />
+      </ToastContextProvider>
   );
 };
 

@@ -27,6 +27,7 @@ const ProfilePage = () => {
 
   const [areYouProfileUser, setAreYouProfileUser] = useState(false);
   const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
+  const [userImage, setUserImage] = useState('');
 
   const { data: externalUser, isFetching } = useQuery(
     ['userInfo', lastSegment],
@@ -45,9 +46,11 @@ const ProfilePage = () => {
     if (user) {
       setAreYouProfileUser(user._id === lastSegment);
       setCurrentProfileUser(areYouProfileUser ? user : externalUser);
+      setUserImage(areYouProfileUser ? user.image : externalUser?.image);
     } else {
       setAreYouProfileUser(false);
       setCurrentProfileUser(externalUser);
+      setUserImage(externalUser?.image);
     }
   }, [user, lastSegment, areYouProfileUser, externalUser]);
 
@@ -79,7 +82,7 @@ const ProfilePage = () => {
                   navigate(`/profile/edit`);
                 }}
               >
-                <Avatar width={8} profileImage="" isLoggedIn={areYouProfileUser} />
+                <Avatar width={8} profileImage={userImage} isLoggedIn={areYouProfileUser} />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
@@ -91,7 +94,7 @@ const ProfilePage = () => {
               </div>
               <SubscribeInfo
                 subscriber={currentProfileUser ? currentProfileUser.followers.length : 0}
-                subscribing={currentProfileUser ? currentProfileUser.comments.length : 0}
+                subscribing={currentProfileUser ? currentProfileUser.following.length : 0}
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
@@ -100,6 +103,7 @@ const ProfilePage = () => {
           </div>
           <Tab
             maxWidth="25.875"
+            defaultTab="item1"
             tabItems={[
               { title: '작성한 기사', width: '12.9375' },
               { title: '응원한 기사', width: '12.9375' },
@@ -107,7 +111,7 @@ const ProfilePage = () => {
           />
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
-          <TabItem title="작성한 기사" index="item1">
+          <TabItem index="item1">
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />
@@ -121,7 +125,7 @@ const ProfilePage = () => {
               </div>
             )}
           </TabItem>
-          <TabItem title="응원한 기사" index="item2">
+          <TabItem index="item2">
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />

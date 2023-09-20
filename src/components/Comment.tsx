@@ -3,17 +3,19 @@ import Avatar from './Avatar';
 import CloseButton from './CloseButton';
 
 type CommentProps = {
+  commentId: string;
   nickname: string;
   content: string;
   postedDate: string;
   active: boolean;
+  onDelete: (commentId: string) => void;
 };
 
-const Comment = ({ nickname, content, postedDate, active }: CommentProps) => {
+const Comment = ({ commentId, nickname, content, postedDate, active, onDelete }: CommentProps) => {
   const timestamp = getTimeStamp(postedDate);
 
   return (
-    <div className="flex justify-center items-center w-[20rem] min-h-[6rem] mt-3">
+    <div className="flex justify-center items-center w-[20rem] min-h-[6rem] mt-3 text-tricorn-black">
       <div className="flex flex-col w-[20rem]  font-Cafe24SurroundAir">
         <div className="flex w-[20rem] h-[1.5rem]">
           <div className="icon cursor-pointer">
@@ -22,7 +24,9 @@ const Comment = ({ nickname, content, postedDate, active }: CommentProps) => {
           <div className="ml-2 w-[18rem] text-wall-street text-base">
             <span className="text-sm cursor-pointer">{nickname}</span>
           </div>
-          <div className="flex w-[1rem]">{active && <CloseButton mode="small" />}</div>
+          <div className="flex w-[1rem]">
+            {active && <CloseButton mode="small" onClick={() => onDelete(commentId)} />}
+          </div>
         </div>
         <div className="flex items-center min-h-[2.4rem] py-3 text-base break-all">
           <span>{content}</span>
