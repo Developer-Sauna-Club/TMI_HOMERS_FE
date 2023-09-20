@@ -5,7 +5,7 @@ import { BiSolidUserCircle } from 'react-icons/bi';
 import { BsFillBellFill } from 'react-icons/bs';
 import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { RiQuillPenFill } from 'react-icons/ri';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
 
 const NavConstants = {
   HOME: '홈',
@@ -25,11 +25,13 @@ type BottomNavigationProp = {
 
 const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const [userId, setUserId] = useState('');
 
   useEffect(() => {
-    setUserId(user?._id || '');
+    setUserId(user ? user._id : '');
   }, [user]);
 
   return (

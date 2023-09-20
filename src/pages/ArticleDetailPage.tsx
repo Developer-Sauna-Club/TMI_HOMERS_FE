@@ -4,19 +4,21 @@ import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { deleteLikePost, likePost } from '@/api/common/Like';
 import { deletePost } from '@/api/common/Post';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
 import { useArticleDetail } from '@hooks/useArticleDetail';
-import { useAuthContext } from '@hooks/useAuthContext';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const { data: article, isLoading, addComment } = useArticleDetail();
-  const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
   const [likesCount, setLikesCount] = useState(article?.likes.length);
