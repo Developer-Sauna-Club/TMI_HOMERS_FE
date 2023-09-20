@@ -10,6 +10,7 @@ import { API, ARTICLE_FETCH_LIMIT } from '@/constants/Article';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { Follow } from '@/type/Follow';
+import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 import HeaderText from '@components/HeaderText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
@@ -21,15 +22,29 @@ import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import Articles from './ArticlesPage/Articles';
 import InfiniteScroll from './ArticlesPage/InfiniteScroll';
 
+const LOCAL_STORAGE_CURRENT_TAB_KEY = 'CURRENT_TAB';
+
 const ArticlesPage = () => {
   const { data: articles, isFetching } = useArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
   });
-
   const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles);
   const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles);
   const [followingUsers, setFollowingUsers] = useState<Follow[]>([]);
+  const [currentTab, setCurrentTab] = useState(
+    getItemFromStorage(LOCAL_STORAGE_CURRENT_TAB_KEY) || 'item1',
+  );
+
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const { ref: scrollRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
+
+  const changeTab = (newTab: string) => {
+    setCurrentTab(newTab);
+    setItemToStorage(LOCAL_STORAGE_CURRENT_TAB_KEY, newTab);
+  };
 
   const fetchFollowingArticles = useCallback(
     async ({ pageParam = 0 }) => {
@@ -38,7 +53,6 @@ const ArticlesPage = () => {
           fetchUserPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT, authorId: user.user }),
         ),
       );
-
       return newArticles.flat();
     },
     [followingUsers],
@@ -58,10 +72,12 @@ const ArticlesPage = () => {
     },
   );
 
-  const { user } = useAuthContext();
-
-  const navigate = useNavigate();
-  const { ref: scrollRef, showScrollToTopButton, scrollToTop } = useScrollToTop();
+  useEffect(() => {
+    const savedTab = getItemFromStorage(LOCAL_STORAGE_CURRENT_TAB_KEY);
+    if (savedTab) {
+      setCurrentTab(savedTab);
+    }
+  }, [currentTab]);
 
   useEffect(() => {
     if (user) {
@@ -83,25 +99,31 @@ const ArticlesPage = () => {
             />
           </div>
           <Tab
-            active="item1"
+            active={currentTab}
             maxWidth="25.875"
             tabItems={[
-              { title: `${TAB_CONSTANTS.NEWEST}`, width: '8.625' },
+              {
+                title: `${TAB_CONSTANTS.NEWEST}`,
+                width: '8.625',
+                onClick: () => changeTab('item1'),
+              },
               {
                 title: `${TAB_CONSTANTS.HOTTEST}`,
                 icon: <BsFire className="w-[1.3rem] h-[1.3rem]" />,
                 width: '8.625',
+                onClick: () => changeTab('item2'),
               },
               {
                 title: `${TAB_CONSTANTS.SUBSCRIBED}`,
                 icon: <MdStars className="w-[1.5rem] h-[1.5rem]" />,
                 width: '8.625',
+                onClick: () => changeTab('item3'),
               },
             ]}
           />
         </header>
         <article ref={scrollRef} className="flex-grow gap-4 overflow-y-auto">
-          <TabItem title={`${TAB_CONSTANTS.NEWEST}`} index="item1">
+          <TabItem index="item1">
             {isFetching ? (
               <div className="flex justify-center">
                 <Loader />
@@ -110,11 +132,23 @@ const ArticlesPage = () => {
               <Articles articles={newestArticles} />
             )}
           </TabItem>
-          <TabItem title={`${TAB_CONSTANTS.HOTTEST}`} index="item2">
-            <Articles articles={hottestArticles} />
+          <TabItem index="item2">
+            {isFetching ? (
+              <div className="flex justify-center">
+                <Loader />
+              </div>
+            ) : (
+              <Articles articles={hottestArticles} />
+            )}
           </TabItem>
-          <TabItem title={`${TAB_CONSTANTS.SUBSCRIBED}`} index="item3">
-            <Articles articles={data?.pages.flat() || []} />
+          <TabItem index="item3">
+            {isFetching ? (
+              <div className="flex justify-center">
+                <Loader />
+              </div>
+            ) : (
+              <Articles articles={data?.pages.flat() || []} />
+            )}
             <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
           </TabItem>
           <button

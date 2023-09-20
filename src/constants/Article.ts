@@ -1,6 +1,7 @@
 export const API = {
   ARTICLES_URL: '/posts',
   AUTHOR_URL: '/author',
+  SEARCH_URL: '/search',
   CHANNEL_URL: '/channel',
   CHANNEL_ID: '64fac2e729260903240d2dab',
 };
