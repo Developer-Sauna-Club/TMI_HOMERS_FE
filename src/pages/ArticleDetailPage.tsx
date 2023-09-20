@@ -153,7 +153,9 @@ const ArticleDetailPage = () => {
             postedDate={createdAt}
             profileImage={authorProfileImage ? authorProfileImage : ''}
           />
-          <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
+          <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
+            {articleTitle}
+          </div>
           <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
           </div>

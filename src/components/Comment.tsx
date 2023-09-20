@@ -41,7 +41,7 @@ const Comment = ({
           <span>{content}</span>
         </div>
         <div className="w-[20rem] h-[1.125rem] text-wall-street text-xs">{timestamp}</div>
-        <div className="w-[20rem] mt-[7%] border-b-[0.01rem] border-gray" />
+        <div className="w-[20rem] mt-[7%] border-b-[0.01rem] border-gray-200 dark:border-gray-700" />
       </div>
     </div>
   );

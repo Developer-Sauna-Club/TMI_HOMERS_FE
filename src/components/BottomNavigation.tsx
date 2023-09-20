@@ -16,7 +16,7 @@ const NavConstants = {
 
 const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center';
 const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
-const BUTTON_COLOR = 'text-footer-icon';
+const BUTTON_COLOR = 'text-footer-icon dark:text-extra-white';
 const ACTIVE_COLOR = 'text-cooled-blue';
 
 type BottomNavigationProp = {
@@ -35,7 +35,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   }, [user]);
 
   return (
-    <div className="flex items-center justify-evenly w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
+    <div className="flex items-center justify-evenly w-[25.875rem] h-[4.75rem] bg-white dark:bg-tricorn-black shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] dark:shadow-[0_-0.021rem_0_0_rgba(238, 238, 238, 0.5)] font-Cafe24SurroundAir">
       <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
@@ -68,7 +68,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
         onClick={() => navigate('/news/create')}
         className={`${BASE_BUTTON_STYLE}position: relative px-5`}
       >
-        <span className="flex items-center justify-center position: absolute -bottom-1 w-[3.5rem] h-[3.5rem] bg-cooled-blue rounded-full drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out delay-150 hover:scale-110">
+        <span className="flex items-center justify-center position: absolute -bottom-1 w-[3.5rem] h-[3.5rem] bg-cooled-blue dark:bg-[#344F59] rounded-full drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out delay-150 hover:scale-110">
           <RiQuillPenFill className="text-white" size="2rem" fill="currentColor" />
         </span>
       </button>
