@@ -9,7 +9,7 @@ export const useArticleDetail = () => {
   const { pathname: url } = useLocation();
   const postId = url.split('/').pop() || '';
 
-  const { data, isFetching } = useQuery<Post>(
+  const { data, isLoading } = useQuery<Post>(
     ['article', postId],
     async () => {
       const response = await fetchPost(postId);
@@ -30,5 +30,5 @@ export const useArticleDetail = () => {
     commentMutation.mutate({ ...newComment, postId });
   };
 
-  return { data, isFetching, addComment };
+  return { data, isLoading, addComment };
 };

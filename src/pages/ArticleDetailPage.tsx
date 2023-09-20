@@ -15,21 +15,20 @@ import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
-  const { data: article, isFetching, addComment } = useArticleDetail();
+  const { data: article, isLoading, addComment } = useArticleDetail();
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
   const [likesCount, setLikesCount] = useState(article?.likes.length);
 
   useEffect(() => {
-    // user가 로드되었을 때 isPostLiked 설정
     if (user) {
       const isPostLiked = user.likes.some((like) => like.post === article?._id);
       setLikePushed(isPostLiked);
     }
   }, [user, article]);
 
-  if (isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 

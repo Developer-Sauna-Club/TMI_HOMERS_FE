@@ -17,6 +17,7 @@ const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormValueType>();
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
@@ -27,6 +28,7 @@ const CommentInput = ({ onAddComment, postId }: CommentInputProps) => {
         postId,
       };
       onAddComment(newComment);
+      reset();
     } catch (error) {
       alert(error);
     }
