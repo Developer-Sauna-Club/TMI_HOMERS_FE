@@ -1,4 +1,5 @@
 import { useNavigate, Navigate } from 'react-router-dom';
+import Loader from '@/components/Loader';
 import MainButton from '@/components/MainButton';
 import { useAuthContext } from '@/hooks/useAuthContext';
 
@@ -15,6 +16,14 @@ const LandingPage = () => {
   const handleClickStartButton = () => {
     navigate('/home');
   };
+
+  if (user === undefined) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <Loader size="lg" />
+      </div>
+    );
+  }
 
   if (user === null) {
     return (

@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { BsFillBellFill } from 'react-icons/bs';
 import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { RiQuillPenFill } from 'react-icons/ri';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 const NavConstants = {
   HOME: '홈',
@@ -23,9 +25,15 @@ type BottomNavigationProp = {
 
 const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const navigate = useNavigate();
+  const { user } = useAuthContext();
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    setUserId(user?._id || '');
+  }, [user]);
 
   return (
-    <div className="flex items-center justify-evenly max-w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
+    <div className="flex items-center justify-evenly w-[25.875rem] h-[4.75rem] bg-white shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] font-Cafe24SurroundAir">
       <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
@@ -81,16 +89,26 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
           {NavConstants.NOTICE}
         </span>
       </button>
-      <button name="profile" onClick={() => navigate('/profile')} className={BASE_BUTTON_STYLE}>
+      <button
+        name="profile"
+        onClick={() => {
+          navigate(`/profile/${userId}`);
+        }}
+        className={BASE_BUTTON_STYLE}
+      >
         <span className={BASE_ICON_STYLE}>
           <BiSolidUserCircle
-            className={`${currentPage === '/profile' ? ACTIVE_COLOR : BUTTON_COLOR}`}
+            className={`${currentPage === `/profile/${userId}` ? ACTIVE_COLOR : BUTTON_COLOR}`}
             aria-hidden="true"
             size="2rem"
             fill="currentColor"
           />
         </span>
-        <span className={`text-sm ${currentPage === '/profile' ? ACTIVE_COLOR : BUTTON_COLOR}`}>
+        <span
+          className={`text-sm ${
+            currentPage === `/profile/${userId}` ? ACTIVE_COLOR : BUTTON_COLOR
+          }`}
+        >
           {NavConstants.MYPAGE}
         </span>
       </button>

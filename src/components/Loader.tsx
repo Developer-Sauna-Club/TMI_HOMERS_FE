@@ -11,7 +11,7 @@ const loaderSize = {
 };
 
 const Loader = ({ size = 'md' }: LoaderProps) => {
-  return <span className={`${defaultLoaderClass} first-letter:${loaderSize[size]}`} />;
+  return <span className={`${defaultLoaderClass} ${loaderSize[size]}`} />;
 };
 
 export default Loader;

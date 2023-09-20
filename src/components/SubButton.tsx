@@ -9,10 +9,10 @@ type SubButtonProps = {
 };
 
 const OUTLINE_TYPE = {
-  blue: 'border-cooled-blue hover:bg-cooled-blue hover:bg-opacity-75 text-cooled-blue bg-white hover:text-input-white',
-  red: 'border-error-red hover:bg-error-red hover:bg-opacity-75 text-error-red bg-white hover:text-input-white',
+  blue: 'border-cooled-blue hover:bg-cooled-blue hover:bg-opacity-75 text-cooled-blue bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+  red: 'border-error-red hover:bg-error-red hover:bg-opacity-75 text-error-red bg-white hover:text-input-white hover:border-none dark:bg-transparent',
   violet:
-    'border-light-violet hover:bg-light-violet hover:bg-opacity-75 text-light-violet bg-white hover:text-input-white',
+    'border-light-violet hover:bg-light-violet hover:bg-opacity-75 text-light-violet bg-white hover:text-input-white hover:border-none dark:bg-transparent',
 };
 
 const FILL_TYPE = {
@@ -42,13 +42,18 @@ const SubButton = ({
   radius = 'small',
   type,
   size = 'medium',
+  onClick,
   ...props
 }: SubButtonProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
   return (
     <button
       className={`btn btn-sm normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
         type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
       } ${BUTTON_SIZE[size]}`}
+      onClick={handleClick}
       {...props}
     >
       {label}

@@ -24,9 +24,21 @@ export default {
         Cafe24SurroundAir: ['Cafe24SurroundAir'],
         Pretendard: ['Pretendard'],
       },
+      keyframes: {
+        zoomin: {
+          from: { transform: 'scale(0) translate(-50%, -50%)' },
+          to: { transform: 'scale(1) translate(-50%, -50%)' },
+        },
+      },
+      animation: {
+        modalZoomIn: 'zoomin 200ms ease-in-out',
+      },
     },
     letterSpacing: {
       tighter: '-0.15rem',
+    },
+    boxShadow: {
+      'article-container': '0px 2px 5px 0px rgba(0, 0, 0, 0.25)',
     },
   },
   // eslint-disable-next-line no-undef
