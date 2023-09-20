@@ -1,16 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { TOAST_MESSAGES } from '@/constants/Messages';
 import { updatePassword } from '@api/common/UserSettings';
+import { useToastContext } from './useToastContext';
 
 const useChangePassword = () => {
   const navigate = useNavigate();
+  const { showToast } = useToastContext();
   const { mutate: changePasswordMutate, isLoading } = useMutation(updatePassword, {
     onSuccess: () => {
-      alert('비밀번호가 성공적으로 변경되었습니다.');
+      showToast(TOAST_MESSAGES.CHANGE_PASSWORD_SUCESS, 'success');
       navigate('/home', { replace: true });
     },
-    onError: (error) => {
-      alert(JSON.stringify(error));
+    onError: () => {
+      showToast(TOAST_MESSAGES.CHANGE_PASSWORD_FAILED, 'error');
     },
   });
 
