@@ -15,7 +15,7 @@ const Comment = ({ commentId, nickname, content, postedDate, active, onDelete }:
   const timestamp = getTimeStamp(postedDate);
 
   return (
-    <div className="flex justify-center items-center w-[20rem] min-h-[6rem] mt-3">
+    <div className="flex justify-center items-center w-[20rem] min-h-[6rem] mt-3 text-tricorn-black">
       <div className="flex flex-col w-[20rem]  font-Cafe24SurroundAir">
         <div className="flex w-[20rem] h-[1.5rem]">
           <div className="icon cursor-pointer">
