@@ -1,7 +1,7 @@
 import { useNavigate, Navigate } from 'react-router-dom';
-import Loader from '@/components/Loader';
 import MainButton from '@/components/MainButton';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import { LoadingPage } from '@pages/index';
 
 const LOGO_SRC = '/img/logo.svg';
 const CHARACTER_SRC = '/img/character.png';
@@ -18,11 +18,7 @@ const LandingPage = () => {
   };
 
   if (user === undefined) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen">
-        <Loader size="lg" />
-      </div>
-    );
+    return <LoadingPage />;
   }
 
   if (user === null) {

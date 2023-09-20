@@ -11,3 +11,5 @@ export { default as SearchPage } from './SearchPage';
 export { default as SignUpPage } from './SignupPage';
 export { default as ProfileEditPage } from './ProfileEditPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage';
+export { default as LoadingPage } from './LoadingPage';
+export { default as ProtectedRouter } from './ProtectedRouter';
