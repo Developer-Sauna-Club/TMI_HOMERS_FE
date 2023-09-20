@@ -14,6 +14,7 @@ import {
   ArticlesPage,
   ProfileEditPage,
   ChangePasswordPage,
+  ProtectedRouter,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -26,14 +27,49 @@ const router = createBrowserRouter([
       { path: 'home', element: <HomePage /> },
       { path: 'signUp', element: <SignUpPage /> },
       { path: 'search', element: <SearchPage /> },
-      { path: 'profile/:userId', element: <ProfilePage /> },
+      {
+        path: 'profile/:userId',
+        element: (
+          <ProtectedRouter>
+            <ProfilePage />
+          </ProtectedRouter>
+        ),
+      },
       { path: 'login', element: <LoginPage /> },
       { path: 'news', element: <ArticlesPage /> },
-      { path: 'news/create', element: <NewArticlePage /> },
+      {
+        path: 'news/create',
+        element: (
+          <ProtectedRouter>
+            <NewArticlePage />
+          </ProtectedRouter>
+        ),
+      },
       { path: 'news/:postId', element: <ArticleDetailPage /> },
-      { path: 'notification', element: <NotificationPage /> },
-      { path: 'profile/edit', element: <ProfileEditPage /> },
-      { path: 'password', element: <ChangePasswordPage /> },
+      {
+        path: 'notification',
+        element: (
+          <ProtectedRouter>
+            <NotificationPage />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: 'profile/edit',
+        element: (
+          <ProtectedRouter>
+            <ProfileEditPage />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: 'password',
+        element: (
+          <ProtectedRouter>
+            <ChangePasswordPage />
+          </ProtectedRouter>
+        ),
+      },
     ],
   },
 ]);

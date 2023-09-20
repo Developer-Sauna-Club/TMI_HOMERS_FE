@@ -1,24 +1,11 @@
-import { Navigate } from 'react-router-dom';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
-import Loader from '@/components/Loader';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import type { User } from '@/type/User';
 import EditForm from './ProfileEditPage/EditForm';
 
 const ProfileEditPage = () => {
   const { user } = useAuthContext();
-
-  if (user === undefined) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen">
-        <Loader size="lg" />
-      </div>
-    );
-  }
-
-  if (user === null) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <section className="grid grid-rows-[1fr_8fr] h-screen bg-white overflow-y-auto dark:bg-[#1D232A]">
@@ -28,7 +15,7 @@ const ProfileEditPage = () => {
           <CloseButton />
         </div>
       </header>
-      <EditForm user={user} />
+      <EditForm user={user! as User} />
     </section>
   );
 };
