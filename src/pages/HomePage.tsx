@@ -10,6 +10,7 @@ import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
 import Articles from './ArticlesPage/Articles';
+import HotArticles from './HomePage/HotArticles';
 
 const CHARACTER_SRC = '/img/character.png';
 
@@ -25,7 +26,7 @@ const HomePage = () => {
     0,
     POST_COUNT.NEWEST,
   );
-  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles).slice(
+  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles).slice(
     0,
     POST_COUNT.HOTTEST,
   );
@@ -49,15 +50,13 @@ const HomePage = () => {
                 </h2>
               </div>
               <div className="bg-white text-black w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
-                <div>
-                  {isFetching ? (
-                    <div className="flex justify-center">
-                      <Loader />
-                    </div>
-                  ) : (
-                    <Articles articles={hottestArticles} />
-                  )}
-                </div>
+                {isFetching ? (
+                  <div className="flex justify-center items-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <HotArticles articles={hottestArticles} />
+                )}
               </div>
               <img
                 src={CHARACTER_SRC}
@@ -67,10 +66,10 @@ const HomePage = () => {
             </div>
           </section>
         </section>
-        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow">
+        <section className="flex flex-col justify-center gap-6 flex-grow pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
+            <h2 className="text-tricorn-black dark:text-lazy-gray font-Cafe24Surround text-lg font-bold px-10">
               <span onClick={() => navigate('/news')} className="cursor-pointer">
                 {MESSAGE.NEWEST}
               </span>
