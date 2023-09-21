@@ -128,12 +128,12 @@ const ProfilePage = () => {
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
               </span>
             </div>
-            <div
+            <button
               className="absolute right-12 top-2 text-[1.5rem] cursor-pointer"
               onClick={() => navigate('/profile/edit')}
             >
               <IoSettingsSharp />
-            </div>
+            </button>
           </div>
           <Tab
             maxWidth="25.875"
