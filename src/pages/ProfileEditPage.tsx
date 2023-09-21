@@ -19,22 +19,24 @@ const ProfileEditPage = () => {
   };
 
   return (
-    <section className="grid grid-rows-[1fr_8fr] h-screen overflow-y-auto">
-      {showModal && (
-        <Confirm
-          theme="negative"
-          title="수정사항이 사라질 수 있어요"
-          onClose={modalClose}
-          onConfirm={handleClickConfirm}
-        />
-      )}
-      <header className="flex justify-center w-full">
-        <div className="flex items-center justify-between w-full max-w-sm p-4 pt-8">
-          <HeaderText label="프로필 수정" />
-          <CloseButton onClick={modalOpen} />
-        </div>
-      </header>
-      <EditForm user={user! as User} />
+    <section className="flex justify-center h-screen">
+      <div className="flex flex-col justify-center px-2">
+        {showModal && (
+          <Confirm
+            theme="negative"
+            title="수정사항이 사라질 수 있어요"
+            onClose={modalClose}
+            onConfirm={handleClickConfirm}
+          />
+        )}
+        <header className="flex justify-center w-full">
+          <div className="flex items-center justify-between w-full max-w-sm p-6 pt-8">
+            <HeaderText label="프로필 수정" />
+            <CloseButton onClick={modalOpen} />
+          </div>
+        </header>
+        <EditForm user={user! as User} />
+      </div>
     </section>
   );
 };
