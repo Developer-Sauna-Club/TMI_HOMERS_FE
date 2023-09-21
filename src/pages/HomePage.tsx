@@ -75,7 +75,7 @@ const HomePage = () => {
                 {MESSAGE.NEWEST}
               </span>
             </h2>
-            <div>
+            <div className="pb-[7rem]">
               {isFetching ? (
                 <div className="flex justify-center">
                   <Loader />
