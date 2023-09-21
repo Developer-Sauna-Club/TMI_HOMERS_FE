@@ -74,7 +74,7 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
           <HeaderText size="normal" label={ETC.HEADER_WRITE} />
@@ -82,7 +82,7 @@ const NewArticlePage = () => {
         </div>
       </header>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col h-[48.5rem]  bg-white dark:bg-tricorn-black rounded-t-3xl">
+        <div className="flex flex-col h-screen bg-white dark:bg-tricorn-black rounded-t-3xl">
           <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
             <Avatar
               width={2.5}
