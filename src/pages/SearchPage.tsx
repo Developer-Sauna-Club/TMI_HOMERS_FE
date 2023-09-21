@@ -32,8 +32,8 @@ const SearchPage = () => {
   const isNotEnoughData = (!data || data.length <= MINIMUM__DATA) && !isFetching;
   return (
     <TabContextProvider>
-      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative dark:bg-[#1D232A]">
-        <header className="bg-cooled-blue pt-[2.75rem] h-[14.375rem] dark:bg-[#1D232A]">
+      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
+        <header className="bg-cooled-blue dark:bg-dark-primary pt-[2.75rem] h-[14.375rem]">
           <div className=" flex mb-[1.25rem] ml-[1.9rem] mr-[1.56rem] justify-between items-center">
             <HeaderText label="검색" />
             <CloseButton onClick={() => navigate(-1)} />

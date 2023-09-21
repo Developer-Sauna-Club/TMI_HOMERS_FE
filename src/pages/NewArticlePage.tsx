@@ -97,13 +97,13 @@ const NewArticlePage = () => {
             </button>
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
-            <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
+            <div className="flex justify-center items-end h-[3.5rem] border-b-2 border-cooled-blue">
               <select
                 onChange={handleTitleSelect}
-                className="pb-3 mr-2 outline-none text-xs dark:text-extra-white dark:bg-tricorn-black"
+                className="flex justify-center items-center pb-2 mr-2 outline-none text-base dark:text-extra-white dark:bg-tricorn-black"
               >
                 {DROPDOWN_OPTIONS.map((option, index) => (
-                  <option key={index} value={option}>
+                  <option key={index} value={option} className="align-middle text-center">
                     {option}
                   </option>
                 ))}
