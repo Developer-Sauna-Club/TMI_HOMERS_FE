@@ -10,13 +10,13 @@ type ToastProps = {
 };
 
 const TOAST_ICON = {
-  info: <AiFillInfoCircle size={24} className="fill-wall-street" />,
+  info: <AiFillInfoCircle size={24} className="fill-wall-street dark:fill-white" />,
   success: <AiFillCheckCircle size={24} className="fill-cooled-blue" />,
   error: <BiSolidErrorCircle size={24} className="fill-error-red" />,
 };
 
 const BORDER_COLOR_CLASSES = {
-  info: 'border-lazy-gray',
+  info: 'border-lazy-gray dark:border-profile-bg',
   success: 'border-cooled-blue',
   error: 'border-error-red',
 };
@@ -40,10 +40,10 @@ const Toast = ({ mode = 'info', message = 'default content', onClick }: ToastPro
         onClick={handleToastClick}
       >
         <div
-          className={`flex flex-start rounded-lg p-3 gap-2 items-center bg-white border ${BORDER_COLOR_CLASSES[mode]} w-full`}
+          className={`flex flex-start rounded-lg p-3 gap-2 items-center bg-white dark:bg-tricorn-black border ${BORDER_COLOR_CLASSES[mode]} w-full`}
         >
           {TOAST_ICON[mode]}
-          <p className="text-wall-street font-Cafe24SurroundAir w-full text-[0.9rem] font-bold mr-1 whitespace-pre-line tracking-toast text-center">
+          <p className="text-wall-street dark:text-white font-Cafe24SurroundAir w-full text-[0.9rem] font-bold mr-1 whitespace-pre-line tracking-toast text-center">
             {message}
           </p>
         </div>
