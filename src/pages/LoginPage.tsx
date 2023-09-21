@@ -55,16 +55,13 @@ const LoginPage = () => {
   const password = watch(PASSWORD);
 
   return (
-    <div className="flex flex-col items-center w-[100vw] h-[100vh] justify-center dark:bg-[#1D232A]">
-      <div className=" absolute top-[12%]">
-        <HeaderText label="로그인" />
-      </div>
+    <div className="flex flex-col items-center h-[100vh] justify-center overflow-hidden">
       <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col font-bold p-4 gap-5"
-        >
-          <div>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col p-4 gap-5">
+          <div className="w-[18.375rem]">
+            <div className="mb-[35%]">
+              <HeaderText label="로그인" />
+            </div>
             <FormInput
               name={EMAIL}
               label={INPUT_LABEL.EMAIL}
@@ -107,7 +104,7 @@ const LoginPage = () => {
             <MainButton label="회원가입" mode="outlined" onClick={handleClickSignUpButton} />
             <button
               onClick={handleClickHomeButton}
-              className="mt-5 text-base font-Cafe24SurroundAir text-lazy-gray hover:text-wall-street"
+              className="mt-[15%] text-[0.9rem] font-Cafe24SurroundAir text-wall-street dark:text-lazy-gray hover:text-wall-street tracking-toast"
             >
               홈으로 가기
             </button>
