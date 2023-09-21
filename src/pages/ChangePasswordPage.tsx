@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import CloseButton from '@/components/CloseButton';
 import FormInput from '@/components/FormInput';
 import HeaderText from '@/components/HeaderText';
 import MainButton from '@/components/MainButton';
+import Confirm from '@/components/Modals/Confirm';
+import { MODAL_MESSAGE } from '@/constants/Messages';
+import useModal from '@/hooks/useModal';
 import useChangePassword from '@hooks/useChangePassword';
 
 type PasswordFormValues = {
@@ -33,31 +38,46 @@ const ERROR_MESSAGE = {
   INVALID_PASSWORD_CHECK: '비밀번호와 일치하지 않습니다!',
 };
 
+const MODAL_CONFIRM_LABEL = '변경하기';
+
 const ChangePasswordPage = () => {
   const methods = useForm<PasswordFormValues>();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { showModal, modalOpen, modalClose } = useModal();
   const { changePasswordMutate, isLoading } = useChangePassword();
 
-  const onSubmit: SubmitHandler<PasswordFormValues> = ({ password }) => {
-    // TODO 추후 모달 방식으로 변경하기
-    if (confirm('비밀번호를 변경하시겠습니까?')) {
-      changePasswordMutate(password);
-    }
+  const onSubmit: SubmitHandler<PasswordFormValues> = () => {
+    modalOpen();
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
   };
 
   const { watch, trigger } = methods;
   const [password, passwordCheck] = [watch(PASSWORD), watch(PASSWORD_CHECK)];
 
   return (
-    <div className="flex flex-col items-center w-[100vw] h-[100vh] justify-center">
+    <div className="flex flex-col items-center h-[100vh] justify-center overflow-hidden">
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
           className="flex flex-col items-center p-4 gap-5"
         >
+          {showModal && (
+            <Confirm
+              theme="positive"
+              title={MODAL_MESSAGE.PASSWORD_EDIT_WARN}
+              confirmLabel={MODAL_CONFIRM_LABEL}
+              onClose={modalClose}
+              onConfirm={() => changePasswordMutate(password)}
+            />
+          )}
           <div className="w-[18.375rem]">
-            <div className="absolute top-[12%]">
+            <div className="mb-[35%] flex items-center justify-between w-full max-w-[18.375rem]">
               <HeaderText label={HEADER_TEXT} />
+              <CloseButton onClick={handleBackClick} />
             </div>
             <FormInput
               name={PASSWORD}
@@ -102,7 +122,7 @@ const ChangePasswordPage = () => {
               showToggleButton={!!passwordCheck}
             />
           </div>
-          <div className="absolute bottom-[12%]">
+          <div className="flex flex-col gap-3 mt-5">
             <MainButton label={LABELS.SUBMIT_BUTTON} type="submit" isLoading={isLoading} />
           </div>
         </form>
