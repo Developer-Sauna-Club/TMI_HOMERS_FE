@@ -66,11 +66,15 @@ const EditForm = ({ user }: EditFormProps) => {
       <form className="p-8 flex flex-col gap-3 max-w-sm w-full" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col">
-            <label className="text-wall-street font-Cafe24Surround font-bold">닉네임</label>
-            <small>한글, 숫자, 영어로 2글자 이상 작성해주세요</small>
+            <label className="text-wall-street dark:text-lazy-gray font-Cafe24Surround font-bold">
+              닉네임
+            </label>
+            <small className="font-Pretendard text-[0.9rem] tracking-toast text-lazy-gray">
+              한글, 숫자, 영어로 2글자 이상 작성해주세요.
+            </small>
           </div>
           <input
-            className="max-w-sm  w-full  p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir"
+            className="max-w-sm  w-full p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir"
             {...register('nickname', {
               required: '닉네임은 필수입니다',
               pattern: {
@@ -97,9 +101,11 @@ const EditForm = ({ user }: EditFormProps) => {
           </small>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-wall-street font-Cafe24Surround font-bold">자기소개</label>
+          <label className="text-wall-street dark:text-lazy-gray font-Cafe24Surround font-bold">
+            자기소개
+          </label>
           <input
-            className="max-w-sm  w-full  p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir"
+            className="max-w-sm w-full p-3.5 bg-input-white outline-none border border-lazy-gray placeholder:text-lazy-gray rounded font-Cafe24SurroundAir"
             {...register('introduction', {
               maxLength: {
                 value: 30,
@@ -116,12 +122,13 @@ const EditForm = ({ user }: EditFormProps) => {
           </small>
         </div>
         <div className="flex flex-col items-center mt-5 p-5 gap-5">
-          <MainButton
-            label="비밀번호 변경하기"
-            mode="outlined"
-            onClick={handleClickPasswordButton}
-          />
           <MainButton label="프로필 수정" type="submit" isLoading={isLoading} />
+          <button
+            onClick={handleClickPasswordButton}
+            className="mt-[5%] text-[0.9rem] font-Cafe24SurroundAir text-wall-street dark:text-lazy-gray hover:text-wall-street tracking-toast"
+          >
+            비밀번호 변경하기
+          </button>
         </div>
       </form>
     </div>

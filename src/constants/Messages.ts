@@ -32,5 +32,7 @@ export const TOAST_MESSAGES = {
 };
 
 export const MODAL_MESSAGE = {
-  PROFILE_EDIT_WARN: '수정사항이 사라질 수 있어요',
+  PROFILE_EDIT_WARN: '수정사항이 사라질 수 있어요.',
+
+  PASSWORD_EDIT_WARN: '비밀번호를 변경하시겠어요?',
 };
