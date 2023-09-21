@@ -4,11 +4,14 @@ import { Post } from '@type/Post';
 import { CommentParams, createComment } from '@/api/common/Comment';
 import { createNotification } from '@/api/common/Notification';
 import { fetchPost } from '@/api/common/Post';
+import { TOAST_MESSAGES } from '@/constants/Messages';
+import { useToastContext } from './useToastContext';
 
 export const useArticleDetail = () => {
   const queryClient = useQueryClient();
   const { pathname: url } = useLocation();
   const postId = url.split('/').pop() || '';
+  const { showToast } = useToastContext();
 
   const { data, isLoading } = useQuery<Post>(
     ['article', postId],
@@ -33,6 +36,9 @@ export const useArticleDetail = () => {
         userId,
         postId,
       });
+    },
+    onError: () => {
+      showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
 
