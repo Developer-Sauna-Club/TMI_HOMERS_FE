@@ -18,7 +18,12 @@ type FormValueType = {
   comment: string;
 };
 
-const CommentInput = ({ onAddComment, postId, userId, userImage }: CommentInputProps & NotificationInputProps) => {
+const CommentInput = ({
+  onAddComment,
+  postId,
+  userId,
+  userImage,
+}: CommentInputProps & NotificationInputProps) => {
   const {
     register,
     handleSubmit,
@@ -37,7 +42,7 @@ const CommentInput = ({ onAddComment, postId, userId, userImage }: CommentInputP
   };
 
   return (
-    <div className="fixed bottom-2 flex justify-center items-center max-w-[24.875rem] w-full max-h-[3.75rem] h-full rounded-2xl bg-[#EEF1F4] dark:bg-lazy-gray font-Cafe24SurroundAir dark:text-tricorn-black">
+    <div className="fixed bottom-2 flex justify-center items-center max-w-[24.875rem] w-full max-h-[3.75rem] h-full rounded-2xl bg-[#EEF1F4] dark:bg-lazy-gray font-Cafe24SurroundAir text-tricorn-black dark:text-white">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between w-[23rem]">
           <div className="flex items-center justify-center">

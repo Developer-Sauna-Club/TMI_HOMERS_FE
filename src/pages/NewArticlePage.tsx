@@ -128,7 +128,7 @@ const NewArticlePage = () => {
                 value={selectedText}
                 placeholder={MESSAGE.TITLE_REQUIRED}
                 maxLength={LENGTH_LIMIT.TITLE_MAX}
-                className="block w-full pb-2 outline-none dark: bg-tricorn-black"
+                className="block w-full pb-2 outline-none bg-white dark:bg-tricorn-black"
               />
             </div>
             <div className="flex justify-end w-full">
@@ -164,7 +164,7 @@ const NewArticlePage = () => {
                 })}
                 placeholder={MESSAGE.CONTENT_REQUIRED}
                 maxLength={LENGTH_LIMIT.CONTENT_MAX}
-                className="overflow-hidden outline-none resize-none h-[20rem] w-full dark: bg-tricorn-black"
+                className="overflow-hidden outline-none resize-none h-[20rem] w-full bg-white dark:bg-tricorn-black"
               />
               {errors?.body && (
                 <span className="text-xs text-error-red mr-3">{errors.body.message}</span>
