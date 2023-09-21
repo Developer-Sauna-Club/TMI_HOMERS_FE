@@ -101,7 +101,7 @@ const HomePage = () => {
                 {TAB_CONSTANTS.NEWEST} 뉴스
               </span>
             </h2>
-            <div>
+            <div className="pb-[7rem]">
               {isFetching ? (
                 <div className="flex justify-center">
                   <Loader />

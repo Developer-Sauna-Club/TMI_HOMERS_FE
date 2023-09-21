@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@type/User';
+import { BiSolidUser } from 'react-icons/bi';
+import { HiPencil } from 'react-icons/hi';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { updateProfileImage } from '@api/common/User';
 import getUserInfo from '@api/getUserInfo';
-import Avatar from '@components/Avatar';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
 import Loader from '@components/Loader';
@@ -45,6 +48,18 @@ const ProfilePage = () => {
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
 
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files;
+    if (!imageFile || imageFile.length < 0) {
+      return;
+    }
+
+    const updatedUser = await updateProfileImage(imageFile[0]);
+    if (updatedUser.image) {
+      setUserImage(updatedUser.image);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       setAreYouProfileUser(user._id === lastSegment);
@@ -78,14 +93,27 @@ const ProfilePage = () => {
               </div>
             )}
           </div>
-          <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
+          <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              <div
-                onClick={() => {
-                  navigate(`/profile/edit`);
-                }}
-              >
-                <Avatar width={8} profileImage={userImage} isLoggedIn={areYouProfileUser} />
+              <div className="relative w-32 h-32 rounded-full bg-profile-bg self-center mb-6 border border-tertiory-gray text-footer-icon">
+                {userImage ? (
+                  <img src={userImage} className="w-full h-full rounded-full" alt="thumbnail" />
+                ) : (
+                  <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
+                )}
+                <label
+                  htmlFor="image"
+                  className="absolute right-1 bottom-1 p-1 rounded-full bg-profile-bg border border-tertiory-gray"
+                >
+                  <HiPencil className="w-4 h-4" />
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  id="image"
+                  onChange={handleUploadImage}
+                />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
@@ -115,6 +143,12 @@ const ProfilePage = () => {
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
               </span>
             </div>
+            <button
+              className="absolute right-12 top-2 text-[1.5rem]"
+              onClick={() => navigate('/profile/edit')}
+            >
+              <IoSettingsSharp />
+            </button>
           </div>
           <Tab
             maxWidth="25.875"
