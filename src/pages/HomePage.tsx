@@ -26,7 +26,7 @@ const HomePage = () => {
     0,
     POST_COUNT.NEWEST,
   );
-  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles).slice(
+  const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles).slice(
     0,
     POST_COUNT.HOTTEST,
   );
