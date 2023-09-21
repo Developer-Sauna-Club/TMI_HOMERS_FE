@@ -1,9 +1,6 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { BiSolidUser } from 'react-icons/bi';
-import { HiPencil } from 'react-icons/hi';
-import { updateProfileImage } from '@/api/common/User';
 import MainButton from '@/components/MainButton';
 import useEditProfile from '@/hooks/useEditProfile';
 import { User } from '@/type/User';
@@ -20,7 +17,6 @@ type EditFormProps = {
 const EditForm = ({ user }: EditFormProps) => {
   const navigate = useNavigate();
   const { editProfile, isLoading } = useEditProfile();
-  const [image, setImage] = useState<string | null>(null);
 
   const {
     watch,
@@ -49,7 +45,6 @@ const EditForm = ({ user }: EditFormProps) => {
     setValue('nickname', user.fullName ? user.fullName : '');
     setValue('introduction', user.username ? user.username : '');
     setFocus('nickname');
-    setImage(user.image ? user.image : null);
   }, [setValue, setFocus, user]);
 
   const [nickname, introduction] = [watch('nickname'), watch('introduction')];
@@ -66,43 +61,9 @@ const EditForm = ({ user }: EditFormProps) => {
     editProfile({ fullName: nickname, username: introduction });
   };
 
-  const handleUpLoadImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    const imageFile = event.target.files;
-    if (!imageFile || imageFile.length < 0) {
-      return;
-    }
-    const updatedUser = await updateProfileImage(imageFile[0]);
-    setImage(updatedUser.image as string);
-  };
-
   return (
     <div className="flex justify-center">
       <form className="p-8 flex flex-col gap-3 max-w-sm w-full" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-3">
-          <label htmlFor="" className="text-wall-street font-Cafe24Surround font-bold">
-            프로필 사진
-          </label>
-          <div className="relative w-32 h-32 rounded-full bg-profile-bg self-center mb-6 border border-tertiory-gray text-footer-icon">
-            {image ? (
-              <img src={image} className="w-full h-full rounded-full" alt="thumbnail" />
-            ) : (
-              <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
-            )}
-            <label
-              htmlFor="image"
-              className="absolute right-1 bottom-1 p-1 rounded-full bg-profile-bg border border-tertiory-gray"
-            >
-              <HiPencil className="w-4 h-4" />
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              id="image"
-              onChange={handleUpLoadImage}
-            />
-          </div>
-        </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col">
             <label className="text-wall-street font-Cafe24Surround font-bold">닉네임</label>

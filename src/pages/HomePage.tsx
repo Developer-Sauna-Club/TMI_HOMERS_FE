@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { HiFire } from 'react-icons/hi';
-import { MdOutlineSearch } from 'react-icons/md';
+import { ImSearch } from 'react-icons/im';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
 import { MESSAGE, POST_COUNT } from '@/constants/Home';
@@ -30,13 +30,19 @@ const HomePage = () => {
     POST_COUNT.HOTTEST,
   );
 
+  const handleClickSearchButton = () => {
+    navigate('/search');
+  };
+
   return (
     <div className="relative flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full max-w-md flex flex-col gap-36 overflow-y-scroll">
         <section className="bg-cooled-blue h-[375px] mb-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
             <HeaderText label={MESSAGE.HOME} />
-            <MdOutlineSearch size="24" className="text-tricorn-black cursor-pointer" />
+            <button onClick={handleClickSearchButton}>
+              <ImSearch size="24" className="text-tricorn-black" />
+            </button>
           </header>
           <section className="relative w-full h-[304px] gap-2 flex justify-center">
             <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
@@ -67,7 +73,7 @@ const HomePage = () => {
             </div>
           </section>
         </section>
-        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow">
+        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">

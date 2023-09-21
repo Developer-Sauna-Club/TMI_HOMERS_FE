@@ -30,3 +30,7 @@ export const TOAST_MESSAGES = {
   AUTH_USER_FAILED: '유저 정보를 받아오는데 실패했어요.',
   NEED_AUTH: '로그인이 필요해요.',
 };
+
+export const MODAL_MESSAGE = {
+  PROFILE_EDIT_WARN: '수정사항이 사라질 수 있어요',
+};
