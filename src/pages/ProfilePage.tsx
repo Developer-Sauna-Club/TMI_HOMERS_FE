@@ -93,8 +93,20 @@ const ProfilePage = () => {
                 </span>
               </div>
               <SubscribeInfo
-                subscriber={currentProfileUser ? currentProfileUser.followers.length : 0}
-                subscribing={currentProfileUser ? currentProfileUser.following.length : 0}
+                subscriber={
+                  currentProfileUser
+                    ? Array.from(
+                        new Set(currentProfileUser.followers.map((follower) => follower.user)),
+                      ).length
+                    : 0
+                }
+                subscribing={
+                  currentProfileUser
+                    ? Array.from(
+                        new Set(currentProfileUser.following.map((follower) => follower.user)),
+                      ).length
+                    : 0
+                }
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
@@ -132,9 +144,14 @@ const ProfilePage = () => {
               </div>
             )}
             {currentProfileUser && currentProfileUser.likes.length > 0 ? (
-              currentProfileUser.likes.map((likeArticle) => (
-                <LikeArticles key={likeArticle.post} likeArticle={likeArticle} />
-              ))
+              Array.from(new Set(currentProfileUser.likes.map((like) => like.post))).map(
+                (postId) => {
+                  const likeArticle = currentProfileUser.likes.find((like) => like.post === postId);
+                  return likeArticle ? (
+                    <LikeArticles key={postId} likeArticle={likeArticle} />
+                  ) : null;
+                },
+              )
             ) : (
               <div className="flex justify-center">
                 <span className="text-center text-lazy-gray">응원한 기사가 없습니다.</span>
