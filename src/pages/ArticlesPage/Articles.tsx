@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Post } from '@type/Post';
-import SubButton from '@/components/SubButton';
-import { API } from '@/constants/Article';
 import Article from '@components/Article';
+import SubButton from '@components/SubButton';
+import { API } from '@constants/Article';
 
 type ArticlesProps = {
   articles: Post[];
