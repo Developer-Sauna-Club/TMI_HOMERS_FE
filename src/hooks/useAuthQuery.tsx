@@ -1,54 +1,57 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { TOAST_MESSAGES } from '@/constants/Messages';
 import { removeItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 import { isEmptyUser } from '@/utils/user';
 import { checkAuthentication, signUp, login, logout } from '@api/common/Auth';
+import { useToastContext } from './useToastContext';
 
 const useAuthQuery = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { showToast } = useToastContext();
 
   const userQuery = useQuery(['user'], checkAuthentication, {
     staleTime: Infinity,
-    onError: () => {
-      removeItemFromStorage('token');
-      alert('유저 정보를 받아오는데 실패했습니다');
-    },
     onSuccess: (user) => {
       if (isEmptyUser(user)) {
         removeItemFromStorage('token');
       }
     },
+    onError: () => {
+      removeItemFromStorage('token');
+      showToast(TOAST_MESSAGES.AUTH_USER_FAILED, 'error');
+    },
   });
 
   const signUpQuery = useMutation(signUp, {
     onSuccess: ({ user, token }) => {
-      alert('회원가입에 성공하셨습니다!');
       queryClient.setQueryData(['user'], user);
       setItemToStorage('token', token);
+      showToast(TOAST_MESSAGES.SIGNUP_SUCCESS, 'success');
       navigate('/home');
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
         if (error.response?.status === 400) {
-          alert('중복된 이메일입니다');
+          showToast(TOAST_MESSAGES.SIGNUP_INVALID_EMAIL, 'error');
         }
       } else {
-        alert('회원가입에 실패하셨습니다.');
+        showToast(TOAST_MESSAGES.SIGNUP_FAILED, 'error');
       }
     },
   });
 
   const loginQuery = useMutation(login, {
     onSuccess: ({ user, token }) => {
-      alert('로그인에 성공하셨습니다!'); //TODO Toast 메세지로 성공 알리기?
       queryClient.setQueryData(['user'], user);
       setItemToStorage('token', token);
+      showToast(TOAST_MESSAGES.LOGIN_SUCCESS, 'success');
       navigate('/home');
     },
     onError: () => {
-      alert('이메일과 비밀번호를 확인해주세요!');
+      showToast(TOAST_MESSAGES.LOGIN_FAILED, 'error');
     },
   });
 
@@ -56,13 +59,13 @@ const useAuthQuery = () => {
 
   const logoutQuery = useMutation(logout, {
     onSuccess: () => {
-      alert('로그아웃에 성공하셨습니다');
+      showToast(TOAST_MESSAGES.LOGOUT_SUCCESS, 'success');
       removeItemFromStorage('token');
       navigate('/home');
       queryClient.setQueryData(['user'], EMTPY_USER);
     },
     onError: () => {
-      alert('로그아웃에 실패하셨습니다');
+      showToast(TOAST_MESSAGES.LOGOUT_FAILED, 'error');
     },
   });
 

@@ -2,12 +2,16 @@ import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Post } from '@type/Post';
 import { CommentParams, createComment } from '@/api/common/Comment';
+import { createNotification } from '@/api/common/Notification';
 import { fetchPost } from '@/api/common/Post';
+import { TOAST_MESSAGES } from '@/constants/Messages';
+import { useToastContext } from './useToastContext';
 
 export const useArticleDetail = () => {
   const queryClient = useQueryClient();
   const { pathname: url } = useLocation();
   const postId = url.split('/').pop() || '';
+  const { showToast } = useToastContext();
 
   const { data, isLoading } = useQuery<Post>(
     ['article', postId],
@@ -21,13 +25,25 @@ export const useArticleDetail = () => {
   );
 
   const commentMutation = useMutation(createComment, {
-    onSuccess: () => {
+    onSuccess: (returnData, variables) => {
       queryClient.invalidateQueries(['article', postId]);
+      const { userId } = variables;
+
+      const commentId = returnData._id;
+      createNotification({
+        notificationType: 'COMMENT',
+        notificationTypeId: commentId,
+        userId,
+        postId,
+      });
+    },
+    onError: () => {
+      showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
 
   const addComment = (newComment: CommentParams) => {
-    commentMutation.mutate({ ...newComment, postId });
+    commentMutation.mutate(newComment);
   };
 
   return { data, isLoading, addComment };

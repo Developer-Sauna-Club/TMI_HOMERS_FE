@@ -4,6 +4,7 @@ import { axiosClient } from '../axiosClient';
 export type CommentParams = {
   comment: string;
   postId: string;
+  userId: string;
 };
 
 export const createComment = async ({ comment, postId }: CommentParams) => {

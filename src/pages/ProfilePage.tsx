@@ -172,7 +172,7 @@ const ProfilePage = () => {
           <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
         </article>
         <div>
-          <BottomNavigation currentPage={`/profile/${lastSegment}`} />
+          <BottomNavigation currentPage={`/profile`} />
         </div>
       </section>
     </TabContextProvider>
