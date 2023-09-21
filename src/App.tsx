@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { AuthContextProvider } from './context/AuthContext';
 import { ToastContextProvider } from './context/ToastContext';
 
 const TempNavBar = () => {
@@ -41,12 +40,10 @@ const TempNavBar = () => {
 
 const App = () => {
   return (
-    <AuthContextProvider>
       <ToastContextProvider>
         <TempNavBar />
         <Outlet />
       </ToastContextProvider>
-    </AuthContextProvider>
   );
 };
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FormInput from '@/components/FormInput';
 import HeaderText from '@/components/HeaderText';
 import MainButton from '@/components/MainButton';
-import useLogin from '@/hooks/useLogin';
+import useAuthQuery from '@/hooks/useAuthQuery';
 
 type LoginFormValues = {
   email: string;
@@ -33,7 +33,9 @@ const ERROR_MESSAGE: { [key: string]: string } = {
 const LoginPage = () => {
   const methods = useForm<LoginFormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const { loginMutate, isLoading } = useLogin();
+  const {
+    loginQuery: { mutate: loginMutate, isLoading },
+  } = useAuthQuery();
 
   const onSubmit: SubmitHandler<LoginFormValues> = ({ email, password }) => {
     loginMutate({ email, password });

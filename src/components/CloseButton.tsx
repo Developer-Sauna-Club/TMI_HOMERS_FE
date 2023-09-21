@@ -8,7 +8,7 @@ type CloseButtonProps = {
 const BASE_BUTTON_CLASSES = 'block bg-transparent rounded-md cursor-pointer hover:bg-lazy-gray/50';
 
 const ModeClasses = {
-  large: 'w-[1.083rem] h-[1.083rem] fill-tricorn-black',
+  large: 'w-[1.083rem] h-[1.083rem] fill-tricorn-black dark:fill-white',
   small: 'w-[0.667rem] h-[0.667rem] fill-lazy-gray',
 };
 

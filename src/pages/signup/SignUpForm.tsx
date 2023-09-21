@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import MainButton from '@/components/MainButton';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import FormInput from '@components/FormInput';
-import useSignUp from '@hooks/useSignUp';
 
 type SignUpFormValues = {
   email: string;
@@ -50,7 +50,9 @@ const ERROR_MESSAGE: { [key: string]: string } = {
 const SignUpForm = () => {
   const methods = useForm<SignUpFormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const { signUpMutate, isLoading } = useSignUp();
+  const {
+    signUpQuery: { mutate: signUpMutate, isLoading },
+  } = useAuthQuery();
 
   const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
     signUpMutate({ email, password, nickname });

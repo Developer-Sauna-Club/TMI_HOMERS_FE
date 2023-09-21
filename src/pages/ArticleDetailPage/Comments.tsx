@@ -16,7 +16,6 @@ const Comments = ({ comments, userId }: CommentsProps) => {
       await deleteComment(commentId);
       const updatedComments = commentList.filter((comment) => comment._id !== commentId);
       setCommentList(updatedComments);
-
       alert('댓글 삭제 완료');
     } catch (error) {
       alert(error);
@@ -29,7 +28,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
 
   return commentList?.map((comment_post) => {
     const { _id, comment, author, createdAt } = comment_post;
-    const { fullName, _id: authorId } = author;
+    const { fullName, _id: authorId, image: authorImage } = author;
     const isMyComment = userId === authorId;
 
     try {
@@ -41,6 +40,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
           postedDate={createdAt}
           nickname={fullName}
           active={isMyComment}
+          profileImage={authorImage ? authorImage : ''}
           onDelete={(commentId) => handleDeleteComment(commentId)}
         />
       );

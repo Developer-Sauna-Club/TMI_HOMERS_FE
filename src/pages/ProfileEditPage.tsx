@@ -1,11 +1,13 @@
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
-import { useAuthContext } from '@/hooks/useAuthContext';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import type { User } from '@/type/User';
 import EditForm from './ProfileEditPage/EditForm';
 
 const ProfileEditPage = () => {
-  const { user } = useAuthContext();
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
 
   return (
     <section className="grid grid-rows-[1fr_8fr] h-screen bg-white overflow-y-auto dark:bg-[#1D232A]">
