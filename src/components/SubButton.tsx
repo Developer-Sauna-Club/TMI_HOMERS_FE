@@ -1,3 +1,6 @@
+import { HiThumbUp } from 'react-icons/hi';
+import { MdStars } from 'react-icons/md';
+
 type SubButtonProps = {
   color: 'blue' | 'red' | 'violet';
   weight?: 'bold' | 'air';
@@ -5,19 +8,21 @@ type SubButtonProps = {
   size?: 'small' | 'medium' | 'large';
   type: 'fill' | 'outline';
   label: string;
+  icon?: 'good' | 'star' | 'none';
   onClick?: () => void;
 };
 
 const OUTLINE_TYPE = {
-  blue: 'border-cooled-blue text-cooled-blue bg-white dark:bg-transparent',
-  red: 'border-error-red dark:bg-transparent',
-  violet: 'border-light-violet text-light-violet bg-white dark:bg-transparent',
+  blue: 'border-cooled-blue hover:bg-cooled-blue hover:bg-opacity-75 text-cooled-blue bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+  red: 'border-error-red hover:bg-error-red hover:bg-opacity-75 text-error-red bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+  violet:
+    'border-light-violet hover:bg-light-violet hover:bg-opacity-75 text-light-violet bg-white hover:text-input-white hover:border-none dark:bg-transparent',
 };
 
 const FILL_TYPE = {
-  blue: 'bg-cooled-blue border-none text-input-white',
-  red: 'bg-error-red border-none text-input-white',
-  violet: 'bg-light-violet border-none text-input-white',
+  blue: 'bg-cooled-blue border-none hover:bg-cooled-blue hover:bg-opacity-75 text-input-white',
+  red: 'bg-error-red border-none hover:bg-error-red hover:bg-opacity-75 text-input-white',
+  violet: 'bg-light-violet border-none hover:bg-light-violet hover:bg-opacity-75 text-input-white',
 };
 const FONT_WEIGHT = {
   bold: 'font-Cafe24Surround',
@@ -29,9 +34,15 @@ const BORDER_RADIUS = {
 };
 
 const BUTTON_SIZE = {
-  small: 'px-4 h-[1.9rem] min-h-[1.9rem] text-[0.8rem]',
-  medium: 'px-[1.3rem]h-[2.3rem] min-h-[2.3rem] text-[0.8rem]',
+  small: 'px-3 h-[1.9rem] text-[0.8rem]',
+  medium: 'px-[1.3rem] h-[2.3rem] text-[0.8rem]',
   large: 'px-[2.1rem] text-[1.1rem] h-[2.3rem] min-h-[2.3rem]',
+};
+
+const ICON_STYLE = {
+  good: <HiThumbUp className="w-4 h-4 mr-1" />,
+  star: <MdStars className="w-5 h-5 mr-1" />,
+  none: '',
 };
 
 const SubButton = ({
@@ -41,6 +52,7 @@ const SubButton = ({
   radius = 'small',
   type,
   size = 'medium',
+  icon = 'none',
   onClick,
   ...props
 }: SubButtonProps) => {
@@ -49,12 +61,15 @@ const SubButton = ({
   };
   return (
     <button
-      className={`normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
-        type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
-      } ${BUTTON_SIZE[size]}`}
+      className={`border transform transition duration-100 active:scale-90 flex items-center text-[0.75rem] ${
+        FONT_WEIGHT[weight]
+      } ${BORDER_RADIUS[radius]} ${type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]} ${
+        BUTTON_SIZE[size]
+      }`}
       onClick={handleClick}
       {...props}
     >
+      <div className="pb-[0.1rem]">{ICON_STYLE[icon]}</div>
       {label}
     </button>
   );

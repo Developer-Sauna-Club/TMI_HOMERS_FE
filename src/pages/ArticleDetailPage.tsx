@@ -101,6 +101,7 @@ const ArticleDetailPage = () => {
               onClick={() => handleLikeButtonClick()}
               color="blue"
               type={myLike ? 'fill' : 'outline'}
+              icon="good"
             />
             <ArticleInfoIcon
               //likes={likesCount ? likesCount : likes.length}
