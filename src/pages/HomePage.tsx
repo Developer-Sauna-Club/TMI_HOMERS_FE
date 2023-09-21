@@ -9,12 +9,20 @@ import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
+import Loader from '@components/Loader';
+import { API } from '@constants/Article';
+import { MESSAGE, POST_COUNT } from '@constants/Home';
+import { TAB_CONSTANTS } from '@constants/Tab';
+import { useArticles } from '@hooks/useArticles';
+import { useFilteredArticles } from '@hooks/useFilteredArticles';
+import useTab from '@hooks/useTab';
 import Articles from './ArticlesPage/Articles';
 
 const CHARACTER_SRC = '/img/character.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { changeTab } = useTab();
 
   const { data: articles, isFetching } = useArticles({
     id: API.CHANNEL_ID,
@@ -49,8 +57,14 @@ const HomePage = () => {
               <div className="flex items-center">
                 <HiFire size="24" className="text-article-highly-liked" />
                 <h2 className="flex-none text-tricorn-black font-Cafe24Surround text-lg font-bold">
-                  <span onClick={() => navigate('/news')} className="cursor-pointer">
-                    {MESSAGE.HOTTEST_NEWS}
+                  <span
+                    onClick={() => {
+                      navigate('/news');
+                      changeTab(TAB_CONSTANTS.HOTTEST);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    {TAB_CONSTANTS.HOTTEST} 뉴스
                   </span>
                 </h2>
               </div>
@@ -77,8 +91,14 @@ const HomePage = () => {
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
-              <span onClick={() => navigate('/news')} className="cursor-pointer">
-                {MESSAGE.NEWEST}
+              <span
+                onClick={() => {
+                  navigate('/news');
+                  changeTab(TAB_CONSTANTS.NEWEST);
+                }}
+                className="cursor-pointer"
+              >
+                {TAB_CONSTANTS.NEWEST} 뉴스
               </span>
             </h2>
             <div className="pb-[7rem]">

@@ -9,6 +9,7 @@ import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
+import useTab from '@hooks/useTab';
 
 export default {
   title: 'Tab',
@@ -17,30 +18,37 @@ export default {
 } as Meta;
 
 export const Default = () => {
+  const { changeTab } = useTab();
   return (
     <Router>
       <TabContextProvider>
         <Tab
           maxWidth="25.875"
-          defaultTab="item1"
+          defaultTab={`${TAB_CONSTANTS.NEWEST}`}
           tabItems={[
-            { title: `${TAB_CONSTANTS.NEWEST}`, width: '8.625' },
+            {
+              title: `${TAB_CONSTANTS.NEWEST}`,
+              width: '8.625',
+              onClick: () => changeTab(TAB_CONSTANTS.NEWEST),
+            },
             {
               title: `${TAB_CONSTANTS.HOTTEST}`,
               width: '8.625',
               icon: <BsFire className="w-[1.3rem] h-[1.3rem]" />,
+              onClick: () => changeTab(TAB_CONSTANTS.HOTTEST),
             },
             {
               title: `${TAB_CONSTANTS.SUBSCRIBED}`,
               width: '8.625',
               icon: <MdStars className="w-[1.5rem] h-[1.5rem]" />,
+              onClick: () => changeTab(TAB_CONSTANTS.SUBSCRIBED),
             },
           ]}
         />
-        <TabItem index="item1">
+        <TabItem index={`${TAB_CONSTANTS.NEWEST}`}>
           <Loader />
         </TabItem>
-        <TabItem index="item2">
+        <TabItem index={`${TAB_CONSTANTS.HOTTEST}`}>
           <Article
             id="1"
             title="(임시)이거슨 뜨겁다."
@@ -51,7 +59,7 @@ export const Default = () => {
             comments={42}
           />
         </TabItem>
-        <TabItem index="item3">
+        <TabItem index={`${TAB_CONSTANTS.SUBSCRIBED}`}>
           <Article
             id="1"
             title="(임시)이거슨 구독이다."
@@ -68,21 +76,30 @@ export const Default = () => {
 };
 
 export const TitleAndNicknameTab = () => {
+  const { changeTab } = useTab();
   return (
     <Router>
       <TabContextProvider>
         <Tab
           maxWidth="23.375"
-          defaultTab="item1"
+          defaultTab={`${TAB_CONSTANTS.ARTICLE_TITLE}`}
           tabItems={[
-            { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
-            { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
+            {
+              title: `${TAB_CONSTANTS.ARTICLE_TITLE}`,
+              width: '11.6875',
+              onClick: () => changeTab(TAB_CONSTANTS.ARTICLE_TITLE),
+            },
+            {
+              title: `${TAB_CONSTANTS.NICKNAME}`,
+              width: '11.6875',
+              onClick: () => changeTab(TAB_CONSTANTS.NICKNAME),
+            },
           ]}
         />
-        <TabItem index="item1">
+        <TabItem index={`${TAB_CONSTANTS.ARTICLE_TITLE}`}>
           <Loader />
         </TabItem>
-        <TabItem index="item2">
+        <TabItem index={`${TAB_CONSTANTS.NICKNAME}`}>
           <ErrorText text="아직 구독한 사용자가 없습니다." />
         </TabItem>
       </TabContextProvider>
@@ -91,21 +108,30 @@ export const TitleAndNicknameTab = () => {
 };
 
 export const SubscribeTab = () => {
+  const { changeTab } = useTab();
   return (
     <Router>
       <TabContextProvider>
         <Tab
           maxWidth="23.375"
-          defaultTab="item1"
+          defaultTab={`${TAB_CONSTANTS.SUBSCRIBER}`}
           tabItems={[
-            { title: `${TAB_CONSTANTS.SUBSCRIBER}`, width: '11.6875' },
-            { title: `${TAB_CONSTANTS.SUBSCRIBING}`, width: '11.6875' },
+            {
+              title: `${TAB_CONSTANTS.SUBSCRIBER}`,
+              width: '11.6875',
+              onClick: () => changeTab(TAB_CONSTANTS.SUBSCRIBER),
+            },
+            {
+              title: `${TAB_CONSTANTS.SUBSCRIBING}`,
+              width: '11.6875',
+              onClick: () => changeTab(TAB_CONSTANTS.SUBSCRIBING),
+            },
           ]}
         />
-        <TabItem index="item1">
+        <TabItem index={`${TAB_CONSTANTS.SUBSCRIBER}`}>
           <Loader />
         </TabItem>
-        <TabItem index="item2">
+        <TabItem index={`${TAB_CONSTANTS.SUBSCRIBING}`}>
           <Article
             id="1"
             title="(임시)이거슨 구독이다."
