@@ -9,12 +9,6 @@ import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
-import Loader from '@components/Loader';
-import { API } from '@constants/Article';
-import { MESSAGE, POST_COUNT } from '@constants/Home';
-import { TAB_CONSTANTS } from '@constants/Tab';
-import { useArticles } from '@hooks/useArticles';
-import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import useTab from '@hooks/useTab';
 import Articles from './ArticlesPage/Articles';
 
@@ -43,8 +37,8 @@ const HomePage = () => {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center overflow-hidden">
-      <div className="w-full max-w-md flex flex-col gap-36 overflow-y-scroll">
+    <div className="relative flex flex-col items-center justify-center overflow-hidden">
+      <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-36">
         <section className="bg-cooled-blue h-[375px] mb-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
             <HeaderText label={MESSAGE.HOME} />
@@ -56,7 +50,7 @@ const HomePage = () => {
             <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
               <div className="flex items-center">
                 <HiFire size="24" className="text-article-highly-liked" />
-                <h2 className="flex-none text-tricorn-black font-Cafe24Surround text-lg font-bold">
+                <h2 className="flex-none text-lg font-bold text-tricorn-black font-Cafe24Surround">
                   <span
                     onClick={() => {
                       navigate('/news');
@@ -87,10 +81,10 @@ const HomePage = () => {
             </div>
           </section>
         </section>
-        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow pb-20">
+        <section className="flex flex-col justify-center flex-grow gap-6 pb-20 bg-white ">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
+            <h2 className="text-lg font-bold text-tricorn-black font-Cafe24Surround px-7">
               <span
                 onClick={() => {
                   navigate('/news');
@@ -113,7 +107,7 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-      <footer className="fixed bottom-0 flex-none justify-center items-center">
+      <footer className="fixed bottom-0 items-center justify-center flex-none">
         <BottomNavigation currentPage="/home" />
       </footer>
     </div>
