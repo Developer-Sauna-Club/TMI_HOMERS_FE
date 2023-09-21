@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import { deleteLikePost, likePost } from '@/api/common/Like';
-import { deletePost } from '@/api/common/Post';
-import useAuthQuery from '@/hooks/useAuthQuery';
+import { BUTTON, MESSAGE } from '@/constants/ArticleDetail';
+import { deleteLikePost, likePost } from '@api/common/Like';
+import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
 import { useArticleDetail } from '@hooks/useArticleDetail';
+import useAuthQuery from '@hooks/useAuthQuery';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
@@ -35,7 +36,7 @@ const ArticleDetailPage = () => {
   }
 
   const { _id, title, author, createdAt, likes, image, comments } = article!;
-  const { fullName, _id: postUserId } = author;
+  const { fullName, _id: postUserId, image: authorProfileImage } = author;
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
 
   const isMyPost = user ? user._id === postUserId : false;
@@ -76,7 +77,7 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto mb-9 h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir text-tricorn-black">
+    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto pb-9 h-screen pt-[2.75rem] font-Cafe24SurroundAir bg-white dark:bg-tricorn-black text-tricorn-black dark:text-extra-white">
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />
@@ -93,21 +94,25 @@ const ArticleDetailPage = () => {
           )}
         </div>
         <div>
-          <ArticleDetail nickname={fullName} postedDate={createdAt} />
-          <div className="my-3 text-lg font-Cafe24Surround">{articleTitle}</div>
+          <ArticleDetail
+            nickname={fullName}
+            postedDate={createdAt}
+            profileImage={authorProfileImage ? authorProfileImage : ''}
+          />
+          <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
+            {articleTitle}
+          </div>
           <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
           </div>
           <div className="text-base">{articleBody}</div>
           <div className="flex justify-between mt-6">
-            {user && (
-              <SubButton
-                label="응원하기"
-                onClick={() => handleLikePost()}
-                color="blue"
-                type={likePushed ? 'fill' : 'outline'}
-              />
-            )}
+            <SubButton
+              label={BUTTON.CHEER_UP}
+              onClick={() => handleLikePost()}
+              color="blue"
+              type={likePushed ? 'fill' : 'outline'}
+            />
             <ArticleInfoIcon
               likes={likesCount ? likesCount : likes.length}
               comments={comments.length}
@@ -120,7 +125,7 @@ const ArticleDetailPage = () => {
       <section>
         {comments.length === 0 ? (
           <div className="flex justify-start w-[22rem] mt-[3%]">
-            <span className="text-xs text-gray-400">댓글이 없습니다</span>
+            <span className="text-xs text-gray-400">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
           <div className="mb-[10rem]">
@@ -128,7 +133,14 @@ const ArticleDetailPage = () => {
           </div>
         )}
       </section>
-      {isLoginUser && <CommentInput onAddComment={addComment} postId={_id} />}
+      {isLoginUser && (
+        <CommentInput
+          onAddComment={addComment}
+          postId={_id}
+          userId={postUserId}
+          userImage={user ? (user.image ? user.image : '') : ''}
+        />
+      )}
     </div>
   );
 };

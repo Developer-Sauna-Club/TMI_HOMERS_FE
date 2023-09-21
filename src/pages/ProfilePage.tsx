@@ -1,19 +1,24 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import getUserInfo from '@/api/getUserInfo';
-import Loader from '@/components/Loader';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
-import useAuthQuery from '@/hooks/useAuthQuery';
-import useScrollToTop from '@/hooks/useScrollToTop';
-import { User } from '@/type/User';
-import Avatar from '@components/Avatar';
+import { User } from '@type/User';
+import { BiSolidUser } from 'react-icons/bi';
+import { HiPencil } from 'react-icons/hi';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { updateProfileImage } from '@api/common/User';
+import getUserInfo from '@api/getUserInfo';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
+import Loader from '@components/Loader';
+import ScrollToTopButton from '@components/ScrollToTopButton';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
+import useAuthQuery from '@hooks/useAuthQuery';
+import useScrollToTop from '@hooks/useScrollToTop';
+import useTab from '@hooks/useTab';
 import LikeArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
@@ -21,6 +26,7 @@ const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
+  const { changeTab } = useTab();
 
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
@@ -41,6 +47,18 @@ const ProfilePage = () => {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
+
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files;
+    if (!imageFile || imageFile.length < 0) {
+      return;
+    }
+
+    const updatedUser = await updateProfileImage(imageFile[0]);
+    if (updatedUser.image) {
+      setUserImage(updatedUser.image);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -75,14 +93,27 @@ const ProfilePage = () => {
               </div>
             )}
           </div>
-          <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray">
+          <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              <div
-                onClick={() => {
-                  navigate(`/profile/edit`);
-                }}
-              >
-                <Avatar width={8} profileImage={userImage} isLoggedIn={areYouProfileUser} />
+              <div className="relative w-32 h-32 rounded-full bg-profile-bg self-center mb-6 border border-tertiory-gray text-footer-icon">
+                {userImage ? (
+                  <img src={userImage} className="w-full h-full rounded-full" alt="thumbnail" />
+                ) : (
+                  <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
+                )}
+                <label
+                  htmlFor="image"
+                  className="absolute right-1 bottom-1 p-1 rounded-full bg-profile-bg border border-tertiory-gray"
+                >
+                  <HiPencil className="w-4 h-4" />
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  id="image"
+                  onChange={handleUploadImage}
+                />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
@@ -93,25 +124,51 @@ const ProfilePage = () => {
                 </span>
               </div>
               <SubscribeInfo
-                subscriber={currentProfileUser ? currentProfileUser.followers.length : 0}
-                subscribing={currentProfileUser ? currentProfileUser.following.length : 0}
+                subscriber={
+                  currentProfileUser
+                    ? Array.from(
+                        new Set(currentProfileUser.followers.map((follower) => follower.user)),
+                      ).length
+                    : 0
+                }
+                subscribing={
+                  currentProfileUser
+                    ? Array.from(
+                        new Set(currentProfileUser.following.map((follower) => follower.user)),
+                      ).length
+                    : 0
+                }
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
                 {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
               </span>
             </div>
+            <button
+              className="absolute right-12 top-2 text-[1.5rem]"
+              onClick={() => navigate('/profile/edit')}
+            >
+              <IoSettingsSharp />
+            </button>
           </div>
           <Tab
             maxWidth="25.875"
-            defaultTab="item1"
+            defaultTab={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}
             tabItems={[
-              { title: '작성한 기사', width: '12.9375' },
-              { title: '응원한 기사', width: '12.9375' },
+              {
+                title: '작성한 기사',
+                width: '12.9375',
+                onClick: () => changeTab(TAB_CONSTANTS.WRITTEN_ARTICLES),
+              },
+              {
+                title: '응원한 기사',
+                width: '12.9375',
+                onClick: () => changeTab(TAB_CONSTANTS.LIKED_ARTICLES),
+              },
             ]}
           />
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
-          <TabItem index="item1">
+          <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />
@@ -125,16 +182,21 @@ const ProfilePage = () => {
               </div>
             )}
           </TabItem>
-          <TabItem index="item2">
+          <TabItem index={`${TAB_CONSTANTS.LIKED_ARTICLES}`}>
             {isFetching && (
               <div className="flex items-center justify-center">
                 <Loader />
               </div>
             )}
             {currentProfileUser && currentProfileUser.likes.length > 0 ? (
-              currentProfileUser.likes.map((likeArticle) => (
-                <LikeArticles key={likeArticle.post} likeArticle={likeArticle} />
-              ))
+              Array.from(new Set(currentProfileUser.likes.map((like) => like.post))).map(
+                (postId) => {
+                  const likeArticle = currentProfileUser.likes.find((like) => like.post === postId);
+                  return likeArticle ? (
+                    <LikeArticles key={postId} likeArticle={likeArticle} />
+                  ) : null;
+                },
+              )
             ) : (
               <div className="flex justify-center">
                 <span className="text-center text-lazy-gray">응원한 기사가 없습니다.</span>
@@ -144,7 +206,7 @@ const ProfilePage = () => {
           <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
         </article>
         <div>
-          <BottomNavigation currentPage={`/profile/${lastSegment}`} />
+          <BottomNavigation currentPage={`/profile`} />
         </div>
       </section>
     </TabContextProvider>

@@ -14,15 +14,17 @@ import { TabContextProvider } from '@context/TabContext';
 import useDebounceValue from '@hooks/useDebounce';
 import useRecentResult from '@hooks/useRecentResult';
 import useSearch from '@hooks/useSearch';
+import useTab from '@hooks/useTab';
 const INPUT_CLASS =
   'w-[23.375rem] w-full p-3.5 bg-input-white outline-none  placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';
 
 const SearchPage = () => {
-  const [keyword, setKeyword] = useState<string>('');
+  const [keyword, setKeyword] = useState('');
   const debouncedKeyword = useDebounceValue(keyword, DEBOUNCE_TIME);
   const { data, isFetching, isSuccess } = useSearch({ keyword: debouncedKeyword });
   const recentResult = useRecentResult({ isSuccess, keyword: debouncedKeyword });
   const navigate = useNavigate();
+  const { changeTab } = useTab();
   const handleRecentResult = (keyword: string) => {
     setKeyword(keyword);
   };
@@ -52,10 +54,18 @@ const SearchPage = () => {
               <div className="pt-[1.63rem]">
                 <Tab
                   maxWidth="23.375"
-                  defaultTab="item1"
+                  defaultTab={`${TAB_CONSTANTS.ARTICLE_TITLE}`}
                   tabItems={[
-                    { title: `${TAB_CONSTANTS.ARTICLE_TITLE}`, width: '11.6875' },
-                    { title: `${TAB_CONSTANTS.NICKNAME}`, width: '11.6875' },
+                    {
+                      title: `${TAB_CONSTANTS.ARTICLE_TITLE}`,
+                      width: '11.6875',
+                      onClick: () => changeTab(TAB_CONSTANTS.ARTICLE_TITLE),
+                    },
+                    {
+                      title: `${TAB_CONSTANTS.NICKNAME}`,
+                      width: '11.6875',
+                      onClick: () => changeTab(TAB_CONSTANTS.NICKNAME),
+                    },
                   ]}
                 />
               </div>
@@ -64,14 +74,14 @@ const SearchPage = () => {
         </header>
         {data && (
           <article className="gap-4 overflow-y-auto pt-6">
-            <TabItem index="item1">
+            <TabItem index={`${TAB_CONSTANTS.ARTICLE_TITLE}`}>
               {isFetching ? (
                 <SearchSkeleton SkeletonType={'title'} />
               ) : (
                 <SearchResultList data={data} />
               )}
             </TabItem>
-            <TabItem index="item2">
+            <TabItem index={`${TAB_CONSTANTS.NICKNAME}`}>
               {isFetching ? (
                 <SearchSkeleton SkeletonType={'user'} />
               ) : (

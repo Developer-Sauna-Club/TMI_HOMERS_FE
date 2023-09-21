@@ -1,5 +1,6 @@
 import type { SearchData } from '@type/search';
 import { SearchType } from '@constants/Search';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import useFilteredSearchResult from '@hooks/useFilteredSearchResult';
 import { useTabContext } from '@hooks/useTabContext';
 import Article from './Article';
@@ -13,7 +14,7 @@ const SearchResultList = ({ data }: SearchData) => {
   const filteredData = useFilteredSearchResult({ data });
   return filteredData && filteredData.length > 0 ? (
     filteredData.map((searchResult, index) => {
-      if (activeTab === 'item1' && SearchType.TITLE in searchResult) {
+      if (activeTab === TAB_CONSTANTS.ARTICLE_TITLE && SearchType.TITLE in searchResult) {
         const { _id, title, author, createdAt, likes, image, comments } = searchResult;
         const { fullName } = author;
         try {
@@ -38,7 +39,7 @@ const SearchResultList = ({ data }: SearchData) => {
           //JSON 문자열의 형식이 올바르지 않을 때
           alert(e);
         }
-      } else if (activeTab === 'item2' && SearchType.ROLE in searchResult) {
+      } else if (activeTab === TAB_CONSTANTS.NICKNAME && SearchType.ROLE in searchResult) {
         const { _id, fullName, image } = searchResult;
         return (
           <div key={_id}>

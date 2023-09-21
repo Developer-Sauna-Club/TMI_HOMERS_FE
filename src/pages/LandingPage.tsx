@@ -25,11 +25,11 @@ const LandingPage = () => {
 
   if (!user) {
     return (
-      <div className="w-full h-[100vh] flex flex-col items-center justify-center bg-white">
+      <div className="w-full h-[100vh] flex flex-col items-center justify-center">
         <div className="flex flex-col justify-center items-center gap-3 select-none">
           <img src={LOGO_SRC} className="w-[48%] max-w-[300px]" alt="logo" />
           <img src={CHARACTER_SRC} className="w-[44%] max-w-[500px]" alt="character" />
-          <pre className="font-Cafe24SurroundAir text-[1.25rem] text-wall-street text-center tracking-tighter">
+          <pre className="font-Cafe24SurroundAir text-[1.25rem] text-wall-street dark:text-lazy-gray text-center tracking-tighter">
             {CATCHPHRASE}
           </pre>
         </div>

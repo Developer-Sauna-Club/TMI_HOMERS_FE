@@ -1,5 +1,6 @@
 import type { Like } from './Like';
 import type { Message } from './Message';
+import type { Notification } from './Notification';
 import type { Post } from './Post';
 
 export type User = {
@@ -12,7 +13,16 @@ export type User = {
   posts: Post[];
   likes: Like[];
   comments: string[];
-  followers: [];
+  followers: [
+    {
+      _id: string;
+      user: string;
+      follower: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    },
+  ];
   following: [
     {
       _id: string;
