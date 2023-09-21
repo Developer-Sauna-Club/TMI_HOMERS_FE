@@ -20,7 +20,7 @@ const NotificationPage = () => {
   const data = [];
   return (
     <div className="flex flex-col items-center h-screen">
-      <header className="flex-none pt-6 pl-6">
+      <header className="flex-none py-6">
         <HeaderText label="알림" />
       </header>
       {data.length === 0 ? (
