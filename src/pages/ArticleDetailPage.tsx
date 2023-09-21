@@ -16,11 +16,12 @@ import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
+  const navigate = useNavigate();
+
   const {
     userQuery: { data: user },
   } = useAuthQuery();
   const { data: article, isLoading, addComment } = useArticleDetail();
-  const navigate = useNavigate();
   const [likePushed, setLikePushed] = useState(false);
   const [likesCount, setLikesCount] = useState(article?.likes.length);
 
@@ -40,30 +41,29 @@ const ArticleDetailPage = () => {
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
 
   const isMyPost = user ? user._id === postUserId : false;
-  const isLoginUser = user ? true : false;
+  const isLoginUser = !!user;
 
   const handleLikePost = async () => {
-    if (user && likePushed) {
-      try {
+    if (!isLoginUser) {
+      alert('로그인 후에 누를 수 있습니다!');
+      return;
+    }
+
+    try {
+      if (likePushed) {
         const likeByUser = likes.find((like) => like.user === user._id);
         if (likeByUser) {
           await deleteLikePost(likeByUser._id);
         }
         setLikePushed(false);
         setLikesCount((prevCount) => (prevCount ? prevCount - 1 : likes.length - 1));
-      } catch (error) {
-        alert(error);
-      }
-    } else if (user && !likePushed) {
-      try {
+      } else {
         await likePost(_id);
         setLikePushed(true);
         setLikesCount((prevCount) => (prevCount ? prevCount + 1 : likes.length + 1));
-      } catch (error) {
-        alert(error);
       }
-    } else {
-      alert('로그인 후에 누를 수 있습니다!');
+    } catch (error) {
+      alert(error);
     }
   };
 
