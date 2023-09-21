@@ -10,11 +10,15 @@ type CommentInputProps = {
   userImage: string;
 };
 
+export type NotificationInputProps = {
+  userId: string;
+};
+
 type FormValueType = {
   comment: string;
 };
 
-const CommentInput = ({ onAddComment, postId, userImage }: CommentInputProps) => {
+const CommentInput = ({ onAddComment, postId, userId, userImage }: CommentInputProps & NotificationInputProps) => {
   const {
     register,
     handleSubmit,
@@ -23,10 +27,10 @@ const CommentInput = ({ onAddComment, postId, userImage }: CommentInputProps) =>
   } = useForm<FormValueType>();
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
-    // alert(JSON.stringify(data));
     const newComment = {
       ...data,
       postId,
+      userId,
     };
     onAddComment(newComment);
     reset();

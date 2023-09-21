@@ -137,6 +137,7 @@ const ArticleDetailPage = () => {
         <CommentInput
           onAddComment={addComment}
           postId={_id}
+          userId={postUserId}
           userImage={user ? (user.image ? user.image : '') : ''}
         />
       )}
