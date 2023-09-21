@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
 import Confirm from '@/components/Modals/Confirm';
+import { MODAL_MESSAGE } from '@/constants/Messages';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import useModal from '@/hooks/useModal';
 import type { User } from '@/type/User';
@@ -24,7 +25,7 @@ const ProfileEditPage = () => {
         {showModal && (
           <Confirm
             theme="negative"
-            title="수정사항이 사라질 수 있어요"
+            title={MODAL_MESSAGE.PROFILE_EDIT_WARN}
             onClose={modalClose}
             onConfirm={handleClickConfirm}
           />
