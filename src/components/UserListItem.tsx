@@ -54,6 +54,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
       </div>
       {isFollowing(user) ? (
         <SubButton
+          icon="star"
           key={id}
           label="팔로우"
           color="violet"
@@ -63,6 +64,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
         />
       ) : (
         <SubButton
+          icon="star"
           key={id}
           label="팔로우"
           color="violet"

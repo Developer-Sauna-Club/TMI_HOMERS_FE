@@ -26,6 +26,10 @@ const meta = {
       options: ['small', 'medium', 'large'],
       control: 'radio',
     },
+    icon: {
+      options: ['good', 'star', 'none'],
+      control: 'radio',
+    },
     label: { control: 'text' },
   },
   args: {
