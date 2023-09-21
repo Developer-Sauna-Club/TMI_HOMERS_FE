@@ -10,7 +10,7 @@ const TEXT: { [key: string]: { CONTENT: string; CLASS: string } } = {
   },
   BODY: {
     CONTENT: '요청하신 페이지를 찾을 수 없어요.',
-    CLASS: 'font-Cafe24SurroundAir text-[1rem] text-footer-icon font-bold',
+    CLASS: 'font-Cafe24SurroundAir text-[1rem] text-footer-icon font-bold dark:text-lazy-gray',
   },
 };
 
@@ -21,7 +21,7 @@ const NotFoundPage = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] flex flex-col justify-center items-center gap-10 bg-white">
+    <div className="w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] flex flex-col justify-center items-center gap-10">
       <div className="flex flex-col justify-center items-center min-w-[200px]">
         <img src={IMAGE_SRC} className="w-[150px] max-w-[200px]" />
         <div className="text-center mt-3">

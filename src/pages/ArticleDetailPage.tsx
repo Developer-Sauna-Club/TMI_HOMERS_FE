@@ -77,7 +77,7 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto pb-9 min-h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir bg-white dark:bg-tricorn-black text-tricorn-black dark:text-extra-white">
+    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto pb-9 h-screen pt-[2.75rem] font-Cafe24SurroundAir bg-white dark:bg-tricorn-black text-tricorn-black dark:text-extra-white">
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />
@@ -128,7 +128,7 @@ const ArticleDetailPage = () => {
             <span className="text-xs text-gray-400">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
-          <div className="mb-[10rem]">
+          <div className="mb-[6rem]">
             <Comments comments={comments} userId={user ? user._id : null} />
           </div>
         )}

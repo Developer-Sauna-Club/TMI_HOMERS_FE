@@ -2,7 +2,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 type CloseButtonProps = {
   mode?: 'large' | 'small';
-  onClick?: () => void;
+  onClick?: VoidFunction;
 };
 
 const BASE_BUTTON_CLASSES = 'block bg-transparent rounded-md cursor-pointer hover:bg-lazy-gray/50';

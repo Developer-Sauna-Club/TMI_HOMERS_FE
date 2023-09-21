@@ -1,3 +1,6 @@
+import { HiThumbUp } from 'react-icons/hi';
+import { MdStars } from 'react-icons/md';
+
 type SubButtonProps = {
   color: 'blue' | 'red' | 'violet';
   weight?: 'bold' | 'air';
@@ -5,6 +8,7 @@ type SubButtonProps = {
   size?: 'small' | 'medium' | 'large';
   type: 'fill' | 'outline';
   label: string;
+  icon?: 'good' | 'star' | 'none';
   onClick?: () => void;
 };
 
@@ -30,9 +34,15 @@ const BORDER_RADIUS = {
 };
 
 const BUTTON_SIZE = {
-  small: 'px-4 h-[1.9rem] min-h-[1.9rem] text-[0.8rem]',
-  medium: 'px-[1.3rem]h-[2.3rem] min-h-[2.3rem] text-[0.8rem]',
+  small: 'px-3 h-[1.9rem] text-[0.8rem]',
+  medium: 'px-[1.3rem] h-[2.3rem] text-[0.8rem]',
   large: 'px-[2.1rem] text-[1.1rem] h-[2.3rem] min-h-[2.3rem]',
+};
+
+const ICON_STYLE = {
+  good: <HiThumbUp className="w-4 h-4 mr-1" />,
+  star: <MdStars className="w-5 h-5 mr-1" />,
+  none: '',
 };
 
 const SubButton = ({
@@ -42,6 +52,7 @@ const SubButton = ({
   radius = 'small',
   type,
   size = 'medium',
+  icon = 'none',
   onClick,
   ...props
 }: SubButtonProps) => {
@@ -50,12 +61,15 @@ const SubButton = ({
   };
   return (
     <button
-      className={`btn btn-sm normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
-        type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
-      } ${BUTTON_SIZE[size]}`}
+      className={`border transform transition duration-100 active:scale-90 flex items-center text-[0.75rem] ${
+        FONT_WEIGHT[weight]
+      } ${BORDER_RADIUS[radius]} ${type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]} ${
+        BUTTON_SIZE[size]
+      }`}
       onClick={handleClick}
       {...props}
     >
+      <div className="pb-[0.1rem]">{ICON_STYLE[icon]}</div>
       {label}
     </button>
   );

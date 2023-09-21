@@ -74,7 +74,7 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
           <HeaderText size="normal" label={ETC.HEADER_WRITE} />
@@ -82,7 +82,7 @@ const NewArticlePage = () => {
         </div>
       </header>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col h-[48.5rem]  bg-white dark:bg-tricorn-black rounded-t-3xl">
+        <div className="flex flex-col h-screen bg-white dark:bg-tricorn-black rounded-t-3xl">
           <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
             <Avatar
               width={2.5}
@@ -97,13 +97,13 @@ const NewArticlePage = () => {
             </button>
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
-            <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
+            <div className="flex justify-center items-end h-[3.5rem] border-b-2 border-cooled-blue">
               <select
                 onChange={handleTitleSelect}
-                className="pb-3 mr-2 outline-none text-xs dark:text-extra-white dark:bg-tricorn-black"
+                className="flex justify-center items-center pb-2 mr-2 outline-none text-base dark:text-extra-white dark:bg-tricorn-black"
               >
                 {DROPDOWN_OPTIONS.map((option, index) => (
-                  <option key={index} value={option}>
+                  <option key={index} value={option} className="align-middle text-center">
                     {option}
                   </option>
                 ))}
@@ -128,7 +128,7 @@ const NewArticlePage = () => {
                 value={selectedText}
                 placeholder={MESSAGE.TITLE_REQUIRED}
                 maxLength={LENGTH_LIMIT.TITLE_MAX}
-                className="block w-full pb-2 outline-none dark: bg-tricorn-black"
+                className="block w-full pb-2 outline-none bg-white dark:bg-tricorn-black"
               />
             </div>
             <div className="flex justify-end w-full">
@@ -164,7 +164,7 @@ const NewArticlePage = () => {
                 })}
                 placeholder={MESSAGE.CONTENT_REQUIRED}
                 maxLength={LENGTH_LIMIT.CONTENT_MAX}
-                className="overflow-hidden outline-none resize-none h-[20rem] w-full dark: bg-tricorn-black"
+                className="overflow-hidden outline-none resize-none h-[20rem] w-full bg-white dark:bg-tricorn-black"
               />
               {errors?.body && (
                 <span className="text-xs text-error-red mr-3">{errors.body.message}</span>
