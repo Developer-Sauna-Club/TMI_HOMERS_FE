@@ -27,6 +27,7 @@ const SearchPage = () => {
     setKeyword(keyword);
   };
 
+  const isNotEnoughData = (!data || data.length <= MINIMUM__DATA) && !isFetching;
   return (
     <TabContextProvider>
       <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative dark:bg-[#1D232A]">
@@ -38,7 +39,7 @@ const SearchPage = () => {
           <div className="flex justify-center">
             <div className="bg-white w-[23.575rem] rounded-lg">
               <form className="flex relative items-center " onSubmit={(e) => e.preventDefault()}>
-                <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4" />
+                <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4 text-black" />
                 <input
                   className={INPUT_CLASS}
                   placeholder="검색어를 입력해주세요"
@@ -61,31 +62,35 @@ const SearchPage = () => {
             </div>
           </div>
         </header>
-        <article className="flex-grow gap-4 overflow-y-auto pb-[4.75rem]">
-          <TabItem index="item1">
-            {isFetching ? (
-              <SearchSkeleton SkeletonType={'title'} />
-            ) : (
-              <SearchResultList data={data} />
-            )}
-          </TabItem>
-          <TabItem index="item2">
-            {isFetching ? (
-              <SearchSkeleton SkeletonType={'user'} />
-            ) : (
-              <SearchResultList data={data} />
-            )}
-          </TabItem>
-        </article>
-        {(!data || data.length <= MINIMUM__DATA) && !isFetching && (
+        {data && (
+          <article className="gap-4 overflow-y-auto pt-6">
+            <TabItem index="item1">
+              {isFetching ? (
+                <SearchSkeleton SkeletonType={'title'} />
+              ) : (
+                <SearchResultList data={data} />
+              )}
+            </TabItem>
+            <TabItem index="item2">
+              {isFetching ? (
+                <SearchSkeleton SkeletonType={'user'} />
+              ) : (
+                <SearchResultList data={data} />
+              )}
+            </TabItem>
+          </article>
+        )}
+        {isNotEnoughData && (
           <footer className="mb-8 mt-8 ml-[1.9rem] mr-[1.56rem]">
-            <h2 className="font-Cafe24Surround text-[1.125rem]">최근 검색어</h2>
+            <h2 className="font-Cafe24Surround text-[1.125rem] text-black dark:text-extra-white">
+              최근 검색어
+            </h2>
             <hr className="mt-2 mb-5" />
             <div className="flex flex-wrap gap-2">
               {recentResult.map((item, index) => (
                 <div key={index}>
                   <SubButton
-                    size="medium"
+                    size="small"
                     radius="medium"
                     label={item}
                     color="blue"
