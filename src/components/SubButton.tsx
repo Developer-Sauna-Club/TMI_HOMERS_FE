@@ -9,16 +9,15 @@ type SubButtonProps = {
 };
 
 const OUTLINE_TYPE = {
-  blue: 'border-cooled-blue hover:bg-cooled-blue hover:bg-opacity-75 text-cooled-blue bg-white hover:text-input-white hover:border-none dark:bg-transparent',
-  red: 'border-error-red hover:bg-error-red hover:bg-opacity-75 text-error-red bg-white hover:text-input-white hover:border-none dark:bg-transparent',
-  violet:
-    'border-light-violet hover:bg-light-violet hover:bg-opacity-75 text-light-violet bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+  blue: 'border-cooled-blue text-cooled-blue bg-white dark:bg-transparent',
+  red: 'border-error-red dark:bg-transparent',
+  violet: 'border-light-violet text-light-violet bg-white dark:bg-transparent',
 };
 
 const FILL_TYPE = {
-  blue: 'bg-cooled-blue border-none hover:bg-cooled-blue hover:bg-opacity-75 text-input-white',
-  red: 'bg-error-red border-none hover:bg-error-red hover:bg-opacity-75 text-input-white',
-  violet: 'bg-light-violet border-none hover:bg-light-violet hover:bg-opacity-75 text-input-white',
+  blue: 'bg-cooled-blue border-none text-input-white',
+  red: 'bg-error-red border-none text-input-white',
+  violet: 'bg-light-violet border-none text-input-white',
 };
 const FONT_WEIGHT = {
   bold: 'font-Cafe24Surround',
@@ -50,7 +49,7 @@ const SubButton = ({
   };
   return (
     <button
-      className={`btn btn-sm normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
+      className={`normal-case ${FONT_WEIGHT[weight]} ${BORDER_RADIUS[radius]} ${
         type === 'outline' ? OUTLINE_TYPE[color] : FILL_TYPE[color]
       } ${BUTTON_SIZE[size]}`}
       onClick={handleClick}

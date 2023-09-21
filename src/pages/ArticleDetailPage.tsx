@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { BUTTON, MESSAGE } from '@/constants/ArticleDetail';
-import { deleteLikePost, likePost } from '@api/common/Like';
+import { useLikeCreateMutation } from '@/hooks/useLikeCreateMutation';
+import { useLikeDeleteMutation } from '@/hooks/useLikeDeleteMutation';
 import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
@@ -22,15 +22,8 @@ const ArticleDetailPage = () => {
     userQuery: { data: user },
   } = useAuthQuery();
   const { data: article, isLoading, addComment } = useArticleDetail();
-  const [likePushed, setLikePushed] = useState(false);
-  const [likesCount, setLikesCount] = useState(article?.likes.length);
-
-  useEffect(() => {
-    if (user) {
-      const isPostLiked = user.likes.some((like) => like.post === article?._id);
-      setLikePushed(isPostLiked);
-    }
-  }, [user, article]);
+  const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
+  const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
 
   if (isLoading) {
     return <Loader />;
@@ -41,29 +34,25 @@ const ArticleDetailPage = () => {
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
 
   const isMyPost = user ? user._id === postUserId : false;
+  const myLike = likes.find((like) => (user ? like.user === user._id : false));
   const isLoginUser = !!user;
 
-  const handleLikePost = async () => {
-    if (!isLoginUser) {
-      alert('로그인 후에 누를 수 있습니다!');
+  const toggleLikeMutate = () => {
+    if (myLike) {
+      likeDeleteMutate(myLike._id);
+    } else {
+      likeCreateMutate(_id);
+    }
+  };
+
+  const handleLikeButtonClick = () => {
+    if (isLikeCreateLoading || isLikeDeleteLoading) {
       return;
     }
-
-    try {
-      if (likePushed) {
-        const likeByUser = likes.find((like) => like.user === user._id);
-        if (likeByUser) {
-          await deleteLikePost(likeByUser._id);
-        }
-        setLikePushed(false);
-        setLikesCount((prevCount) => (prevCount ? prevCount - 1 : likes.length - 1));
-      } else {
-        await likePost(_id);
-        setLikePushed(true);
-        setLikesCount((prevCount) => (prevCount ? prevCount + 1 : likes.length + 1));
-      }
-    } catch (error) {
-      alert(error);
+    if (!isLoginUser) {
+      alert('로그인 후에 누를 수 있습니다!');
+    } else {
+      toggleLikeMutate();
     }
   };
 
@@ -109,14 +98,16 @@ const ArticleDetailPage = () => {
           <div className="flex justify-between mt-6">
             <SubButton
               label={BUTTON.CHEER_UP}
-              onClick={() => handleLikePost()}
+              onClick={() => handleLikeButtonClick()}
               color="blue"
-              type={likePushed ? 'fill' : 'outline'}
+              type={myLike ? 'fill' : 'outline'}
             />
             <ArticleInfoIcon
-              likes={likesCount ? likesCount : likes.length}
+              //likes={likesCount ? likesCount : likes.length}
+              likes={likes.length}
               comments={comments.length}
               mode="post"
+              color={myLike ? 'blue' : 'gray'}
             />
           </div>
         </div>

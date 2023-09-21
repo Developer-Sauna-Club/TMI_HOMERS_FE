@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Post } from '@type/Post';
 import { CommentParams, createComment } from '@/api/common/Comment';
@@ -9,8 +9,8 @@ import { useToastContext } from './useToastContext';
 
 export const useArticleDetail = () => {
   const queryClient = useQueryClient();
-  const { pathname: url } = useLocation();
-  const postId = url.split('/').pop() || '';
+  const params = useParams();
+  const postId = params.postId as string;
   const { showToast } = useToastContext();
 
   const { data, isLoading } = useQuery<Post>(
