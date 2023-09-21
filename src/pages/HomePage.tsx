@@ -73,7 +73,7 @@ const HomePage = () => {
             </div>
           </section>
         </section>
-        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow">
+        <section className=" bg-white flex flex-col justify-center gap-6 flex-grow pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
             <h2 className="text-tricorn-black font-Cafe24Surround text-lg font-bold px-7">
