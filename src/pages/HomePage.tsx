@@ -39,18 +39,18 @@ const HomePage = () => {
   return (
     <div className="relative flex flex-col items-center justify-center overflow-hidden">
       <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-36">
-        <section className="bg-cooled-blue h-[375px] mb-10">
+        <section className="bg-cooled-blue dark:bg-dark-primary h-[375px] mb-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
             <HeaderText label={MESSAGE.HOME} />
             <button onClick={handleClickSearchButton}>
-              <ImSearch size="24" className="text-tricorn-black" />
+              <ImSearch size="24" className="text-tricorn-black dark:text-white" />
             </button>
           </header>
           <section className="relative w-full h-[304px] gap-2 flex justify-center">
             <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 <HiFire size="24" className="text-article-highly-liked" />
-                <h2 className="flex-none text-lg font-bold text-tricorn-black font-Cafe24Surround">
+                <h2 className="flex-none text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
                   <span
                     onClick={() => {
                       navigate('/news');
@@ -62,7 +62,7 @@ const HomePage = () => {
                   </span>
                 </h2>
               </div>
-              <div className="bg-white text-black w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
+              <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
                 <div>
                   {isFetching ? (
                     <div className="flex justify-center">
@@ -81,10 +81,10 @@ const HomePage = () => {
             </div>
           </section>
         </section>
-        <section className="flex flex-col justify-center flex-grow gap-6 pb-20 bg-white ">
+        <section className="flex flex-col justify-center flex-grow gap-6 pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-lg font-bold text-tricorn-black font-Cafe24Surround px-7">
+            <h2 className="text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround px-10">
               <span
                 onClick={() => {
                   navigate('/news');
@@ -95,7 +95,7 @@ const HomePage = () => {
                 {TAB_CONSTANTS.NEWEST} 뉴스
               </span>
             </h2>
-            <div className="pb-[7rem]">
+            <div className="">
               {isFetching ? (
                 <div className="flex justify-center">
                   <Loader />

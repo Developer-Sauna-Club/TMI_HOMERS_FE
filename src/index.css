@@ -25,5 +25,5 @@
 }
 
 body {
-  @apply dark:bg-[#1D232A];
+  @apply dark:bg-tricorn-black;
 }

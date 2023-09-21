@@ -10,7 +10,7 @@ export const ROUTES = {
   ARTICLES_URL: '/news',
 };
 
-export const HOTTEST_ARTICLE_LIKES_THRESHOLD = 15;
+export const HOTTEST_ARTICLE_LIKES_THRESHOLD = 5;
 export const ARTICLE_TITLE_MAX_LENGTH = 20;
 export const ARTICLE_BODY_MAX_LENGTH = 500;
 export const ARTICLE_FETCH_LIMIT = 10;

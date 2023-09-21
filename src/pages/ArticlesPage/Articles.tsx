@@ -14,7 +14,7 @@ const Articles = ({ articles }: ArticlesProps) => {
 
   if (isArticlesEmpty) {
     return (
-      <div className="flex flex-col justify-center w-full gap-4 mx-auto mt-4">
+      <div className="flex flex-col justify-center w-full gap-4 mx-auto mt-4 items-center">
         <span className="text-center">앗, 팔로우한 사람들의 글 목록이 존재하지 않습니다!</span>
         <div
           className="inline-block mx-auto"

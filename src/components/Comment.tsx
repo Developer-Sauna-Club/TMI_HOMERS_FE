@@ -30,7 +30,7 @@ const Comment = ({
           <div className="icon cursor-pointer">
             <Avatar width={1.5} profileImage={profileImage} isLoggedIn={false} />
           </div>
-          <div className="ml-2 w-[18rem] text-wall-street text-base">
+          <div className="ml-2 w-[18rem] text-wall-street dark:text-extra-white text-base">
             <span className="text-sm cursor-pointer">{nickname}</span>
           </div>
           <div className="flex w-[1rem]">

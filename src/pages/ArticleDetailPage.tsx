@@ -128,7 +128,7 @@ const ArticleDetailPage = () => {
             <span className="text-xs text-gray-400">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
-          <div className="mb-[10rem]">
+          <div className="mb-[6rem]">
             <Comments comments={comments} userId={user ? user._id : null} />
           </div>
         )}
