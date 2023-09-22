@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { User } from '@/type/User';
 import safeJSONParse from '@/utils/safeJSONParse';
@@ -76,6 +77,10 @@ const ArticleEditForm = ({
     setFocus('body');
   }, [setValue, setFocus, title, body, user]);
 
+  const handleRemoveImage = () => {
+    setPreviewImage(null);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col h-[48.5rem]  bg-white dark:bg-tricorn-black rounded-t-3xl">
@@ -128,14 +133,32 @@ const ArticleEditForm = ({
           </div>
           <div className="block">
             {previewImage ? (
-              <img
-                className="block w-[3rem] pb-2"
-                src={userPreviewImage ? URL.createObjectURL(previewImage) : ''}
-                alt="thumbnail"
-              />
+              <div className="inline-block pb-2 relative">
+                <img
+                  className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
+                  src={userPreviewImage ? URL.createObjectURL(previewImage) : ''}
+                  alt="thumbnail"
+                  onClick={handleRemoveImage}
+                />
+                <AiOutlineCloseCircle
+                  size="1rem"
+                  className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                />
+              </div>
             ) : (
               articleImage && (
-                <img className="block w-[3rem] pb-2" src={articleImage} alt="thumbnail" />
+                <div className="inline-block pb-2 relative">
+                  <img
+                    className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
+                    src={articleImage}
+                    alt="thumbnail"
+                    onClick={handleRemoveImage}
+                  />
+                  <AiOutlineCloseCircle
+                    size="1rem"
+                    className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                  />
+                </div>
               )
             )}
             <Controller
@@ -182,9 +205,9 @@ const ArticleEditForm = ({
         <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
           <label
             htmlFor="file_input"
-            className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
+            className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
           >
-            <BiImageAdd size="1.2rem" />
+            <BiImageAdd size="1.7rem" />
           </label>
           <input
             id="file_input"

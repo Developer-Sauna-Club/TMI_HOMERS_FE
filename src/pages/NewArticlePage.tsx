@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
@@ -78,6 +79,10 @@ const NewArticlePage = () => {
     }
   };
 
+  const handleRemoveImage = () => {
+    setImage(null);
+  };
+
   return (
     <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
@@ -146,11 +151,18 @@ const NewArticlePage = () => {
             </div>
             <div className="block">
               {image && (
-                <img
-                  className="block w-[3rem] pb-2"
-                  src={URL.createObjectURL(image)}
-                  alt="thumbnail"
-                />
+                <div className="inline-block pb-2 relative">
+                  <img
+                    className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
+                    src={URL.createObjectURL(image)}
+                    alt="thumbnail"
+                    onClick={handleRemoveImage}
+                  />
+                  <AiOutlineCloseCircle
+                    size="1rem"
+                    className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                  />
+                </div>
               )}
               <textarea
                 {...register('body', {
