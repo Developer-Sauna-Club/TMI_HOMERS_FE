@@ -6,7 +6,7 @@ import {
   NotificationParam,
 } from '@/api/common/Notification';
 
-const useNotificationQuery = (userId: string) => {
+const useNotificationQuery = (userId?: string) => {
   const notificationQuery = useQuery(['notification', userId || ''], fetchNotifications, {
     enabled: !!userId,
   });

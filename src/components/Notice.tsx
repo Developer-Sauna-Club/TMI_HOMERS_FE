@@ -6,7 +6,8 @@ type NoticeProps = {
   time: string;
   isShowButton?: boolean;
   buttonLabel?: '팔로우' | '언팔로우';
-  profileImage: string;
+  profileImage?: string;
+  onClick: VoidFunction;
 };
 
 const Notice = ({
@@ -16,9 +17,13 @@ const Notice = ({
   isShowButton = true,
   buttonLabel = '팔로우',
   profileImage,
+  onClick,
 }: NoticeProps) => {
   return (
-    <div className="flex flex-col gap-2 bg-input-white w-5/6 max-w-sm shadow-lg rounded-xl px-4 py-5">
+    <div
+      className="flex flex-col gap-2 bg-input-white w-5/6 max-w-sm shadow-lg rounded-xl px-4 py-5 cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex justify-between items-center">
         <div className="flex gap-1 items-center">
           <Avatar width={1.5} isLoggedIn={false} profileImage={profileImage} />
