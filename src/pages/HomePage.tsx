@@ -11,6 +11,7 @@ import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
 import useTab from '@hooks/useTab';
 import Articles from './ArticlesPage/Articles';
+import HotArticles from './HomePage/HotArticles';
 
 const CHARACTER_SRC = '/img/character.png';
 
@@ -63,15 +64,13 @@ const HomePage = () => {
                 </h2>
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
-                <div>
-                  {isFetching ? (
-                    <div className="flex justify-center">
-                      <Loader />
-                    </div>
-                  ) : (
-                    <Articles articles={hottestArticles} />
-                  )}
-                </div>
+                {isFetching ? (
+                  <div className="flex justify-center items-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <HotArticles articles={hottestArticles} />
+                )}
               </div>
               <img
                 src={CHARACTER_SRC}
