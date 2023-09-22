@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CURRENT_NEWS_TAB_KEY, CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 
-const DEFAULT_TAB_VALUES: { [key: string]: TAB_CONSTANTS } = {
+const DEFAULT_TAB_VALUES: { [storageKey: string]: TAB_CONSTANTS } = {
   [CURRENT_NEWS_TAB_KEY]: TAB_CONSTANTS.NEWEST,
   [CURRENT_PROFILE_TAB_KEY]: TAB_CONSTANTS.SUBSCRIBED,
 };
