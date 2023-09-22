@@ -14,7 +14,7 @@ export const readNotifications = async () => {
 
 type NotificationType = 'COMMENT' | 'FOLLOW' | 'LIKE' | 'MESSAGE';
 
-type NotificationParam = {
+export type NotificationParam = {
   notificationType: NotificationType;
   notificationTypeId: string;
   userId: string;
