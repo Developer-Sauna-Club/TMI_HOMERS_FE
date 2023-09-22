@@ -67,6 +67,7 @@ const NotificationPage = () => {
               message={getNotificationMessage(notification)}
               time={getTimeDelta(notification.createdAt)}
               profileImage={notification.author?.image}
+              seen={notification.seen}
             />
           ))}
         </div>

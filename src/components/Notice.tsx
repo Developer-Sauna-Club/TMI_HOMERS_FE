@@ -6,14 +6,25 @@ type NoticeProps = {
   message: string;
   time: string;
   profileImage?: string;
+  seen?: boolean;
   onClick: VoidFunction;
   onClickAvatar: MouseEventHandler;
 };
 
-const Notice = ({ nickname, message, time, profileImage, onClick, onClickAvatar }: NoticeProps) => {
+const Notice = ({
+  nickname,
+  message,
+  time,
+  profileImage,
+  onClick,
+  onClickAvatar,
+  seen = false,
+}: NoticeProps) => {
   return (
     <div
-      className="flex flex-col gap-2 bg-input-white w-full max-w-sm rounded-xl px-4 py-5 cursor-pointer border border-lazy-gray"
+      className={`flex flex-col gap-2 bg-input-white w-full max-w-sm rounded-xl px-4 py-5 cursor-pointer border border-lazy-gray ${
+        seen ? 'grayscale opacity-50' : ''
+      }`}
       onClick={onClick}
     >
       <div className="flex justify-between items-center">
