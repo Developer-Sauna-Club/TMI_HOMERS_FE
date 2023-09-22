@@ -11,7 +11,7 @@ const useNotificationQuery = (userId?: string) => {
   const queryClient = useQueryClient();
   const notificationQuery = useQuery(['notification', userId || ''], fetchNotifications, {
     enabled: !!userId,
-    refetchInterval: 1000 * 3,
+    refetchInterval: 1000 * 5,
   });
   const readNotifications = useMutation(readNotice, {
     onMutate: async () => {

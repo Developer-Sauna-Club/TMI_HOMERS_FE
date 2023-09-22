@@ -52,9 +52,7 @@ const NotificationPage = () => {
 
   useEffect(
     () => {
-      (() => {
-        window.addEventListener('beforeunload', preventClose);
-      })();
+      window.addEventListener('beforeunload', preventClose);
 
       return () => {
         readNotifications.mutate();
