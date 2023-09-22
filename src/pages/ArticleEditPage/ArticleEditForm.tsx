@@ -41,6 +41,7 @@ const ArticleEditForm = ({
   const { editPost, isLoading } = useEditPost();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [previewImage, setPreviewImage] = useState<File | null>(null);
+  const [userArticleImage, setUserArticleImage] = useState<string | null>(articleImage);
   const userPreviewImage = watch('image');
 
   const { title, body } = safeJSONParse(articleInfo);
@@ -79,6 +80,7 @@ const ArticleEditForm = ({
 
   const handleRemoveImage = () => {
     setPreviewImage(null);
+    setUserArticleImage(null);
   };
 
   return (
@@ -133,7 +135,7 @@ const ArticleEditForm = ({
           </div>
           <div className="block">
             {previewImage ? (
-              <div className="inline-block pb-2 relative">
+              <div className="relative inline-block pb-2">
                 <img
                   className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
                   src={userPreviewImage ? URL.createObjectURL(previewImage) : ''}
@@ -142,21 +144,21 @@ const ArticleEditForm = ({
                 />
                 <AiOutlineCloseCircle
                   size="1rem"
-                  className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                  className="absolute cursor-pointer text-lazy-gray top-1 right-1"
                 />
               </div>
             ) : (
-              articleImage && (
-                <div className="inline-block pb-2 relative">
+              userArticleImage && (
+                <div className="relative inline-block pb-2">
                   <img
                     className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
-                    src={articleImage}
+                    src={userArticleImage}
                     alt="thumbnail"
                     onClick={handleRemoveImage}
                   />
                   <AiOutlineCloseCircle
                     size="1rem"
-                    className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                    className="absolute cursor-pointer text-lazy-gray top-1 right-1"
                   />
                 </div>
               )
