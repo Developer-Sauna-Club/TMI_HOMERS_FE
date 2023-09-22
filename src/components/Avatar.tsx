@@ -3,7 +3,7 @@ import { FaUser } from 'react-icons/fa6';
 
 type AvatarProps = {
   width: number;
-  profileImage: string;
+  profileImage?: string;
   isLoggedIn: boolean;
 };
 
