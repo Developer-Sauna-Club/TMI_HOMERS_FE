@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { BiImageAdd } from 'react-icons/bi';
 import { User } from '@/type/User';
@@ -149,7 +149,7 @@ const ArticleEditForm = ({
                     field.ref(e);
                   }}
                   placeholder={MESSAGE.CONTENT_REQUIRED}
-                  className="w-full h-auto bg-white outline-none resize-none  dark:bg-tricorn-black"
+                  className="w-full h-auto bg-white outline-none resize-none dark:bg-tricorn-black"
                   onChange={(e) => {
                     handleResizeTextareaHeight();
                     field.onChange(e);
