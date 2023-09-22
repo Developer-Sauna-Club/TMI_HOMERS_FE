@@ -155,7 +155,7 @@ const ArticlesPage = () => {
             <AiOutlineArrowUp className="w-[1.5rem] h-[1.5rem]" />
           </button>
         </article>
-        <div>
+        <div className="flex justify-center flex-none w-full">
           <BottomNavigation currentPage="/news" />
         </div>
       </section>

@@ -12,7 +12,7 @@ export const useArticle = () => {
   return useMutation(saveArticle, {
     onSuccess: () => {
       queryClient.invalidateQueries(['search']);
-      showToast(TOAST_MESSAGES.POST_SUCESS, 'success');
+      showToast(TOAST_MESSAGES.POST_SUCCESS, 'success');
       navigate('/news');
     },
     onError: () => {

@@ -9,7 +9,7 @@ const useChangePassword = () => {
   const { showToast } = useToastContext();
   const { mutate: changePasswordMutate, isLoading } = useMutation(updatePassword, {
     onSuccess: () => {
-      showToast(TOAST_MESSAGES.CHANGE_PASSWORD_SUCESS, 'success');
+      showToast(TOAST_MESSAGES.CHANGE_PASSWORD_SUCCESS, 'success');
       navigate('/home', { replace: true });
     },
     onError: () => {

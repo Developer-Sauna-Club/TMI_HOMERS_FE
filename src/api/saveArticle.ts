@@ -1,6 +1,6 @@
 import { axiosClient } from './axiosClient';
 
-const CHANNEL_ID = '64fac2e729260903240d2dab';
+export const CHANNEL_ID = '64fac2e729260903240d2dab';
 
 type FormValue = {
   title: string;

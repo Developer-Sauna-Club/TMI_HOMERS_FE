@@ -10,10 +10,10 @@ import { useArticle } from '@/hooks/useArticle';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import { User } from '@/type/User';
 
-type FormValueType = {
+export type FormValueType = {
   title: string;
   body: string;
-  image: File;
+  image: File | null;
 };
 
 const NewArticlePage = () => {
