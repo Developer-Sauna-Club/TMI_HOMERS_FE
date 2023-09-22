@@ -107,6 +107,7 @@ const ArticleDetailPage = () => {
             nickname={fullName}
             postedDate={createdAt}
             profileImage={authorProfileImage ? authorProfileImage : ''}
+            postUserId={postUserId}
           />
           <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
             {articleTitle}

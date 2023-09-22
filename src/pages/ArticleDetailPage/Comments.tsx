@@ -40,6 +40,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
           postedDate={createdAt}
           nickname={fullName}
           active={isMyComment}
+          authorId={authorId}
           profileImage={authorImage ? authorImage : ''}
           onDelete={(commentId) => handleDeleteComment(commentId)}
         />

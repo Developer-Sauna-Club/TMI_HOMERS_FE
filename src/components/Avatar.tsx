@@ -5,9 +5,10 @@ type AvatarProps = {
   width: number;
   profileImage?: string;
   isLoggedIn: boolean;
+  onClick?: () => void;
 };
 
-const Avatar = ({ width, profileImage, isLoggedIn }: AvatarProps) => {
+const Avatar = ({ width, profileImage, isLoggedIn, onClick }: AvatarProps) => {
   const PROFILE_STYLE = `relative rounded-full border-[0.1rem] border-lazy-gray bg-profile-bg object-cover`;
   const userIconWidth = width * 0.55;
   const editIconWidth = width * 0.1875;
@@ -15,7 +16,7 @@ const Avatar = ({ width, profileImage, isLoggedIn }: AvatarProps) => {
   const editPencilPosition = width * 0.0625;
 
   return (
-    <div className="relative inline-block cursor-pointer">
+    <div className="relative inline-block cursor-pointer" onClick={onClick}>
       {profileImage !== '' ? (
         <img
           src={`${profileImage}`}
