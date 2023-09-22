@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineBell } from 'react-icons/ai';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -42,9 +43,27 @@ const NotificationPage = () => {
   const userId = user?._id;
   const {
     notificationQuery: { data: notifications },
+    readNotifications,
   } = useNotificationQuery(userId);
 
-  // console.log(notifications);
+  const preventClose = () => {
+    readNotifications.mutate();
+  };
+
+  useEffect(
+    () => {
+      (() => {
+        window.addEventListener('beforeunload', preventClose);
+      })();
+
+      return () => {
+        readNotifications.mutate();
+        window.removeEventListener('beforeunload', preventClose);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <div className="flex flex-col items-center h-screen">
