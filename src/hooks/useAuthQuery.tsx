@@ -55,14 +55,14 @@ const useAuthQuery = () => {
     },
   });
 
-  const EMTPY_USER = '';
+  const EMPTY_USER = '';
 
   const logoutQuery = useMutation(logout, {
     onSuccess: () => {
       showToast(TOAST_MESSAGES.LOGOUT_SUCCESS, 'success');
       removeItemFromStorage('token');
       navigate('/home');
-      queryClient.setQueryData(['user'], EMTPY_USER);
+      queryClient.setQueryData(['user'], EMPTY_USER);
     },
     onError: () => {
       showToast(TOAST_MESSAGES.LOGOUT_FAILED, 'error');

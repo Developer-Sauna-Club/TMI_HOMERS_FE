@@ -107,9 +107,9 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-      <footer className="fixed bottom-0 items-center justify-center flex-none">
+      <div className="fixed bottom-0 flex justify-center flex-none w-full">
         <BottomNavigation currentPage="/home" />
-      </footer>
+      </div>
     </div>
   );
 };

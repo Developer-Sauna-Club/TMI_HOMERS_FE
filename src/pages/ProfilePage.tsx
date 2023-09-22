@@ -116,7 +116,7 @@ const ProfilePage = () => {
                 />
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
-                <span className="text-center max-w-[7.3125rem] h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
+                <span className="text-center  h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
                   {currentProfileUser?.fullName}
                 </span>
                 <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
@@ -191,7 +191,11 @@ const ProfilePage = () => {
             {currentProfileUser && currentProfileUser.likes.length > 0 ? (
               Array.from(new Set(currentProfileUser.likes.map((like) => like.post))).map(
                 (postId) => {
-                  const likeArticle = currentProfileUser.likes.find((like) => like.post === postId);
+                  const likeArticle = currentProfileUser.likes
+                    .sort((a, b) => {
+                      return b.createdAt > a.createdAt ? 1 : -1;
+                    })
+                    .find((like) => like.post === postId);
                   return likeArticle ? (
                     <LikeArticles key={postId} likeArticle={likeArticle} />
                   ) : null;
@@ -205,8 +209,8 @@ const ProfilePage = () => {
           </TabItem>
           <ScrollToTopButton show={showScrollToTopButton} onClick={scrollToTop} />
         </article>
-        <div>
-          <BottomNavigation currentPage={`/profile`} />
+        <div className="flex justify-center flex-none w-full">
+          <BottomNavigation currentPage={'/profile'} />
         </div>
       </section>
     </TabContextProvider>
