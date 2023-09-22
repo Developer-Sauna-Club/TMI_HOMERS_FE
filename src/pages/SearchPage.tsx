@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineSearch } from 'react-icons/md';
+import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 import CloseButton from '@components/CloseButton';
 import HeaderText from '@components/HeaderText';
 import SearchResultList from '@components/SearchResultList';
@@ -9,7 +10,7 @@ import SubButton from '@components/SubButton';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { DEBOUNCE_TIME, MINIMUM__DATA } from '@constants/Search';
-import { TAB_CONSTANTS } from '@constants/Tab';
+import { CURRENT_SEARCH_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useDebounceValue from '@hooks/useDebounce';
 import useRecentResult from '@hooks/useRecentResult';
@@ -24,12 +25,19 @@ const SearchPage = () => {
   const { data, isFetching, isSuccess } = useSearch({ keyword: debouncedKeyword });
   const recentResult = useRecentResult({ isSuccess, keyword: debouncedKeyword });
   const navigate = useNavigate();
-  const { changeTab } = useTab();
+  const { currentTab, changeTab } = useTab(CURRENT_SEARCH_TAB_KEY);
   const handleRecentResult = (keyword: string) => {
     setKeyword(keyword);
   };
 
   const isNotEnoughData = (!data || data.length <= MINIMUM__DATA) && !isFetching;
+
+  useEffect(() => {
+    const savedTab = getItemFromStorage(CURRENT_SEARCH_TAB_KEY);
+    savedTab
+      ? changeTab(savedTab)
+      : setItemToStorage(TAB_CONSTANTS.ARTICLE_TITLE, TAB_CONSTANTS.ARTICLE_TITLE);
+  }, [currentTab, changeTab]);
   return (
     <TabContextProvider>
       <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
@@ -40,7 +48,7 @@ const SearchPage = () => {
           </div>
           <div className="flex justify-center">
             <div className="bg-white w-[23.575rem] rounded-lg">
-              <form className="flex relative items-center " onSubmit={(e) => e.preventDefault()}>
+              <form className="relative flex items-center " onSubmit={(e) => e.preventDefault()}>
                 <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4 text-black" />
                 <input
                   className={INPUT_CLASS}
@@ -53,6 +61,7 @@ const SearchPage = () => {
               </form>
               <div className="pt-[1.63rem]">
                 <Tab
+                  active={currentTab}
                   maxWidth="23.375"
                   defaultTab={`${TAB_CONSTANTS.ARTICLE_TITLE}`}
                   tabItems={[
@@ -73,7 +82,7 @@ const SearchPage = () => {
           </div>
         </header>
         {data && (
-          <article className="gap-4 overflow-y-auto pt-6">
+          <article className="gap-4 pt-6 overflow-y-auto">
             <TabItem index={`${TAB_CONSTANTS.ARTICLE_TITLE}`}>
               {isFetching ? (
                 <SearchSkeleton SkeletonType={'title'} />

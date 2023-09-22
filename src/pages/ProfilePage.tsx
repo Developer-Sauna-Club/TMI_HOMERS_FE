@@ -5,16 +5,16 @@ import { User } from '@type/User';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
+import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 import { updateProfileImage } from '@api/common/User';
 import getUserInfo from '@api/getUserInfo';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
-import Loader from '@components/Loader';
 import ScrollToTopButton from '@components/ScrollToTopButton';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
-import { TAB_CONSTANTS } from '@constants/Tab';
+import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useAuthQuery from '@hooks/useAuthQuery';
 import useScrollToTop from '@hooks/useScrollToTop';
@@ -26,7 +26,7 @@ const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
-  const { changeTab } = useTab();
+  const { currentTab, changeTab } = useTab(CURRENT_PROFILE_TAB_KEY);
 
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
@@ -35,7 +35,7 @@ const ProfilePage = () => {
   const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
   const [userImage, setUserImage] = useState('');
 
-  const { data: externalUser, isFetching } = useQuery(
+  const { data: externalUser } = useQuery(
     ['userInfo', lastSegment],
     () => getUserInfo(lastSegment),
     {
@@ -59,6 +59,13 @@ const ProfilePage = () => {
       setUserImage(updatedUser.image);
     }
   };
+
+  useEffect(() => {
+    const savedTab = getItemFromStorage(CURRENT_PROFILE_TAB_KEY);
+    savedTab
+      ? changeTab(savedTab)
+      : setItemToStorage(CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS.WRITTEN_ARTICLES);
+  }, [currentTab, changeTab]);
 
   useEffect(() => {
     if (user) {
@@ -95,7 +102,7 @@ const ProfilePage = () => {
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              <div className="relative w-32 h-32 rounded-full bg-profile-bg self-center mb-6 border border-tertiory-gray text-footer-icon">
+              <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
                 {userImage ? (
                   <img src={userImage} className="w-full h-full rounded-full" alt="thumbnail" />
                 ) : (
@@ -103,7 +110,7 @@ const ProfilePage = () => {
                 )}
                 <label
                   htmlFor="image"
-                  className="absolute right-1 bottom-1 p-1 rounded-full bg-profile-bg border border-tertiory-gray"
+                  className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
                 >
                   <HiPencil className="w-4 h-4" />
                 </label>
@@ -151,6 +158,7 @@ const ProfilePage = () => {
             </button>
           </div>
           <Tab
+            active={currentTab}
             maxWidth="25.875"
             defaultTab={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}
             tabItems={[
@@ -169,11 +177,6 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-            {isFetching && (
-              <div className="flex items-center justify-center">
-                <Loader />
-              </div>
-            )}
             {currentProfileUser && currentProfileUser.posts.length > 0 ? (
               <UserArticles userId={currentProfileUser._id} />
             ) : (
@@ -183,11 +186,6 @@ const ProfilePage = () => {
             )}
           </TabItem>
           <TabItem index={`${TAB_CONSTANTS.LIKED_ARTICLES}`}>
-            {isFetching && (
-              <div className="flex items-center justify-center">
-                <Loader />
-              </div>
-            )}
             {currentProfileUser && currentProfileUser.likes.length > 0 ? (
               Array.from(new Set(currentProfileUser.likes.map((like) => like.post))).map(
                 (postId) => {

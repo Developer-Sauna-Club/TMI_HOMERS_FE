@@ -1,5 +1,4 @@
-import Loader from '@/components/Loader';
-import { useArticles } from '@/hooks/useArticles';
+import { useArticles } from '@hooks/useArticles';
 import Articles from '../ArticlesPage/Articles';
 
 type UserArticlesProps = {
@@ -11,7 +10,7 @@ const UserArticles = ({ userId }: UserArticlesProps) => {
     id: userId,
     type: 'user',
   });
-  return isFetching ? <Loader /> : <Articles articles={userArticles} />;
+  return isFetching ? null : <Articles articles={userArticles} />;
 };
 
 export default UserArticles;

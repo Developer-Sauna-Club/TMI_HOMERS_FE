@@ -7,7 +7,7 @@ import ErrorText from '@components/ErrorText';
 import Loader from '@components/Loader';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
-import { TAB_CONSTANTS } from '@constants/Tab';
+import { CURRENT_NEWS_TAB_KEY, CURRENT_SEARCH_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useTab from '@hooks/useTab';
 
@@ -18,7 +18,7 @@ export default {
 } as Meta;
 
 export const Default = () => {
-  const { changeTab } = useTab();
+  const { changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
   return (
     <Router>
       <TabContextProvider>
@@ -76,7 +76,7 @@ export const Default = () => {
 };
 
 export const TitleAndNicknameTab = () => {
-  const { changeTab } = useTab();
+  const { changeTab } = useTab(CURRENT_SEARCH_TAB_KEY);
   return (
     <Router>
       <TabContextProvider>
@@ -101,46 +101,6 @@ export const TitleAndNicknameTab = () => {
         </TabItem>
         <TabItem index={`${TAB_CONSTANTS.NICKNAME}`}>
           <ErrorText text="아직 구독한 사용자가 없습니다." />
-        </TabItem>
-      </TabContextProvider>
-    </Router>
-  );
-};
-
-export const SubscribeTab = () => {
-  const { changeTab } = useTab();
-  return (
-    <Router>
-      <TabContextProvider>
-        <Tab
-          maxWidth="23.375"
-          defaultTab={`${TAB_CONSTANTS.SUBSCRIBER}`}
-          tabItems={[
-            {
-              title: `${TAB_CONSTANTS.SUBSCRIBER}`,
-              width: '11.6875',
-              onClick: () => changeTab(TAB_CONSTANTS.SUBSCRIBER),
-            },
-            {
-              title: `${TAB_CONSTANTS.SUBSCRIBING}`,
-              width: '11.6875',
-              onClick: () => changeTab(TAB_CONSTANTS.SUBSCRIBING),
-            },
-          ]}
-        />
-        <TabItem index={`${TAB_CONSTANTS.SUBSCRIBER}`}>
-          <Loader />
-        </TabItem>
-        <TabItem index={`${TAB_CONSTANTS.SUBSCRIBING}`}>
-          <Article
-            id="1"
-            title="(임시)이거슨 구독이다."
-            nickname="@sub-scriber"
-            postedDate="2023-09-14T09:28:39.390Z"
-            hasImage={false}
-            likes={12}
-            comments={42}
-          />
         </TabItem>
       </TabContextProvider>
     </Router>

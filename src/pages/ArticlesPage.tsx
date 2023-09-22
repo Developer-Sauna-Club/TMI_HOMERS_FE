@@ -12,14 +12,14 @@ import Loader from '@components/Loader';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { API, ARTICLE_FETCH_LIMIT } from '@constants/Article';
-import { LOCAL_STORAGE_CURRENT_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
+import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import { useArticles } from '@hooks/useArticles';
 import useAuthQuery from '@hooks/useAuthQuery';
 import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import useScrollToTop from '@hooks/useScrollToTop';
 import useTab from '@hooks/useTab';
-import { getItemFromStorage } from '@utils/localStorage';
+import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
 import Articles from './ArticlesPage/Articles';
 import InfiniteScroll from './ArticlesPage/InfiniteScroll';
 
@@ -30,7 +30,7 @@ const ArticlesPage = () => {
   });
   const newestArticles = useFilteredArticles(TAB_CONSTANTS.NEWEST, articles);
   const hottestArticles = useFilteredArticles(TAB_CONSTANTS.HOTTEST, articles);
-  const { currentTab, changeTab } = useTab();
+  const { currentTab, changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
   const [followingUsers, setFollowingUsers] = useState<Follow[]>([]);
 
   const {
@@ -67,10 +67,8 @@ const ArticlesPage = () => {
   );
 
   useEffect(() => {
-    const savedTab = getItemFromStorage(LOCAL_STORAGE_CURRENT_TAB_KEY);
-    if (savedTab) {
-      changeTab(savedTab);
-    }
+    const savedTab = getItemFromStorage(CURRENT_NEWS_TAB_KEY);
+    savedTab ? changeTab(savedTab) : setItemToStorage(CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS.NEWEST);
   }, [currentTab, changeTab]);
 
   useEffect(() => {
@@ -95,6 +93,7 @@ const ArticlesPage = () => {
           <Tab
             active={currentTab}
             maxWidth="25.875"
+            defaultTab={`${TAB_CONSTANTS.NEWEST}`}
             tabItems={[
               {
                 title: `${TAB_CONSTANTS.NEWEST}`,

@@ -4,7 +4,7 @@ import { ImSearch } from 'react-icons/im';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
 import { MESSAGE, POST_COUNT } from '@/constants/Home';
-import { TAB_CONSTANTS } from '@/constants/Tab';
+import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
@@ -17,7 +17,7 @@ const CHARACTER_SRC = '/img/character.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { changeTab } = useTab();
+  const { changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
 
   const { data: articles, isFetching } = useArticles({
     id: API.CHANNEL_ID,
@@ -65,7 +65,7 @@ const HomePage = () => {
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
                 {isFetching ? (
-                  <div className="flex justify-center items-center">
+                  <div className="flex items-center justify-center">
                     <Loader />
                   </div>
                 ) : (
@@ -83,7 +83,7 @@ const HomePage = () => {
         <section className="flex flex-col justify-center flex-grow gap-6 pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround px-10">
+            <h2 className="px-10 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
               <span
                 onClick={() => {
                   navigate('/news');

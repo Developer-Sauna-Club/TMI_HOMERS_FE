@@ -14,7 +14,7 @@ const Articles = ({ articles }: ArticlesProps) => {
 
   if (isArticlesEmpty) {
     return (
-      <div className="flex flex-col justify-center w-full gap-4 mx-auto mt-4 items-center">
+      <div className="flex flex-col items-center justify-center w-full gap-4 mx-auto mt-4">
         <span className="text-center">앗, 팔로우한 사람들의 글 목록이 존재하지 않습니다!</span>
         <div
           className="inline-block mx-auto"
@@ -28,7 +28,13 @@ const Articles = ({ articles }: ArticlesProps) => {
     );
   }
 
-  return articles?.map((article) => {
+  const filteredArticles = articles
+    .filter((article, index, self) => index === self.findIndex((a) => a._id === article._id))
+    .sort((a, b) => {
+      return new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime();
+    });
+
+  return filteredArticles?.map((article) => {
     const { _id, title, author, createdAt, likes, image, comments } = article;
     const { fullName } = author;
     try {
