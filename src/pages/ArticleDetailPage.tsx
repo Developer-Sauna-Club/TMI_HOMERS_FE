@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import { BUTTON, MESSAGE } from '@/constants/ArticleDetail';
-import { useLikeCreateMutation } from '@/hooks/useLikeCreateMutation';
-import { useLikeDeleteMutation } from '@/hooks/useLikeDeleteMutation';
+import { useLikeCreateMutation, useLikeDeleteMutation } from '@/hooks/useLikeMutation';
+import { useNotification } from '@/hooks/useNotification';
 import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
+import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
 import { useArticleDetail } from '@hooks/useArticleDetail';
 import useAuthQuery from '@hooks/useAuthQuery';
 import CommentInput from './ArticleDetailPage/CommentInput';
@@ -24,6 +24,7 @@ const ArticleDetailPage = () => {
   const { data: article, isLoading, addComment } = useArticleDetail();
   const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
+  const { mutate: likeNotificationMutate } = useNotification();
 
   if (isLoading) {
     return <Loader />;
@@ -39,7 +40,15 @@ const ArticleDetailPage = () => {
 
   const toggleLikeMutate = () => {
     if (myLike) {
-      likeDeleteMutate(myLike._id);
+      likeDeleteMutate(myLike._id, {
+        onSuccess: (newLike) =>
+          likeNotificationMutate({
+            notificationType: 'LIKE',
+            notificationTypeId: newLike._id,
+            userId: postUserId,
+            postId: newLike.post,
+          }),
+      });
     } else {
       likeCreateMutate(_id);
     }
