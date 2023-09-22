@@ -37,7 +37,12 @@ const NewArticlePage = () => {
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
     try {
-      addArticle.mutate({ ...data, image });
+      const titleWithOption = `${selectedText} ${data.title}`;
+      const newData = {
+        ...data,
+        title: titleWithOption,
+      };
+      addArticle.mutate({ ...newData, image });
     } catch (error) {
       alert(error);
     }
@@ -122,10 +127,8 @@ const NewArticlePage = () => {
                   onChange: (e) => {
                     handleTitleCount(e);
                     trigger('title');
-                    setSelectedText(e.target.value);
                   },
                 })}
-                value={selectedText}
                 placeholder={MESSAGE.TITLE_REQUIRED}
                 maxLength={LENGTH_LIMIT.TITLE_MAX}
                 className="block w-full pb-2 outline-none bg-white dark:bg-tricorn-black"
