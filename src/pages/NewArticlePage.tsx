@@ -162,6 +162,7 @@ const NewArticlePage = () => {
                   <AiOutlineCloseCircle
                     size="1rem"
                     className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                    onClick={handleRemoveImage}
                   />
                 </div>
               )}

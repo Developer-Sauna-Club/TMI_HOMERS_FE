@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
@@ -25,6 +26,7 @@ const ArticleDetailPage = () => {
   const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
   const { mutate: likeNotificationMutate } = useNotification();
+  const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
     return <Loader />;
@@ -74,6 +76,10 @@ const ArticleDetailPage = () => {
     }
   };
 
+  const handleImageSize = () => {
+    setIsBigImage(!isBigImage);
+  };
+
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
       <section className="post-field max-w-[22rem] w-full">
@@ -106,7 +112,13 @@ const ArticleDetailPage = () => {
             {articleTitle}
           </div>
           <div className="flex items-center justify-center">
-            {image && <img src={image} className="w-[10rem] m-5" />}
+            {image && (
+              <img
+                src={image}
+                className={isBigImage ? 'w-full m-5' : 'w-[14rem] m-5 rounded-lg'}
+                onClick={handleImageSize}
+              />
+            )}
           </div>
           <div className="text-base text-tricorn-black dark:text-extra-white">{articleBody}</div>
           <div className="flex justify-between mt-6">
