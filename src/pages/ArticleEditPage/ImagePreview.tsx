@@ -4,7 +4,7 @@ const ImagePreview = ({ image, onRemove }: { image: string | null; onRemove?: ()
   <div className="relative inline-block pb-2">
     <img
       className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
-      src={image}
+      src={image !== null ? image : ''}
       alt="thumbnail"
       onClick={onRemove}
     />
