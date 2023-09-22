@@ -108,7 +108,7 @@ const ArticleDetailPage = () => {
           <div className="flex items-center justify-center">
             {image && <img src={image} className="w-[10rem] m-5" />}
           </div>
-          <div className="text-base">{articleBody}</div>
+          <div className="text-base text-tricorn-black dark:text-extra-white">{articleBody}</div>
           <div className="flex justify-between mt-6">
             <SubButton
               label={BUTTON.CHEER_UP}

@@ -177,9 +177,9 @@ const NewArticlePage = () => {
           <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
             <label
               htmlFor="file_input"
-              className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
+              className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
             >
-              <BiImageAdd size="1.2rem" />
+              <BiImageAdd size="1.7rem" />
             </label>
             <input
               id="file_input"
