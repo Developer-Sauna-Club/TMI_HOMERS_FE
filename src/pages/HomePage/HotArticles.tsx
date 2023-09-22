@@ -14,7 +14,7 @@ const HotArticles = ({ articles }: ArticlesProps) => {
 
   if (isArticlesEmpty) {
     return (
-      <div className="flex flex-col justify-center items-center w-full h-full gap-4">
+      <div className="flex flex-col justify-center items-center w-full h-full gap-4 font-Cafe24SurroundAir">
         <p>앗, 뜨거운 뉴스가 없네요!</p>
         <SubButton
           size="small"
