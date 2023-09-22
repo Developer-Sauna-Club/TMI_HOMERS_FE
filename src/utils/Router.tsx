@@ -15,6 +15,7 @@ import {
   ProfileEditPage,
   ChangePasswordPage,
   ProtectedRouter,
+  ArticleEditPage,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRouter>
             <NotificationPage />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: 'news/edit',
+        element: (
+          <ProtectedRouter>
+            <ArticleEditPage />
           </ProtectedRouter>
         ),
       },
