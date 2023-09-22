@@ -1,26 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { User } from '@type/User';
 import { BiImageAdd } from 'react-icons/bi';
-import { User } from '@/type/User';
-import safeJSONParse from '@/utils/safeJSONParse';
 import { CHANNEL_ID } from '@api/saveArticle';
 import Avatar from '@components/Avatar';
 import MainButton from '@components/MainButton';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@constants/NewArticle';
 import { useEditPost } from '@hooks/useEdit';
+import safeJSONParse from '@utils/safeJSONParse';
 import { FormValueType } from '../NewArticlePage';
+import ImagePreview from './ImagePreview';
 
 const ArticleEditForm = ({
   articleInfo,
   articleImage,
   user,
   postId,
+  imagePublicId,
 }: {
   articleInfo: string;
   articleImage: string;
   user: User | '' | undefined;
   postId: string;
+  imagePublicId: string;
 }) => {
   const {
     watch,
@@ -40,8 +42,8 @@ const ArticleEditForm = ({
   });
   const { editPost, isLoading } = useEditPost();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [previewImage, setPreviewImage] = useState<File | null>(null);
-  const [userArticleImage, setUserArticleImage] = useState<string | null>(articleImage);
+  const [doDeleteImage, setDoDeleteImage] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | File | null>(articleImage);
   const userPreviewImage = watch('image');
 
   const { title, body } = safeJSONParse(articleInfo);
@@ -57,7 +59,17 @@ const ArticleEditForm = ({
 
   const onSubmit: SubmitHandler<FormValueType> = async ({ title, body, image }) => {
     const stringifiedTitle = JSON.stringify({ title, body });
-    editPost({ postId, title: stringifiedTitle, image, channelId: CHANNEL_ID });
+    if (doDeleteImage) {
+      editPost({
+        postId,
+        title: stringifiedTitle,
+        image,
+        channelId: CHANNEL_ID,
+        imageToDeletePublicId: imagePublicId,
+      });
+    } else {
+      editPost({ postId, title: stringifiedTitle, image, channelId: CHANNEL_ID });
+    }
   };
 
   useEffect(() => {
@@ -79,9 +91,10 @@ const ArticleEditForm = ({
   }, [setValue, setFocus, title, body, user]);
 
   const handleRemoveImage = () => {
-    setPreviewImage(null);
-    setUserArticleImage(null);
+    setDoDeleteImage(true);
   };
+
+  const imageSrc = previewImage instanceof File ? URL.createObjectURL(previewImage) : previewImage;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,35 +147,7 @@ const ArticleEditForm = ({
             >{`${articleTitle.length}/${LENGTH_LIMIT.TITLE_MAX}`}</span>
           </div>
           <div className="block">
-            {previewImage ? (
-              <div className="relative inline-block pb-2">
-                <img
-                  className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
-                  src={userPreviewImage ? URL.createObjectURL(previewImage) : ''}
-                  alt="thumbnail"
-                  onClick={handleRemoveImage}
-                />
-                <AiOutlineCloseCircle
-                  size="1rem"
-                  className="absolute cursor-pointer text-lazy-gray top-1 right-1"
-                />
-              </div>
-            ) : (
-              userArticleImage && (
-                <div className="relative inline-block pb-2">
-                  <img
-                    className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
-                    src={userArticleImage}
-                    alt="thumbnail"
-                    onClick={handleRemoveImage}
-                  />
-                  <AiOutlineCloseCircle
-                    size="1rem"
-                    className="absolute cursor-pointer text-lazy-gray top-1 right-1"
-                  />
-                </div>
-              )
-            )}
+            {!doDeleteImage ? <ImagePreview image={imageSrc} onRemove={handleRemoveImage} /> : null}
             <Controller
               name="body"
               control={control}
@@ -217,6 +202,7 @@ const ArticleEditForm = ({
             accept="image/*"
             {...register('image')}
             onChange={(e) => {
+              setDoDeleteImage(false);
               setValue('image', e.target.files && e.target.files[0], { shouldValidate: true });
             }}
             className="hidden"
