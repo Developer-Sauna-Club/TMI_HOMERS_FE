@@ -9,6 +9,7 @@ import {
 const useNotificationQuery = (userId?: string) => {
   const notificationQuery = useQuery(['notification', userId || ''], fetchNotifications, {
     enabled: !!userId,
+    // refetchInterval: 1000 * 5,
   });
   const readNotifications = useMutation(readNotice);
   const createNotification = useMutation((notificationParam: NotificationParam) =>

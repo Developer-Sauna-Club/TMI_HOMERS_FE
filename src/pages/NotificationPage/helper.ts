@@ -2,29 +2,13 @@ import type { NotificationType } from '@/api/common/Notification';
 import type { Notification } from '@/type/Notification';
 
 type NoticeMessage = {
-  [key in NotificationType]: {
-    FRONT: string;
-    MIDDLE: string;
-    REAR: string;
-  };
+  [key in NotificationType]: string;
 };
 
 const NOTICE_MESSAGE: NoticeMessage = {
-  LIKE: {
-    FRONT: '님이 회원님의 뉴스를 ',
-    MIDDLE: '',
-    REAR: '응원합니다',
-  },
-  COMMENT: {
-    FRONT: '님이 회원님의 뉴스에 ',
-    MIDDLE: '댓글',
-    REAR: '을 달았습니다',
-  },
-  FOLLOW: {
-    FRONT: '님이 회원님을 ',
-    MIDDLE: '구독',
-    REAR: '합니다',
-  },
+  LIKE: '님이 회원님의 뉴스를 응원합니다',
+  COMMENT: '님이 회원님의 뉴스에 댓글을 달았습니다',
+  FOLLOW: '님이 회원님을 구독합니다',
 };
 
 interface GetMessageType {
@@ -54,7 +38,7 @@ export const getNotificationMessage = ({
 
   const nickname = author!.fullName as string;
 
-  return `${nickname}${NOTICE_MESSAGE[notificationType].FRONT} ${NOTICE_MESSAGE[notificationType].MIDDLE}${NOTICE_MESSAGE[notificationType].REAR}`;
+  return `${nickname}${NOTICE_MESSAGE[notificationType]}`;
 };
 
 export const getNotificationUrl = (notification: Notification) => {
@@ -65,4 +49,8 @@ export const getNotificationUrl = (notification: Notification) => {
   };
 
   return NOTIFICATION_URL[getMessageType(notification)];
+};
+
+export const getProfileUrl = (notification: Notification) => {
+  return `/profile/${notification.author._id}`;
 };

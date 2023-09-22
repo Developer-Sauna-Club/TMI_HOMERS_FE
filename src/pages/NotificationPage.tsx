@@ -6,7 +6,11 @@ import Notice from '@/components/Notice';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import useNotificationQuery from '@/hooks/useNotificationQuery';
 import { getTimeDelta } from '@/utils/getTimeDelta';
-import { getNotificationMessage, getNotificationUrl } from './NotificationPage/helper';
+import {
+  getNotificationMessage,
+  getNotificationUrl,
+  getProfileUrl,
+} from './NotificationPage/helper';
 
 const NoNotification = () => {
   return (
@@ -26,6 +30,10 @@ const NotificationPage = () => {
 
   const handleClickNotice = (url: string) => {
     navigate(url);
+  };
+
+  const handleClickAvatar = (profileUrl: string) => {
+    navigate(profileUrl);
   };
 
   const {
@@ -50,6 +58,10 @@ const NotificationPage = () => {
           {notifications?.map((notification) => (
             <Notice
               onClick={() => handleClickNotice(getNotificationUrl(notification))}
+              onClickAvatar={(event) => {
+                event.stopPropagation();
+                handleClickAvatar(getProfileUrl(notification));
+              }}
               key={notification._id}
               nickname={notification.author.fullName}
               message={getNotificationMessage(notification)}
