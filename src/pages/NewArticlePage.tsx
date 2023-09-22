@@ -6,6 +6,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
+import Loader from '@/components/Loader';
 import { DROPDOWN_OPTIONS, ETC, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 import useAuthQuery from '@/hooks/useAuthQuery';
@@ -33,7 +34,7 @@ const NewArticlePage = () => {
     trigger,
     formState: { errors },
   } = useForm<FormValueType>();
-  const addArticle = useArticle();
+  const { createPost, isLoading } = useArticle();
   const [image, setImage] = useState<File | null>(null);
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
@@ -43,7 +44,7 @@ const NewArticlePage = () => {
         ...data,
         title: titleWithOption,
       };
-      addArticle.mutate({ ...newData, image });
+      createPost({ ...newData, image });
     } catch (error) {
       alert(error);
     }
@@ -103,7 +104,7 @@ const NewArticlePage = () => {
               <span className="font-Cafe24Surround">{fullName}</span>
             </div>
             <button className="w-[6rem] h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer">
-              {ETC.BUTTON_WRITE}
+              {isLoading ? <Loader /> : ETC.BUTTON_WRITE}
             </button>
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">

@@ -9,9 +9,9 @@ export const useArticle = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  return useMutation(saveArticle, {
+  const { mutate: createPost, isLoading } = useMutation(saveArticle, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['search']);
+      queryClient.invalidateQueries(['post']);
       showToast(TOAST_MESSAGES.POST_SUCCESS, 'success');
       navigate('/news');
     },
@@ -19,4 +19,5 @@ export const useArticle = () => {
       showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
+  return { createPost, isLoading };
 };
