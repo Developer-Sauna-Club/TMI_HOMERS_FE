@@ -30,7 +30,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
     }
   };
 
-  const isFollowing = (user: User | undefined | '') => {
+  const isFollowing = (user: User | null | undefined) => {
     if (user) {
       return user.following.every(({ user }) => user !== id);
     }
