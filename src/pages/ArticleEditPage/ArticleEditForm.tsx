@@ -18,7 +18,7 @@ const ArticleEditForm = ({
 }: {
   articleInfo: string;
   articleImage: string;
-  user: User | '' | undefined;
+  user: User | '' | undefined | null;
   postId: string;
 }) => {
   const {
