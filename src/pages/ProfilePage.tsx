@@ -1,52 +1,53 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { User } from '@type/User';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
-import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
-import { updateProfileImage } from '@api/common/User';
-import getUserInfo from '@api/getUserInfo';
+import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
+import Loader from '@components/Loader';
 import ScrollToTopButton from '@components/ScrollToTopButton';
+import Circle from '@components/Skeleton/Circle';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
-import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
+import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS, TOTAL_TAB_WIDTH } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useAuthQuery from '@hooks/useAuthQuery';
+import useImageMutation from '@hooks/useImageMutation';
 import useScrollToTop from '@hooks/useScrollToTop';
 import useTab from '@hooks/useTab';
-import LikeArticles from './ProfilePage/LikeArticles';
+import { useToastContext } from '@hooks/useToastContext';
+import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
+import { TWO_TAB_WIDTH } from '../constants/Tab';
+import LikedArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
-  const { currentTab, changeTab } = useTab(CURRENT_PROFILE_TAB_KEY);
-
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
-
-  const [areYouProfileUser, setAreYouProfileUser] = useState(false);
-  const [currentProfileUser, setCurrentProfileUser] = useState<User | null>(null);
-  const [userImage, setUserImage] = useState('');
-
-  const { data: externalUser } = useQuery(
-    ['userInfo', lastSegment],
-    () => getUserInfo(lastSegment),
-    {
-      enabled: !areYouProfileUser,
-    },
-  );
-
   const {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
+  const { data: userInfo } = useQuery(['userInfo', lastSegment], () => fetchUser(lastSegment));
+
+  const { showToast } = useToastContext();
+
+  const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
+  const { currentTab, changeTab } = useTab(CURRENT_PROFILE_TAB_KEY);
+
+  const isMyProfile = user ? user._id === userInfo?._id : false;
+  const likeArticlesIds = userInfo?.likes.map((like) => like.post);
+
+  const userImageMutation = useImageMutation({
+    queryKey: ['userInfo', lastSegment],
+    showToast,
+  });
 
   const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
@@ -54,10 +55,7 @@ const ProfilePage = () => {
       return;
     }
 
-    const updatedUser = await updateProfileImage(imageFile[0]);
-    if (updatedUser.image) {
-      setUserImage(updatedUser.image);
-    }
+    userImageMutation.mutate(imageFile[0]);
   };
 
   useEffect(() => {
@@ -66,18 +64,6 @@ const ProfilePage = () => {
       ? changeTab(savedTab)
       : setItemToStorage(CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS.WRITTEN_ARTICLES);
   }, [currentTab, changeTab]);
-
-  useEffect(() => {
-    if (user) {
-      setAreYouProfileUser(user._id === lastSegment);
-      setCurrentProfileUser(areYouProfileUser ? user : externalUser);
-      setUserImage(areYouProfileUser ? user.image : externalUser?.image);
-    } else {
-      setAreYouProfileUser(false);
-      setCurrentProfileUser(externalUser);
-      setUserImage(externalUser?.image);
-    }
-  }, [user, lastSegment, areYouProfileUser, externalUser]);
 
   return (
     <TabContextProvider>
@@ -89,7 +75,7 @@ const ProfilePage = () => {
                 navigate(-1);
               }}
             />
-            {areYouProfileUser && (
+            {isMyProfile && (
               <div
                 onClick={() => {
                   logoutMutate();
@@ -103,28 +89,46 @@ const ProfilePage = () => {
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
               <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
-                {userImage ? (
-                  <img src={userImage} className="w-full h-full rounded-full" alt="thumbnail" />
+                {userInfo ? (
+                  userImageMutation.isLoading ? (
+                    <Circle className="w-full h-full rounded-full object-cover" />
+                  ) : (
+                    <img
+                      src={userInfo.image}
+                      className="w-full h-full rounded-full object-cover"
+                      alt="thumbnail"
+                    />
+                  )
                 ) : (
                   <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
                 )}
-                <label
-                  htmlFor="image"
-                  className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
-                >
-                  <HiPencil className="w-4 h-4" />
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  id="image"
-                  onChange={handleUploadImage}
-                />
+                {isMyProfile && (
+                  <>
+                    <label
+                      htmlFor="image"
+                      className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
+                    >
+                      {userImageMutation.isLoading ? (
+                        <div className="w-4 h-4">
+                          <Loader size="xs" />
+                        </div>
+                      ) : (
+                        <HiPencil className="w-4 h-4" />
+                      )}
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="image"
+                      onChange={handleUploadImage}
+                    />
+                  </>
+                )}
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center  h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
-                  {currentProfileUser?.fullName}
+                  {userInfo?.fullName}
                 </span>
                 <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
                   기자
@@ -132,22 +136,19 @@ const ProfilePage = () => {
               </div>
               <SubscribeInfo
                 subscriber={
-                  currentProfileUser
-                    ? Array.from(
-                        new Set(currentProfileUser.followers.map((follower) => follower.user)),
-                      ).length
+                  userInfo
+                    ? Array.from(new Set(userInfo.followers.map((follower) => follower._id))).length
                     : 0
                 }
                 subscribing={
-                  currentProfileUser
-                    ? Array.from(
-                        new Set(currentProfileUser.following.map((follower) => follower.user)),
-                      ).length
+                  userInfo
+                    ? Array.from(new Set(userInfo.following.map((following) => following.user)))
+                        .length
                     : 0
                 }
               />
               <span className="text-center px-[2.8rem] mt-[1rem]">
-                {currentProfileUser ? currentProfileUser.username : '자기소개가 없습니다.'}
+                {userInfo ? userInfo.username : '자기소개가 없습니다.'}
               </span>
             </div>
             <button
@@ -159,17 +160,17 @@ const ProfilePage = () => {
           </div>
           <Tab
             active={currentTab}
-            maxWidth="25.875"
+            maxWidth={TOTAL_TAB_WIDTH}
             defaultTab={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}
             tabItems={[
               {
-                title: '작성한 기사',
-                width: '12.9375',
+                title: TAB_CONSTANTS.WRITTEN_ARTICLES,
+                width: TWO_TAB_WIDTH,
                 onClick: () => changeTab(TAB_CONSTANTS.WRITTEN_ARTICLES),
               },
               {
-                title: '응원한 기사',
-                width: '12.9375',
+                title: TAB_CONSTANTS.LIKED_ARTICLES,
+                width: TWO_TAB_WIDTH,
                 onClick: () => changeTab(TAB_CONSTANTS.LIKED_ARTICLES),
               },
             ]}
@@ -177,31 +178,24 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-            {currentProfileUser && currentProfileUser.posts.length > 0 ? (
-              <UserArticles userId={currentProfileUser._id} />
+            {userInfo && userInfo.posts.length > 0 ? (
+              <UserArticles userId={userInfo._id} />
             ) : (
               <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">작성한 기사가 없습니다.</span>
+                <span className="text-center text-lazy-gray">
+                  {TAB_CONSTANTS.WRITTEN_ARTICLES}가 없습니다.
+                </span>
               </div>
             )}
           </TabItem>
           <TabItem index={`${TAB_CONSTANTS.LIKED_ARTICLES}`}>
-            {currentProfileUser && currentProfileUser.likes.length > 0 ? (
-              Array.from(new Set(currentProfileUser.likes.map((like) => like.post))).map(
-                (postId) => {
-                  const likeArticle = currentProfileUser.likes
-                    .sort((a, b) => {
-                      return b.createdAt > a.createdAt ? 1 : -1;
-                    })
-                    .find((like) => like.post === postId);
-                  return likeArticle ? (
-                    <LikeArticles key={postId} likeArticle={likeArticle} />
-                  ) : null;
-                },
-              )
+            {likeArticlesIds && likeArticlesIds.length > 0 ? (
+              <LikedArticles postIds={likeArticlesIds} />
             ) : (
               <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">응원한 기사가 없습니다.</span>
+                <span className="text-center text-lazy-gray">
+                  {TAB_CONSTANTS.LIKED_ARTICLES}가 없습니다.
+                </span>
               </div>
             )}
           </TabItem>
