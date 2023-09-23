@@ -36,8 +36,8 @@ export type User = {
   notifications: Notification[];
   messages: Message[];
   _id: string;
-  fullName: string;
-  username: string;
+  fullName: string; // 닉네임
+  username: string; // 자기소개
   email: string;
   createdAt: string;
   updatedAt: string;

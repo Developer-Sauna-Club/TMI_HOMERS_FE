@@ -3,7 +3,7 @@ import { FaUser } from 'react-icons/fa6';
 
 type AvatarProps = {
   width: number;
-  profileImage: string;
+  profileImage?: string;
   isLoggedIn: boolean;
 };
 
@@ -16,7 +16,7 @@ const Avatar = ({ width, profileImage, isLoggedIn }: AvatarProps) => {
 
   return (
     <div className="relative inline-block cursor-pointer">
-      {profileImage !== '' ? (
+      {profileImage ? (
         <img
           src={`${profileImage}`}
           alt="프로필 이미지"

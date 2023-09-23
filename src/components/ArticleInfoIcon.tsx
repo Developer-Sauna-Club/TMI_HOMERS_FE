@@ -5,6 +5,7 @@ type ArticleInfoIconProps = {
   likes: number;
   comments: number;
   mode?: 'list' | 'post';
+  color?: 'blue' | 'gray';
 };
 
 const ModeClasses = {
@@ -12,19 +13,21 @@ const ModeClasses = {
   post: 'justify-end',
 };
 
-const ArticleInfoIcon = ({ likes, comments, mode = 'list' }: ArticleInfoIconProps) => {
+const ArticleInfoIcon = ({ likes, comments, mode = 'list', color }: ArticleInfoIconProps) => {
   const spanStyle = 'flex items-center text-wall-street text-[0.75rem] h-[0.75rem] ml-0.5';
-  const iconStyle = 'icon w-[0.9rem] fill-lazy-gray';
+  const iconStyle = 'icon w-[0.9rem]';
 
   return (
     <div className={`flex w-[6.25rem] ${ModeClasses[mode]}`}>
       <div className="flex items-center">
-        <HiThumbUp className={iconStyle} />
+        <HiThumbUp
+          className={`${iconStyle} ${color === 'blue' ? 'fill-cooled-blue' : 'fill-lazy-gray'}`}
+        />
         <span className={spanStyle}>{likes}</span>
       </div>
       <div className="space w-[1rem]" />
       <div className="flex items-center">
-        <BiSolidComment className={iconStyle} />
+        <BiSolidComment className={`${iconStyle} fill-lazy-gray`} />
         <span className={spanStyle}>{comments}</span>
       </div>
     </div>

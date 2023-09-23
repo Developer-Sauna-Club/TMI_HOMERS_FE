@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import { LOCAL_STORAGE_CURRENT_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
+import { CURRENT_NEWS_TAB_KEY, CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 
-const useTab = () => {
+const DEFAULT_TAB_VALUES: { [storageKey: string]: TAB_CONSTANTS } = {
+  [CURRENT_NEWS_TAB_KEY]: TAB_CONSTANTS.NEWEST,
+  [CURRENT_PROFILE_TAB_KEY]: TAB_CONSTANTS.SUBSCRIBED,
+};
+const useTab = (storageKey: string) => {
+  const defaultTab = DEFAULT_TAB_VALUES[storageKey] || TAB_CONSTANTS.NEWEST;
+
+  const [currentTab, setCurrentTab] = useState(getItemFromStorage(storageKey) || defaultTab);
+
   const changeTab = (newTab: string) => {
     setCurrentTab(newTab);
-    setItemToStorage(LOCAL_STORAGE_CURRENT_TAB_KEY, newTab);
+    setItemToStorage(storageKey, newTab);
   };
-  const [currentTab, setCurrentTab] = useState(
-    getItemFromStorage(LOCAL_STORAGE_CURRENT_TAB_KEY) || TAB_CONSTANTS.NEWEST,
-  );
 
   return { currentTab, changeTab };
 };

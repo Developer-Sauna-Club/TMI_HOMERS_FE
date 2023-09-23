@@ -11,7 +11,7 @@ type UseArticlesProps = {
 const ARTICLES_STALE_TIME = 1000 * 60;
 
 export const useArticles = ({ id, type }: UseArticlesProps) => {
-  const { data = [], isFetching } = useQuery<Post[]>(
+  const { data = [], isLoading } = useQuery<Post[]>(
     ['articles', id, type],
     async () => {
       const requestUrl =
@@ -26,5 +26,5 @@ export const useArticles = ({ id, type }: UseArticlesProps) => {
     },
   );
 
-  return { data, isFetching };
+  return { data, isLoading };
 };

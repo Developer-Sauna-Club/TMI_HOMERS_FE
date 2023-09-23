@@ -1,17 +1,17 @@
-import Loader from '@/components/Loader';
-import { useArticles } from '@/hooks/useArticles';
-import Articles from '../ArticlesPage/Articles';
+import { useArticles } from '@hooks/useArticles';
+import RenderArticles from '../ArticlesPage/RenderArticles';
 
 type UserArticlesProps = {
   userId: string;
 };
 
 const UserArticles = ({ userId }: UserArticlesProps) => {
-  const { data: userArticles, isFetching } = useArticles({
+  const { data: userArticles, isLoading } = useArticles({
     id: userId,
     type: 'user',
   });
-  return isFetching ? <Loader /> : <Articles articles={userArticles} />;
+
+  return isLoading ? null : <RenderArticles articles={userArticles} />;
 };
 
 export default UserArticles;

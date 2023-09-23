@@ -1,35 +1,30 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import { BUTTON, MESSAGE } from '@/constants/ArticleDetail';
-import { deleteLikePost, likePost } from '@api/common/Like';
+import { useLikeCreateMutation, useLikeDeleteMutation } from '@/hooks/useLikeMutation';
+import { useNotification } from '@/hooks/useNotification';
 import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
+import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
 import { useArticleDetail } from '@hooks/useArticleDetail';
 import useAuthQuery from '@hooks/useAuthQuery';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
+  const navigate = useNavigate();
+
   const {
     userQuery: { data: user },
   } = useAuthQuery();
   const { data: article, isLoading, addComment } = useArticleDetail();
-  const navigate = useNavigate();
-  const [likePushed, setLikePushed] = useState(false);
-  const [likesCount, setLikesCount] = useState(article?.likes.length);
-
-  useEffect(() => {
-    if (user) {
-      const isPostLiked = user.likes.some((like) => like.post === article?._id);
-      setLikePushed(isPostLiked);
-    }
-  }, [user, article]);
+  const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
+  const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
+  const { mutate: likeNotificationMutate } = useNotification();
 
   if (isLoading) {
     return <Loader />;
@@ -40,30 +35,33 @@ const ArticleDetailPage = () => {
   const { title: articleTitle, body: articleBody } = JSON.parse(title);
 
   const isMyPost = user ? user._id === postUserId : false;
-  const isLoginUser = user ? true : false;
+  const myLike = likes.find((like) => (user ? like.user === user._id : false));
+  const isLoginUser = !!user;
 
-  const handleLikePost = async () => {
-    if (user && likePushed) {
-      try {
-        const likeByUser = likes.find((like) => like.user === user._id);
-        if (likeByUser) {
-          await deleteLikePost(likeByUser._id);
-        }
-        setLikePushed(false);
-        setLikesCount((prevCount) => (prevCount ? prevCount - 1 : likes.length - 1));
-      } catch (error) {
-        alert(error);
-      }
-    } else if (user && !likePushed) {
-      try {
-        await likePost(_id);
-        setLikePushed(true);
-        setLikesCount((prevCount) => (prevCount ? prevCount + 1 : likes.length + 1));
-      } catch (error) {
-        alert(error);
-      }
+  const toggleLikeMutate = () => {
+    if (myLike) {
+      likeDeleteMutate(myLike._id, {
+        onSuccess: (newLike) =>
+          likeNotificationMutate({
+            notificationType: 'LIKE',
+            notificationTypeId: newLike._id,
+            userId: postUserId,
+            postId: newLike.post,
+          }),
+      });
     } else {
+      likeCreateMutate(_id);
+    }
+  };
+
+  const handleLikeButtonClick = () => {
+    if (isLikeCreateLoading || isLikeDeleteLoading) {
+      return;
+    }
+    if (!isLoginUser) {
       alert('로그인 후에 누를 수 있습니다!');
+    } else {
+      toggleLikeMutate();
     }
   };
 
@@ -77,14 +75,19 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto pb-9 h-screen pt-[2.75rem] font-Cafe24SurroundAir bg-white dark:bg-tricorn-black text-tricorn-black dark:text-extra-white">
+    <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />
-          <div />
           {isMyPost && (
             <div id="isMine" className="flex items-center justify-between w-[3rem]">
-              <button type="button" name="edit">
+              <button
+                type="button"
+                name="edit"
+                onClick={() => {
+                  navigate(`/news/edit`, { state: { article } });
+                }}
+              >
                 <FiEdit className="w-[1rem] h-[1rem]" />
               </button>
               <button type="button" name="delete" onClick={handleDeletePost}>
@@ -109,14 +112,17 @@ const ArticleDetailPage = () => {
           <div className="flex justify-between mt-6">
             <SubButton
               label={BUTTON.CHEER_UP}
-              onClick={() => handleLikePost()}
+              onClick={() => handleLikeButtonClick()}
               color="blue"
-              type={likePushed ? 'fill' : 'outline'}
+              type={myLike ? 'fill' : 'outline'}
+              icon="good"
             />
             <ArticleInfoIcon
-              likes={likesCount ? likesCount : likes.length}
+              //likes={likesCount ? likesCount : likes.length}
+              likes={likes.length}
               comments={comments.length}
               mode="post"
+              color={myLike ? 'blue' : 'gray'}
             />
           </div>
         </div>

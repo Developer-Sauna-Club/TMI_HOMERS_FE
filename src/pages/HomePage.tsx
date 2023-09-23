@@ -4,21 +4,22 @@ import { ImSearch } from 'react-icons/im';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
 import { MESSAGE, POST_COUNT } from '@/constants/Home';
-import { TAB_CONSTANTS } from '@/constants/Tab';
+import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
 import useTab from '@hooks/useTab';
-import Articles from './ArticlesPage/Articles';
+import RenderArticles from './ArticlesPage/RenderArticles';
+import HotArticles from './HomePage/HotArticles';
 
 const CHARACTER_SRC = '/img/character.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { changeTab } = useTab();
+  const { changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
 
-  const { data: articles, isFetching } = useArticles({
+  const { data: articles, isLoading } = useArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
   });
@@ -63,15 +64,13 @@ const HomePage = () => {
                 </h2>
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
-                <div>
-                  {isFetching ? (
-                    <div className="flex justify-center">
-                      <Loader />
-                    </div>
-                  ) : (
-                    <Articles articles={hottestArticles} />
-                  )}
-                </div>
+                {isLoading ? (
+                  <div className="flex items-center justify-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <HotArticles articles={hottestArticles} />
+                )}
               </div>
               <img
                 src={CHARACTER_SRC}
@@ -84,7 +83,7 @@ const HomePage = () => {
         <section className="flex flex-col justify-center flex-grow gap-6 pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround px-10">
+            <h2 className="px-10 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
               <span
                 onClick={() => {
                   navigate('/news');
@@ -96,20 +95,20 @@ const HomePage = () => {
               </span>
             </h2>
             <div className="">
-              {isFetching ? (
+              {isLoading ? (
                 <div className="flex justify-center">
                   <Loader />
                 </div>
               ) : (
-                <Articles articles={newestArticles} />
+                <RenderArticles articles={newestArticles} />
               )}
             </div>
           </div>
         </section>
       </div>
-      <footer className="fixed bottom-0 items-center justify-center flex-none">
+      <div className="fixed bottom-0 flex justify-center flex-none w-full">
         <BottomNavigation currentPage="/home" />
-      </footer>
+      </div>
     </div>
   );
 };

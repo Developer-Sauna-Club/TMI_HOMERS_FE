@@ -6,6 +6,7 @@ type MainButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   onClick?: VoidFunction;
   isLoading?: boolean;
+  className?: string;
 };
 
 const BASE_BUTTON_CLASSES = 'rounded-md text-base w-[18.375rem] h-[3.125rem]';

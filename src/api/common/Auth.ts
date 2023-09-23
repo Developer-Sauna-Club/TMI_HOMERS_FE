@@ -60,5 +60,5 @@ type EmptyUser = '';
 
 export const checkAuthentication = async () => {
   const { data } = await axiosClient.get<User | EmptyUser>(CHECK_AUTH_URL);
-  return data;
+  return data ? data : null;
 };

@@ -13,3 +13,4 @@ export { default as ProfileEditPage } from './ProfileEditPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage';
 export { default as LoadingPage } from './LoadingPage';
 export { default as ProtectedRouter } from './ProtectedRouter';
+export {default as ArticleEditPage} from './ArticleEditPage';
