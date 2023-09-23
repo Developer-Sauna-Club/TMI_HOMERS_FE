@@ -26,7 +26,10 @@ export const useArticleDetail = () => {
 
   const commentMutation = useMutation(createComment, {
     onSuccess: (returnData, variables) => {
-      queryClient.invalidateQueries(['article', postId]);
+      Promise.all([
+        queryClient.invalidateQueries(['article', postId]),
+        queryClient.invalidateQueries(['articles']),
+      ]);
       const { userId } = variables;
 
       const commentId = returnData._id;
