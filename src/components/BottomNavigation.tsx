@@ -6,6 +6,7 @@ import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { RiQuillPenFill } from 'react-icons/ri';
 import { TOAST_MESSAGES } from '@/constants/Messages';
 import useAuthQuery from '@/hooks/useAuthQuery';
+import useNotificationQuery from '@/hooks/useNotificationQuery';
 import { useToastContext } from '@/hooks/useToastContext';
 
 const NavConstants = {
@@ -16,7 +17,7 @@ const NavConstants = {
 };
 
 const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center';
-const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
+const BASE_ICON_STYLE = 'relative flex items-center justify-center w-[2rem] h-[2rem]';
 const BUTTON_COLOR = 'text-footer-icon dark:text-extra-white';
 const ACTIVE_COLOR = 'text-cooled-blue';
 
@@ -30,6 +31,12 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
+  const userId = user?._id;
+  const {
+    notificationQuery: { data: notifications },
+  } = useNotificationQuery(userId);
+
+  const unseenNotifications = notifications?.filter(({ seen }) => !seen).length;
 
   const handleClickProfile = () => {
     if (user) {
@@ -90,6 +97,11 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             size="2rem"
             fill="currentColor"
           />
+          {!!unseenNotifications && (
+            <div className="motion-safe:animate-bounce badge badge-success badge-lg absolute -top-1/2 -right-1/2 -translate-x-1/2 translate-y-1/2">
+              {unseenNotifications}
+            </div>
+          )}
         </span>
         <span
           className={`text-sm ${currentPage === '/notification' ? ACTIVE_COLOR : BUTTON_COLOR}`}
