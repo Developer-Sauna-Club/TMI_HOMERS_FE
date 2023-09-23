@@ -16,7 +16,7 @@ const Avatar = ({ width, profileImage, isLoggedIn }: AvatarProps) => {
 
   return (
     <div className="relative inline-block cursor-pointer">
-      {profileImage !== '' ? (
+      {profileImage ? (
         <img
           src={`${profileImage}`}
           alt="프로필 이미지"

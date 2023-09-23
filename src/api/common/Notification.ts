@@ -12,9 +12,9 @@ export const readNotifications = async () => {
   return await axiosClient.put<Notification>(READ_NOTIFICATIONS);
 };
 
-type NotificationType = 'COMMENT' | 'FOLLOW' | 'LIKE' | 'MESSAGE';
+export type NotificationType = 'COMMENT' | 'FOLLOW' | 'LIKE';
 
-type NotificationParam = {
+export type NotificationParam = {
   notificationType: NotificationType;
   notificationTypeId: string;
   userId: string;

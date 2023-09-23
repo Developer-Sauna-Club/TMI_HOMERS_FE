@@ -173,6 +173,7 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
+
             {userInfo && userInfo.posts.length > 0 ? (
               <UserArticles userId={userInfo._id} />
             ) : (

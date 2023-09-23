@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import fetchArticleById from '@api/fetchArticleById';
-import Articles from '../ArticlesPage/Articles';
+import RenderArticles from '../ArticlesPage/RenderArticles';
 
 const LikedArticles = ({ postIds }: { postIds: string[] }) => {
   const fetchMultipleArticles = async () => {
@@ -10,7 +10,7 @@ const LikedArticles = ({ postIds }: { postIds: string[] }) => {
 
   const { data: allFetchedArticles } = useQuery(['articles', postIds], fetchMultipleArticles);
 
-  return allFetchedArticles ? <Articles articles={allFetchedArticles} /> : null;
+  return allFetchedArticles ? <RenderArticles articles={allFetchedArticles} /> : null;
 };
 
 export default LikedArticles;

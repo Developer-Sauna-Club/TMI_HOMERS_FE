@@ -8,9 +8,16 @@ type ArticlesProps = {
   articles: Post[];
 };
 
-const Articles = ({ articles }: ArticlesProps) => {
+const RenderArticles = ({ articles }: ArticlesProps) => {
   const navigate = useNavigate();
-  const isArticlesEmpty = articles && articles.length === 0;
+
+  const filteredArticles = articles
+    .filter((article, index, self) => index === self.findIndex((a) => a._id === article._id))
+    .sort((a, b) => {
+      return new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime();
+    });
+
+  const isArticlesEmpty = filteredArticles && filteredArticles.length === 0;
 
   if (isArticlesEmpty) {
     return (
@@ -27,12 +34,6 @@ const Articles = ({ articles }: ArticlesProps) => {
       </div>
     );
   }
-
-  const filteredArticles = articles
-    .filter((article, index, self) => index === self.findIndex((a) => a._id === article._id))
-    .sort((a, b) => {
-      return new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime();
-    });
 
   return filteredArticles?.map((article) => {
     const { _id, title, author, createdAt, likes, image, comments } = article;
@@ -57,4 +58,4 @@ const Articles = ({ articles }: ArticlesProps) => {
   });
 };
 
-export default Articles;
+export default RenderArticles;
