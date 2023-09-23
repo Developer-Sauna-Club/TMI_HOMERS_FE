@@ -5,6 +5,7 @@ export type UserSkeletonProps = {
   line?: number;
   size?: number;
   height?: number;
+  className?: string;
 };
 
 const UserSkeleton = ({ line = 2, size = 3, height = 1.4 }: UserSkeletonProps) => {
