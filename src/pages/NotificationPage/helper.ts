@@ -16,13 +16,13 @@ interface GetMessageType {
 }
 
 const getMessageType: GetMessageType = ({ user, follow, comment }) => {
-  if (follow) {
+  if (follow !== undefined) {
     return 'FOLLOW';
   }
-  if (comment) {
+  if (comment !== undefined) {
     return 'COMMENT';
   }
-  if (user) {
+  if (user !== undefined) {
     return 'LIKE';
   }
   throw new Error('잘못된 알림 타입입니다');
