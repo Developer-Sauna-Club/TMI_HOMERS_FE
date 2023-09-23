@@ -15,7 +15,7 @@ const useImageMutation = (options: ImageMutationOptions) => {
   return useMutation(updateProfileImage, {
     onMutate: async (newImage) => {
       await queryClient.cancelQueries({ queryKey });
-      const previousImage = queryClient.getQueryData(queryKey);
+      const previousData: User | undefined = queryClient.getQueryData(queryKey);
 
       queryClient.setQueryData(queryKey, (old?: User) => {
         if (!old) {
@@ -27,17 +27,16 @@ const useImageMutation = (options: ImageMutationOptions) => {
         };
       });
 
-      return { previousImage };
+      return { previousData };
     },
     onSuccess: () => {
       queryClient.invalidateQueries(queryKey);
       showToast(TOAST_MESSAGES.CHANGE_PROFILE_IMAGE_SUCCESS, 'success');
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(queryKey, context?.previousImage);
+      queryClient.setQueryData(queryKey, context);
       showToast(TOAST_MESSAGES.CHANGE_PROFILE_IMAGE_FAILED, 'error');
     },
-    retry: 0,
   });
 };
 

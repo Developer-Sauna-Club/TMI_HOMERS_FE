@@ -9,7 +9,6 @@ import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
 import Loader from '@components/Loader';
 import ScrollToTopButton from '@components/ScrollToTopButton';
-import Circle from '@components/Skeleton/Circle';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
@@ -90,15 +89,11 @@ const ProfilePage = () => {
             <div className="flex flex-col items-center">
               <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
                 {userInfo ? (
-                  userImageMutation.isLoading ? (
-                    <Circle className="w-full h-full rounded-full object-cover" />
-                  ) : (
-                    <img
-                      src={userInfo.image}
-                      className="w-full h-full rounded-full object-cover"
-                      alt="thumbnail"
-                    />
-                  )
+                  <img
+                    src={userInfo.image}
+                    className="w-full h-full rounded-full object-cover"
+                    alt="thumbnail"
+                  />
                 ) : (
                   <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
                 )}
