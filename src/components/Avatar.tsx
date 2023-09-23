@@ -16,8 +16,9 @@ const Avatar = ({ width, profileImage, isLoggedIn, onClick }: AvatarProps) => {
   const editPencilPosition = width * 0.0625;
 
   return (
+
     <div className="relative inline-block cursor-pointer" onClick={onClick}>
-      {profileImage !== '' ? (
+      {profileImage ? (
         <img
           src={`${profileImage}`}
           alt="프로필 이미지"
