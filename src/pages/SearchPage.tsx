@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { MdOutlineSearch } from 'react-icons/md';
 import CloseButton from '@components/CloseButton';
 import HeaderText from '@components/HeaderText';
-import SearchResultList from '@components/SearchResultList';
 import SearchSkeleton from '@components/SearchSkeleton';
 import SubButton from '@components/SubButton';
 import Tab from '@components/Tab';
@@ -15,6 +14,7 @@ import useDebounceValue from '@hooks/useDebounce';
 import useRecentResult from '@hooks/useRecentResult';
 import useSearch from '@hooks/useSearch';
 import useTab from '@hooks/useTab';
+import SearchResultList from './SearchPage/SearchResultList';
 const INPUT_CLASS =
   'w-[23.375rem] w-full p-3.5 bg-input-white outline-none  placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';
 
@@ -41,7 +41,7 @@ const SearchPage = () => {
           <div className="flex justify-center">
             <div className="bg-white w-[23.575rem] rounded-lg">
               <form className="flex relative items-center " onSubmit={(e) => e.preventDefault()}>
-                <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4 text-black" />
+                <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4 text-tricorn-black" />
                 <input
                   className={INPUT_CLASS}
                   placeholder="검색어를 입력해주세요"
@@ -92,7 +92,7 @@ const SearchPage = () => {
         )}
         {isNotEnoughData && (
           <footer className="mb-8 mt-8 ml-[1.9rem] mr-[1.56rem]">
-            <h2 className="font-Cafe24Surround text-[1.125rem] text-black dark:text-extra-white">
+            <h2 className="font-Cafe24Surround text-[1.125rem] text-tricorn-black dark:text-extra-white">
               최근 검색어
             </h2>
             <hr className="mt-2 mb-5" />
