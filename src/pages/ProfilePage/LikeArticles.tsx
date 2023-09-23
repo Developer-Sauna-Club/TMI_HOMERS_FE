@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import fetchArticleById from '@/api/fetchArticleById';
-import Articles from '../ArticlesPage/Articles';
+import RenderArticles from '../ArticlesPage/RenderArticles';
 
 type LikeArticleProps = {
   likeArticle: {
@@ -14,7 +14,7 @@ const LikeArticles = ({ likeArticle }: LikeArticleProps) => {
   const { data: article } = useQuery(['article', post], () => fetchArticleById(post), {
     staleTime: 1000 * 60,
   });
-  return article ? <Articles articles={[article]} /> : null;
+  return article ? <RenderArticles articles={[article]} /> : null;
 };
 
 export default LikeArticles;

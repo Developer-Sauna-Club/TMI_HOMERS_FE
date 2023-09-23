@@ -10,7 +10,7 @@ import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
 import useTab from '@hooks/useTab';
-import Articles from './ArticlesPage/Articles';
+import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
 
 const CHARACTER_SRC = '/img/character.png';
@@ -19,7 +19,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
 
-  const { data: articles, isFetching } = useArticles({
+  const { data: articles, isLoading } = useArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
   });
@@ -64,7 +64,7 @@ const HomePage = () => {
                 </h2>
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
-                {isFetching ? (
+                {isLoading ? (
                   <div className="flex items-center justify-center">
                     <Loader />
                   </div>
@@ -95,12 +95,12 @@ const HomePage = () => {
               </span>
             </h2>
             <div className="">
-              {isFetching ? (
+              {isLoading ? (
                 <div className="flex justify-center">
                   <Loader />
                 </div>
               ) : (
-                <Articles articles={newestArticles} />
+                <RenderArticles articles={newestArticles} />
               )}
             </div>
           </div>

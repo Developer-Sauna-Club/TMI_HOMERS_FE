@@ -177,7 +177,7 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-            {currentProfileUser && currentProfileUser.posts.length > 0 ? (
+            {currentProfileUser && currentProfileUser._id && currentProfileUser.posts.length > 0 ? (
               <UserArticles userId={currentProfileUser._id} />
             ) : (
               <div className="flex justify-center">

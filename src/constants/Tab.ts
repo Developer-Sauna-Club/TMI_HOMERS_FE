@@ -5,7 +5,6 @@ export enum TAB_CONSTANTS {
   HOTTEST = '뜨거운',
   SUBSCRIBED = '구독한',
   SUBSCRIBER = '구독자',
-  SUBSCRIBING = '구독중',
   WRITTEN_ARTICLES = '작성한 기사',
   LIKED_ARTICLES = '응원한 기사',
 }
