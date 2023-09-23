@@ -1,36 +1,56 @@
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { followUser, unFollowUser } from '@/api/common/Follow';
+import { createNotification } from '@/api/common/Notification';
+import { User } from '@/type/User';
 const useFollowQuery = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const followMutation = useMutation(followUser, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['user']);
-      // TODO : 팔로우 알람 보내기
-      // createNotification({
-      //   notificationTypeId: data._id,
-      //   notificationType: 'FOLLOW',
-      //   userId: data.user,
-      //   postId: null,
-      // });
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          const userConfirmed = confirm('로그인이 필요한 작업입니다. 로그인하시겠습니까?');
-          if (userConfirmed) {
-            navigate('/login');
-          }
-        }
+    onMutate: async (id) => {
+      queryClient.cancelQueries(['user']);
+      const preData = queryClient.getQueryData<User>(['user']);
+      if (!preData) {
+        return;
       }
+      const modifyData = [...preData.following, { user: id }];
+      queryClient.setQueryData(['user'], { ...preData, following: modifyData });
+      return preData;
+    },
+    onError: (_, __, context) => {
+      if (context) {
+        queryClient.setQueryData(['user'], context);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['user']);
+    },
+    onSuccess: (data) => {
+      createNotification({
+        notificationTypeId: data._id,
+        notificationType: 'FOLLOW',
+        userId: data.user,
+        postId: null,
+      });
     },
   });
 
   const unFollowMutation = useMutation(unFollowUser, {
-    onSuccess: () => {
+    onMutate: async (id) => {
+      queryClient.cancelQueries(['user']);
+      const preData = queryClient.getQueryData<User>(['user']);
+      if (!preData) {
+        return;
+      }
+      const modifyData = preData.following.filter(({ _id }) => _id !== id);
+      queryClient.setQueryData(['user'], { ...preData, following: modifyData });
+      return preData;
+    },
+    onError: (_, __, context) => {
+      if (context) {
+        queryClient.setQueryData(['user'], context);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries(['user']);
     },
   });

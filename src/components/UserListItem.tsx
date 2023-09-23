@@ -16,25 +16,23 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
   } = useAuthQuery();
   const navigate = useNavigate();
   const { followMutation, unFollowMutation } = useFollowQuery();
-  // TODO : 디바운스 작업 또는 batching
-  const handleFollowing = (id: string) => {
-    followMutation.mutate(id);
-  };
+  if (!user) {
+    return;
+  }
 
-  const handleUnFollowing = (id: string) => {
-    if (user) {
-      const userId = user?.following.find(({ user }) => user === id);
-      if (userId) {
-        unFollowMutation.mutate(userId._id);
-      }
+  const handleToggleFollow = (id: string) => {
+    const followingUserId = user?.following.find(({ user }) => user === id);
+    if (!followingUserId) {
+      followMutation.mutate(id);
+    } else {
+      unFollowMutation.mutate(followingUserId._id);
     }
   };
 
   const isFollowing = (user: User | undefined | '') => {
     if (user) {
-      return user.following.every(({ user }) => user !== id);
+      return user.following.some(({ user }) => user === id) ?? false;
     }
-    return true;
   };
 
   return (
@@ -52,27 +50,15 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
             : fullName}
         </div>
       </div>
-      {isFollowing(user) ? (
-        <SubButton
-          icon="star"
-          key={id}
-          label="팔로우"
-          color="violet"
-          type="outline"
-          size="small"
-          onClick={() => handleFollowing(id)}
-        />
-      ) : (
-        <SubButton
-          icon="star"
-          key={id}
-          label="팔로우"
-          color="violet"
-          type="fill"
-          size="small"
-          onClick={() => handleUnFollowing(id)}
-        />
-      )}
+      <SubButton
+        icon="star"
+        key={id}
+        label="팔로우"
+        color="violet"
+        type={isFollowing(user) ? 'fill' : 'outline'}
+        size="small"
+        onClick={() => handleToggleFollow(id)}
+      />
     </div>
   );
 };
