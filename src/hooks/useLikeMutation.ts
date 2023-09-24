@@ -9,6 +9,7 @@ export const useLikeCreateMutation = () => {
     onSuccess: (like) =>
       Promise.all([
         queryClient.invalidateQueries(['article', like.post]),
+        queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
         queryClient.invalidateQueries(['user']),
       ]),
@@ -23,6 +24,7 @@ export const useLikeDeleteMutation = () => {
     onSuccess: (like) =>
       Promise.all([
         queryClient.invalidateQueries(['article', like.post]),
+        queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
         queryClient.invalidateQueries(['user']),
       ]),

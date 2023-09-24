@@ -20,7 +20,7 @@ const ArticleEditForm = ({
 }: {
   articleInfo: string;
   articleImage: string;
-  user: User | '' | undefined;
+  user: User | null | undefined;
   postId: string;
   imagePublicId: string;
 }) => {

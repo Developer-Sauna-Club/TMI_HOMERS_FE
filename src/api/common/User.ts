@@ -20,7 +20,7 @@ export const fetchAllUsers = async ({ offset, limit }: Partial<FetchUsersParams>
 
 export const fetchUser = async (userId: string) => {
   const FETCH_USER_URL = `/users/${userId}`;
-  const { data } = await axiosClient.post<User>(FETCH_USER_URL);
+  const { data } = await axiosClient.get<User>(FETCH_USER_URL);
   return data;
 };
 
