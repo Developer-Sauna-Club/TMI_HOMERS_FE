@@ -36,7 +36,9 @@ const useNotificationQuery = (userId?: string) => {
     createNotice(notificationParam),
   );
 
-  return { notificationQuery, readNotifications, createNotification };
+  const unseenNotifications = notificationQuery.data?.filter(({ seen }) => !seen).length;
+
+  return { notificationQuery, readNotifications, createNotification, unseenNotifications };
 };
 
 export default useNotificationQuery;

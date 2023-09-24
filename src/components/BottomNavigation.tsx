@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSolidUserCircle } from 'react-icons/bi';
@@ -32,11 +33,17 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
     userQuery: { data: user },
   } = useAuthQuery();
   const userId = user?._id;
-  const {
-    notificationQuery: { data: notifications },
-  } = useNotificationQuery(userId);
 
-  const unseenNotifications = notifications?.filter(({ seen }) => !seen).length;
+  const [badgeLength, setbadgeLength] = useState(0);
+  const { unseenNotifications } = useNotificationQuery(userId);
+
+  useEffect(() => {
+    if (unseenNotifications) {
+      setbadgeLength(unseenNotifications);
+    } else {
+      setbadgeLength(0);
+    }
+  }, [unseenNotifications]);
 
   const handleClickProfile = () => {
     if (user) {
@@ -97,9 +104,9 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             size="2rem"
             fill="currentColor"
           />
-          {!!unseenNotifications && (
-            <div className="motion-safe:animate-bounce badge badge-success badge-lg absolute -top-1/2 -right-1/2 -translate-x-1/2 translate-y-1/2">
-              {unseenNotifications}
+          {currentPage !== '/notification' && !!badgeLength && (
+            <div className="motion-safe:animate-bounce badge badge-success absolute -top-1/2 -right-1/2 -translate-x-1/2 translate-y-1/2">
+              {badgeLength}
             </div>
           )}
         </span>
