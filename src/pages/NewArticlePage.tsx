@@ -1,10 +1,12 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import Avatar from '@/components/Avatar';
 import CloseButton from '@/components/CloseButton';
 import HeaderText from '@/components/HeaderText';
+import Loader from '@/components/Loader';
 import { DROPDOWN_OPTIONS, ETC, LENGTH_LIMIT, MESSAGE } from '@/constants/NewArticle';
 import { useArticle } from '@/hooks/useArticle';
 import useAuthQuery from '@/hooks/useAuthQuery';
@@ -32,7 +34,7 @@ const NewArticlePage = () => {
     trigger,
     formState: { errors },
   } = useForm<FormValueType>();
-  const addArticle = useArticle();
+  const { createPost, isLoading } = useArticle();
   const [image, setImage] = useState<File | null>(null);
 
   const onSubmit: SubmitHandler<FormValueType> = (data) => {
@@ -42,7 +44,7 @@ const NewArticlePage = () => {
         ...data,
         title: titleWithOption,
       };
-      addArticle.mutate({ ...newData, image });
+      createPost({ ...newData, image });
     } catch (error) {
       alert(error);
     }
@@ -78,6 +80,10 @@ const NewArticlePage = () => {
     }
   };
 
+  const handleRemoveImage = () => {
+    setImage(null);
+  };
+
   return (
     <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
@@ -98,7 +104,7 @@ const NewArticlePage = () => {
               <span className="font-Cafe24Surround">{fullName}</span>
             </div>
             <button className="w-[6rem] h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer">
-              {ETC.BUTTON_WRITE}
+              {isLoading ? <Loader /> : ETC.BUTTON_WRITE}
             </button>
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
@@ -146,11 +152,19 @@ const NewArticlePage = () => {
             </div>
             <div className="block">
               {image && (
-                <img
-                  className="block w-[3rem] pb-2"
-                  src={URL.createObjectURL(image)}
-                  alt="thumbnail"
-                />
+                <div className="inline-block pb-2 relative">
+                  <img
+                    className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
+                    src={URL.createObjectURL(image)}
+                    alt="thumbnail"
+                    onClick={handleRemoveImage}
+                  />
+                  <AiOutlineCloseCircle
+                    size="1rem"
+                    className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                    onClick={handleRemoveImage}
+                  />
+                </div>
               )}
               <textarea
                 {...register('body', {
@@ -177,9 +191,9 @@ const NewArticlePage = () => {
           <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
             <label
               htmlFor="file_input"
-              className="flex items-center justify-center w-[2rem] h-[2rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
+              className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
             >
-              <BiImageAdd size="1.2rem" />
+              <BiImageAdd size="1.7rem" />
             </label>
             <input
               id="file_input"

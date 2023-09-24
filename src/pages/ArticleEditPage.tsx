@@ -14,7 +14,12 @@ const ArticleEditPage = () => {
   } = useAuthQuery();
 
   const navigate = useNavigate();
-  const { _id: postId, title: articleInfo, image: articleImage } = useLocation().state.article;
+  const {
+    _id: postId,
+    title: articleInfo,
+    image: articleImage,
+    imagePublicId,
+  } = useLocation().state.article;
   const { showModal, modalOpen, modalClose } = useModal();
 
   const handleClickExit = () => {
@@ -43,6 +48,7 @@ const ArticleEditPage = () => {
         postId={postId}
         articleInfo={articleInfo}
         articleImage={articleImage}
+        imagePublicId={imagePublicId}
       />
     </section>
   );
