@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import Confirm from '@/components/Modals/Confirm';
-import { useLikeCreateMutation, useLikeDeleteMutation } from '@/hooks/useLikeMutation';
 import useModal from '@/hooks/useModal';
 import { useNotification } from '@/hooks/useNotification';
 import ArticleDetail from '@components/ArticleDetail';
@@ -28,7 +27,8 @@ const ArticleDetailPage = () => {
   const { data: article, isLoading, addComment, deletePostArticle } = useArticleDetail();
   const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
-  const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } = useNotification();
+  const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } =
+    useNotification();
   const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
