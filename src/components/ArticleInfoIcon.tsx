@@ -14,7 +14,8 @@ const ModeClasses = {
 };
 
 const ArticleInfoIcon = ({ likes, comments, mode = 'list', color }: ArticleInfoIconProps) => {
-  const spanStyle = 'flex items-center text-wall-street text-[0.75rem] h-[0.75rem] ml-0.5';
+  const spanStyle =
+    'flex items-center text-wall-street dark:text-extra-white text-[0.75rem] h-[0.75rem] ml-0.5';
   const iconStyle = 'icon w-[0.9rem]';
 
   return (

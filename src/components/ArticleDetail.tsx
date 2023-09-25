@@ -31,7 +31,7 @@ const ArticleDetail = ({ nickname, postedDate, profileImage, postUserId }: Artic
                 {nickname}
               </span>
             </div>
-            <div className="text-wall-street text-[10px]">{timestamp}</div>
+            <div className="text-wall-street dark:text-extra-white text-[10px]">{timestamp}</div>
           </div>
         </div>
       </div>

@@ -138,7 +138,6 @@ const ArticleDetailPage = () => {
               icon="good"
             />
             <ArticleInfoIcon
-              //likes={likesCount ? likesCount : likes.length}
               likes={likes.length}
               comments={comments.length}
               mode="post"
