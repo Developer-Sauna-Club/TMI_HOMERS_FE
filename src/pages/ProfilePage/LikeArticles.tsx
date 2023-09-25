@@ -1,20 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchArticleById from '@/api/fetchArticleById';
+import fetchArticleById from '@api/fetchArticleById';
 import RenderArticles from '../ArticlesPage/RenderArticles';
 
-type LikeArticleProps = {
-  likeArticle: {
-    post: string;
+const LikedArticles = ({ postIds }: { postIds: string[] }) => {
+  const fetchMultipleArticles = async () => {
+    const requests = postIds.map((postId) => fetchArticleById(postId));
+    return Promise.all(requests);
   };
+
+  const { data: allFetchedArticles } = useQuery(['articles', postIds], fetchMultipleArticles);
+
+  return allFetchedArticles ? <RenderArticles articles={allFetchedArticles} /> : null;
 };
 
-const LikeArticles = ({ likeArticle }: LikeArticleProps) => {
-  const { post } = likeArticle;
-
-  const { data: article } = useQuery(['article', post], () => fetchArticleById(post), {
-    staleTime: 1000 * 60,
-  });
-  return article ? <RenderArticles articles={[article]} /> : null;
-};
-
-export default LikeArticles;
+export default LikedArticles;

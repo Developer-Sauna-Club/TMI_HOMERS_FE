@@ -14,6 +14,7 @@ import SubButton from '@components/SubButton';
 import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
 import { useArticleDetail } from '@hooks/useArticleDetail';
 import useAuthQuery from '@hooks/useAuthQuery';
+import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMutation';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
@@ -27,7 +28,7 @@ const ArticleDetailPage = () => {
   const { data: article, isLoading, addComment, deletePostArticle } = useArticleDetail();
   const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
-  const { mutate: likeNotificationMutate } = useNotification();
+  const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } = useNotification();
   const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
@@ -44,22 +45,23 @@ const ArticleDetailPage = () => {
 
   const toggleLikeMutate = () => {
     if (myLike) {
-      likeDeleteMutate(myLike._id, {
-        onSuccess: (newLike) =>
+      likeDeleteMutate(myLike._id);
+    } else {
+      likeCreateMutate(_id, {
+        onSuccess: (newLike) => {
           likeNotificationMutate({
             notificationType: 'LIKE',
             notificationTypeId: newLike._id,
             userId: postUserId,
             postId: newLike.post,
-          }),
+          });
+        },
       });
-    } else {
-      likeCreateMutate(_id);
     }
   };
 
   const handleLikeButtonClick = () => {
-    if (isLikeCreateLoading || isLikeDeleteLoading) {
+    if (isLikeCreateLoading || isLikeDeleteLoading || isLikeNotificationLoading) {
       return;
     }
     if (!isLoginUser) {
