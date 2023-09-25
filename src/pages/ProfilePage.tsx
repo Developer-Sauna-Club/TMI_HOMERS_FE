@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
+import Confirm from '@/components/Modals/Confirm';
+import useModal from '@/hooks/useModal';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
@@ -25,6 +27,7 @@ import LikedArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
 const EDIT_PAGE_URL = '/profile/edit';
+const CHANGE_PASSWORD_PAGE_URL = '/password';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -67,13 +70,25 @@ const ProfilePage = () => {
   }, [currentTab, changeTab]);
 
   const SettingsDropdown = () => {
+    const { showModal, modalOpen, modalClose } = useModal();
+
     const dropdownMenu = [
       { label: '프로필 수정', onClick: () => navigate(EDIT_PAGE_URL) },
-      { label: '로그아웃', onClick: logoutMutate },
+      { label: '비밀번호 변경', onClick: () => navigate(CHANGE_PASSWORD_PAGE_URL) },
+      { label: '로그아웃', onClick: () => modalOpen() },
     ];
 
     return (
       <div className="dropdown dropdown-end">
+        {showModal && (
+          <Confirm
+            theme="negative"
+            title="정말 로그아웃 하시겠어요?"
+            confirmLabel="로그아웃"
+            onClose={modalClose}
+            onConfirm={logoutMutate}
+          />
+        )}
         <label
           tabIndex={0}
           className="cursor-pointer text-[1.5rem] z-[40] text-footer-icon focus:text-tricorn-black dark:text-lazy-gray dark:focus:text-wall-street"
