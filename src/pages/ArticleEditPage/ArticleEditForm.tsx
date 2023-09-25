@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { User } from '@type/User';
 import { BiImageAdd } from 'react-icons/bi';
@@ -7,6 +7,7 @@ import Avatar from '@components/Avatar';
 import MainButton from '@components/MainButton';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@constants/NewArticle';
 import { useEditPost } from '@hooks/useEdit';
+import { useToastContext } from '@hooks/useToastContext';
 import safeJSONParse from '@utils/safeJSONParse';
 import { FormValueType } from '../NewArticlePage';
 import ImagePreview from './ImagePreview';
@@ -42,8 +43,8 @@ const ArticleEditForm = ({
   });
   const { editPost, isLoading } = useEditPost();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [doDeleteImage, setDoDeleteImage] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | File | null>(articleImage);
+  const { showToast } = useToastContext();
+  const [selectedText, setSelectedText] = useState(DROPDOWN_OPTIONS[0]);
   const userPreviewImage = watch('image');
 
   const { title, body } = safeJSONParse(articleInfo);
@@ -57,9 +58,22 @@ const ArticleEditForm = ({
     }
   };
 
+  const handleTitleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    const selectedText = event.target.value;
+
+    selectedText === DROPDOWN_OPTIONS[0] ? setSelectedText('') : setSelectedText(selectedText);
+  };
+
   const onSubmit: SubmitHandler<FormValueType> = async ({ title, body, image }) => {
-    const stringifiedTitle = JSON.stringify({ title, body });
-    if (doDeleteImage) {
+    if (selectedText === DROPDOWN_OPTIONS[0]) {
+      showToast(MESSAGE.TITLE_PREFIX_REQUIRED, 'error');
+      return;
+    }
+
+    const titleWithOption = `${selectedText} ${title}`;
+    const stringifiedTitle = JSON.stringify({ title: titleWithOption, body });
+
+    if (!userPreviewImage) {
       editPost({
         postId,
         title: stringifiedTitle,
@@ -72,6 +86,16 @@ const ArticleEditForm = ({
     }
   };
 
+  const handleRemoveImage = () => {
+    setValue('image', null);
+  };
+
+  useEffect(() => {
+    if (articleImage) {
+      setValue('image', articleImage);
+    }
+  }, [setValue, articleImage]);
+
   useEffect(() => {
     if (textareaRef.current) {
       handleResizeTextareaHeight();
@@ -79,22 +103,23 @@ const ArticleEditForm = ({
   }, [articleBody]);
 
   useEffect(() => {
-    if (userPreviewImage && userPreviewImage instanceof File) {
-      setPreviewImage(userPreviewImage);
-    }
-  }, [userPreviewImage, setPreviewImage]);
-
-  useEffect(() => {
     setValue('title', title ? title : '');
     setValue('body', body ? body : '');
     setFocus('body');
   }, [setValue, setFocus, title, body, user]);
 
-  const handleRemoveImage = () => {
-    setDoDeleteImage(true);
-  };
+  useEffect(() => {
+    if (title) {
+      const prefix = title.split(' ')[0];
 
-  const imageSrc = previewImage instanceof File ? URL.createObjectURL(previewImage) : previewImage;
+      if (DROPDOWN_OPTIONS.includes(prefix)) {
+        setSelectedText(prefix);
+      }
+
+      const remainingTitle = title.replace(prefix, '').trim();
+      setValue('title', remainingTitle === '' ? prefix : remainingTitle);
+    }
+  }, [title, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -112,10 +137,20 @@ const ArticleEditForm = ({
           />
         </div>
         <div className="max-w-[22.625rem] mx-auto w-full">
-          <div className="flex items-end h-[3.5rem] border-b-2 border-cooled-blue">
-            <select className="flex items-center justify-center pb-2 mr-2 text-base outline-none dark:text-extra-white dark:bg-tricorn-black">
+          <div className="flex items-end justify-center h-[3.5rem] border-b-2 border-cooled-blue">
+            <select
+              aria-required
+              value={selectedText}
+              onChange={handleTitleSelect}
+              className="flex items-center justify-center pb-2 mr-2 text-base outline-none dark:text-extra-white dark:bg-tricorn-black"
+            >
               {DROPDOWN_OPTIONS.map((option, index) => (
-                <option key={index} value={option} className="text-center align-middle">
+                <option
+                  key={index}
+                  value={option}
+                  className="text-center"
+                  disabled={option === DROPDOWN_OPTIONS[0]}
+                >
                   {option}
                 </option>
               ))}
@@ -129,7 +164,7 @@ const ArticleEditForm = ({
                 },
                 maxLength: {
                   value: LENGTH_LIMIT.TITLE_MAX,
-                  message: MESSAGE.TITLE_MAXLENGTH,
+                  message: MESSAGE.TITLE_MAX_LENGTH,
                 },
               })}
               aria-required
@@ -147,7 +182,9 @@ const ArticleEditForm = ({
             >{`${articleTitle.length}/${LENGTH_LIMIT.TITLE_MAX}`}</span>
           </div>
           <div className="block">
-            {!doDeleteImage ? <ImagePreview image={imageSrc} onRemove={handleRemoveImage} /> : null}
+            {userPreviewImage ? (
+              <ImagePreview image={userPreviewImage} onRemove={handleRemoveImage} />
+            ) : null}
             <Controller
               name="body"
               control={control}
@@ -174,13 +211,13 @@ const ArticleEditForm = ({
                 },
                 maxLength: {
                   value: LENGTH_LIMIT.CONTENT_MAX,
-                  message: MESSAGE.CONTENT_MAXLENGTH,
+                  message: MESSAGE.CONTENT_MAX_LENGTH,
                 },
               }}
             />
 
-            {errors?.title && (
-              <span className="mr-3 text-xs text-error-red">{errors.title.message}</span>
+            {errors?.body && (
+              <span className="mr-3 text-xs text-error-red">{errors.body.message}</span>
             )}
             <span
               className={`text-xs ${
@@ -202,7 +239,6 @@ const ArticleEditForm = ({
             accept="image/*"
             {...register('image')}
             onChange={(e) => {
-              setDoDeleteImage(false);
               setValue('image', e.target.files && e.target.files[0], { shouldValidate: true });
             }}
             className="hidden"
