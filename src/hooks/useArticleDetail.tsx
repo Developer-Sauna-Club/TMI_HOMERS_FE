@@ -29,6 +29,7 @@ export const useArticleDetail = () => {
       Promise.all([
         queryClient.invalidateQueries(['article', postId]),
         queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['newestArticles']),
       ]);
       const { userId } = variables;
 

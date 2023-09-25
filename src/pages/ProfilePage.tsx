@@ -20,7 +20,7 @@ import useScrollToTop from '@hooks/useScrollToTop';
 import useTab from '@hooks/useTab';
 import { useToastContext } from '@hooks/useToastContext';
 import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
-import { TWO_TAB_WIDTH } from '../constants/Tab';
+import { DOUBLE_TAB_WIDTH } from '../constants/Tab';
 import LikedArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
@@ -160,12 +160,12 @@ const ProfilePage = () => {
             tabItems={[
               {
                 title: TAB_CONSTANTS.WRITTEN_ARTICLES,
-                width: TWO_TAB_WIDTH,
+                width: DOUBLE_TAB_WIDTH,
                 onClick: () => changeTab(TAB_CONSTANTS.WRITTEN_ARTICLES),
               },
               {
                 title: TAB_CONSTANTS.LIKED_ARTICLES,
-                width: TWO_TAB_WIDTH,
+                width: DOUBLE_TAB_WIDTH,
                 onClick: () => changeTab(TAB_CONSTANTS.LIKED_ARTICLES),
               },
             ]}
@@ -173,7 +173,6 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-
             {userInfo && userInfo.posts.length > 0 ? (
               <UserArticles userId={userInfo._id} />
             ) : (

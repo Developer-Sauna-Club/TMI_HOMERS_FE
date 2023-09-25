@@ -3,6 +3,7 @@ import { Post } from '@type/Post';
 import Article from '@components/Article';
 import SubButton from '@components/SubButton';
 import { API } from '@constants/Article';
+import { filterArticles } from './filterArticles';
 
 type ArticlesProps = {
   articles: Post[];
@@ -11,12 +12,7 @@ type ArticlesProps = {
 const RenderArticles = ({ articles }: ArticlesProps) => {
   const navigate = useNavigate();
 
-  const filteredArticles = articles
-    .filter((article, index, self) => index === self.findIndex((a) => a._id === article._id))
-    .sort((a, b) => {
-      return new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime();
-    });
-
+  const filteredArticles = filterArticles(articles);
   const isArticlesEmpty = filteredArticles && filteredArticles.length === 0;
 
   if (isArticlesEmpty) {
