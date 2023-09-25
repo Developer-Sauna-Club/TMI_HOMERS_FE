@@ -25,5 +25,14 @@
 }
 
 body {
+  @apply bg-gradient-to-br from-[#dafff7] via-50% via-white to-[#f1daff] dark:bg-gradient-to-br from-[10%] dark:from-[#1c2c2b] dark:from-0% dark:via-tricorn-black dark:via-50% dark:to-[#1c151d];
+}
+
+#app-screen {
   @apply dark:bg-tricorn-black;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
 }

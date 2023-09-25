@@ -19,6 +19,7 @@ export default {
         'tertiory-gray': '#9BA5B7',
         'primary-black': '#141619',
         'dark-primary': '#313E43',
+        'pigeon-body': '#375160',
       },
       fontFamily: {
         Cafe24Surround: ['Cafe24Surround'],

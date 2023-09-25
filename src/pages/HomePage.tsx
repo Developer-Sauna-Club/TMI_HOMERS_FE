@@ -106,7 +106,7 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-      <div className="fixed bottom-0 flex justify-center flex-none w-full">
+      <div className="fixed bottom-0 flex justify-center flex-none w-inherit">
         <BottomNavigation currentPage="/home" />
       </div>
     </div>
