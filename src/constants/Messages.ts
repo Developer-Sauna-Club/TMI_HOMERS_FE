@@ -32,6 +32,9 @@ export const TOAST_MESSAGES = {
 
   AUTH_USER_FAILED: '유저 정보를 받아오는데 실패했어요.',
   NEED_AUTH: '로그인이 필요해요.',
+
+  CHANGE_PROFILE_IMAGE_SUCCESS: '프로필 사진이 변경되었어요.',
+  CHANGE_PROFILE_IMAGE_FAILED: '프로필 사진 변경 도중 오류가 발생했어요.',
 };
 
 export const MODAL_MESSAGE = {
