@@ -24,6 +24,8 @@ import { DOUBLE_TAB_WIDTH } from '../constants/Tab';
 import LikedArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
+const EDIT_PAGE_URL = '/profile/edit';
+
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,6 +66,40 @@ const ProfilePage = () => {
       : setItemToStorage(CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS.WRITTEN_ARTICLES);
   }, [currentTab, changeTab]);
 
+  const SettingsDropdown = () => {
+    const dropdownMenu = [
+      { label: '프로필 수정', onClick: () => navigate(EDIT_PAGE_URL) },
+      { label: '로그아웃', onClick: logoutMutate },
+      {
+        label: '테마 변경',
+        onClick: () => {
+          /* TODO 색상 모드 토글 함수 넣어주기 */
+        },
+      },
+    ];
+
+    return (
+      <div className="dropdown dropdown-end">
+        <label
+          tabIndex={0}
+          className="cursor-pointer text-[1.5rem] z-[40] text-footer-icon focus:text-tricorn-black dark:text-lazy-gray dark:focus:text-wall-street"
+        >
+          <IoSettingsSharp />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content z-[30] menu p-1 shadow bg-white text-tricorn-black dark:text-lazy-gray dark:bg-tricorn-black border border-lazy-gray rounded-box w-40"
+        >
+          {dropdownMenu.map((item, i) => (
+            <li key={i}>
+              <div onClick={() => item.onClick()}>{item.label}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <TabContextProvider>
       <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative overflow-hidden">
@@ -74,16 +110,7 @@ const ProfilePage = () => {
                 navigate(-1);
               }}
             />
-            {isMyProfile && (
-              <div
-                onClick={() => {
-                  logoutMutate();
-                }}
-                className="cursor-pointer h-[1.5rem] p-[1rem] flex items-center justify-center border-[0.05rem] rounded-lg text-[0.875rem]"
-              >
-                로그아웃
-              </div>
-            )}
+            {isMyProfile && <SettingsDropdown />}
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
@@ -122,10 +149,10 @@ const ProfilePage = () => {
                 )}
               </div>
               <div className="flex items-center mt-2 mb-[0.3rem]">
-                <span className="text-center  h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
+                <span className="text-center text-tricorn-black dark:text-white h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
                   {userInfo?.fullName}
                 </span>
-                <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
+                <span className="text-center text-wall-street max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] dark:text-lazy-gray">
                   기자
                 </span>
               </div>
@@ -142,16 +169,10 @@ const ProfilePage = () => {
                     : 0
                 }
               />
-              <span className="text-center px-[2.8rem] mt-[1rem]">
+              <span className="text-center px-[2.8rem] mt-[1rem] text-wall-street dark:text-lazy-gray">
                 {userInfo ? userInfo.username : '자기소개가 없습니다.'}
               </span>
             </div>
-            <button
-              className="absolute right-12 top-2 text-[1.5rem]"
-              onClick={() => navigate('/profile/edit')}
-            >
-              <IoSettingsSharp />
-            </button>
           </div>
           <Tab
             active={currentTab}
