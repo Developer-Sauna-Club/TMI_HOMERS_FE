@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { HiFire } from 'react-icons/hi';
 import DarkMode from '@/components/DarkMode';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
@@ -7,6 +6,7 @@ import { MESSAGE, POST_COUNT } from '@/constants/Home';
 import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
+import HomeBanner from '@components/Banner/HomeBanner';
 import BottomNavigation from '@components/BottomNavigation';
 import HeaderText from '@components/HeaderText';
 import useTab from '@hooks/useTab';
@@ -14,6 +14,17 @@ import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
 
 const CHARACTER_SRC = '/img/character.png';
+
+const BANNER_ITEMS = [
+  {
+    imgSrc: '/img/banner-icon-1.png',
+    text: '나만의\nTMI를\n공유해주세요',
+  },
+  {
+    imgSrc: '/img/banner-icon-2.png',
+    text: '아무말이나\n지껄이더라도\n용서해줘요!',
+  },
+];
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -34,17 +45,17 @@ const HomePage = () => {
   );
 
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden">
-      <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-36">
-        <section className="bg-cooled-blue dark:bg-dark-primary h-[375px] mb-10">
+    <div className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative justify-between overflow-hidden">
+      {/* <div className="bg-cooled-blue dark:bg-dark-primary h-[35%] absolute top-0 w-full -z-0" /> */}
+      <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-10 z-10">
+        <section className="z-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
             <HeaderText label={MESSAGE.HOME} />
             <DarkMode />
           </header>
-          <section className="relative w-full h-[304px] gap-2 flex justify-center">
-            <div className="w-10/12 max-w-[374px] flex flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <HiFire size="24" className="text-article-highly-liked" />
+          <div className="relative w-full h-[30%] flex justify-center">
+            <div className="w-[90%] flex flex-col gap-2">
+              <div className="flex items-center gap-2 ml-2">
                 <h2 className="flex-none text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
                   <span
                     onClick={() => {
@@ -72,12 +83,16 @@ const HomePage = () => {
                 alt="character"
               />
             </div>
-          </section>
+          </div>
         </section>
-        <section className="flex flex-col justify-center flex-grow gap-6 pb-20">
-          {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
-          <div className="flex flex-col gap-3">
-            <h2 className="px-10 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
+        <section className="px-5">
+          <div className="z-10">
+            <HomeBanner carouselItems={BANNER_ITEMS} />
+          </div>
+        </section>
+        <section className="flex flex-col justify-center items-center flex-grow gap-6">
+          <div className="flex flex-col gap-3 w-[90%]">
+            <h2 className="pl-2 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
               <span
                 onClick={() => {
                   navigate('/news');
@@ -88,7 +103,7 @@ const HomePage = () => {
                 {TAB_CONSTANTS.NEWEST} 뉴스
               </span>
             </h2>
-            <div className="">
+            <div className="relative">
               {isLoading ? (
                 <div className="flex justify-center">
                   <Loader />
@@ -100,7 +115,7 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-      <div className="fixed bottom-0 flex justify-center flex-none w-inherit">
+      <div className="flex justify-center flex-none w-full z-10">
         <BottomNavigation currentPage="/home" />
       </div>
     </div>
