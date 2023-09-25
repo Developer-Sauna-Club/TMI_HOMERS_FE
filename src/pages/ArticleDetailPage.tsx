@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import Confirm from '@/components/Modals/Confirm';
+import { useLikeCreateMutation, useLikeDeleteMutation } from '@/hooks/useLikeMutation';
+import useModal from '@/hooks/useModal';
 import { useNotification } from '@/hooks/useNotification';
-import { deletePost } from '@api/common/Post';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
@@ -18,11 +20,12 @@ import Comments from './ArticleDetailPage/Comments';
 
 const ArticleDetailPage = () => {
   const navigate = useNavigate();
+  const { showModal, modalOpen, modalClose } = useModal();
 
   const {
     userQuery: { data: user },
   } = useAuthQuery();
-  const { data: article, isLoading, addComment } = useArticleDetail();
+  const { data: article, isLoading, addComment, deletePostArticle } = useArticleDetail();
   const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
   const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } = useNotification();
@@ -69,12 +72,7 @@ const ArticleDetailPage = () => {
   };
 
   const handleDeletePost = async () => {
-    try {
-      await deletePost(_id);
-      navigate('/news');
-    } catch (error) {
-      alert(error);
-    }
+    deletePostArticle(_id);
   };
 
   const handleImageSize = () => {
@@ -83,6 +81,14 @@ const ArticleDetailPage = () => {
 
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
+      {showModal && (
+        <Confirm
+          theme="negative"
+          title="게시물을 삭제하겠습니까?"
+          onClose={modalClose}
+          onConfirm={handleDeletePost}
+        />
+      )}
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
           <BackButton onClick={() => navigate(-1)} />
@@ -97,7 +103,7 @@ const ArticleDetailPage = () => {
               >
                 <FiEdit className="w-[1rem] h-[1rem]" />
               </button>
-              <button type="button" name="delete" onClick={handleDeletePost}>
+              <button type="button" name="delete" onClick={modalOpen}>
                 <BsTrash className="w-[1rem] h-[1rem]" />
               </button>
             </div>

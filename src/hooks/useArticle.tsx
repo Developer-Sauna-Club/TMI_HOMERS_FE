@@ -11,7 +11,10 @@ export const useArticle = () => {
 
   const { mutate: createPost, isLoading } = useMutation(saveArticle, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['post']);
+      Promise.all([
+        queryClient.invalidateQueries(['post']),
+        queryClient.invalidateQueries(['newestAtrticles']),
+      ]);
       showToast(TOAST_MESSAGES.POST_SUCCESS, 'success');
       navigate('/news');
     },
