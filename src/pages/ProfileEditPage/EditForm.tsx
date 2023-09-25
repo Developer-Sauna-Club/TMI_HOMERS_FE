@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import MainButton from '@/components/MainButton';
+import { TOAST_MESSAGES } from '@/constants/Messages';
 import useEditProfile from '@/hooks/useEditProfile';
+import { useToastContext } from '@/hooks/useToastContext';
 import { User } from '@/type/User';
 
 type FormValue = {
@@ -15,7 +16,7 @@ type EditFormProps = {
 };
 
 const EditForm = ({ user }: EditFormProps) => {
-  const navigate = useNavigate();
+  const { showToast } = useToastContext();
   const { editProfile, isLoading } = useEditProfile();
 
   const {
@@ -49,13 +50,9 @@ const EditForm = ({ user }: EditFormProps) => {
 
   const [nickname, introduction] = [watch('nickname'), watch('introduction')];
 
-  const handleClickPasswordButton = () => {
-    navigate('/password');
-  };
-
   const onSubmit: SubmitHandler<FormValue> = ({ nickname, introduction }) => {
     if (isNotProfileChanged({ nickname, introduction })) {
-      alert('기존 정보와 같습니다');
+      showToast(TOAST_MESSAGES.EDIT_PROFILE_INVALID, 'error');
       return;
     }
     editProfile({ fullName: nickname, username: introduction });
@@ -121,14 +118,8 @@ const EditForm = ({ user }: EditFormProps) => {
             {introduction.length} / 30
           </small>
         </div>
-        <div className="flex flex-col items-center mt-5 p-5 gap-5">
+        <div className="flex flex-col justify-center items-center mt-5">
           <MainButton label="프로필 수정" type="submit" isLoading={isLoading} />
-          <button
-            onClick={handleClickPasswordButton}
-            className="mt-[5%] text-[0.9rem] font-Cafe24SurroundAir text-wall-street dark:text-lazy-gray hover:text-wall-street tracking-toast"
-          >
-            비밀번호 변경하기
-          </button>
         </div>
       </form>
     </div>
