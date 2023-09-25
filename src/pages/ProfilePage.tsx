@@ -70,12 +70,6 @@ const ProfilePage = () => {
     const dropdownMenu = [
       { label: '프로필 수정', onClick: () => navigate(EDIT_PAGE_URL) },
       { label: '로그아웃', onClick: logoutMutate },
-      {
-        label: '테마 변경',
-        onClick: () => {
-          /* TODO 색상 모드 토글 함수 넣어주기 */
-        },
-      },
     ];
 
     return (
