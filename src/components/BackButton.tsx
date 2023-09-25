@@ -11,7 +11,7 @@ const BackButton = ({ onClick, ...props }: BackButtonProps) => {
       onClick={onClick}
       {...props}
     >
-      <AiOutlineLeft className="icon" size="1.083rem" color="tricorn-black" />
+      <AiOutlineLeft className="icon fill-footer-icon dark:fill-lazy-gray" size="1.083rem" />
     </button>
   );
 };
