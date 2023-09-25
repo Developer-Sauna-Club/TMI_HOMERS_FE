@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSolidUserCircle } from 'react-icons/bi';
@@ -6,6 +7,7 @@ import { HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { RiQuillPenFill } from 'react-icons/ri';
 import { TOAST_MESSAGES } from '@/constants/Messages';
 import useAuthQuery from '@/hooks/useAuthQuery';
+import useNotificationQuery from '@/hooks/useNotificationQuery';
 import { useToastContext } from '@/hooks/useToastContext';
 
 const NavConstants = {
@@ -16,7 +18,7 @@ const NavConstants = {
 };
 
 const BASE_BUTTON_STYLE = 'button inline-flex flex-col items-center justify-center';
-const BASE_ICON_STYLE = 'flex items-center justify-center w-[2rem] h-[2rem]';
+const BASE_ICON_STYLE = 'relative flex items-center justify-center w-[2rem] h-[2rem]';
 const BUTTON_COLOR = 'text-footer-icon dark:text-extra-white';
 const ACTIVE_COLOR = 'text-cooled-blue';
 
@@ -30,6 +32,18 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
+  const userId = user?._id;
+
+  const [badgeLength, setbadgeLength] = useState(0);
+  const { unseenNotifications } = useNotificationQuery(userId);
+
+  useEffect(() => {
+    if (unseenNotifications) {
+      setbadgeLength(unseenNotifications);
+    } else {
+      setbadgeLength(0);
+    }
+  }, [unseenNotifications]);
 
   const handleClickProfile = () => {
     if (user) {
@@ -90,6 +104,11 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             size="2rem"
             fill="currentColor"
           />
+          {currentPage !== '/notification' && !!badgeLength && (
+            <div className="motion-safe:animate-bounce badge badge-success absolute -top-1/2 -right-1/2 -translate-x-1/2 translate-y-1/2">
+              {badgeLength}
+            </div>
+          )}
         </span>
         <span
           className={`text-sm ${currentPage === '/notification' ? ACTIVE_COLOR : BUTTON_COLOR}`}
