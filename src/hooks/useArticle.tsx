@@ -13,7 +13,7 @@ export const useArticle = () => {
     onSuccess: () => {
       Promise.all([
         queryClient.invalidateQueries(['post']),
-        queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['newestAtrticles']),
       ]);
       showToast(TOAST_MESSAGES.POST_SUCCESS, 'success');
       navigate('/news');
