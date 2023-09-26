@@ -7,10 +7,10 @@ import useAuthQuery from '@/hooks/useAuthQuery';
 import useNotificationQuery from '@/hooks/useNotificationQuery';
 import NoticeList from './NotificationPage/NoticeList';
 
-type Filter = '안 읽음' | '모든 알림' | '읽은 알림';
+type Filter = '새 알림' | '모든 알림' | '읽은 알림';
 
 const NotificationPage = () => {
-  const [filter, setFilter] = useState<Filter>('안 읽음');
+  const [filter, setFilter] = useState<Filter>('새 알림');
 
   const navigate = useNavigate();
 
@@ -37,8 +37,8 @@ const NotificationPage = () => {
 
   const dropdownMenu = [
     {
-      label: '안 읽음',
-      onClick: () => setFilter('안 읽음'),
+      label: '새 알림',
+      onClick: () => setFilter('새 알림'),
     },
     {
       label: '모든 알림',
@@ -51,9 +51,16 @@ const NotificationPage = () => {
   ];
 
   const filteredNotice = {
-    '안 읽음': notifications?.filter(({ seen }) => !seen),
+    '새 알림': notifications?.filter(({ seen }) => !seen),
     '모든 알림': notifications,
     '읽은 알림': notifications?.filter(({ seen }) => seen),
+  };
+
+  const handleDropdownClose = () => {
+    const liElement = document.activeElement;
+    if (liElement instanceof HTMLElement) {
+      liElement?.blur();
+    }
   };
 
   useEffect(
@@ -70,24 +77,30 @@ const NotificationPage = () => {
   );
 
   return (
-    <div className="flex flex-col items-center h-screen">
-      <header className="flex justify-between flex-none py-6 w-2/3">
+    <div className="flex flex-col items-center h-screen max-w-[414px] pt-[2.75rem]">
+      <header className="flex justify-between items-center flex-none py-6 w-full px-[2.44rem]">
         <HeaderText label="알림" />
-        <div className="dropdown dropdown-end top-1/2">
+        <div className="dropdown dropdown-end self-end">
           <label
             tabIndex={0}
-            className="btn text-[1.5rem] z-[40] bg-white text-tricorn-black dark:text-lazy-gray dark:bg-tricorn-black focus:text-tricorn-black hover:bg-transparent dark:focus:text-wall-street"
+            className="h-[1.5rem] font-Cafe24SurroundAir border-lazy-gray dark:border-wall-street hover:bg-transparent bg-transparent btn btn-sm text-base z-[40] text-footer-icon dark:text-white focus:text-cooled-blue"
           >
             <IoMdArrowDropdown />
             {filter}
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[30] menu p-1 shadow bg-white text-tricorn-black dark:text-lazy-gray dark:bg-tricorn-black border border-lazy-gray rounded-box w-40"
+            className="dropdown-content z-[30] font-Cafe24SurroundAir menu p-1 shadow bg-white text-tricorn-black dark:text-lazy-gray dark:bg-tricorn-black border border-lazy-gray rounded-box w-40"
           >
             {dropdownMenu.map((item, i) => (
-              <li key={i}>
-                <div onClick={() => item.onClick()}>{item.label}</div>
+              <li
+                key={i}
+                onClick={() => {
+                  item.onClick();
+                  handleDropdownClose();
+                }}
+              >
+                <p>{item.label}</p>
               </li>
             ))}
           </ul>
