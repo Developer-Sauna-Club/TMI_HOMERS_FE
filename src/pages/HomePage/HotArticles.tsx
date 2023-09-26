@@ -36,6 +36,7 @@ const HotArticles = ({ articles }: ArticlesProps) => {
       const { title: articleTitle } = JSON.parse(title);
       return (
         <Article
+          isHome={false}
           key={_id}
           id={_id}
           title={articleTitle ? articleTitle : '제목이 없습니다.'}

@@ -59,7 +59,7 @@ const HomePage = () => {
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
                 {isLoading ? (
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center h-[304px]">
                     <Loader />
                   </div>
                 ) : (
@@ -76,7 +76,7 @@ const HomePage = () => {
         </section>
         <section className="flex flex-col justify-center flex-grow gap-6 pb-20">
           {/* <div className="bg-emerald-300 w-[280px] h-20 self-center" /> */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 text-primary-black dark:text-lazy-gray">
             <h2 className="px-10 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
               <span
                 onClick={() => {
@@ -90,7 +90,7 @@ const HomePage = () => {
             </h2>
             <div className="">
               {isLoading ? (
-                <div className="flex justify-center">
+                <div className="flex justify-center h-[104px]">
                   <Loader />
                 </div>
               ) : (

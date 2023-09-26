@@ -18,9 +18,19 @@ type ArticleProps = {
   hasImage: boolean;
   likes: number;
   comments: number;
+  isHome?: boolean;
 };
 
-const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
+const Article = ({
+  id,
+  title,
+  nickname,
+  postedDate,
+  hasImage,
+  likes,
+  comments,
+  isHome = true,
+}: ArticleProps) => {
   const navigate = useNavigate();
   const timestamp = getTimeDelta(postedDate);
   const isHighlyLiked = likes >= HOTTEST_ARTICLE_LIKES_THRESHOLD;
@@ -32,7 +42,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
-          {isHighlyLiked && (
+          {isHighlyLiked && isHome && (
             <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
           )}
           <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem]">
@@ -49,11 +59,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
       <div className="flex justify-between h-[0.75rem]">
         <div className="flex items-center h-full">
           <div className="flex justify-center mr-[1.7rem]">
-            <HiThumbUp
-              className={`w-[0.9rem] mr-[0.25rem] ${
-                isHighlyLiked ? 'text-article-highly-liked' : 'text-lazy-gray'
-              }`}
-            />
+            <HiThumbUp className={`w-[0.9rem] mr-[0.25rem] text-lazy-gray`} />
             <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{likes}</span>
           </div>
           <div className="flex justify-center">
