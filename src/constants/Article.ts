@@ -3,7 +3,7 @@ export const API = {
   AUTHOR_URL: '/author',
   SEARCH_URL: '/search',
   CHANNEL_URL: '/channel',
-  CHANNEL_ID: '64fac2e729260903240d2dab',
+  CHANNEL_ID: '6512cdce2692b6795f161818',
 };
 
 export const ROUTES = {
