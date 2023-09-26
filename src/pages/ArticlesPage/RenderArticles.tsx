@@ -11,8 +11,6 @@ const RenderArticles = ({ articles }: ArticlesProps) => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
-  const navigate = useNavigate();
-
   const filteredArticles = filterArticles(articles);
 
   return filteredArticles?.map((article) => {

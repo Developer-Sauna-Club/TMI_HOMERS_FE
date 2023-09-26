@@ -18,6 +18,7 @@ type ArticleProps = {
   hasImage: boolean;
   likes: number;
   comments: number;
+  isHome?: boolean;
   myLikeArticle?: boolean;
 };
 
@@ -29,6 +30,7 @@ const Article = ({
   hasImage,
   likes,
   comments,
+  isHome = true,
   myLikeArticle = false,
 }: ArticleProps) => {
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ const Article = ({
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
-          {isHighlyLiked && (
+          {isHighlyLiked && isHome && (
             <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
           )}
           <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem]">

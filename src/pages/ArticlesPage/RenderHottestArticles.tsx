@@ -1,5 +1,5 @@
 import Article from '@/components/Article';
-import Loader from '@/components/Loader';
+import SearchSkeleton from '@/components/SearchSkeleton';
 import { API } from '@/constants/Article';
 import { TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
@@ -19,11 +19,7 @@ const RenderHottestArticles = () => {
 
   return (
     <>
-      {isLoading && (
-        <div className="flex justify-center">
-          <Loader />
-        </div>
-      )}
+      {isLoading && <SearchSkeleton SkeletonType="title" />}
       {hottestArticles?.map((article) => {
         const { _id, title, author, createdAt, likes, image, comments } = article;
         const { fullName } = author;

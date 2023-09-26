@@ -11,7 +11,7 @@ const Box = ({ height = 1.4, width, ...props }: BoxProps) => {
       <div className="flex-1 space-y-6 py-1">
         <div
           style={{ height: `${height}rem`, width: `${width}%` }}
-          className=" bg-slate-200 rounded-lg"
+          className=" bg-slate-200 rounded-lg dark:bg-wall-street"
           {...props}
         />
       </div>

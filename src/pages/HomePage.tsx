@@ -70,7 +70,7 @@ const HomePage = () => {
               </div>
               <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center pt-2 z-20">
                 {isLoading ? (
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center h-[304px]">
                     <Loader />
                   </div>
                 ) : (
@@ -105,7 +105,7 @@ const HomePage = () => {
             </h2>
             <div className="relative">
               {isLoading ? (
-                <div className="flex justify-center">
+                <div className="flex justify-center h-[104px]">
                   <Loader />
                 </div>
               ) : (

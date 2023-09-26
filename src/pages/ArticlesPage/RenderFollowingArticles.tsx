@@ -45,9 +45,7 @@ const RenderFollowingArticles = () => {
   return (
     <>
       {userLoading ? (
-        <div className="flex justify-center">
-          <Loader />
-        </div>
+        <SearchSkeleton SkeletonType="title" />
       ) : (
         <>
           {!data?.pages || data?.pages.flat().length === 0 ? (
