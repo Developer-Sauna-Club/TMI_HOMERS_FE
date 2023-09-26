@@ -29,7 +29,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
       const followingUserId = user.following.find(({ user }) => user === id);
       if (!followingUserId) {
         followMutation.mutate(id);
-        showToast('팔로우에 성공하셨습니다');
+        showToast('팔로우에 성공하셨습니다', 'success');
       } else {
         unFollowMutation.mutate(followingUserId._id);
       }
