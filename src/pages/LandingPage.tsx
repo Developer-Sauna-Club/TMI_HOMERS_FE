@@ -4,7 +4,7 @@ import useAuthQuery from '@/hooks/useAuthQuery';
 import { LoadingPage } from '@pages/index';
 
 const LOGO_SRC = '/img/logo.svg';
-const CHARACTER_SRC = '/img/character.png';
+const CHARACTER_SRC = '/img/character.webp';
 
 const CATCHPHRASE = '쓸데없는 걸 쓰고 싶은데\n어디 쓸 데 없나?';
 const START_BUTTON_CONTENT = '시작하기';
