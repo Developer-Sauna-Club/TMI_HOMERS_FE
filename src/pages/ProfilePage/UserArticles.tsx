@@ -1,3 +1,4 @@
+import Loader from '@components/Loader';
 import { useArticles } from '@hooks/useArticles';
 import RenderArticles from '../ArticlesPage/RenderArticles';
 
@@ -11,7 +12,7 @@ const UserArticles = ({ userId }: UserArticlesProps) => {
     type: 'user',
   });
 
-  return isLoading ? null : <RenderArticles articles={userArticles} />;
+  return isLoading ? <Loader /> : <RenderArticles articles={userArticles} />;
 };
 
 export default UserArticles;
