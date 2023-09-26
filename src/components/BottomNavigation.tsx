@@ -105,7 +105,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             fill="currentColor"
           />
           {currentPage !== '/notification' && !!badgeLength && (
-            <div className="motion-safe:animate-bounce badge bg-error-red badge-sm border-none absolute -top-[15%] -right-[25%] font-Cafe24Surround">
+            <div className="motion-safe:animate-bounce badge bg-error-red badge-sm border-none absolute -top-[15%] -right-[25%] font-Cafe24Surround text-white">
               {badgeLength}
             </div>
           )}
