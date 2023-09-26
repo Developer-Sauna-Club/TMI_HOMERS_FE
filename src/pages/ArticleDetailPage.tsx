@@ -5,7 +5,6 @@ import { FiEdit } from 'react-icons/fi';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
-import Loader from '@components/Loader';
 import Confirm from '@components/Modals/Confirm';
 import SubButton from '@components/SubButton';
 import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
@@ -16,10 +15,12 @@ import useModal from '@hooks/useModal';
 import { useNotification } from '@hooks/useNotification';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
+import { LoadingPage } from '.';
 
 const ArticleDetailPage = () => {
   const navigate = useNavigate();
   const { showModal, modalOpen, modalClose } = useModal();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const {
     userQuery: { data: user },
@@ -29,14 +30,10 @@ const ArticleDetailPage = () => {
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
   const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } =
     useNotification();
-  const [isBigImage, setIsBigImage] = useState(false);
+  //const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader />
-      </div>
-    );
+    return <LoadingPage />;
   }
 
   const { _id, title, author, createdAt, likes, image, comments } = article!;
@@ -79,10 +76,6 @@ const ArticleDetailPage = () => {
     deletePostArticle(_id);
   };
 
-  const handleImageSize = () => {
-    setIsBigImage(!isBigImage);
-  };
-
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
       {showModal && (
@@ -123,12 +116,16 @@ const ArticleDetailPage = () => {
           <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
             {articleTitle}
           </div>
-          <div className="flex items-center justify-center">
+          <div className={`flex items-center justify-center ${image ? 'h-[20rem]' : ''}`}>
             {image && (
               <img
                 src={image}
-                className={isBigImage ? 'w-full m-5' : 'w-[14rem] m-5 rounded-lg'}
-                onClick={handleImageSize}
+                className={
+                  !isImageLoaded
+                    ? 'h-full m-5 rounded-lg bg-gray-300 dark:bg-gray-800 animate-pulse'
+                    : 'h-full object-scale-down m-5 rounded-lg'
+                }
+                onLoad={() => setIsImageLoaded(true)}
               />
             )}
           </div>
@@ -142,7 +139,6 @@ const ArticleDetailPage = () => {
               icon="good"
             />
             <ArticleInfoIcon
-              //likes={likesCount ? likesCount : likes.length}
               likes={likes.length}
               comments={comments.length}
               mode="post"
