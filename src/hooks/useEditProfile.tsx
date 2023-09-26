@@ -11,6 +11,7 @@ const useEditProfile = () => {
   const { mutate: editProfile, isLoading } = useMutation(updateUser, {
     onSuccess: (user) => {
       queryClient.setQueryData(['user'], user);
+      queryClient.invalidateQueries(['userInfo', user._id]);
       showToast(TOAST_MESSAGES.EDIT_PROFILE_SUCCESS, 'success');
       navigate(`/profile/${user._id}`);
     },

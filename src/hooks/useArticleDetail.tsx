@@ -27,7 +27,11 @@ export const useArticleDetail = () => {
 
   const deletePostMutation = useMutation(deletePost, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['newestArticles']);
+      Promise.all([
+        queryClient.invalidateQueries(['article', postId]),
+        queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['newestArticles']),
+      ]);
       showToast('게시물이 삭제되었습니다', 'success');
       navigate(-1);
     },
