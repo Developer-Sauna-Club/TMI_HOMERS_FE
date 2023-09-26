@@ -18,9 +18,19 @@ type ArticleProps = {
   hasImage: boolean;
   likes: number;
   comments: number;
+  myLikeArticle?: boolean;
 };
 
-const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
+const Article = ({
+  id,
+  title,
+  nickname,
+  postedDate,
+  hasImage,
+  likes,
+  comments,
+  myLikeArticle = false,
+}: ArticleProps) => {
   const navigate = useNavigate();
   const timestamp = getTimeDelta(postedDate);
   const isHighlyLiked = likes >= HOTTEST_ARTICLE_LIKES_THRESHOLD;
@@ -51,7 +61,7 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
           <div className="flex justify-center mr-[1.7rem]">
             <HiThumbUp
               className={`w-[0.9rem] mr-[0.25rem] ${
-                isHighlyLiked ? 'text-article-highly-liked' : 'text-lazy-gray'
+                myLikeArticle ? 'text-article-highly-liked' : 'text-lazy-gray'
               }`}
             />
             <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{likes}</span>

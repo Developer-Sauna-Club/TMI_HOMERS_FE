@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Post } from '@type/Post';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import Article from '@components/Article';
 import SubButton from '@components/SubButton';
 import { API } from '@constants/Article';
@@ -10,6 +11,9 @@ type ArticlesProps = {
 };
 
 const RenderArticles = ({ articles }: ArticlesProps) => {
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const navigate = useNavigate();
 
   const filteredArticles = filterArticles(articles);
@@ -34,6 +38,7 @@ const RenderArticles = ({ articles }: ArticlesProps) => {
   return filteredArticles?.map((article) => {
     const { _id, title, author, createdAt, likes, image, comments } = article;
     const { fullName } = author;
+    const myLike = likes.find((like) => (user ? like.user === user._id : false));
     try {
       const { title: articleTitle } = JSON.parse(title);
       return (
@@ -46,6 +51,7 @@ const RenderArticles = ({ articles }: ArticlesProps) => {
           hasImage={image !== undefined}
           likes={likes?.length || 0}
           comments={comments?.length || 0}
+          myLikeArticle={!!myLike}
         />
       );
     } catch (e) {
