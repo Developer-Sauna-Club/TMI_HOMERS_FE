@@ -27,7 +27,7 @@ const ArticleEditPage = () => {
   };
 
   return (
-    <section className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <section className="max-w-[25.875rem] h-screen mx-auto pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       {showModal && (
         <Confirm
           theme="negative"

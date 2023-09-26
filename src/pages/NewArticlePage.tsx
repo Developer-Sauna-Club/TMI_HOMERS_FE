@@ -90,7 +90,7 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
           <HeaderText size="normal" label={ETC.HEADER_WRITE} />
@@ -99,7 +99,7 @@ const NewArticlePage = () => {
       </header>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col h-screen bg-white dark:bg-tricorn-black rounded-t-3xl">
-          <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
+          <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem] mb-2">
             <Avatar
               width={2.5}
               profileImage={profileImage ? profileImage : ''}
@@ -116,18 +116,18 @@ const NewArticlePage = () => {
             />
           </div>
           <div className="max-w-[22.625rem] mx-auto w-full">
-            <div className="flex justify-center items-end h-[3.5rem] border-b-2 border-cooled-blue">
+            <div className="flex justify-center h-[2.8rem] border-b-2 pb-1 items-end border-cooled-blue gap-2">
               <select
                 aria-required
                 value={selectedText}
                 onChange={handleTitleSelect}
-                className="flex justify-center items-center pb-2 mr-2 outline-none text-base dark:text-extra-white dark:bg-tricorn-black"
+                className="flex items-center justify-center text-base outline-none h-1/2 dark:text-extra-white dark:bg-tricorn-black"
               >
                 {DROPDOWN_OPTIONS.map((option, index) => (
                   <option
                     key={index}
                     value={option}
-                    className="align-middle text-center"
+                    className="text-center align-middle"
                     disabled={option === DROPDOWN_OPTIONS[0]}
                   >
                     {option}
@@ -147,12 +147,12 @@ const NewArticlePage = () => {
                   },
                 })}
                 placeholder={MESSAGE.TITLE_REQUIRED}
-                className="block w-full pb-2 outline-none bg-white dark:bg-tricorn-black"
+                className="block w-full bg-white outline-none h-1/2 dark:bg-tricorn-black"
               />
             </div>
             <div className="flex justify-end w-full">
               {errors?.title && (
-                <span className="text-xs text-error-red mr-3">{errors.title.message}</span>
+                <span className="mr-3 text-xs text-error-red">{errors.title.message}</span>
               )}
               <span
                 className={`text-xs ${
@@ -162,7 +162,7 @@ const NewArticlePage = () => {
             </div>
             <div className="block">
               {image && (
-                <div className="inline-block pb-2 relative">
+                <div className="relative inline-block pb-2">
                   <img
                     className="w-[5rem] rounded-lg cursor-pointer drop-shadow-md"
                     src={URL.createObjectURL(image)}
@@ -171,7 +171,7 @@ const NewArticlePage = () => {
                   />
                   <AiOutlineCloseCircle
                     size="1rem"
-                    className="text-lazy-gray absolute top-1 right-1 cursor-pointer"
+                    className="absolute cursor-pointer text-lazy-gray top-1 right-1"
                     onClick={handleRemoveImage}
                   />
                 </div>
@@ -190,11 +190,10 @@ const NewArticlePage = () => {
                   },
                 })}
                 placeholder={MESSAGE.CONTENT_REQUIRED}
-                maxLength={LENGTH_LIMIT.CONTENT_MAX}
-                className="overflow-hidden outline-none resize-none h-auto w-full bg-white dark:bg-tricorn-black"
+                className="w-full h-auto overflow-hidden bg-white outline-none resize-none dark:bg-tricorn-black"
               />
               {errors?.body && (
-                <span className="text-xs text-error-red mr-3">{errors.body.message}</span>
+                <span className="mr-3 text-xs text-error-red">{errors.body.message}</span>
               )}
               <span
                 className={`text-xs ${
@@ -205,7 +204,7 @@ const NewArticlePage = () => {
               >{`${articleBody.length}/${LENGTH_LIMIT.CONTENT_MAX}`}</span>
             </div>
           </div>
-          <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
+          <div className="max-w-[25.875rem] w-full h-[2rem]">
             <label
               htmlFor="file_input"
               className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
