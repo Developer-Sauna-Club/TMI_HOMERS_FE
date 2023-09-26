@@ -112,7 +112,7 @@ const ProfilePage = () => {
 
   return (
     <TabContextProvider>
-      <section className="flex flex-col justify-center h-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative overflow-hidden">
+      <section className="flex flex-col justify-center h-screen w-screen max-w-[25.875rem] mx-auto pt-[3.75rem] font-Cafe24SurroundAir relative overflow-hidden">
         <header>
           <div className="flex justify-between flex-start px-[1.87rem]">
             <BackButton

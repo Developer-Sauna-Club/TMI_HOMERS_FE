@@ -77,8 +77,8 @@ const NotificationPage = () => {
   );
 
   return (
-    <div className="flex flex-col items-center h-screen max-w-[414px] pt-[2.75rem]">
-      <header className="flex justify-between items-center flex-none py-6 w-full px-[2.44rem]">
+    <div className="flex flex-col items-center h-screen w-screen max-w-[25.875rem] mx-auto">
+      <header className="flex justify-between items-center flex-none pt-[4.25rem] px-[2rem] w-full">
         <HeaderText label="알림" />
         <div className="dropdown dropdown-end self-end">
           <label

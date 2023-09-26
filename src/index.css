@@ -34,7 +34,7 @@ body {
 }
 
 #app-screen {
-  @apply lg:w-[414px] lg:border-x overflow-auto bg-white dark:bg-tricorn-black dark:border-wall-street;
+  @apply lg:w-[416px] lg:border-x overflow-auto bg-white dark:bg-tricorn-black dark:border-wall-street;
 }
 
 #pc-screen {
