@@ -27,7 +27,7 @@ const CommentInput = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting },
     reset,
   } = useForm<FormValueType>();
 
@@ -63,14 +63,11 @@ const CommentInput = ({
             />
           </div>
           <div className="flex items-center justify-center">
-            <button className="outline-none cursor-pointer">
+            <button className="outline-none cursor-pointer" disabled={isSubmitting}>
               <RiQuillPenFill className="fill-cooled-blue w-[1.5rem] h-[1.5rem]" />
             </button>
           </div>
         </div>
-        {errors?.comment && (
-          <span className="text-xs text-error-red">{errors.comment.message}</span>
-        )}
       </form>
     </div>
   );
