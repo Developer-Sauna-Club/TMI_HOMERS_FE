@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Meta, StoryObj } from '@storybook/react';
 import ArticleDetail from '@/components/ArticleDetail';
 
@@ -18,4 +19,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: () => (
+    <Router>
+      <ArticleDetail nickname="@khakhiD" postedDate="2023-08-29T09:28:39.390Z" postUserId="1" />
+    </Router>
+  ),
+};

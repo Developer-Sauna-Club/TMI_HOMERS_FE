@@ -5,7 +5,7 @@ import Avatar from './Avatar';
 type ArticleDetailProps = {
   nickname: string;
   postedDate: string;
-  profileImage: string;
+  profileImage?: string;
   postUserId: string;
 };
 
