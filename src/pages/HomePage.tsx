@@ -13,15 +13,15 @@ import useTab from '@hooks/useTab';
 import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
 
-const CHARACTER_SRC = '/img/character.png';
+const CHARACTER_SRC = '/img/character.webp';
 
 const BANNER_ITEMS = [
   {
-    imgSrc: '/img/banner-icon-1.png',
+    imgSrc: '/img/banner-icon-1.webp',
     text: '나만의\nTMI를\n공유해주세요',
   },
   {
-    imgSrc: '/img/banner-icon-2.png',
+    imgSrc: '/img/banner-icon-2.webp',
     text: '아무말이나\n지껄이더라도\n용서해줘요!',
   },
 ];
