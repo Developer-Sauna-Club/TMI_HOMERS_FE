@@ -116,7 +116,7 @@ const ArticleDetailPage = () => {
           <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
             {articleTitle}
           </div>
-          <div className="flex items-center justify-center h-[20rem]">
+          <div className={`flex items-center justify-center ${image ? 'h-[20rem]' : ''}`}>
             {image && (
               <img
                 src={image}
