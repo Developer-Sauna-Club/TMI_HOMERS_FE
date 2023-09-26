@@ -19,6 +19,7 @@ type ArticleProps = {
   likes: number;
   comments: number;
   isHome?: boolean;
+  myLikeArticle?: boolean;
 };
 
 const Article = ({
@@ -30,6 +31,7 @@ const Article = ({
   likes,
   comments,
   isHome = true,
+  myLikeArticle = false,
 }: ArticleProps) => {
   const navigate = useNavigate();
   const timestamp = getTimeDelta(postedDate);
@@ -38,7 +40,7 @@ const Article = ({
   return (
     <div
       onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
-      className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto dark:bg-tricorn-black"
+      className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
@@ -59,15 +61,23 @@ const Article = ({
       <div className="flex justify-between h-[0.75rem]">
         <div className="flex items-center h-full">
           <div className="flex justify-center mr-[1.7rem]">
-            <HiThumbUp className={`w-[0.9rem] mr-[0.25rem] text-lazy-gray`} />
-            <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{likes}</span>
+            <HiThumbUp
+              className={`w-[0.9rem] mr-[0.25rem] ${
+                myLikeArticle ? 'text-article-highly-liked' : 'text-lazy-gray'
+              }`}
+            />
+            <span className="text-wall-street dark:text-extra-white text-[0.75rem] h-[0.75rem]">
+              {likes}
+            </span>
           </div>
           <div className="flex justify-center">
             <BiSolidComment className="w-[0.9rem] text-lazy-gray mr-[0.25rem]" />
-            <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{comments}</span>
+            <span className="text-wall-street dark:text-extra-white text-[0.75rem] h-[0.75rem]">
+              {comments}
+            </span>
           </div>
         </div>
-        <span className="text-wall-street text-[0.75rem] ">{nickname}</span>
+        <span className="text-wall-street dark:text-extra-white text-[0.75rem] ">{nickname}</span>
       </div>
     </div>
   );

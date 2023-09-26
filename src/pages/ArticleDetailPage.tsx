@@ -2,18 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import Confirm from '@/components/Modals/Confirm';
-import useModal from '@/hooks/useModal';
-import { useNotification } from '@/hooks/useNotification';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
 import Loader from '@components/Loader';
+import Confirm from '@components/Modals/Confirm';
 import SubButton from '@components/SubButton';
 import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
 import { useArticleDetail } from '@hooks/useArticleDetail';
 import useAuthQuery from '@hooks/useAuthQuery';
 import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMutation';
+import useModal from '@hooks/useModal';
+import { useNotification } from '@hooks/useNotification';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 
@@ -95,7 +95,7 @@ const ArticleDetailPage = () => {
       )}
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
-          <BackButton onClick={() => navigate(-1)} />
+          <BackButton onClick={() => navigate('/news')} />
           {isMyPost && (
             <div id="isMine" className="flex items-center justify-between w-[3rem]">
               <button

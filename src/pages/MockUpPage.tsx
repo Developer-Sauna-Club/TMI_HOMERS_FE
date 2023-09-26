@@ -14,7 +14,7 @@ const URLS = {
 const MockUpPage = ({ children }: MockUpProps) => {
   return (
     <>
-      <div className="lg:flex hidden flex-col items-start w-[414px] max-w-[610px] justify-between">
+      <div id="pc-screen">
         <header className="mt-[5%]">
           <img src="/img/logo.svg" alt="logo" className="w-[100px]" />
         </header>
@@ -40,9 +40,6 @@ const MockUpPage = ({ children }: MockUpProps) => {
           </div>
         </section>
         <footer className="mb-[5%] flex gap-5 justify-start items-center h-[3rem]">
-          {/* <a href="">
-            <img src="/img/google-play.png" alt="google-play" className="w-[8rem]" />
-          </a> */}
           <div className="hover:scale-[90%] transition ease-in-out cursor-pointer">
             <a href={URLS.GITHUB} target="_blank" rel="noreferrer">
               <GithubIcon
@@ -63,12 +60,7 @@ const MockUpPage = ({ children }: MockUpProps) => {
           </div>
         </footer>
       </div>
-      <div
-        id="app-main"
-        className="lg:w-[414px] lg:border-x overflow-auto bg-white dark:bg-tricorn-black dark:border-wall-street"
-      >
-        {children}
-      </div>
+      <div id="app-screen">{children}</div>
     </>
   );
 };

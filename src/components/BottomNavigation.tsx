@@ -55,7 +55,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
   };
 
   return (
-    <div className="flex items-center justify-evenly w-[25.875rem] h-[4.75rem] bg-white dark:bg-tricorn-black shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] dark:shadow-[0_-0.021rem_0_0_rgba(238, 238, 238, 0.5)] font-Cafe24SurroundAir">
+    <div className="flex items-center justify-evenly w-full max-w-[25.875rem] h-[4.75rem] bg-white dark:bg-tricorn-black shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] dark:shadow-[0_-0.021rem_0_0_rgba(238, 238, 238, 0.5)] font-Cafe24SurroundAir">
       <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
@@ -105,7 +105,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
             fill="currentColor"
           />
           {currentPage !== '/notification' && !!badgeLength && (
-            <div className="motion-safe:animate-bounce badge bg-error-red badge-sm border-none absolute -top-[15%] -right-[25%] font-Cafe24Surround">
+            <div className="motion-safe:animate-bounce badge bg-error-red badge-sm border-none absolute -top-[15%] -right-[25%] font-Cafe24Surround text-white">
               {badgeLength}
             </div>
           )}

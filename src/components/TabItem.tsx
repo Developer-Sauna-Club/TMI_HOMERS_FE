@@ -7,7 +7,7 @@ type TabItemProps = {
 
 const TabItem = ({ index, children }: TabItemProps) => {
   const { activeTab } = useTabContext();
-  return <div>{activeTab === index && children}</div>;
+  return <>{activeTab === index && children}</>;
 };
 
 export default TabItem;

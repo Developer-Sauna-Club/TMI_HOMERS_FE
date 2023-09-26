@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateUser } from '@/api/common/UserSettings';
-import { TOAST_MESSAGES } from '@/constants/Messages';
 import { updatePost } from '@api/common/Post';
+import { updateUser } from '@api/common/UserSettings';
+import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
 export const useEditProfile = () => {
@@ -30,9 +30,13 @@ export const useEditPost = () => {
 
   const { mutate: editPost, isLoading } = useMutation(updatePost, {
     onSuccess: (post) => {
-      queryClient.setQueryData(['post'], post);
+      Promise.all([
+        queryClient.invalidateQueries(['newestArticles']),
+        queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['followingArticles']),
+      ]);
       showToast(TOAST_MESSAGES.EDIT_POST_SUCCESS, 'success');
-      navigate(`/news/${post._id}`, { replace: true });
+      navigate(`/news/${post._id}`);
     },
     onError: () => {
       showToast(TOAST_MESSAGES.EDIT_POST_FAILED, 'error');

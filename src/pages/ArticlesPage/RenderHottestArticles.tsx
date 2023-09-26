@@ -3,9 +3,13 @@ import SearchSkeleton from '@/components/SearchSkeleton';
 import { API } from '@/constants/Article';
 import { TAB_CONSTANTS } from '@/constants/Tab';
 import { useArticles } from '@/hooks/useArticles';
+import useAuthQuery from '@/hooks/useAuthQuery';
 import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 
 const RenderHottestArticles = () => {
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const { data: articles, isLoading } = useArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
@@ -19,6 +23,7 @@ const RenderHottestArticles = () => {
       {hottestArticles?.map((article) => {
         const { _id, title, author, createdAt, likes, image, comments } = article;
         const { fullName } = author;
+        const myLike = likes.find((like) => (user ? like.user === user._id : false));
         try {
           const { title: articleTitle } = JSON.parse(title);
           return (
@@ -31,6 +36,7 @@ const RenderHottestArticles = () => {
               hasImage={image !== undefined}
               likes={likes?.length || 0}
               comments={comments?.length || 0}
+              myLikeArticle={!!myLike}
             />
           );
         } catch (e) {
