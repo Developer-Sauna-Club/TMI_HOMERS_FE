@@ -46,7 +46,7 @@ const HomePage = () => {
 
   return (
     <div className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative justify-between overflow-hidden">
-      {/* <div className="bg-cooled-blue dark:bg-dark-primary h-[35%] absolute top-0 w-full -z-0" /> */}
+      <div className="bg-cooled-blue dark:bg-dark-primary h-[35%] absolute top-0 w-full -z-0" />
       <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-10 z-10">
         <section className="z-10">
           <header className="flex h-[180px] justify-between px-10 items-center">
