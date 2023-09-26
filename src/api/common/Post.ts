@@ -62,7 +62,7 @@ export const fetchPost = async (postId: string) => {
 type UpdatePostParams = {
   postId: string;
   title: string;
-  image: File | null;
+  image: File | string | undefined | null;
   imageToDeletePublicId?: string;
   channelId: string;
 };
