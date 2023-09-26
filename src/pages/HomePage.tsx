@@ -68,7 +68,7 @@ const HomePage = () => {
                   </span>
                 </h2>
               </div>
-              <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center h-[304px] z-20">
+              <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center pt-2 z-20">
                 {isLoading ? (
                   <div className="flex items-center justify-center">
                     <Loader />
