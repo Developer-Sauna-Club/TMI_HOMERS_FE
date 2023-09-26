@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import Confirm from '@/components/Modals/Confirm';
-import { MODAL_MESSAGE } from '@/constants/Messages';
 import CloseButton from '@components/CloseButton';
 import HeaderText from '@components/HeaderText';
+import Confirm from '@components/Modals/Confirm';
+import { MODAL_MESSAGE } from '@constants/Messages';
 import { ETC } from '@constants/NewArticle';
 import useAuthQuery from '@hooks/useAuthQuery';
 import useModal from '@hooks/useModal';
@@ -27,7 +27,7 @@ const ArticleEditPage = () => {
   };
 
   return (
-    <section className="max-w-[25.875rem] mx-auto max-h-[56rem] h-full pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <section className="max-w-[25.875rem] h-screen mx-auto pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       {showModal && (
         <Confirm
           theme="negative"
@@ -38,7 +38,7 @@ const ArticleEditPage = () => {
       )}
       <header className="flex flex-col">
         <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
-          <HeaderText size="normal" label={ETC.HEADER_WRITE} />
+          <HeaderText size="normal" label={ETC.HEADER_WRITE_EDIT} />
           <CloseButton onClick={modalOpen} />
         </div>
       </header>
