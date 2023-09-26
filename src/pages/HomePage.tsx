@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { HiFire } from 'react-icons/hi2';
 import DarkMode from '@/components/DarkMode';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
@@ -46,17 +47,18 @@ const HomePage = () => {
 
   return (
     <div className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative justify-between overflow-hidden">
-      <div className="bg-cooled-blue dark:bg-dark-primary h-[35%] absolute top-0 w-full -z-0" />
       <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-10 z-10">
-        <section className="z-10">
-          <header className="flex h-[180px] justify-between px-10 items-center">
+        <section className="z-10 relative">
+          <div className="bg-cooled-blue dark:bg-dark-primary h-[80%] absolute top-0 w-full" />
+          <header className="flex h-[180px] justify-between px-10 items-center relative">
             <HeaderText label={MESSAGE.HOME} />
             <DarkMode />
           </header>
-          <div className="relative w-full h-[30%] flex justify-center">
+          <div className="relative w-full flex justify-center">
             <div className="w-[90%] flex flex-col gap-2">
               <div className="flex items-center gap-2 ml-2">
-                <h2 className="flex-none text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
+                <h2 className="flex text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
+                  <HiFire size="24" className="text-article-highly-liked mr-1" />
                   <span
                     onClick={() => {
                       navigate('/news');
@@ -68,7 +70,7 @@ const HomePage = () => {
                   </span>
                 </h2>
               </div>
-              <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center pt-2 z-20">
+              <div className="bg-white dark:bg-tricorn-black text-tricorn-black dark:text-lazy-gray w-full rounded-xl shadow-article-container max-w-sm self-center pt-2 z-20 h-[304px]">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-[304px]">
                     <Loader />
