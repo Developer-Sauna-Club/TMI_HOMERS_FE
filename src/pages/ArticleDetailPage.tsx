@@ -30,7 +30,7 @@ const ArticleDetailPage = () => {
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
   const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } =
     useNotification();
-  const [isBigImage, setIsBigImage] = useState(false);
+  //const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -76,10 +76,6 @@ const ArticleDetailPage = () => {
     deletePostArticle(_id);
   };
 
-  const handleImageSize = () => {
-    setIsBigImage(!isBigImage);
-  };
-
   return (
     <div className="flex flex-col items-center max-w-[25.875rem] mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
       {showModal && (
@@ -120,18 +116,15 @@ const ArticleDetailPage = () => {
           <div className="my-3 text-lg text-tricorn-black dark:text-extra-white font-Cafe24Surround">
             {articleTitle}
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center h-[20rem]">
             {image && (
               <img
                 src={image}
                 className={
                   !isImageLoaded
-                    ? 'w-[15rem] m-5 rounded-lg bg-gray-300 dark:bg-gray-800 animate-pulse'
-                    : isBigImage
-                    ? 'w-full m-5'
-                    : 'w-[15rem] m-5 rounded-lg'
+                    ? 'h-full m-5 rounded-lg bg-gray-300 dark:bg-gray-800 animate-pulse'
+                    : 'h-full object-scale-down m-5 rounded-lg'
                 }
-                onClick={handleImageSize}
                 onLoad={() => setIsImageLoaded(true)}
               />
             )}
