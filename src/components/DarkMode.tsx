@@ -1,35 +1,36 @@
 import { useEffect, useState } from 'react';
 
 const DarkMode = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
+  const isSavedTheme = localStorage.getItem('theme');
 
   const toggleDarkMode = () => {
-    if (localStorage.getItem('theme') === 'dark') {
-      localStorage.removeItem('theme');
+    if (mode === 'dark') {
+      localStorage.setItem('theme', 'light');
+      setMode('light');
       document.documentElement.classList.remove('dark');
-      setIsDark(false);
     } else {
-      document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
-      setIsDark(true);
+      setMode('dark');
+      document.documentElement.classList.add('dark');
     }
   };
 
   useEffect(() => {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+
+    if (isSavedTheme !== null) {
+      setMode(isSavedTheme);
     } else {
-      document.documentElement.classList.remove('dark');
-      setIsDark(false);
+      localStorage.setItem('theme', preferredTheme);
+      setMode(preferredTheme);
     }
-  }, []);
+  }, [isSavedTheme]);
 
   return (
-    <label className={`swap swap-rotate ${isDark ? 'swap-off' : 'swap-on'}`}>
+    <label className={`swap swap-rotate ${mode === 'dark' ? 'swap-on' : 'swap-off'}`}>
       <input type="checkbox" onClick={toggleDarkMode} />
       <svg
         className="swap-on fill-tricorn-black dark:fill-white w-[1.5rem] h-[1.5rem]"
