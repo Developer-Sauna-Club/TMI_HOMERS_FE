@@ -32,7 +32,11 @@ const ArticleDetailPage = () => {
   const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   const { _id, title, author, createdAt, likes, image, comments } = article!;
