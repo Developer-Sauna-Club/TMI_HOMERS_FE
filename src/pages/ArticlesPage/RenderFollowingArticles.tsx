@@ -13,13 +13,13 @@ import RenderArticles from './RenderArticles';
 
 const RenderFollowingArticles = () => {
   const {
-    userQuery: { data: user, isLoading: userLoading },
+    userQuery: { data: user },
   } = useAuthQuery();
 
   const navigate = useNavigate();
   const followingUsersIds = Array.from(new Set(user?.following.map((user) => user.user)));
 
-  const fetchFollowing = useCallback(
+  const fetchFollowingArticles = useCallback(
     async ({ pageParam = 0 }) => {
       return fetchArticles({
         type: TAB_CONSTANTS.SUBSCRIBED,
@@ -30,9 +30,9 @@ const RenderFollowingArticles = () => {
     [followingUsersIds],
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
-    ['followingArticles', [...followingUsersIds]],
-    fetchFollowing,
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery(
+    ['followingArticles'],
+    fetchFollowingArticles,
     {
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.length < ARTICLE_FETCH_LIMIT) {
@@ -40,12 +40,13 @@ const RenderFollowingArticles = () => {
         }
         return pages.length * ARTICLE_FETCH_LIMIT;
       },
+      enabled: !!followingUsersIds.length,
     },
   );
 
   return (
     <>
-      {userLoading ? (
+      {isLoading ? (
         <SearchSkeleton SkeletonType="title" />
       ) : (
         <>

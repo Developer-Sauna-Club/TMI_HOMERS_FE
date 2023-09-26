@@ -12,7 +12,13 @@ const UserArticles = ({ userId }: UserArticlesProps) => {
     type: 'user',
   });
 
-  return isLoading ? <Loader /> : <RenderArticles articles={userArticles} />;
+  return isLoading ? (
+    <div className="flex items-center justify-center w-full h-full">
+      <Loader />
+    </div>
+  ) : (
+    <RenderArticles articles={userArticles} />
+  );
 };
 
 export default UserArticles;
