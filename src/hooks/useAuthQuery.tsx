@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { TOAST_MESSAGES } from '@/constants/Messages';
-import { removeItemFromStorage, setItemToStorage } from '@/utils/localStorage';
-import { isEmptyUser } from '@/utils/user';
 import { checkAuthentication, signUp, login, logout } from '@api/common/Auth';
+import { TOAST_MESSAGES } from '@constants/Messages';
+import { removeItemFromStorage, setItemToStorage } from '@utils/localStorage';
+import { isEmptyUser } from '@utils/user';
 import { useToastContext } from './useToastContext';
 
 const useAuthQuery = () => {
@@ -63,6 +63,7 @@ const useAuthQuery = () => {
       removeItemFromStorage('token');
       navigate('/home');
       queryClient.setQueryData(['user'], EMPTY_USER);
+      queryClient.resetQueries();
     },
     onError: () => {
       showToast(TOAST_MESSAGES.LOGOUT_FAILED, 'error');
