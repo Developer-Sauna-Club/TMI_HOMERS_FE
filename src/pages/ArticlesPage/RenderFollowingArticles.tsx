@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import SearchSkeleton from '@/components/SearchSkeleton';
 import SubButton from '@/components/SubButton';
 import Loader from '@components/Loader';
 import { API, ARTICLE_FETCH_LIMIT } from '@constants/Article';
