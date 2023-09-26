@@ -35,7 +35,7 @@ const ArticlesPage = () => {
     <TabContextProvider>
       <section className="max-w-[25.875rem] mx-auto h-screen w-screen flex flex-col relative overflow-hidden">
         <header className="flex flex-col pt-[2.75rem]">
-          <div className="flex justify-between mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
+          <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
             <MdOutlineSearch
               className="w-[1.8rem] h-[1.8rem] cursor-pointer"

@@ -90,32 +90,34 @@ const NewArticlePage = () => {
   };
 
   return (
-    <div className="max-w-[25.875rem] mx-auto h-screen pt-[2.75rem] relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
-      <header className="flex flex-col">
-        <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
-          <HeaderText size="normal" label={ETC.HEADER_WRITE} />
-          <CloseButton onClick={() => navigate(-1)} />
-        </div>
-      </header>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col h-screen bg-white dark:bg-tricorn-black rounded-t-3xl">
-          <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem] mb-2">
+    <div className="max-w-[25.875rem] mx-auto h-screen w-screen relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+      <div className="h-[15%] pt-[2.75rem]">
+        <header className="flex flex-col">
+          <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
+            <HeaderText size="normal" label={ETC.HEADER_WRITE} />
+            <CloseButton onClick={() => navigate(-1)} />
+          </div>
+        </header>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="h-[85%]">
+        <div className="flex flex-col bg-white dark:bg-tricorn-black h-full rounded-t-3xl">
+          <div className="flex items-center justify-between px-[5%] w-full pt-[2rem] mb-2">
             <Avatar
               width={2.5}
               profileImage={profileImage ? profileImage : ''}
               isLoggedIn={false}
             />
-            <div className="flex w-[12.5rem]">
+            <div className="flex w-[12.5rem] ml-[2.5%]">
               <span className="font-Cafe24Surround">{fullName}</span>
             </div>
             <MainButton
-              className="w-[6rem] h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer"
+              className="w-1/4 h-[2.2rem] rounded-lg bg-cooled-blue font-Cafe24Surround text-white cursor-pointer truncate"
               type="submit"
               label={ETC.BUTTON_WRITE}
               isLoading={isLoading}
             />
           </div>
-          <div className="max-w-[22.625rem] mx-auto w-full">
+          <div className="max-w-[22.625rem] w-[90%] mx-auto">
             <div className="flex justify-center h-[2.8rem] border-b-2 pb-1 items-end border-cooled-blue gap-2">
               <select
                 aria-required
@@ -204,7 +206,7 @@ const NewArticlePage = () => {
               >{`${articleBody.length}/${LENGTH_LIMIT.CONTENT_MAX}`}</span>
             </div>
           </div>
-          <div className="max-w-[25.875rem] w-full h-[2rem]">
+          <div className="max-w-[25.875rem] w-[90%] h-[2rem]">
             <label
               htmlFor="file_input"
               className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"
