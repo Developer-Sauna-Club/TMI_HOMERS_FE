@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Toast from '@/components/Toast';
+import { ToastContextProvider } from '@/context/ToastContext';
 
 const meta = {
   title: 'Toast',
@@ -9,6 +10,11 @@ const meta = {
     children: { control: 'text' },
     mode: { control: 'inline-radio', options: ['info', 'success', 'error'] },
   },
+  render: ({ message, mode, onClick }) => (
+    <ToastContextProvider>
+      <Toast mode={mode} message={message} onClick={onClick} />
+    </ToastContextProvider>
+  ),
 } as Meta;
 
 export default meta;

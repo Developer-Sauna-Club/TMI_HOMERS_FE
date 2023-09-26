@@ -1,3 +1,4 @@
+import { MemoryRouter } from 'react-router-dom';
 import { Meta, StoryObj } from '@storybook/react';
 import Comment from '@components/Comment';
 
@@ -17,6 +18,29 @@ const meta = {
     postedDate: '2023-08-29T09:28:39.390Z',
     active: true,
   },
+  render: ({
+    commentId,
+    nickname,
+    content,
+    postedDate,
+    active,
+    profileImage,
+    authorId,
+    onDelete,
+  }) => (
+    <MemoryRouter>
+      <Comment
+        commentId={commentId}
+        nickname={nickname}
+        content={content}
+        postedDate={postedDate}
+        active={active}
+        profileImage={profileImage}
+        authorId={authorId}
+        onDelete={onDelete}
+      />
+    </MemoryRouter>
+  ),
 } as Meta;
 
 export default meta;
