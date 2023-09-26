@@ -7,7 +7,7 @@ type InfinityScrollParams = {
 };
 
 export const fetchAllPosts = async ({ offset, limit }: Partial<InfinityScrollParams>) => {
-  const FETCH_ALL_POSTS_URL = '/posts/channel/64fac2e729260903240d2dab';
+  const FETCH_ALL_POSTS_URL = '/posts/channel/6512cdce2692b6795f161818';
 
   const { data } = await axiosClient.get<Post[]>(FETCH_ALL_POSTS_URL, {
     params: { offset, limit },

@@ -13,10 +13,10 @@ type SubButtonProps = {
 };
 
 const OUTLINE_TYPE = {
-  blue: 'border-cooled-blue hover:bg-cooled-blue hover:bg-opacity-75 text-cooled-blue bg-white hover:text-input-white hover:border-none dark:bg-transparent',
-  red: 'border-error-red hover:bg-error-red hover:bg-opacity-75 text-error-red bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+  blue: 'border-cooled-blue hover:bg-cooled-blue text-cooled-blue bg-white hover:text-input-white dark:bg-transparent dark:hover:bg-cooled-blue',
+  red: 'border-error-red hover:bg-error-red text-error-red bg-white hover:text-input-white dark:bg-transparent dark:hover:bg-error-red',
   violet:
-    'border-light-violet hover:bg-light-violet hover:bg-opacity-75 text-light-violet bg-white hover:text-input-white hover:border-none dark:bg-transparent',
+    'border-light-violet hover:bg-light-violet text-light-violet bg-white hover:text-input-white dark:bg-transparent dark:hover:bg-light-violet',
 };
 
 const FILL_TYPE = {
@@ -28,6 +28,7 @@ const FONT_WEIGHT = {
   bold: 'font-Cafe24Surround',
   air: 'font-Cafe24SurroundAir',
 };
+
 const BORDER_RADIUS = {
   small: 'rounded-xl',
   medium: 'rounded-3xl',
