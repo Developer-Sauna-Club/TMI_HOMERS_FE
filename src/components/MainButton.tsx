@@ -7,6 +7,7 @@ type MainButtonProps = {
   onClick?: VoidFunction;
   isLoading?: boolean;
   className?: string;
+  disabled?: boolean;
 };
 
 const BASE_BUTTON_CLASSES = 'rounded-md text-base w-[18.375rem] h-[3.125rem]';
