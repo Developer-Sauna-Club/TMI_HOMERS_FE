@@ -9,6 +9,7 @@ type MockUpProps = {
 const URLS = {
   GITHUB: 'https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/wiki',
   NOTION: 'https://prgrms.notion.site/7fee2a48d198430aa3fc7c17a61fd4cb?pvs=4',
+  BUTTON_IMG_SRC: '/img/notion-button.webp',
 };
 
 const MockUpPage = ({ children }: MockUpProps) => {
@@ -36,7 +37,7 @@ const MockUpPage = ({ children }: MockUpProps) => {
             </p>
           </div>
           <div className="mt-[3rem] select-none hover:scale-[97%] transition ease-in-out cursor-pointer">
-            <img src="/img/notion-button.png" alt="about-homers-button" />
+            <img src={URLS.BUTTON_IMG_SRC} alt="about-homers-button" />
           </div>
         </section>
         <footer className="mb-[5%] flex gap-5 justify-start items-center h-[3rem]">

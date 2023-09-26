@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import MainButton from '@/components/MainButton';
 
-const IMAGE_SRC = '/img/404.png';
+const IMAGE_SRC = '/img/404.webp';
 const HOME_BUTTON_LABEL = '홈으로 이동하기';
 const TEXT: { [key: string]: { CONTENT: string; CLASS: string } } = {
   TITLE: {
