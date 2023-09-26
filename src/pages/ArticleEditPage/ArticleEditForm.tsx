@@ -122,9 +122,12 @@ const ArticleEditForm = ({
   }, [title, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col h-[48.5rem]  bg-white dark:bg-tricorn-black rounded-t-3xl">
-        <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="relative flex flex-col h-full bg-white dark:bg-tricorn-black rounded-t-3xl"
+    >
+      <div>
+        <div className="flex items-center justify-between mx-auto w-full max-w-[22.625rem] pt-[2rem] mb-2">
           <Avatar width={2.5} profileImage={user ? user.image : ''} isLoggedIn={false} />
           <div className="flex w-[12.5rem]">
             <span className="font-Cafe24Surround">{user && user.fullName}</span>
@@ -137,12 +140,12 @@ const ArticleEditForm = ({
           />
         </div>
         <div className="max-w-[22.625rem] mx-auto w-full">
-          <div className="flex items-end justify-center h-[3.5rem] border-b-2 border-cooled-blue">
+          <div className="flex justify-center h-[2.8rem] border-b-2 pb-1 items-end border-cooled-blue gap-2">
             <select
               aria-required
               value={selectedText}
               onChange={handleTitleSelect}
-              className="flex items-center justify-center pb-2 mr-2 text-base outline-none dark:text-extra-white dark:bg-tricorn-black"
+              className="flex items-center justify-center text-base outline-none h-1/2 dark:text-extra-white dark:bg-tricorn-black"
             >
               {DROPDOWN_OPTIONS.map((option, index) => (
                 <option
@@ -168,7 +171,7 @@ const ArticleEditForm = ({
                 },
               })}
               aria-required
-              className="block w-full pb-2 bg-white outline-none dark:bg-tricorn-black"
+              className="block w-full bg-white outline-none h-1/2 dark:bg-tricorn-black"
             />
           </div>
           <div className="flex justify-end w-full">
@@ -181,7 +184,7 @@ const ArticleEditForm = ({
               }`}
             >{`${articleTitle.length}/${LENGTH_LIMIT.TITLE_MAX}`}</span>
           </div>
-          <div className="block">
+          <div className="block h-full">
             {userPreviewImage ? (
               <ImagePreview image={userPreviewImage} onRemove={handleRemoveImage} />
             ) : null}
@@ -226,7 +229,7 @@ const ArticleEditForm = ({
             >{`${articleBody.length}/${LENGTH_LIMIT.CONTENT_MAX}`}</span>
           </div>
         </div>
-        <div className="max-w-[25.875rem] w-full h-[2rem] fixed bottom-4">
+        <div className="max-w-[25.875rem] w-full h-[2rem] bottom-4">
           <label
             htmlFor="file_input"
             className="flex items-center justify-center w-[3.5rem] h-[3.5rem] rounded-full bg-cooled-blue text-white font-Cafe24SurroundAir absolute right-4 bottom-4 shadow-md cursor-pointer"

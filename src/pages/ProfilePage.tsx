@@ -7,7 +7,6 @@ import { IoSettingsSharp } from 'react-icons/io5';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
-import Loader from '@components/Loader';
 import ScrollToTopButton from '@components/ScrollToTopButton';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
@@ -33,7 +32,9 @@ const ProfilePage = () => {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
-  const { data: userInfo } = useQuery(['userInfo', lastSegment], () => fetchUser(lastSegment));
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery(['userInfo', lastSegment], () =>
+    fetchUser(lastSegment),
+  );
 
   const { showToast } = useToastContext();
 
@@ -87,42 +88,38 @@ const ProfilePage = () => {
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
-                {userInfo ? (
-                  <img
-                    src={userInfo.image}
-                    className="w-full h-full rounded-full object-cover"
-                    alt="thumbnail"
-                  />
-                ) : (
-                  <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
-                )}
-                {isMyProfile && (
-                  <>
-                    <label
-                      htmlFor="image"
-                      className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
-                    >
-                      {userImageMutation.isLoading ? (
-                        <div className="w-4 h-4">
-                          <Loader size="xs" />
-                        </div>
-                      ) : (
-                        <HiPencil className="w-4 h-4" />
-                      )}
-                    </label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      id="image"
-                      onChange={handleUploadImage}
+              {!userInfoLoading && (
+                <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
+                  {userInfo && userInfo.image ? (
+                    <img
+                      src={userInfo.image}
+                      className="object-cover w-full h-full rounded-full "
+                      alt="thumbnail"
                     />
-                  </>
-                )}
-              </div>
+                  ) : (
+                    <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
+                  )}
+                  {isMyProfile && (
+                    <>
+                      <label
+                        htmlFor="image"
+                        className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
+                      >
+                        <HiPencil className="w-4 h-4" />
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        id="image"
+                        onChange={handleUploadImage}
+                      />
+                    </>
+                  )}
+                </div>
+              )}
               <div className="flex items-center mt-2 mb-[0.3rem]">
-                <span className="text-center  h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
+                <span className="text-center h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
                   {userInfo?.fullName}
                 </span>
                 <span className="text-center max-w-[1.6875rem] h-[1.125rem] text-[0.875rem] text-lazy-gray">
@@ -176,8 +173,8 @@ const ProfilePage = () => {
             {userInfo && userInfo.posts.length > 0 ? (
               <UserArticles userId={userInfo._id} />
             ) : (
-              <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">
+              <div className="flex justify-center w-full h-full">
+                <span className="flex items-center justify-center text-center text-lazy-gray">
                   {TAB_CONSTANTS.WRITTEN_ARTICLES}가 없습니다.
                 </span>
               </div>
@@ -187,8 +184,8 @@ const ProfilePage = () => {
             {likeArticlesIds && likeArticlesIds.length > 0 ? (
               <LikedArticles postIds={likeArticlesIds} />
             ) : (
-              <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">
+              <div className="flex justify-center w-full h-full">
+                <span className="flex items-center justify-center text-center text-lazy-gray">
                   {TAB_CONSTANTS.LIKED_ARTICLES}가 없습니다.
                 </span>
               </div>
