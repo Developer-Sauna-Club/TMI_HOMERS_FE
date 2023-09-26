@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
+import Confirm from '@/components/Modals/Confirm';
+import useModal from '@/hooks/useModal';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
-import Loader from '@components/Loader';
 import ScrollToTopButton from '@components/ScrollToTopButton';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
@@ -25,6 +26,7 @@ import LikedArticles from './ProfilePage/LikeArticles';
 import UserArticles from './ProfilePage/UserArticles';
 
 const EDIT_PAGE_URL = '/profile/edit';
+const CHANGE_PASSWORD_PAGE_URL = '/password';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -35,7 +37,9 @@ const ProfilePage = () => {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
-  const { data: userInfo } = useQuery(['userInfo', lastSegment], () => fetchUser(lastSegment));
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery(['userInfo', lastSegment], () =>
+    fetchUser(lastSegment),
+  );
 
   const { showToast } = useToastContext();
 
@@ -67,13 +71,25 @@ const ProfilePage = () => {
   }, [currentTab, changeTab]);
 
   const SettingsDropdown = () => {
+    const { showModal, modalOpen, modalClose } = useModal();
+
     const dropdownMenu = [
       { label: '프로필 수정', onClick: () => navigate(EDIT_PAGE_URL) },
-      { label: '로그아웃', onClick: logoutMutate },
+      { label: '비밀번호 변경', onClick: () => navigate(CHANGE_PASSWORD_PAGE_URL) },
+      { label: '로그아웃', onClick: () => modalOpen() },
     ];
 
     return (
       <div className="dropdown dropdown-end">
+        {showModal && (
+          <Confirm
+            theme="negative"
+            title="정말 로그아웃 하시겠어요?"
+            confirmLabel="로그아웃"
+            onClose={modalClose}
+            onConfirm={logoutMutate}
+          />
+        )}
         <label
           tabIndex={0}
           className="cursor-pointer text-[1.5rem] z-[40] text-footer-icon focus:text-tricorn-black dark:text-lazy-gray dark:focus:text-wall-street"
@@ -108,40 +124,36 @@ const ProfilePage = () => {
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
-                {userInfo ? (
-                  <img
-                    src={userInfo.image}
-                    className="w-full h-full rounded-full object-cover"
-                    alt="thumbnail"
-                  />
-                ) : (
-                  <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
-                )}
-                {isMyProfile && (
-                  <>
-                    <label
-                      htmlFor="image"
-                      className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
-                    >
-                      {userImageMutation.isLoading ? (
-                        <div className="w-4 h-4">
-                          <Loader size="xs" />
-                        </div>
-                      ) : (
-                        <HiPencil className="w-4 h-4" />
-                      )}
-                    </label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      id="image"
-                      onChange={handleUploadImage}
+              {!userInfoLoading && (
+                <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
+                  {userInfo && userInfo.image ? (
+                    <img
+                      src={userInfo.image}
+                      className="object-cover w-full h-full rounded-full "
+                      alt="thumbnail"
                     />
-                  </>
-                )}
-              </div>
+                  ) : (
+                    <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
+                  )}
+                  {isMyProfile && (
+                    <>
+                      <label
+                        htmlFor="image"
+                        className="absolute p-1 border rounded-full right-1 bottom-1 bg-profile-bg border-tertiory-gray"
+                      >
+                        <HiPencil className="w-4 h-4" />
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        id="image"
+                        onChange={handleUploadImage}
+                      />
+                    </>
+                  )}
+                </div>
+              )}
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center text-tricorn-black dark:text-white h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
                   {userInfo?.fullName}
@@ -191,8 +203,8 @@ const ProfilePage = () => {
             {userInfo && userInfo.posts.length > 0 ? (
               <UserArticles userId={userInfo._id} />
             ) : (
-              <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">
+              <div className="flex justify-center w-full h-full">
+                <span className="flex items-center justify-center text-center text-lazy-gray">
                   {TAB_CONSTANTS.WRITTEN_ARTICLES}가 없습니다.
                 </span>
               </div>
@@ -202,8 +214,8 @@ const ProfilePage = () => {
             {likeArticlesIds && likeArticlesIds.length > 0 ? (
               <LikedArticles postIds={likeArticlesIds} />
             ) : (
-              <div className="flex justify-center">
-                <span className="text-center text-lazy-gray">
+              <div className="flex justify-center w-full h-full">
+                <span className="flex items-center justify-center text-center text-lazy-gray">
                   {TAB_CONSTANTS.LIKED_ARTICLES}가 없습니다.
                 </span>
               </div>

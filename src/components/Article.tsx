@@ -18,9 +18,21 @@ type ArticleProps = {
   hasImage: boolean;
   likes: number;
   comments: number;
+  isHome?: boolean;
+  myLikeArticle?: boolean;
 };
 
-const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }: ArticleProps) => {
+const Article = ({
+  id,
+  title,
+  nickname,
+  postedDate,
+  hasImage,
+  likes,
+  comments,
+  isHome = true,
+  myLikeArticle = false,
+}: ArticleProps) => {
   const navigate = useNavigate();
   const timestamp = getTimeDelta(postedDate);
   const isHighlyLiked = likes >= HOTTEST_ARTICLE_LIKES_THRESHOLD;
@@ -28,11 +40,11 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
   return (
     <div
       onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
-      className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto dark:bg-tricorn-black"
+      className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex">
-          {isHighlyLiked && (
+          {isHighlyLiked && isHome && (
             <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
           )}
           <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem]">
@@ -51,17 +63,21 @@ const Article = ({ id, title, nickname, postedDate, hasImage, likes, comments }:
           <div className="flex justify-center mr-[1.7rem]">
             <HiThumbUp
               className={`w-[0.9rem] mr-[0.25rem] ${
-                isHighlyLiked ? 'text-article-highly-liked' : 'text-lazy-gray'
+                myLikeArticle ? 'text-article-highly-liked' : 'text-lazy-gray'
               }`}
             />
-            <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{likes}</span>
+            <span className="text-wall-street dark:text-extra-white text-[0.75rem] h-[0.75rem]">
+              {likes}
+            </span>
           </div>
           <div className="flex justify-center">
             <BiSolidComment className="w-[0.9rem] text-lazy-gray mr-[0.25rem]" />
-            <span className="text-wall-street text-[0.75rem] h-[0.75rem]">{comments}</span>
+            <span className="text-wall-street dark:text-extra-white text-[0.75rem] h-[0.75rem]">
+              {comments}
+            </span>
           </div>
         </div>
-        <span className="text-wall-street text-[0.75rem] ">{nickname}</span>
+        <span className="text-wall-street dark:text-extra-white text-[0.75rem] ">{nickname}</span>
       </div>
     </div>
   );

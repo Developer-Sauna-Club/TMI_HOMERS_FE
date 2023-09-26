@@ -1,18 +1,21 @@
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import Loader from '@/components/Loader';
-import { ARTICLE_FETCH_LIMIT } from '@/constants/Article';
-import { TAB_CONSTANTS } from '@/constants/Tab';
-import useAuthQuery from '@/hooks/useAuthQuery';
+import SubButton from '@/components/SubButton';
+import Loader from '@components/Loader';
+import { API, ARTICLE_FETCH_LIMIT } from '@constants/Article';
+import { TAB_CONSTANTS } from '@constants/Tab';
+import useAuthQuery from '@hooks/useAuthQuery';
 import { fetchArticles } from './fetchArticles';
 import InfiniteScroll from './InfiniteScroll';
 import RenderArticles from './RenderArticles';
 
 const RenderFollowingArticles = () => {
   const {
-    userQuery: { data: user },
+    userQuery: { data: user, isLoading: userLoading },
   } = useAuthQuery();
 
+  const navigate = useNavigate();
   const followingUsersIds = Array.from(new Set(user?.following.map((user) => user.user)));
 
   const fetchFollowing = useCallback(
@@ -26,8 +29,8 @@ const RenderFollowingArticles = () => {
     [followingUsersIds],
   );
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery(
-    ['followingArticles', followingUsersIds],
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
+    ['followingArticles', [...followingUsersIds]],
     fetchFollowing,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -41,20 +44,27 @@ const RenderFollowingArticles = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div className="flex justify-center">
-          <Loader />
-        </div>
+      {userLoading ? (
+        <SearchSkeleton SkeletonType="title" />
       ) : (
         <>
-          {data?.pages.flat().length === 0 && (
-            <div className="flex flex-col items-center justify-center w-full gap-4 mx-auto mt-4">
-              <span className="text-center">
-                앗, 팔로우한 사람들의 글 목록이 존재하지 않습니다!
+          {!data?.pages || data?.pages.flat().length === 0 ? (
+            <div className="flex flex-col items-center justify-center w-2/3 h-full gap-4 mx-auto">
+              <span className="block text-center font-Cafe24SurroundAir">
+                앗, 팔로우한 사람들의 <br />글 목록이 존재하지 않습니다!
               </span>
+              <div
+                className="inline-block mx-auto"
+                onClick={() => {
+                  navigate(`${API.SEARCH_URL}`);
+                }}
+              >
+                <SubButton size="small" color="blue" label="팔로우 하러 가기" type="outline" />
+              </div>
             </div>
+          ) : (
+            <RenderArticles articles={data?.pages.flat() || []} />
           )}
-          <RenderArticles articles={data?.pages.flat() || []} />
           {isFetching && (
             <div className="flex justify-center">
               <Loader />

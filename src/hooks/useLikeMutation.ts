@@ -7,10 +7,11 @@ export const useLikeCreateMutation = () => {
   return useMutation({
     mutationFn: likePost,
     onSuccess: (like) =>
-      Promise.all([
+      Promise.allSettled([
         queryClient.invalidateQueries(['article', like.post]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['followingArticles', like._id]),
         queryClient.invalidateQueries(['user']),
       ]),
   });
@@ -22,10 +23,11 @@ export const useLikeDeleteMutation = () => {
   return useMutation({
     mutationFn: deleteLikePost,
     onSuccess: (like) =>
-      Promise.all([
+      Promise.allSettled([
         queryClient.invalidateQueries(['article', like.post]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['followingArticles', like._id]),
         queryClient.invalidateQueries(['user']),
       ]),
   });

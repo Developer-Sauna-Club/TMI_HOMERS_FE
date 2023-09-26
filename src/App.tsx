@@ -6,9 +6,11 @@ const App = () => {
   return (
     <div className="lg:w-full lg:h-screen lg:flex lg:justify-center">
       <MockUpPage>
-        <ToastContextProvider>
-          <Outlet />
-        </ToastContextProvider>
+        <div className="w-full h-full">
+          <ToastContextProvider>
+            <Outlet />
+          </ToastContextProvider>
+        </div>
       </MockUpPage>
     </div>
   );

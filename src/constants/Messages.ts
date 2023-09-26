@@ -26,6 +26,7 @@ export const TOAST_MESSAGES = {
 
   EDIT_PROFILE_SUCCESS: '회원정보가 수정되었어요.',
   EDIT_PROFILE_FAILED: '회원정보 수정 도중 오류가 발생했어요.',
+  EDIT_PROFILE_INVALID: '기존 정보와 같아요.',
 
   CHANGE_PASSWORD_SUCCESS: '비밀번호가 변경되었어요.',
   CHANGE_PASSWORD_FAILED: '비밀번호 변경 도중 오류가 발생했어요.',
