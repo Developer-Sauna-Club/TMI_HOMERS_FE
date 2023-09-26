@@ -26,7 +26,7 @@ const RenderArticles = ({ articles }: ArticlesProps) => {
           title={articleTitle ? articleTitle : '제목이 없습니다.'}
           nickname={fullName ? `@${fullName}` : ''}
           postedDate={createdAt}
-          hasImage={image !== undefined}
+          hasImage={image !== (undefined || null || '')}
           likes={likes?.length || 0}
           comments={comments?.length || 0}
           myLikeArticle={!!myLike}
