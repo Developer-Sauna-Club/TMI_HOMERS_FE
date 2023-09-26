@@ -8,7 +8,6 @@ import { useNotification } from '@/hooks/useNotification';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
-import Loader from '@components/Loader';
 import SubButton from '@components/SubButton';
 import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
 import { useArticleDetail } from '@hooks/useArticleDetail';
@@ -16,10 +15,12 @@ import useAuthQuery from '@hooks/useAuthQuery';
 import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMutation';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
+import { LoadingPage } from '.';
 
 const ArticleDetailPage = () => {
   const navigate = useNavigate();
   const { showModal, modalOpen, modalClose } = useModal();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const {
     userQuery: { data: user },
@@ -32,7 +33,7 @@ const ArticleDetailPage = () => {
   const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
-    return <Loader />;
+    return <LoadingPage />;
   }
 
   const { _id, title, author, createdAt, likes, image, comments } = article!;
@@ -123,8 +124,15 @@ const ArticleDetailPage = () => {
             {image && (
               <img
                 src={image}
-                className={isBigImage ? 'w-full m-5' : 'w-[14rem] m-5 rounded-lg'}
+                className={
+                  !isImageLoaded
+                    ? 'w-[15rem] m-5 rounded-lg bg-gray-300 dark:bg-gray-800 animate-pulse'
+                    : isBigImage
+                    ? 'w-full m-5'
+                    : 'w-[15rem] m-5 rounded-lg'
+                }
                 onClick={handleImageSize}
+                onLoad={() => setIsImageLoaded(true)}
               />
             )}
           </div>
