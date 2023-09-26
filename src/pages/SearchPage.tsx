@@ -17,7 +17,7 @@ import useSearch from '@hooks/useSearch';
 import useTab from '@hooks/useTab';
 import SearchResultList from './SearchPage/SearchResultList';
 const INPUT_CLASS =
-  'w-[23.375rem] w-full p-3.5 bg-input-white outline-none  placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';
+  'w-[90%] p-3.5 bg-input-white outline-none placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -40,14 +40,14 @@ const SearchPage = () => {
   }, [currentTab, changeTab]);
   return (
     <TabContextProvider>
-      <section className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative">
+      <section className="max-w-[25.875rem] mx-auto h-screen w-screen flex flex-col relative">
         <header className="bg-cooled-blue dark:bg-dark-primary pt-[2.75rem] h-[14.375rem]">
-          <div className=" flex mb-[1.25rem] ml-[1.9rem] mr-[1.56rem] justify-between items-center">
+          <div className="flex mb-[1.25rem] ml-[1.9rem] mr-[1.56rem] justify-between items-center">
             <HeaderText label="검색" />
             <CloseButton onClick={() => navigate(-1)} />
           </div>
           <div className="flex justify-center">
-            <div className="bg-white w-[23.575rem] rounded-lg">
+            <div className="bg-white w-[90%] rounded-lg">
               <form className="flex relative items-center " onSubmit={(e) => e.preventDefault()}>
                 <MdOutlineSearch className="w-[1.8rem] h-[1.8rem] cursor-pointer absolute left-4 text-tricorn-black" />
                 <input

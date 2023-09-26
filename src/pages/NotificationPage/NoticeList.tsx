@@ -38,7 +38,7 @@ const NoticeList = ({
 
 const NoNotification = () => {
   return (
-    <div className="flex flex-col items-center justify-center flex-grow gap-4">
+    <div className="flex flex-col items-center w-full max-w-[22.625rem] justify-center flex-grow gap-4">
       <div className="w-20 h-20 rounded-full bg-cooled-blue">
         <AiOutlineBell className="w-10 h-10 text-white translate-x-1/2 translate-y-1/2" />
       </div>

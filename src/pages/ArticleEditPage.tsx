@@ -27,7 +27,7 @@ const ArticleEditPage = () => {
   };
 
   return (
-    <section className="max-w-[25.875rem] h-screen mx-auto pt-[2.75rem] position:relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
+    <section className="max-w-[25.875rem] w-screen h-screen mx-auto relative bg-cooled-blue dark:bg-[#303E43] text-tricorn-black dark:text-extra-white font-Cafe24SurroundAir">
       {showModal && (
         <Confirm
           theme="negative"
@@ -36,20 +36,23 @@ const ArticleEditPage = () => {
           onConfirm={handleClickExit}
         />
       )}
-      <header className="flex flex-col">
-        <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
-          <HeaderText size="normal" label={ETC.HEADER_WRITE_EDIT} />
-          <CloseButton onClick={modalOpen} />
-        </div>
-      </header>
-
-      <ArticleEditForm
-        user={user}
-        postId={postId}
-        articleInfo={articleInfo}
-        articleImage={articleImage}
-        imagePublicId={imagePublicId}
-      />
+      <div className="h-[15%] pt-[2.75rem]">
+        <header className="flex flex-col">
+          <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
+            <HeaderText size="normal" label={ETC.HEADER_WRITE_EDIT} />
+            <CloseButton onClick={modalOpen} />
+          </div>
+        </header>
+      </div>
+      <div className="h-[85%] mx-auto">
+        <ArticleEditForm
+          user={user}
+          postId={postId}
+          articleInfo={articleInfo}
+          articleImage={articleImage}
+          imagePublicId={imagePublicId}
+        />
+      </div>
     </section>
   );
 };
