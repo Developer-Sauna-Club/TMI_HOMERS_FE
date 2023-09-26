@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import Loader from '@/components/Loader';
-import SearchSkeleton from '@/components/SearchSkeleton';
-import { ARTICLE_FETCH_LIMIT } from '@/constants/Article';
-import { TAB_CONSTANTS } from '@/constants/Tab';
+import Loader from '@components/Loader';
+import SearchSkeleton from '@components/SearchSkeleton';
+import { ARTICLE_FETCH_LIMIT } from '@constants/Article';
+import { TAB_CONSTANTS } from '@constants/Tab';
 import { fetchArticles } from './fetchArticles';
 import InfiniteScroll from './InfiniteScroll';
 import RenderArticles from './RenderArticles';

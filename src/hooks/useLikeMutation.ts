@@ -9,9 +9,10 @@ export const useLikeCreateMutation = () => {
     onSuccess: (like) =>
       Promise.allSettled([
         queryClient.invalidateQueries(['article', like.post]),
+        queryClient.invalidateQueries(['userInfo', like.user]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['followingArticles', like._id]),
+        queryClient.invalidateQueries(['followingArticles']),
         queryClient.invalidateQueries(['user']),
       ]),
   });
@@ -25,9 +26,10 @@ export const useLikeDeleteMutation = () => {
     onSuccess: (like) =>
       Promise.allSettled([
         queryClient.invalidateQueries(['article', like.post]),
+        queryClient.invalidateQueries(['userInfo', like.user]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['followingArticles', like._id]),
+        queryClient.invalidateQueries(['followingArticles']),
         queryClient.invalidateQueries(['user']),
       ]),
   });

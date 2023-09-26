@@ -9,9 +9,15 @@ const LikedArticles = ({ postIds }: { postIds: string[] }) => {
     return Promise.all(requests);
   };
 
-  const { data: allFetchedArticles } = useQuery(['articles', postIds], fetchMultipleArticles);
+  const { data: allFetchedArticles } = useQuery(['articles', [...postIds]], fetchMultipleArticles);
 
-  return allFetchedArticles ? <RenderArticles articles={allFetchedArticles} /> : <Loader />;
+  return allFetchedArticles ? (
+    <RenderArticles articles={allFetchedArticles} />
+  ) : (
+    <div className="flex justify-center items-center w-full h-full">
+      <Loader />
+    </div>
+  );
 };
 
 export default LikedArticles;

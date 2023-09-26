@@ -10,16 +10,16 @@ type FetchArticlesParams = {
 
 export const fetchArticles = async ({
   type,
-  followingUsersIds: followingUsers,
+  followingUsersIds,
   pageParam = 0,
 }: FetchArticlesParams) => {
   if (type === TAB_CONSTANTS.NEWEST) {
     return await fetchAllPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT });
   }
 
-  if (type === TAB_CONSTANTS.SUBSCRIBED && followingUsers) {
+  if (type === TAB_CONSTANTS.SUBSCRIBED && followingUsersIds) {
     const newArticles = await Promise.all(
-      followingUsers.map((user) =>
+      followingUsersIds.map((user) =>
         fetchUserPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT, authorId: user }),
       ),
     );
