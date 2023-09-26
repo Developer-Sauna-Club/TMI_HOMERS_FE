@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { followUser, unFollowUser } from '@/api/common/Follow';
-import { createNotification } from '@/api/common/Notification';
-import { User } from '@/type/User';
+import { User } from '@type/User';
+import { followUser, unFollowUser } from '@api/common/Follow';
+import { createNotification } from '@api/common/Notification';
 const useFollowQuery = () => {
   const queryClient = useQueryClient();
 
@@ -22,7 +22,10 @@ const useFollowQuery = () => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries(['user']);
+      Promise.all([
+        queryClient.invalidateQueries(['user']),
+        queryClient.invalidateQueries(['followingArticles']),
+      ]);
     },
     onSuccess: (data) => {
       createNotification({
@@ -51,7 +54,10 @@ const useFollowQuery = () => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries(['user']);
+      Promise.all([
+        queryClient.invalidateQueries(['user']),
+        queryClient.invalidateQueries(['followingArticles']),
+      ]);
     },
   });
 

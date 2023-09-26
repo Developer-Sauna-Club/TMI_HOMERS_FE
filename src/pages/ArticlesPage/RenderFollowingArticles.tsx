@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import SearchSkeleton from '@/components/SearchSkeleton';
-import SubButton from '@/components/SubButton';
 import Loader from '@components/Loader';
+import SearchSkeleton from '@components/SearchSkeleton';
+import SubButton from '@components/SubButton';
 import { API, ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
 import useAuthQuery from '@hooks/useAuthQuery';
@@ -30,7 +30,7 @@ const RenderFollowingArticles = () => {
     [followingUsersIds],
   );
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
     ['followingArticles'],
     fetchFollowingArticles,
     {
@@ -41,12 +41,13 @@ const RenderFollowingArticles = () => {
         return pages.length * ARTICLE_FETCH_LIMIT;
       },
       enabled: !!followingUsersIds.length,
+      placeholderData: { pages: [[]], pageParams: [null] },
     },
   );
 
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <SearchSkeleton SkeletonType="title" />
       ) : (
         <>
