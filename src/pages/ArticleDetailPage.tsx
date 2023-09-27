@@ -13,6 +13,7 @@ import useAuthQuery from '@hooks/useAuthQuery';
 import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMutation';
 import useModal from '@hooks/useModal';
 import { useNotification } from '@hooks/useNotification';
+import { useToastContext } from '@hooks/useToastContext';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 import { LoadingPage } from '.';
@@ -21,6 +22,7 @@ const ArticleDetailPage = () => {
   const navigate = useNavigate();
   const { showModal, modalOpen, modalClose } = useModal();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const { showToast } = useToastContext();
 
   const {
     userQuery: { data: user },
@@ -66,7 +68,7 @@ const ArticleDetailPage = () => {
       return;
     }
     if (!isLoginUser) {
-      alert('로그인 후에 누를 수 있습니다!');
+      showToast('로그인이 필요해요');
     } else {
       toggleLikeMutate();
     }

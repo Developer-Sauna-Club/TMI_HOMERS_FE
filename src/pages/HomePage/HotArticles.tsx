@@ -3,12 +3,16 @@ import { Post } from '@type/Post';
 import SubButton from '@/components/SubButton';
 import { ROUTES } from '@/constants/Article';
 import Article from '@components/Article';
+import useAuthQuery from '@hooks/useAuthQuery';
 
 type ArticlesProps = {
   articles: Post[];
 };
 
 const HotArticles = ({ articles }: ArticlesProps) => {
+  const {
+    userQuery: { data: user },
+  } = useAuthQuery();
   const navigate = useNavigate();
   const isArticlesEmpty = articles && articles.length === 0;
 
@@ -32,6 +36,7 @@ const HotArticles = ({ articles }: ArticlesProps) => {
   return articles?.map((article) => {
     const { _id, title, author, createdAt, likes, image, comments } = article;
     const { fullName } = author;
+    const myLike = likes.find((like) => (user ? like.user === user._id : false));
     try {
       const { title: articleTitle } = JSON.parse(title);
       return (
@@ -45,6 +50,7 @@ const HotArticles = ({ articles }: ArticlesProps) => {
           hasImage={image !== undefined}
           likes={likes?.length || 0}
           comments={comments?.length || 0}
+          myLikeArticle={!!myLike}
         />
       );
     } catch (e) {
