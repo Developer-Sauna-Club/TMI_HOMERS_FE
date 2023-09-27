@@ -26,9 +26,10 @@ const useFollowQuery = () => {
       }
       showToast(TOAST_MESSAGES.FOLLOW_FAILED, 'error');
     },
-    onSettled: () => {
+    onSettled: (data) => {
       Promise.all([
         queryClient.invalidateQueries(['user']),
+        queryClient.invalidateQueries(['userInfo', data?.user]),
         queryClient.invalidateQueries(['followingArticles']),
       ]);
     },
@@ -60,9 +61,10 @@ const useFollowQuery = () => {
         queryClient.setQueryData(['user'], context);
       }
     },
-    onSettled: () => {
+    onSettled: (data) => {
       Promise.all([
         queryClient.invalidateQueries(['user']),
+        queryClient.invalidateQueries(['userInfo', data?.user]),
         queryClient.invalidateQueries(['followingArticles']),
       ]);
     },
