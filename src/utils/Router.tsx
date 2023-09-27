@@ -20,19 +20,19 @@ import {
   // ArticleEditPage,
 } from '@pages/index';
 
-const SignUpPage = lazy(() => import('@pages/SignUpPage'));
-const SearchPage = lazy(() => import('@pages/SearchPage'));
-const ProfilePage = lazy(() => import('@pages/ProfilePage'));
-const NotFoundPage = lazy(() => import('@pages/NotFoundPage'));
-const LoginPage = lazy(() => import('@pages/LoginPage'));
-const NewArticlePage = lazy(() => import('@pages/NewArticlePage'));
-const ArticleDetailPage = lazy(() => import('@pages/ArticleDetailPage'));
-const NotificationPage = lazy(() => import('@pages/NotificationPage'));
-const ArticlesPage = lazy(() => import('@pages/ArticlesPage'));
-const ProfileEditPage = lazy(() => import('@pages/ProfileEditPage'));
-const ChangePasswordPage = lazy(() => import('@pages/ChangePasswordPage'));
-const ProtectedRouter = lazy(() => import('@pages/ProtectedRouter'));
-const ArticleEditPage = lazy(() => import('@pages/ArticleEditPage'));
+const SignUpPage = lazy(() => import('@/pages/SignUpPage'));
+const SearchPage = lazy(() => import('@/pages/SearchPage'));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
+const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const NewArticlePage = lazy(() => import('@/pages/NewArticlePage'));
+const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));
+const NotificationPage = lazy(() => import('@/pages/NotificationPage'));
+const ArticlesPage = lazy(() => import('@/pages/ArticlesPage'));
+const ProfileEditPage = lazy(() => import('@/pages/ProfileEditPage'));
+const ChangePasswordPage = lazy(() => import('@/pages/ChangePasswordPage'));
+const ProtectedRouter = lazy(() => import('@/pages/ProtectedRouter'));
+const ArticleEditPage = lazy(() => import('@/pages/ArticleEditPage'));
 
 const router = createBrowserRouter([
   {
