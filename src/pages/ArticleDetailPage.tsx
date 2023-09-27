@@ -79,7 +79,7 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] w-screen mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
+    <div className="flex flex-col items-center max-w-[25.875rem] w-screen mx-auto h-screen pt-[2.75rem] font-Cafe24SurroundAir">
       {showModal && (
         <Confirm
           theme="negative"
@@ -121,6 +121,7 @@ const ArticleDetailPage = () => {
           <div className={`flex items-center justify-center ${image ? 'h-[20rem]' : ''}`}>
             {image && (
               <img
+                alt={articleTitle}
                 src={image}
                 className={
                   !isImageLoaded
@@ -131,7 +132,9 @@ const ArticleDetailPage = () => {
               />
             )}
           </div>
-          <div className="text-base text-tricorn-black dark:text-extra-white">{articleBody}</div>
+          <div className="text-base text-tricorn-black break-all dark:text-extra-white mt-3">
+            {articleBody}
+          </div>
           <div className="flex justify-between mt-6">
             <SubButton
               label={BUTTON.CHEER_UP}
@@ -153,7 +156,7 @@ const ArticleDetailPage = () => {
       <section>
         {comments.length === 0 ? (
           <div className="flex justify-start w-[22rem] mt-[3%]">
-            <span className="text-xs text-gray-400 ">{MESSAGE.NO_COMMENT}</span>
+            <span className="text-xs text-gray-400 mb-[5rem] ">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
           <div className="mb-[6rem]">
