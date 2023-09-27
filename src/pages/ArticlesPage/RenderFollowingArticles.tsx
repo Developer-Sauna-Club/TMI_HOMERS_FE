@@ -31,7 +31,7 @@ const RenderFollowingArticles = () => {
     [followingUsersId],
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isFetched } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
     ['followingArticles'],
     fetchFollowingArticles,
     {
@@ -64,15 +64,7 @@ const RenderFollowingArticles = () => {
         />
       </div>
     );
-  }
-
-  if (!isFetched) {
-    return <SearchSkeleton SkeletonType="title" />;
-  }
-
-  const isDataEmpty = data?.pages.flat().length === 0 || !data;
-
-  if (isDataEmpty) {
+  } else if (followingUsersId.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-full text-center font-Cafe24SurroundAir">
         <span className="mb-4">
