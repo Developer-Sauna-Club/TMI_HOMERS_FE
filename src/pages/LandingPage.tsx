@@ -1,7 +1,7 @@
 import { useNavigate, Navigate } from 'react-router-dom';
 import MainButton from '@/components/MainButton';
 import useAuthQuery from '@/hooks/useAuthQuery';
-import { LoadingPage } from '@/pages/index';
+import LoadingPage from '@/pages/LoadingPage';
 
 const LOGO_SRC = '/img/logo.svg';
 const CHARACTER_SRC = '/img/character.webp';
