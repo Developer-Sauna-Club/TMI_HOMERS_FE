@@ -49,7 +49,10 @@ const RenderFollowingArticles = () => {
     return <SearchSkeleton SkeletonType="title" />;
   }
 
-  if (!isInitialLoading && data?.pages.flat().length === 0) {
+  const isDataEmpty =
+    (!isInitialLoading && data?.pages.flat().length === 0) || !followingUsersId.length;
+
+  if (isDataEmpty) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-full text-center font-Cafe24SurroundAir">
         <span className="mb-4">
