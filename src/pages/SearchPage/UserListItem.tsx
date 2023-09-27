@@ -8,7 +8,6 @@ import { ARTICLE_TITLE_MAX_LENGTH } from '@constants/Article';
 import useAuthQuery from '@hooks/useAuthQuery';
 import useFollowQuery from '@hooks/useFollowQuery';
 import useModal from '@hooks/useModal';
-import { useToastContext } from '@hooks/useToastContext';
 
 const SEARCH_RESULT_CLASS =
   'cursor-pointer max-w-[22.375rem] mb-[0.8rem] mt-[1rem] mx-auto flex items-center justify-between font-Cafe24SurroundAir pl-4 pr-3 pb-[0.625rem]';
@@ -20,7 +19,6 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
   const navigate = useNavigate();
   const { followMutation, unFollowMutation } = useFollowQuery();
   const { showModal, modalOpen, modalClose } = useModal();
-  const { showToast } = useToastContext();
 
   const handleToggleFollow = (id: string) => {
     if (!user) {
@@ -29,7 +27,6 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
       const followingUserId = user.following.find(({ user }) => user === id);
       if (!followingUserId) {
         followMutation.mutate(id);
-        showToast('팔로우에 성공하셨습니다', 'success');
       } else {
         unFollowMutation.mutate(followingUserId._id);
       }
@@ -65,7 +62,7 @@ const UserListItem = ({ fullName, id, image }: UserListItemParams) => {
       <SubButton
         icon="star"
         key={id}
-        label="팔로우"
+        label="구독하기"
         color="violet"
         type={isFollowing(user) ? 'fill' : 'outline'}
         size="small"

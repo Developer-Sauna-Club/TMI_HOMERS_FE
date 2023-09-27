@@ -1,9 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '@type/User';
+import { TOAST_MESSAGES } from '@/constants/Messages';
 import { followUser, unFollowUser } from '@api/common/Follow';
 import { createNotification } from '@api/common/Notification';
+import { useToastContext } from './useToastContext';
+
 const useFollowQuery = () => {
   const queryClient = useQueryClient();
+  const { showToast } = useToastContext();
 
   const followMutation = useMutation(followUser, {
     onMutate: async (id) => {
@@ -20,6 +24,7 @@ const useFollowQuery = () => {
       if (context) {
         queryClient.setQueryData(['user'], context);
       }
+      showToast(TOAST_MESSAGES.FOLLOW_FAILED, 'error');
     },
     onSettled: () => {
       Promise.all([
@@ -28,6 +33,7 @@ const useFollowQuery = () => {
       ]);
     },
     onSuccess: (data) => {
+      showToast(TOAST_MESSAGES.FOLLOW_SUCCESS, 'success');
       createNotification({
         notificationTypeId: data._id,
         notificationType: 'FOLLOW',
@@ -49,6 +55,7 @@ const useFollowQuery = () => {
       return preData;
     },
     onError: (_, __, context) => {
+      showToast(TOAST_MESSAGES.UNFOLLOW_FAILED, 'error');
       if (context) {
         queryClient.setQueryData(['user'], context);
       }
@@ -58,6 +65,9 @@ const useFollowQuery = () => {
         queryClient.invalidateQueries(['user']),
         queryClient.invalidateQueries(['followingArticles']),
       ]);
+    },
+    onSuccess: () => {
+      showToast(TOAST_MESSAGES.UNFOLLOW_SUCCESS, 'success');
     },
   });
 
