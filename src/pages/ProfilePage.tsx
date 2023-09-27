@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@type/User';
 import { BiSolidUser } from 'react-icons/bi';
-import { BsBookmarkStarFill, BsBookmarkPlus } from 'react-icons/bs';
+// import { MdStars } from 'react-icons/md';
+import { BsBookmarkStarFill, BsBookmarkStar } from 'react-icons/bs';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { fetchUser } from '@api/common/User';
@@ -67,19 +68,26 @@ const ProfilePage = () => {
       }
     };
 
-    const ICON_CLASS = {
+    const ALTS = {
+      UNFOLLOW: '구독취소하기',
+      FOLLOW: '구독하기',
+    };
+
+    const BUTTON_CLASS = {
+      CONTAINER_CLASS: 'transform transition duration-100 active:scale-90',
       FOLLOW_ICON:
-        'fill-wall-street hover:fill-cooled-blue active:fill-cooled-blue transform transition duration-100 active:scale-90',
-      UNFOLLOW_ICON:
-        'fill-light-violet hover:fill-cooled-blue active:fill-cooled-blue transform transition duration-100 active:scale-90',
+        'fill-wall-street dark:fill-extra-white hover:fill-cooled-blue active:fill-cooled-blue',
+      UNFOLLOW_ICON: 'fill-light-violet hover:fill-cooled-blue active:fill-cooled-blue',
     };
     return (
-      <div onClick={handleToggleFollow} className="text-[1.7rem] cursor-pointer self-end">
-        {isFollowing(user) ? (
-          <BsBookmarkStarFill className={ICON_CLASS.UNFOLLOW_ICON} alt="구독취소" />
-        ) : (
-          <BsBookmarkPlus className={ICON_CLASS.FOLLOW_ICON} alt="구독하기" />
-        )}
+      <div onClick={handleToggleFollow} className="text-[1.7rem] cursor-pointer self-end flex">
+        <div className={BUTTON_CLASS.CONTAINER_CLASS}>
+          {isFollowing(user) ? (
+            <BsBookmarkStarFill className={BUTTON_CLASS.UNFOLLOW_ICON} alt={ALTS.UNFOLLOW} />
+          ) : (
+            <BsBookmarkStar className={BUTTON_CLASS.FOLLOW_ICON} alt={ALTS.FOLLOW} />
+          )}
+        </div>
       </div>
     );
   };
