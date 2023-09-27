@@ -121,6 +121,7 @@ const ArticleDetailPage = () => {
           <div className={`flex items-center justify-center ${image ? 'h-[20rem]' : ''}`}>
             {image && (
               <img
+                alt={articleTitle}
                 src={image}
                 className={
                   !isImageLoaded
@@ -131,7 +132,9 @@ const ArticleDetailPage = () => {
               />
             )}
           </div>
-          <div className="text-base text-tricorn-black dark:text-extra-white">{articleBody}</div>
+          <div className="text-base text-tricorn-black dark:text-extra-white mt-3">
+            {articleBody}
+          </div>
           <div className="flex justify-between mt-6">
             <SubButton
               label={BUTTON.CHEER_UP}
