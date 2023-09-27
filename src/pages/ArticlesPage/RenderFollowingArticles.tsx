@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import Loader from '@components/Loader';
 import SearchSkeleton from '@components/SearchSkeleton';
 import SubButton from '@components/SubButton';
-import { API, ARTICLE_FETCH_LIMIT } from '@constants/Article';
+import { FOLLOWING_ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
 import useAuthQuery from '@hooks/useAuthQuery';
 import { fetchArticles } from './fetchArticles';
@@ -17,65 +17,66 @@ const RenderFollowingArticles = () => {
   } = useAuthQuery();
 
   const navigate = useNavigate();
-  const followingUsersIds = Array.from(new Set(user?.following.map((user) => user.user)));
+
+  const followingUsersId = Array.from(new Set(user?.following.map((user) => user.user)));
 
   const fetchFollowingArticles = useCallback(
     async ({ pageParam = 0 }) => {
       return fetchArticles({
         type: TAB_CONSTANTS.SUBSCRIBED,
         pageParam,
-        followingUsersIds,
+        followingUsersIds: followingUsersId,
       });
     },
-    [followingUsersIds],
+    [followingUsersId],
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isFetching, isInitialLoading } = useInfiniteQuery(
     ['followingArticles'],
     fetchFollowingArticles,
     {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length < ARTICLE_FETCH_LIMIT) {
+        if (lastPage.length < FOLLOWING_ARTICLE_FETCH_LIMIT) {
           return undefined;
         }
-        return pages.length * ARTICLE_FETCH_LIMIT;
+        return pages.length * FOLLOWING_ARTICLE_FETCH_LIMIT;
       },
-      enabled: !!followingUsersIds.length,
-      placeholderData: { pages: [[]], pageParams: [null] },
+      enabled: !!followingUsersId.length,
     },
   );
 
+  if (isInitialLoading) {
+    return <SearchSkeleton SkeletonType="title" />;
+  }
+
+  if (!isInitialLoading && data?.pages.flat().length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full text-center font-Cafe24SurroundAir">
+        <span className="mb-4">
+          앗 구독한 글들이 없습니다. <br />
+          다른 사용자를 팔로우하러 가시겠습니까?
+        </span>
+        <SubButton
+          label="구독하기"
+          color="blue"
+          type="outline"
+          onClick={() => {
+            navigate('/search');
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
-      {isFetching ? (
-        <SearchSkeleton SkeletonType="title" />
-      ) : (
-        <>
-          {!data?.pages || data?.pages.flat().length === 0 ? (
-            <div className="flex flex-col items-center justify-center w-2/3 h-full gap-4 mx-auto">
-              <span className="block text-center font-Cafe24SurroundAir">
-                앗, 팔로우한 사람들의 <br />글 목록이 존재하지 않습니다!
-              </span>
-              <div
-                className="inline-block mx-auto"
-                onClick={() => {
-                  navigate(`${API.SEARCH_URL}`);
-                }}
-              >
-                <SubButton size="small" color="blue" label="팔로우 하러 가기" type="outline" />
-              </div>
-            </div>
-          ) : (
-            <RenderArticles articles={data?.pages.flat() || []} />
-          )}
-          {isFetching && (
-            <div className="flex justify-center">
-              <Loader />
-            </div>
-          )}
-          <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
-        </>
+      <RenderArticles articles={data?.pages.flat() || []} />
+      {isFetching && (
+        <div className="flex justify-center">
+          <Loader />
+        </div>
       )}
+      <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
     </>
   );
 };
