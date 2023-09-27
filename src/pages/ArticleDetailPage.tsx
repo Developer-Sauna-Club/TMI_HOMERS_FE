@@ -79,7 +79,7 @@ const ArticleDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[25.875rem] w-screen mx-auto h-[56rem] pt-[2.75rem] font-Cafe24SurroundAir">
+    <div className="flex flex-col items-center max-w-[25.875rem] w-screen mx-auto h-screen pt-[2.75rem] font-Cafe24SurroundAir">
       {showModal && (
         <Confirm
           theme="negative"
