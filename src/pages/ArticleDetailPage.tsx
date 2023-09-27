@@ -151,7 +151,7 @@ const ArticleDetailPage = () => {
       <section>
         {comments.length === 0 ? (
           <div className="flex justify-start w-[22rem] mt-[3%]">
-            <span className="text-xs text-gray-400">{MESSAGE.NO_COMMENT}</span>
+            <span className="text-xs text-gray-400 ">{MESSAGE.NO_COMMENT}</span>
           </div>
         ) : (
           <div className="mb-[6rem]">

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Post } from '@type/Post';
-import { CommentParams, createComment } from '@/api/common/Comment';
+import { CommentParams, createComment, deleteComment } from '@/api/common/Comment';
 import { createNotification } from '@/api/common/Notification';
 import { deletePost, fetchPost } from '@/api/common/Post';
 import { TOAST_MESSAGES } from '@/constants/Messages';
@@ -67,5 +67,20 @@ export const useArticleDetail = () => {
     commentMutation.mutate(newComment);
   };
 
-  return { data, isLoading, addComment, deletePostArticle };
+  const deleteCommentMutation = useMutation(deleteComment, {
+    onSuccess: () => {
+      Promise.all([
+        queryClient.invalidateQueries(['article', postId]),
+        queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['newestArticles']),
+      ]);
+      showToast('댓글이 삭제되었습니다', 'success');
+    },
+  });
+
+  const deleteMyComment = (commentId: string) => {
+    deleteCommentMutation.mutate(commentId);
+  };
+
+  return { data, isLoading, addComment, deletePostArticle, deleteMyComment };
 };

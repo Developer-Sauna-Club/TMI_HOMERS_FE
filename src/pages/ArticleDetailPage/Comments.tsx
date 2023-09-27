@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Comment as CommentType } from '@type/Comment';
-import { deleteComment } from '@/api/common/Comment';
 import Comment from '@components/Comment';
+import { useArticleDetail } from '@hooks/useArticleDetail';
 
 type CommentsProps = {
   comments: CommentType[];
@@ -10,16 +10,10 @@ type CommentsProps = {
 
 const Comments = ({ comments, userId }: CommentsProps) => {
   const [commentList, setCommentList] = useState<CommentType[]>(comments);
+  const { deleteMyComment } = useArticleDetail();
 
-  const handleDeleteComment = async (commentId: string) => {
-    try {
-      await deleteComment(commentId);
-      const updatedComments = commentList.filter((comment) => comment._id !== commentId);
-      setCommentList(updatedComments);
-      alert('댓글 삭제 완료');
-    } catch (error) {
-      alert(error);
-    }
+  const handleDeleteComment = (commentId: string) => {
+    deleteMyComment(commentId);
   };
 
   useEffect(() => {
@@ -42,7 +36,7 @@ const Comments = ({ comments, userId }: CommentsProps) => {
           active={isMyComment}
           authorId={authorId}
           profileImage={authorImage ? authorImage : ''}
-          onDelete={(commentId) => handleDeleteComment(commentId)}
+          onDelete={handleDeleteComment}
         />
       );
     } catch (error) {

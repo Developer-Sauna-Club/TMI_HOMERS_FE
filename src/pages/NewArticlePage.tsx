@@ -115,6 +115,7 @@ const NewArticlePage = () => {
               type="submit"
               label={ETC.BUTTON_WRITE}
               isLoading={isLoading}
+              disabled={isLoading}
             />
           </div>
           <div className="max-w-[22.625rem] w-[90%] mx-auto">
