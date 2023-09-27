@@ -14,9 +14,9 @@ import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMuta
 import useModal from '@hooks/useModal';
 import { useNotification } from '@hooks/useNotification';
 import { useToastContext } from '@hooks/useToastContext';
+import { LoadingPage } from '@pages/index';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
-import { LoadingPage } from '.';
 
 const ArticleDetailPage = () => {
   const navigate = useNavigate();
