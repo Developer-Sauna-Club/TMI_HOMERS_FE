@@ -31,7 +31,7 @@ const RenderFollowingArticles = () => {
     [followingUsersId],
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isInitialLoading } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetched } = useInfiniteQuery(
     ['followingArticles'],
     fetchFollowingArticles,
     {
@@ -45,12 +45,32 @@ const RenderFollowingArticles = () => {
     },
   );
 
-  if (isInitialLoading) {
+  if (user === undefined) {
+    return <SearchSkeleton SkeletonType="title" />;
+  } else if (user === null) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full text-center font-Cafe24SurroundAir">
+        <span className="mb-4">
+          로그인이 필요합니다. <br />
+          로그인 페이지로 이동하시겠습니까?
+        </span>
+        <SubButton
+          label="로그인"
+          color="blue"
+          type="outline"
+          onClick={() => {
+            navigate('/login');
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (!isFetched) {
     return <SearchSkeleton SkeletonType="title" />;
   }
 
-  const isDataEmpty =
-    (!isInitialLoading && data?.pages.flat().length === 0) || !followingUsersId.length;
+  const isDataEmpty = data?.pages.flat().length === 0 || !data;
 
   if (isDataEmpty) {
     return (
