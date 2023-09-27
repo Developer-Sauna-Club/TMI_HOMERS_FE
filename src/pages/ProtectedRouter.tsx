@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { TOAST_MESSAGES } from '@/constants/Messages';
 import useAuthQuery from '@/hooks/useAuthQuery';
 import { useToastContext } from '@/hooks/useToastContext';
-import { LoadingPage } from '.';
+import { LoadingPage } from '@pages/index';
 
 const ProtectedRouter = ({ children }: { children: ReactNode }) => {
   const { showToast } = useToastContext();
