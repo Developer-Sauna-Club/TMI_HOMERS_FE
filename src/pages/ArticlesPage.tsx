@@ -38,7 +38,7 @@ const ArticlesPage = () => {
           <div className="flex justify-between items-center mb-[1.75rem] ml-[2.44rem] mr-[1.56rem]">
             <HeaderText label="뉴스" />
             <MdOutlineSearch
-              className="w-[1.8rem] h-[1.8rem] cursor-pointer"
+              className="w-[1.8rem] h-[1.8rem] cursor-pointer text-tricorn-black dark:text-extra-white"
               onClick={() => {
                 navigate('/search');
               }}
