@@ -31,7 +31,7 @@ const RenderFollowingArticles = () => {
     [followingUsersId],
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, status, isFetching } = useInfiniteQuery(
     ['followingArticles'],
     fetchFollowingArticles,
     {
@@ -85,13 +85,14 @@ const RenderFollowingArticles = () => {
 
   return (
     <>
+      {status === 'loading' && !data && <SearchSkeleton SkeletonType="title" />}
       <RenderArticles articles={data?.pages.flat() || []} />
-      {isFetching && (
+      <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
+      {isFetching && status !== 'loading' && (
         <div className="flex justify-center">
           <Loader />
         </div>
       )}
-      <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
     </>
   );
 };
