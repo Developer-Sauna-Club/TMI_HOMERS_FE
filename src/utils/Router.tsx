@@ -6,7 +6,7 @@ import {
   HomePage,
   LandingPage,
   // NotFoundPage,
-  // SignUpPage,
+  SignUpPage,
   // SearchPage,
   // ProfilePage,
   // LoginPage,
@@ -20,7 +20,7 @@ import {
   // ArticleEditPage,
 } from '@pages/index';
 
-const SignUpPage = lazy(() => import('@/pages/SignUpPage'));
+// const SignUpPage = lazy(() => import('@/pages/SignUpPage'));
 const SearchPage = lazy(() => import('@/pages/SearchPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
