@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { HiFire } from 'react-icons/hi2';
-import DarkMode from '@/components/DarkMode';
+import DarkModeButton from '@/components/DarkModeButton';
 import Loader from '@/components/Loader';
 import { API } from '@/constants/Article';
 import { MESSAGE, POST_COUNT } from '@/constants/Home';
@@ -52,7 +52,7 @@ const HomePage = () => {
           <div className="bg-cooled-blue dark:bg-dark-primary h-[80%] absolute top-0 w-full" />
           <header className="flex h-[180px] justify-between px-10 items-center relative">
             <HeaderText label={MESSAGE.HOME} />
-            <DarkMode />
+            <DarkModeButton />
           </header>
           <div className="relative w-full flex justify-center">
             <div className="w-[90%] flex flex-col gap-2">

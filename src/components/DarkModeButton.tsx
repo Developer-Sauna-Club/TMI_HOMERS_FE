@@ -1,36 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useThemeContext } from '@hooks/useThemeContext';
 
-const DarkMode = () => {
-  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
-  const isSavedTheme = localStorage.getItem('theme');
-
-  const toggleDarkMode = () => {
-    if (mode === 'dark') {
-      localStorage.setItem('theme', 'light');
-      setMode('light');
-      document.documentElement.classList.remove('dark');
-    } else {
-      localStorage.setItem('theme', 'dark');
-      setMode('dark');
-      document.documentElement.classList.add('dark');
-    }
-  };
-
-  useEffect(() => {
-    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-
-    if (isSavedTheme !== null) {
-      setMode(isSavedTheme);
-    } else {
-      localStorage.setItem('theme', preferredTheme);
-      setMode(preferredTheme);
-    }
-  }, [isSavedTheme]);
+const DarkModeButton = () => {
+  const { theme, toggleDarkMode } = useThemeContext();
 
   return (
-    <label className={`swap swap-rotate ${mode === 'dark' ? 'swap-on' : 'swap-off'}`}>
+    <label className={`swap swap-rotate ${theme === 'dark' ? 'swap-on' : 'swap-off'}`}>
       <input type="checkbox" onClick={toggleDarkMode} />
       <svg
         className="swap-on fill-tricorn-black dark:fill-white w-[1.5rem] h-[1.5rem]"
@@ -50,4 +24,4 @@ const DarkMode = () => {
   );
 };
 
-export default DarkMode;
+export default DarkModeButton;
