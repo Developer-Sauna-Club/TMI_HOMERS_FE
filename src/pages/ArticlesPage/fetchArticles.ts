@@ -1,5 +1,5 @@
 import { fetchAllPosts, fetchUserPosts } from '@api/common/Post';
-import { ARTICLE_FETCH_LIMIT } from '@constants/Article';
+import { ARTICLE_FETCH_LIMIT, FOLLOWING_ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
 
 type FetchArticlesParams = {
@@ -20,7 +20,7 @@ export const fetchArticles = async ({
   if (type === TAB_CONSTANTS.SUBSCRIBED && followingUsersIds) {
     const newArticles = await Promise.all(
       followingUsersIds.map((user) =>
-        fetchUserPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT, authorId: user }),
+        fetchUserPosts({ offset: pageParam, limit: FOLLOWING_ARTICLE_FETCH_LIMIT, authorId: user }),
       ),
     );
     return newArticles.flat();
