@@ -1,7 +1,9 @@
 import { ChangeEvent, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { User } from '@type/User';
 import { BiSolidUser } from 'react-icons/bi';
+import { BsBookmarkStarFill, BsBookmarkPlus } from 'react-icons/bs';
 import { HiPencil } from 'react-icons/hi';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { fetchUser } from '@api/common/User';
@@ -15,6 +17,7 @@ import TabItem from '@components/TabItem';
 import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS, TOTAL_TAB_WIDTH } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useAuthQuery from '@hooks/useAuthQuery';
+import useFollowQuery from '@hooks/useFollowQuery';
 import useImageMutation from '@hooks/useImageMutation';
 import useModal from '@hooks/useModal';
 import useScrollToTop from '@hooks/useScrollToTop';
@@ -31,8 +34,11 @@ const CHANGE_PASSWORD_PAGE_URL = '/password';
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const pathSegments = location.pathname.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
+  const profileId = pathSegments[2];
+
   const {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
@@ -40,6 +46,43 @@ const ProfilePage = () => {
   const { data: userInfo, isLoading: userInfoLoading } = useQuery(['userInfo', lastSegment], () =>
     fetchUser(lastSegment),
   );
+
+  const FollowButton = () => {
+    const { followMutation, unFollowMutation } = useFollowQuery();
+
+    const handleToggleFollow = () => {
+      if (user) {
+        const followingUserId = user.following.find(({ user }) => user === profileId);
+        if (!followingUserId) {
+          followMutation.mutate(profileId);
+        } else {
+          unFollowMutation.mutate(followingUserId._id);
+        }
+      }
+    };
+
+    const isFollowing = (user: User | undefined | null) => {
+      if (user) {
+        return user.following.some(({ user }) => user === profileId) ?? false;
+      }
+    };
+
+    const ICON_CLASS = {
+      FOLLOW_ICON:
+        'fill-wall-street hover:fill-cooled-blue active:fill-cooled-blue transform transition duration-100 active:scale-90',
+      UNFOLLOW_ICON:
+        'fill-light-violet hover:fill-cooled-blue active:fill-cooled-blue transform transition duration-100 active:scale-90',
+    };
+    return (
+      <div onClick={handleToggleFollow} className="text-[1.7rem] cursor-pointer self-end">
+        {isFollowing(user) ? (
+          <BsBookmarkStarFill className={ICON_CLASS.UNFOLLOW_ICON} alt="구독취소" />
+        ) : (
+          <BsBookmarkPlus className={ICON_CLASS.FOLLOW_ICON} alt="구독하기" />
+        )}
+      </div>
+    );
+  };
 
   const { showToast } = useToastContext();
 
@@ -121,6 +164,7 @@ const ProfilePage = () => {
               }}
             />
             {isMyProfile && <SettingsDropdown />}
+            {!isMyProfile && <FollowButton />}
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
