@@ -132,7 +132,7 @@ const ArticleDetailPage = () => {
               />
             )}
           </div>
-          <div className="text-base text-tricorn-black break-all dark:text-extra-white mt-3">
+          <div className="text-base text-tricorn-black break-all dark:text-extra-white mt-3 whitespace-pre-line">
             {articleBody}
           </div>
           <div className="flex justify-between mt-6">
