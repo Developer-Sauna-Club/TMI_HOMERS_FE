@@ -42,7 +42,7 @@ const Article = ({
       onClick={() => navigate(`${ROUTES.ARTICLES_URL}/${id}`)}
       className="cursor-pointer max-w-[22.375rem] pl-4 pr-3 pb-[0.625rem] pt-[0.25rem] mb-[0.8rem] mt-[0.5rem] font-Cafe24SurroundAir mx-auto"
     >
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-2 bg-zinc-300">
         <div className="flex">
           {isHighlyLiked && isHome && (
             <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
