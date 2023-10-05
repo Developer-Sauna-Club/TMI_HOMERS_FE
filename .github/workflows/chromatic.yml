@@ -1,25 +1,52 @@
-name: 'Chromatic Deployment'
-
+# Name of our action
+name: 'Chromatic'
+# The event that will trigger the action
 on:
   pull_request:
-    branches: ['main']
-    paths:
-      - 'src/**'
-  workflow_dispatch:
+    branches:
+      - main
 
+# What the action will do
 jobs:
-  chromatic-deployment:
+  test:
+    # The operating system it will run on
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ job.status }}
+    # The list of steps that the action will go through
     steps:
-      - uses: actions/checkout@v1
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - run: yarn
+        #👇 Adds Chromatic as a step in the workflow
 
-      - uses: actions/setup-node@v3
+      - name: publish to chromatic
+        uses: chromaui/action@v1
+        # Options required for Chromatic's GitHub Action
+        id: chromatic
         with:
-          node-version: '16'
-          cache: 'yarn'
-          cache-dependency-path: yarn.lock
-
-      - uses: chromaui/action@v1
-        with:
+          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/design-systems-for-developers/react/ko/review/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: '🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}'
