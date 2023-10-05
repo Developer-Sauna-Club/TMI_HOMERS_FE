@@ -47,7 +47,7 @@ const Article = ({
           {isHighlyLiked && isHome && (
             <BsFire className="text-article-highly-liked mr-[0.25rem] w-[1.1rem] h-[1.1rem]" />
           )}
-          <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem]">
+          <h1 className="text-tricorn-black dark:text-extra-white line-clamp-1 max-w-[14.5rem] bg-zinc-300">
             {title.length > ARTICLE_TITLE_MAX_LENGTH
               ? `${title.slice(0, ARTICLE_TITLE_MAX_LENGTH)}...`
               : title}
