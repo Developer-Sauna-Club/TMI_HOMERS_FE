@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import { getOptimizedImageURL } from '@/utils/imageURL';
 import ArticleDetail from '@components/ArticleDetail';
 import ArticleInfoIcon from '@components/ArticleInfoIcon';
 import BackButton from '@components/BackButton';
@@ -122,13 +123,15 @@ const ArticleDetailPage = () => {
             {image && (
               <img
                 alt={articleTitle}
-                src={image}
+                src={getOptimizedImageURL({ url: image, width: 350, height: 320 })}
                 className={
                   !isImageLoaded
                     ? 'h-full m-5 rounded-lg bg-gray-300 dark:bg-gray-800 animate-pulse'
                     : 'h-full object-scale-down m-5 rounded-lg'
                 }
                 onLoad={() => setIsImageLoaded(true)}
+                width="352px"
+                height="320px"
               />
             )}
           </div>
