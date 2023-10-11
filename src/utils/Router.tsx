@@ -2,12 +2,11 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
-import { HomePage, LandingPage } from '@pages/index';
+import { HomePage, LandingPage, NotFoundPage } from '@pages/index';
 
 const SignUpPage = lazy(() => import('@/pages/SignupPage'));
 const SearchPage = lazy(() => import('@/pages/SearchPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const NewArticlePage = lazy(() => import('@/pages/NewArticlePage'));
 const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));

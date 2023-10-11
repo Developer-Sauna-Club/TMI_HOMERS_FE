@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
 import { useThemeContext } from '@hooks/useThemeContext';
 import { ToastContextProvider } from './context/ToastContext';
+import { LoadingPage } from './pages';
 import MockUpPage from './pages/MockUpPage';
 
 const App = () => {
@@ -36,7 +37,9 @@ const App = () => {
       <MockUpPage>
         <div className="w-full h-full">
           <ToastContextProvider>
-            <Outlet />
+            <Suspense fallback={<LoadingPage />}>
+              <Outlet />
+            </Suspense>
           </ToastContextProvider>
         </div>
       </MockUpPage>
