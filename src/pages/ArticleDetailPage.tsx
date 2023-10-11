@@ -97,6 +97,7 @@ const ArticleDetailPage = () => {
               <button
                 type="button"
                 name="edit"
+                aria-label="프로필 수정"
                 onClick={() => {
                   navigate(`/news/edit`, { state: { article } });
                 }}

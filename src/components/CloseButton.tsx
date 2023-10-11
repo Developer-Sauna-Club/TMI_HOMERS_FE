@@ -18,6 +18,7 @@ const CloseButton = ({ mode = 'large', onClick, ...props }: CloseButtonProps) =>
       type="button"
       className={`${BASE_BUTTON_CLASSES} ${ModeClasses[mode]}`}
       onClick={onClick}
+      aria-label="close"
       {...props}
     >
       <AiOutlineClose className={`icon ${ModeClasses[mode]}`} />
