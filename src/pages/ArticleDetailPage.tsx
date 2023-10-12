@@ -131,7 +131,7 @@ const ArticleDetailPage = () => {
                     : 'h-full object-scale-down m-5 rounded-lg'
                 }
                 onLoad={() => setIsImageLoaded(true)}
-                width="352px"
+                width="350px"
                 height="320px"
               />
             )}
