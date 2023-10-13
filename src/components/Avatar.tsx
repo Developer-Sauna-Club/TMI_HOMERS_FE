@@ -1,5 +1,6 @@
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa6';
+import { getOptimizedImageURL } from '@/utils/imageURL';
 
 type AvatarProps = {
   width: number;
@@ -16,12 +17,17 @@ const Avatar = ({ width, profileImage, isLoggedIn, onClick }: AvatarProps) => {
   const editPencilPosition = width * 0.0625;
 
   return (
-
     <div className="relative inline-block cursor-pointer" onClick={onClick}>
       {profileImage ? (
         <img
-          src={`${profileImage}`}
+          src={`${getOptimizedImageURL({
+            url: profileImage,
+            width: width * 16,
+            height: width * 16,
+          })}`}
           alt="프로필 이미지"
+          width={`${width}rem`}
+          height={`${width}rem`}
           style={{ width: `${width}rem`, height: `${width}rem` }}
           className={PROFILE_STYLE}
         />

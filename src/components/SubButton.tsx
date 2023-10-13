@@ -68,6 +68,7 @@ const SubButton = ({
         BUTTON_SIZE[size]
       }`}
       onClick={handleClick}
+      aria-label={label}
       {...props}
     >
       <div className="pb-[0.1rem]">{ICON_STYLE[icon]}</div>

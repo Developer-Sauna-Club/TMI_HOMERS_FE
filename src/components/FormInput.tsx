@@ -57,6 +57,7 @@ const FormInput = ({
             className="absolute right-4 top-1/2 -translate-y-1/2"
             onClick={toggleShowPassword}
             type="button"
+            aria-label={label}
           >
             {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
           </button>

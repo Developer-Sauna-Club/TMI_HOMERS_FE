@@ -9,6 +9,7 @@ const BackButton = ({ onClick, ...props }: BackButtonProps) => {
     <button
       className="inline-flex items-center justify-center rounded-md w-[1.625rem] h-[1.625rem] cursor-pointer hover:bg-lazy-gray/50"
       onClick={onClick}
+      aria-label="뒤로 가기"
       {...props}
     >
       <AiOutlineLeft className="icon fill-footer-icon dark:fill-lazy-gray" size="1.083rem" />
