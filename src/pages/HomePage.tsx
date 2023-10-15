@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { HiFire } from 'react-icons/hi2';
-import DarkModeButton from '@/components/DarkModeButton';
-import Loader from '@/components/Loader';
-import { API } from '@/constants/Article';
-import { MESSAGE, POST_COUNT } from '@/constants/Home';
-import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@/constants/Tab';
-import { useArticles } from '@/hooks/useArticles';
-import { useFilteredArticles } from '@/hooks/useFilteredArticles';
 import HomeBanner from '@components/Banner/HomeBanner';
 import BottomNavigation from '@components/BottomNavigation';
+import DarkModeButton from '@components/DarkModeButton';
 import HeaderText from '@components/HeaderText';
+import Loader from '@components/Loader';
+import { API } from '@constants/Article';
+import { MESSAGE, POST_COUNT } from '@constants/Home';
+import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
+import { useFetchArticles } from '@hooks/useFetchArticles';
+import { useFilteredArticles } from '@hooks/useFilteredArticles';
 import useTab from '@hooks/useTab';
 import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
@@ -31,7 +31,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { changeTab } = useTab(CURRENT_NEWS_TAB_KEY);
 
-  const { data: articles, isLoading } = useArticles({
+  const { data: articles, isLoading } = useFetchArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
   });
@@ -47,18 +47,18 @@ const HomePage = () => {
 
   return (
     <div className="max-w-[25.875rem] mx-auto h-screen flex flex-col relative justify-between overflow-hidden">
-      <div className="flex flex-col w-full max-w-md overflow-y-scroll gap-10 z-10">
-        <section className="z-10 relative">
+      <div className="z-10 flex flex-col w-full max-w-md gap-10 overflow-y-scroll">
+        <section className="relative z-10">
           <div className="bg-cooled-blue dark:bg-dark-primary h-[80%] absolute top-0 w-full" />
           <header className="flex h-[180px] justify-between px-10 items-center relative">
             <HeaderText label={MESSAGE.HOME} />
             <DarkModeButton />
           </header>
-          <div className="relative w-full flex justify-center">
+          <div className="relative flex justify-center w-full">
             <div className="w-[90%] flex flex-col gap-2">
               <div className="flex items-center gap-2 ml-2">
                 <h2 className="flex text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
-                  <HiFire size="24" className="text-article-highly-liked mr-1" />
+                  <HiFire size="24" className="mr-1 text-article-highly-liked" />
                   <span
                     onClick={() => {
                       navigate('/news');
@@ -92,7 +92,7 @@ const HomePage = () => {
             <HomeBanner carouselItems={BANNER_ITEMS} />
           </div>
         </section>
-        <section className="flex flex-col justify-center items-center flex-grow gap-6">
+        <section className="flex flex-col items-center justify-center flex-grow gap-6">
           <div className="flex flex-col gap-3 w-[90%]">
             <h2 className="pl-2 text-lg font-bold text-tricorn-black dark:text-white font-Cafe24Surround">
               <span
@@ -117,7 +117,7 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center flex-none w-full z-10">
+      <div className="z-10 flex justify-center flex-none w-full">
         <BottomNavigation currentPage="/home" />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { Post } from '@type/Post';
-import useAuthQuery from '@/hooks/useAuthQuery';
 import Article from '@components/Article';
+import useAuthQuery from '@hooks/useAuthQuery';
 import { filterArticles } from './filterArticles';
 
 type ArticlesProps = {

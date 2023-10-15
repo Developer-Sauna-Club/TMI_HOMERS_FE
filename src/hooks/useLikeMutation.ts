@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteLikePost, likePost } from '@/api/common/Like';
+import { deleteLikePost, likePost } from '@api/common/Like';
 
 export const useLikeCreateMutation = () => {
   const queryClient = useQueryClient();
@@ -12,6 +12,8 @@ export const useLikeCreateMutation = () => {
         queryClient.invalidateQueries(['userInfo', like.user]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['userArticles']),
+        queryClient.invalidateQueries(['likedArticles']),
         queryClient.invalidateQueries(['followingArticles']),
         queryClient.invalidateQueries(['user']),
       ]),
@@ -29,6 +31,8 @@ export const useLikeDeleteMutation = () => {
         queryClient.invalidateQueries(['userInfo', like.user]),
         queryClient.invalidateQueries(['newestArticles']),
         queryClient.invalidateQueries(['articles']),
+        queryClient.invalidateQueries(['userArticles']),
+        queryClient.invalidateQueries(['likedArticles']),
         queryClient.invalidateQueries(['followingArticles']),
         queryClient.invalidateQueries(['user']),
       ]),
