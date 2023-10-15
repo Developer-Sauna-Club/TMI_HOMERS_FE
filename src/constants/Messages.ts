@@ -23,8 +23,8 @@ export const TOAST_MESSAGES = {
 
   FOLLOW_SUCCESS: '구독되었어요.',
   FOLLOW_FAILED: '구독 요청에 실패했어요.',
-  UNFOLLOW_SUCCESS: '구독이 취소되었어요.',
-  UNFOLLOW_FAILED: '구독 취소 요청에 실패했어요.',
+  UN_FOLLOW_SUCCESS: '구독이 취소되었어요.',
+  UN_FOLLOW_FAILED: '구독 취소 요청에 실패했어요.',
 
   EDIT_PROFILE_SUCCESS: '회원정보가 수정되었어요.',
   EDIT_PROFILE_FAILED: '회원정보 수정 도중 오류가 발생했어요.',
