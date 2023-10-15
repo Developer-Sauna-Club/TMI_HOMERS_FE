@@ -17,18 +17,17 @@ const RenderFollowingArticles = () => {
   } = useAuthQuery();
 
   const navigate = useNavigate();
-
-  const followingUsersId = Array.from(new Set(user?.following.map((user) => user.user)));
+  const followingUsersIds = Array.from(new Set(user?.following.map((user) => user.user)));
 
   const fetchFollowingArticles = useCallback(
     async ({ pageParam = 0 }) => {
       return fetchArticles({
         type: TAB_CONSTANTS.SUBSCRIBED,
         pageParam,
-        followingUsersIds: followingUsersId,
+        followingUsersIds,
       });
     },
-    [followingUsersId],
+    [followingUsersIds],
   );
 
   const { data, fetchNextPage, hasNextPage, status, isFetching } = useInfiniteQuery(
@@ -41,7 +40,7 @@ const RenderFollowingArticles = () => {
         }
         return pages.length * FOLLOWING_ARTICLE_FETCH_LIMIT;
       },
-      enabled: !!followingUsersId.length,
+      enabled: !!followingUsersIds.length,
     },
   );
 
@@ -64,7 +63,7 @@ const RenderFollowingArticles = () => {
         />
       </div>
     );
-  } else if (followingUsersId.length === 0) {
+  } else if (followingUsersIds.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-full text-center font-Cafe24SurroundAir">
         <span className="mb-4">

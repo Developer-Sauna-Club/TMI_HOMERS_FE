@@ -4,7 +4,7 @@ import { saveArticle } from '@api/saveArticle';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
-export const useArticle = () => {
+export const useCreateArticle = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
