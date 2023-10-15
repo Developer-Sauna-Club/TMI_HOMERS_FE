@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
@@ -45,7 +45,10 @@ const ProfilePage = () => {
   const { currentTab, changeTab } = useTab(CURRENT_PROFILE_TAB_KEY);
 
   const isMyProfile = user ? user._id === userInfo?._id : false;
-  const likeArticlesIds = userInfo?.likes.map((like) => like.post);
+  const [userInfoPosts, setUserInfoPosts] = useState(userInfo?.posts || []);
+  const [likeArticlesIds, setLikeArticlesIds] = useState(
+    userInfo?.likes.map((like) => like.post) || [],
+  );
 
   const userImageMutation = useImageMutation({
     queryKey: ['userInfo', lastSegment],
@@ -54,12 +57,20 @@ const ProfilePage = () => {
 
   const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
+
     if (!imageFile || imageFile.length < 0) {
       return;
     }
 
     userImageMutation.mutate(imageFile[0]);
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      setUserInfoPosts(() => [...userInfo.posts]);
+      setLikeArticlesIds(() => [...userInfo.likes.map((like) => like.post)]);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     const savedTab = getItemFromStorage(CURRENT_PROFILE_TAB_KEY);
@@ -159,10 +170,8 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-            {userInfoLoading ? (
-              <></>
-            ) : userInfo && userInfo.posts.length > 0 ? (
-              <RenderUserArticles posts={userInfo.posts} />
+            {userInfoPosts && userInfoPosts.length > 0 ? (
+              <RenderUserArticles posts={userInfoPosts} />
             ) : (
               <div className="flex justify-center w-full h-full">
                 <span className="flex items-center justify-center text-center text-lazy-gray">

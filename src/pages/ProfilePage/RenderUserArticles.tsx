@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Post } from '@type/Post';
 import Loader from '@components/Loader';
@@ -17,7 +18,7 @@ const RenderUserArticles = ({ posts }: UserArticlesProps) => {
     return { startIdx, endIdx };
   };
 
-  const fetchArticlesByPage = async ({ pageParam = 1 }) => {
+  const fetchArticlesByIdx = async ({ pageParam = 1 }) => {
     const { startIdx, endIdx } = calculateIndices(pageParam, posts.length);
 
     if (startIdx === endIdx) {
@@ -29,12 +30,13 @@ const RenderUserArticles = ({ posts }: UserArticlesProps) => {
   };
 
   const {
-    data: infiniteFetchUserArticles,
+    data: fetchedUserArticles,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteQuery(['userArticles'], fetchArticlesByPage, {
+    refetch,
+  } = useInfiniteQuery(['userArticles', posts.length], fetchArticlesByIdx, {
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {
         return undefined;
@@ -43,11 +45,15 @@ const RenderUserArticles = ({ posts }: UserArticlesProps) => {
     },
   });
 
+  useEffect(() => {
+    refetch();
+  }, [posts, refetch]);
+
   return (
     <>
       {isLoading && <SearchSkeleton SkeletonType="title" />}
-      {infiniteFetchUserArticles?.pages.flatMap((page) => page) && (
-        <RenderArticles articles={infiniteFetchUserArticles?.pages.flatMap((page) => page)} />
+      {fetchedUserArticles?.pages.flatMap((page) => page) && (
+        <RenderArticles articles={fetchedUserArticles?.pages.flatMap((page) => page)} />
       )}
       {isFetchingNextPage ? (
         <div className="flex justify-center">

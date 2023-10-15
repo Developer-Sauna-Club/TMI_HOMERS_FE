@@ -27,14 +27,12 @@ export const useArticleDetail = () => {
 
   const deletePostMutation = useMutation(deletePost, {
     onSuccess: () => {
-      Promise.all([
-        queryClient.invalidateQueries(['article', postId]),
-        queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['userArticles']),
-        queryClient.invalidateQueries(['likedArticles']),
-        queryClient.invalidateQueries(['newestArticles']),
-        queryClient.invalidateQueries(['followingArticles']),
-      ]);
+      queryClient.invalidateQueries(['article', postId]);
+      queryClient.invalidateQueries(['articles']);
+      queryClient.invalidateQueries(['userArticles']);
+      queryClient.invalidateQueries(['likedArticles']);
+      queryClient.invalidateQueries(['newestArticles']);
+      queryClient.invalidateQueries(['followingArticles']);
       showToast('게시물이 삭제되었습니다', 'success');
       navigate(-1);
     },
@@ -46,16 +44,15 @@ export const useArticleDetail = () => {
 
   const commentMutation = useMutation(createComment, {
     onSuccess: (returnData, variables) => {
-      Promise.all([
-        queryClient.invalidateQueries(['article', postId]),
-        queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['userArticles']),
-        queryClient.invalidateQueries(['likedArticles']),
-        queryClient.invalidateQueries(['newestArticles']),
-        queryClient.invalidateQueries(['followingArticles']),
-      ]);
-      const { userId } = variables;
+      queryClient.invalidateQueries(['article', postId]);
+      queryClient.invalidateQueries(['articles']);
+      queryClient.invalidateQueries(['userInfo', returnData.author._id]);
+      queryClient.invalidateQueries(['userArticles']);
+      queryClient.invalidateQueries(['likedArticles']);
+      queryClient.invalidateQueries(['newestArticles']);
+      queryClient.invalidateQueries(['followingArticles']);
 
+      const { userId } = variables;
       const commentId = returnData._id;
       createNotification({
         notificationType: 'COMMENT',
@@ -74,15 +71,14 @@ export const useArticleDetail = () => {
   };
 
   const deleteCommentMutation = useMutation(deleteComment, {
-    onSuccess: () => {
-      Promise.all([
-        queryClient.invalidateQueries(['article', postId]),
-        queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['userArticles']),
-        queryClient.invalidateQueries(['likedArticles']),
-        queryClient.invalidateQueries(['newestArticles']),
-        queryClient.invalidateQueries(['followingArticles']),
-      ]);
+    onSuccess: (returnData) => {
+      queryClient.invalidateQueries(['article', postId]);
+      queryClient.invalidateQueries(['articles']);
+      queryClient.invalidateQueries(['userInfo', returnData.author]);
+      queryClient.invalidateQueries(['userArticles']);
+      queryClient.invalidateQueries(['likedArticles']);
+      queryClient.invalidateQueries(['newestArticles']);
+      queryClient.invalidateQueries(['followingArticles']);
       showToast('댓글이 삭제되었습니다', 'success');
     },
   });

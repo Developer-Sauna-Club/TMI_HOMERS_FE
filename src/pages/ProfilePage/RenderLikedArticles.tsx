@@ -13,7 +13,7 @@ const calculateIndices = (page: number, postIdsLength: number) => {
 };
 
 const RenderLikedArticles = ({ postIds }: { postIds: string[] }) => {
-  const fetchArticlesByPage = async ({ pageParam = 1 }) => {
+  const fetchArticlesByIdx = async ({ pageParam = 1 }) => {
     const { startIdx, endIdx } = calculateIndices(pageParam, postIds.length);
 
     if (startIdx === endIdx) {
@@ -25,12 +25,12 @@ const RenderLikedArticles = ({ postIds }: { postIds: string[] }) => {
   };
 
   const {
-    data: infiniteFetchLikedArticles,
+    data: fetchedLikeArticles,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteQuery(['likedArticles'], fetchArticlesByPage, {
+  } = useInfiniteQuery(['likedArticles', postIds.length], fetchArticlesByIdx, {
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {
         return undefined;
@@ -42,8 +42,8 @@ const RenderLikedArticles = ({ postIds }: { postIds: string[] }) => {
   return (
     <>
       {isLoading && <SearchSkeleton SkeletonType="title" />}
-      {infiniteFetchLikedArticles?.pages.flatMap((page) => page) && (
-        <RenderArticles articles={infiniteFetchLikedArticles?.pages.flatMap((page) => page)} />
+      {fetchedLikeArticles?.pages.flatMap((page) => page) && (
+        <RenderArticles articles={fetchedLikeArticles?.pages.flatMap((page) => page)} />
       )}
       {isFetchingNextPage ? (
         <div className="flex justify-center">
