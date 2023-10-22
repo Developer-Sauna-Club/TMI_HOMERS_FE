@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
-import { IoSettingsSharp } from 'react-icons/io5';
 import { getOptimizedImageURL } from '@/utils/imageURL';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
@@ -99,7 +98,7 @@ const ProfilePage = () => {
               {
                 <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
                   {userInfoLoading ? (
-                    <div className="w-full h-full rounded-full bg-transparent" />
+                    <div className="w-full h-full bg-transparent rounded-full" />
                   ) : userInfo && userInfo.image ? (
                     <img
                       src={getOptimizedImageURL({ url: userInfo.image, width: 128, height: 128 })}
