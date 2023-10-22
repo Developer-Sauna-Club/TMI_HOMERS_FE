@@ -56,7 +56,12 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
 
   return (
     <div className="flex items-center justify-evenly w-full max-w-[25.875rem] h-[4.75rem] bg-white dark:bg-tricorn-black shadow-[0_-0.021rem_0_0_rgba(0,0,0,0.3)] dark:shadow-[0_-0.021rem_0_0_rgba(238, 238, 238, 0.5)] font-Cafe24SurroundAir">
-      <button name="home" onClick={() => navigate('/home')} className={BASE_BUTTON_STYLE}>
+      <button
+        name="home"
+        onClick={() => navigate('/home')}
+        className={BASE_BUTTON_STYLE}
+        aria-label="home"
+      >
         <span className={BASE_ICON_STYLE}>
           <AiFillHome
             className={`${currentPage === '/home' ? ACTIVE_COLOR : BUTTON_COLOR}`}
@@ -69,7 +74,12 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
           {NavConstants.HOME}
         </span>
       </button>
-      <button name="news" onClick={() => navigate('/news')} className={BASE_BUTTON_STYLE}>
+      <button
+        name="news"
+        onClick={() => navigate('/news')}
+        className={BASE_BUTTON_STYLE}
+        aria-label="news"
+      >
         <span className={BASE_ICON_STYLE}>
           <HiChatBubbleLeftEllipsis
             className={`${currentPage === '/news' ? ACTIVE_COLOR : BUTTON_COLOR}`}
@@ -87,6 +97,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
         name="news-create"
         onClick={() => navigate('/news/create')}
         className={`${BASE_BUTTON_STYLE}position: relative px-5`}
+        aria-label="news-create"
       >
         <span className="flex items-center justify-center position: absolute -bottom-1 w-[3.5rem] h-[3.5rem] bg-cooled-blue dark:bg-[#344F59] rounded-full drop-shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)] transition ease-in-out delay-150 hover:scale-110">
           <RiQuillPenFill className="text-white" size="2rem" fill="currentColor" />
@@ -96,6 +107,7 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
         name="notification"
         onClick={() => navigate('/notification')}
         className={BASE_BUTTON_STYLE}
+        aria-label="notification"
       >
         <span className={BASE_ICON_STYLE}>
           <BsFillBellFill
@@ -116,7 +128,12 @@ const BottomNavigation = ({ currentPage }: BottomNavigationProp) => {
           {NavConstants.NOTICE}
         </span>
       </button>
-      <button name="profile" onClick={handleClickProfile} className={BASE_BUTTON_STYLE}>
+      <button
+        name="profile"
+        onClick={handleClickProfile}
+        className={BASE_BUTTON_STYLE}
+        aria-label="profile"
+      >
         <span className={BASE_ICON_STYLE}>
           <BiSolidUserCircle
             className={`${currentPage === `/profile` ? ACTIVE_COLOR : BUTTON_COLOR}`}

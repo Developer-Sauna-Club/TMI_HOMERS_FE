@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { getOptimizedImageURL } from '@/utils/imageURL';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
@@ -94,18 +96,22 @@ const ProfilePage = () => {
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
-              {!userInfoLoading && (
+              {
                 <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
-                  {userInfo && userInfo.image ? (
+                  {userInfoLoading ? (
+                    <div className="w-full h-full rounded-full bg-transparent" />
+                  ) : userInfo && userInfo.image ? (
                     <img
-                      src={userInfo.image}
-                      className="object-cover w-full h-full rounded-full "
+                      src={getOptimizedImageURL({ url: userInfo.image, width: 128, height: 128 })}
+                      className="object-cover w-full h-full rounded-full"
                       alt="thumbnail"
+                      width="128"
+                      height="128"
                     />
                   ) : (
                     <BiSolidUser className="w-24 h-24 translate-x-4 translate-y-4" />
                   )}
-                  {isMyProfile && (
+                  {!userInfoLoading && isMyProfile && (
                     <>
                       <label
                         htmlFor="image"
@@ -123,7 +129,7 @@ const ProfilePage = () => {
                     </>
                   )}
                 </div>
-              )}
+              }
               <div className="flex items-center mt-2 mb-[0.3rem]">
                 <span className="text-center text-tricorn-black dark:text-white h-[1.8125rem] font-Cafe24Surround text-[1.375rem] -tracking-[0.01875rem] mr-2">
                   {userInfo?.fullName}

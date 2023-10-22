@@ -36,6 +36,7 @@ const MainButton = ({
       className={`${BASE_BUTTON_CLASSES} ${computedClasses}`}
       type={type}
       onClick={handleClick}
+      aria-label={label}
       {...props}
     >
       {isLoading ? <Loader /> : label}
