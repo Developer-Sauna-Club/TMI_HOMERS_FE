@@ -10,8 +10,7 @@ const InfiniteScroll = ({ fetchData, canFetchMore }: InfiniteScrollProps) => {
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && canFetchMore) {
+      if (entries[0].isIntersecting && canFetchMore) {
         fetchData();
       }
     };

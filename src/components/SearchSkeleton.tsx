@@ -1,5 +1,5 @@
-import { NUMBER_OF_SKELETON } from '@/constants/Search';
 import Skeleton from '@components/Skeleton';
+import { NUMBER_OF_SKELETON } from '@constants/Search';
 import UserSkeleton from './Skeleton/UserSkeleton';
 
 type SkeletonTypeParams = {

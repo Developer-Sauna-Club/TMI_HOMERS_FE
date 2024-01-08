@@ -1,16 +1,16 @@
-import Article from '@/components/Article';
-import SearchSkeleton from '@/components/SearchSkeleton';
-import { API } from '@/constants/Article';
-import { TAB_CONSTANTS } from '@/constants/Tab';
-import { useArticles } from '@/hooks/useArticles';
-import useAuthQuery from '@/hooks/useAuthQuery';
-import { useFilteredArticles } from '@/hooks/useFilteredArticles';
+import Article from '@components/Article';
+import SearchSkeleton from '@components/SearchSkeleton';
+import { API } from '@constants/Article';
+import { TAB_CONSTANTS } from '@constants/Tab';
+import useAuthQuery from '@hooks/useAuthQuery';
+import { useFetchArticles } from '@hooks/useFetchArticles';
+import { useFilteredArticles } from '@hooks/useFilteredArticles';
 
 const RenderHottestArticles = () => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
-  const { data: articles, isLoading } = useArticles({
+  const { data: articles, isLoading } = useFetchArticles({
     id: API.CHANNEL_ID,
     type: 'channel',
   });

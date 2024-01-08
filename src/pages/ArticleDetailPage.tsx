@@ -33,7 +33,6 @@ const ArticleDetailPage = () => {
   const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
   const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } =
     useNotification();
-  //const [isBigImage, setIsBigImage] = useState(false);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -91,7 +90,7 @@ const ArticleDetailPage = () => {
       )}
       <section className="post-field max-w-[22rem] w-full">
         <div className="flex justify-between">
-          <BackButton onClick={() => navigate('/news')} />
+          <BackButton onClick={() => navigate(-1)} />
           {isMyPost && (
             <div id="isMine" className="flex items-center justify-between w-[3rem]">
               <button

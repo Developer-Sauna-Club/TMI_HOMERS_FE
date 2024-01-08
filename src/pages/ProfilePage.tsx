@@ -1,37 +1,29 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { User } from '@type/User';
 import { BiSolidUser } from 'react-icons/bi';
-// import { MdStars } from 'react-icons/md';
-import { BsBookmarkStarFill, BsBookmarkStar } from 'react-icons/bs';
 import { HiPencil } from 'react-icons/hi';
-import { IoSettingsSharp } from 'react-icons/io5';
 import { getOptimizedImageURL } from '@/utils/imageURL';
 import { fetchUser } from '@api/common/User';
 import BackButton from '@components/BackButton';
 import BottomNavigation from '@components/BottomNavigation';
-import Confirm from '@components/Modals/Confirm';
 import ScrollToTopButton from '@components/ScrollToTopButton';
 import SubscribeInfo from '@components/SubscribeInfo';
 import Tab from '@components/Tab';
 import TabItem from '@components/TabItem';
 import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS, TOTAL_TAB_WIDTH } from '@constants/Tab';
+import { DOUBLE_TAB_WIDTH } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
 import useAuthQuery from '@hooks/useAuthQuery';
-import useFollowQuery from '@hooks/useFollowQuery';
 import useImageMutation from '@hooks/useImageMutation';
-import useModal from '@hooks/useModal';
 import useScrollToTop from '@hooks/useScrollToTop';
 import useTab from '@hooks/useTab';
 import { useToastContext } from '@hooks/useToastContext';
 import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
-import { DOUBLE_TAB_WIDTH } from '../constants/Tab';
-import LikedArticles from './ProfilePage/LikeArticles';
-import UserArticles from './ProfilePage/UserArticles';
-
-const EDIT_PAGE_URL = '/profile/edit';
-const CHANGE_PASSWORD_PAGE_URL = '/password';
+import DropdownMenu from './ProfilePage/DropdownMenu';
+import FollowButton from './ProfilePage/FollowButton';
+import RenderLikedArticles from './ProfilePage/RenderLikedArticles';
+import RenderUserArticles from './ProfilePage/RenderUserArticles';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -49,57 +41,15 @@ const ProfilePage = () => {
     fetchUser(lastSegment),
   );
 
-  const FollowButton = () => {
-    const { followMutation, unFollowMutation } = useFollowQuery();
-
-    const handleToggleFollow = () => {
-      if (user) {
-        const followingUserId = user.following.find(({ user }) => user === profileId);
-        if (!followingUserId) {
-          followMutation.mutate(profileId);
-        } else {
-          unFollowMutation.mutate(followingUserId._id);
-        }
-      }
-    };
-
-    const isFollowing = (user: User | undefined | null) => {
-      if (user) {
-        return user.following.some(({ user }) => user === profileId) ?? false;
-      }
-    };
-
-    const ALTS = {
-      UNFOLLOW: '구독취소하기',
-      FOLLOW: '구독하기',
-    };
-
-    const BUTTON_CLASS = {
-      CONTAINER_CLASS: 'transform transition duration-100 active:scale-90',
-      FOLLOW_ICON:
-        'fill-wall-street dark:fill-extra-white hover:fill-cooled-blue active:fill-cooled-blue',
-      UNFOLLOW_ICON: 'fill-light-violet hover:fill-cooled-blue active:fill-cooled-blue',
-    };
-    return (
-      <div onClick={handleToggleFollow} className="text-[1.7rem] cursor-pointer self-end flex">
-        <div className={BUTTON_CLASS.CONTAINER_CLASS}>
-          {isFollowing(user) ? (
-            <BsBookmarkStarFill className={BUTTON_CLASS.UNFOLLOW_ICON} alt={ALTS.UNFOLLOW} />
-          ) : (
-            <BsBookmarkStar className={BUTTON_CLASS.FOLLOW_ICON} alt={ALTS.FOLLOW} />
-          )}
-        </div>
-      </div>
-    );
-  };
-
   const { showToast } = useToastContext();
-
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();
   const { currentTab, changeTab } = useTab(CURRENT_PROFILE_TAB_KEY);
 
   const isMyProfile = user ? user._id === userInfo?._id : false;
-  const likeArticlesIds = userInfo?.likes.map((like) => like.post);
+  const [userInfoPosts, setUserInfoPosts] = useState(userInfo?.posts || []);
+  const [likeArticlesIds, setLikeArticlesIds] = useState(
+    userInfo?.likes.map((like) => like.post) || [],
+  );
 
   const userImageMutation = useImageMutation({
     queryKey: ['userInfo', lastSegment],
@@ -108,6 +58,7 @@ const ProfilePage = () => {
 
   const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
+
     if (!imageFile || imageFile.length < 0) {
       return;
     }
@@ -116,51 +67,18 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
+    if (userInfo) {
+      setUserInfoPosts(() => [...userInfo.posts]);
+      setLikeArticlesIds(() => [...userInfo.likes.map((like) => like.post)]);
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
     const savedTab = getItemFromStorage(CURRENT_PROFILE_TAB_KEY);
     savedTab
       ? changeTab(savedTab)
       : setItemToStorage(CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS.WRITTEN_ARTICLES);
   }, [currentTab, changeTab]);
-
-  const SettingsDropdown = () => {
-    const { showModal, modalOpen, modalClose } = useModal();
-
-    const dropdownMenu = [
-      { label: '프로필 수정', onClick: () => navigate(EDIT_PAGE_URL) },
-      { label: '비밀번호 변경', onClick: () => navigate(CHANGE_PASSWORD_PAGE_URL) },
-      { label: '로그아웃', onClick: () => modalOpen() },
-    ];
-
-    return (
-      <div className="dropdown dropdown-end">
-        {showModal && (
-          <Confirm
-            theme="negative"
-            title="정말 로그아웃 하시겠어요?"
-            confirmLabel="로그아웃"
-            onClose={modalClose}
-            onConfirm={logoutMutate}
-          />
-        )}
-        <label
-          tabIndex={0}
-          className="cursor-pointer text-[1.5rem] z-[40] text-footer-icon focus:text-tricorn-black dark:text-lazy-gray dark:focus:text-wall-street"
-        >
-          <IoSettingsSharp />
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content z-[30] menu p-1 shadow bg-white text-tricorn-black dark:text-lazy-gray dark:bg-tricorn-black border border-lazy-gray rounded-box w-40"
-        >
-          {dropdownMenu.map((item, i) => (
-            <li key={i}>
-              <div onClick={() => item.onClick()}>{item.label}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
 
   return (
     <TabContextProvider>
@@ -172,15 +90,15 @@ const ProfilePage = () => {
                 navigate(-1);
               }}
             />
-            {isMyProfile && <SettingsDropdown />}
-            {!isMyProfile && <FollowButton />}
+            {isMyProfile && <DropdownMenu logoutMutate={logoutMutate} />}
+            {!isMyProfile && <FollowButton user={user} profileId={profileId} />}
           </div>
           <div className="flex justify-center pb-8 mb-[1.2rem] border-b-[0.01rem] border-tertiory-gray relative">
             <div className="flex flex-col items-center">
               {
                 <div className="relative self-center w-32 h-32 mb-6 border rounded-full bg-profile-bg border-tertiory-gray text-footer-icon">
                   {userInfoLoading ? (
-                    <div className="w-full h-full rounded-full bg-transparent" />
+                    <div className="w-full h-full bg-transparent rounded-full" />
                   ) : userInfo && userInfo.image ? (
                     <img
                       src={getOptimizedImageURL({ url: userInfo.image, width: 128, height: 128 })}
@@ -257,8 +175,8 @@ const ProfilePage = () => {
         </header>
         <article ref={ref} className="flex-grow overflow-y-auto">
           <TabItem index={`${TAB_CONSTANTS.WRITTEN_ARTICLES}`}>
-            {userInfo && userInfo.posts.length > 0 ? (
-              <UserArticles userId={userInfo._id} />
+            {userInfoPosts && userInfoPosts.length > 0 ? (
+              <RenderUserArticles posts={userInfoPosts} />
             ) : (
               <div className="flex justify-center w-full h-full">
                 <span className="flex items-center justify-center text-center text-lazy-gray">
@@ -269,7 +187,7 @@ const ProfilePage = () => {
           </TabItem>
           <TabItem index={`${TAB_CONSTANTS.LIKED_ARTICLES}`}>
             {likeArticlesIds && likeArticlesIds.length > 0 ? (
-              <LikedArticles postIds={likeArticlesIds} />
+              <RenderLikedArticles postIds={likeArticlesIds} />
             ) : (
               <div className="flex justify-center w-full h-full">
                 <span className="flex items-center justify-center text-center text-lazy-gray">

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '@type/User';
-import { TOAST_MESSAGES } from '@/constants/Messages';
 import { followUser, unFollowUser } from '@api/common/Follow';
 import { createNotification } from '@api/common/Notification';
+import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
 const useFollowQuery = () => {
@@ -56,7 +56,7 @@ const useFollowQuery = () => {
       return preData;
     },
     onError: (_, __, context) => {
-      showToast(TOAST_MESSAGES.UNFOLLOW_FAILED, 'error');
+      showToast(TOAST_MESSAGES.UN_FOLLOW_FAILED, 'error');
       if (context) {
         queryClient.setQueryData(['user'], context);
       }
@@ -69,7 +69,7 @@ const useFollowQuery = () => {
       ]);
     },
     onSuccess: () => {
-      showToast(TOAST_MESSAGES.UNFOLLOW_SUCCESS, 'success');
+      showToast(TOAST_MESSAGES.UN_FOLLOW_SUCCESS, 'success');
     },
   });
 

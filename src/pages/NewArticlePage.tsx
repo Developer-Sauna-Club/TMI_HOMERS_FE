@@ -9,8 +9,8 @@ import CloseButton from '@components/CloseButton';
 import HeaderText from '@components/HeaderText';
 import MainButton from '@components/MainButton';
 import { DROPDOWN_OPTIONS, ETC, LENGTH_LIMIT, MESSAGE } from '@constants/NewArticle';
-import { useArticle } from '@hooks/useArticle';
 import useAuthQuery from '@hooks/useAuthQuery';
+import { useCreateArticle } from '@hooks/useCreateArticle';
 import { useToastContext } from '@hooks/useToastContext';
 
 export type FormValueType = {
@@ -43,7 +43,7 @@ const NewArticlePage = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const { showToast } = useToastContext();
-  const { createPost, isLoading } = useArticle();
+  const { createPost, isLoading } = useCreateArticle();
   const [articleTitle, articleBody] = [watch('title'), watch('body')];
 
   const { fullName, image: profileImage } = user! as User;
