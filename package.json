@@ -41,6 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.15",
     "chromatic": "^7.2.0",
     "cz-customizable": "^7.0.0",
