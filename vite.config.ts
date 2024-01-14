@@ -1,7 +1,9 @@
+/// <reference types="vitest" />
 import path from 'path';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import { dependencies } from './package.json';
+
 function renderChunks(deps: Record<string, string>) {
   const chunks: { [key: string]: string[] } = {};
   Object.keys(deps).forEach((key) => {
@@ -14,7 +16,12 @@ function renderChunks(deps: Record<string, string>) {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(() => ({
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/utils/test/setupTests.ts',
+  },
   plugins: [react()],
   resolve: {
     alias: [
@@ -41,4 +48,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

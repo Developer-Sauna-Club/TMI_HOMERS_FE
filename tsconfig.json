@@ -32,7 +32,8 @@
       "@stories/*": ["src/stories/*"],
       "@type/*": ["src/type/*"],
       "@utils/*": ["src/utils/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": ["src", "**/*.ts", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
