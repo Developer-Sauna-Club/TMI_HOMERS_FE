@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import fetchArticleById from '@api/fetchArticleById';
+import { fetchPost } from '@/api/common/Post';
 import Loader from '@components/Loader';
 import SearchSkeleton from '@components/SearchSkeleton';
 import { ARTICLE_FETCH_LIMIT } from '@constants/Article';
@@ -20,7 +20,7 @@ const RenderLikedArticles = ({ postIds }: { postIds: string[] }) => {
       return [];
     }
 
-    const requests = postIds.slice(startIdx, endIdx).map((postId) => fetchArticleById(postId));
+    const requests = postIds.slice(startIdx, endIdx).map(fetchPost);
     return Promise.all(requests);
   };
 
