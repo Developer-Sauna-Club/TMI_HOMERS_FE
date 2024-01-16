@@ -43,7 +43,7 @@ const NewArticlePage = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const { showToast } = useToastContext();
-  const { createPost, isLoading } = useCreateArticle();
+  const { createArticle, isLoading } = useCreateArticle();
   const [articleTitle, articleBody] = [watch('title'), watch('body')];
 
   const { fullName, image: profileImage } = user! as User;
@@ -59,7 +59,7 @@ const NewArticlePage = () => {
       ...data,
       title: titleWithOption,
     };
-    createPost({ ...newData, image });
+    createArticle({ ...newData, image });
   };
 
   const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
