@@ -1,6 +1,6 @@
 import type { Post } from '@type/Post';
 import { API } from '@constants/Article';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 type InfinityScrollParams = {
   offset: number;

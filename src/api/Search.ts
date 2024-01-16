@@ -1,6 +1,6 @@
 import { Post } from '@type/Post';
 import { User } from '@type/User';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 export const searchUsers = async (query: string) => {
   const SEARCH_USERS_URL = `/search/users/${query}`;

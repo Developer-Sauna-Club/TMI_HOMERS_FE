@@ -1,7 +1,7 @@
 import { SignUpParams } from '@/type/signUp';
 import { SignUpFormValues } from '@/type/signUp';
 import type { User } from '@/type/User';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 const SIGNUP_URL = '/signup';
 const LOGIN_URL = '/login';

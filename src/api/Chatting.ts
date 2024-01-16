@@ -1,6 +1,6 @@
 import { Conversation } from '@/type/Conversation';
 import { Message } from '@/type/Message';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 export const fetchMessageList = async () => {
   const FETCH_MESSAGE_LIST_URL = '/messages/conversations';

@@ -1,5 +1,5 @@
-import { axiosClient } from '../axiosClient';
-import { Notification } from './../../type/Notification';
+import { Notification } from '../type/Notification';
+import { axiosClient } from './axiosClient';
 
 export const fetchNotifications = async () => {
   const FETCH_NOTIFICATIONS_URL = '/notifications';

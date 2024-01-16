@@ -1,5 +1,5 @@
 import { Like } from '@/type/Like';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 export const likePost = async (postId: string) => {
   const LIKE_POST_URL = '/likes/create';

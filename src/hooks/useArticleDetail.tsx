@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Post } from '@type/Post';
-import { CommentParams, createComment, deleteComment } from '@api/common/Comment';
-import { createNotification } from '@api/common/Notification';
-import { deletePost, fetchPost } from '@api/common/Post';
+import { CommentParams, createComment, deleteComment } from '@/api/Comment';
+import { createNotification } from '@/api/Notification';
+import { deletePost, fetchPost } from '@/api/Post';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 

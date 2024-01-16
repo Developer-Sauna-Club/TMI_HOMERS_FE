@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchPost } from '@/api/common/Post';
+import { fetchPost } from '@/api/Post';
 import Loader from '@components/Loader';
 import SearchSkeleton from '@components/SearchSkeleton';
 import { ARTICLE_FETCH_LIMIT } from '@constants/Article';

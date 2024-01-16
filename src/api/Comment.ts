@@ -1,5 +1,5 @@
 import { Comment } from '@/type/Comment';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 export type CommentParams = {
   comment: string;

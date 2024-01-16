@@ -1,5 +1,5 @@
 import { User } from '@/type/User';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 const UPDATE_USER = '/settings/update-user';
 const UPDATE_PASSWORD = '/settings/update-password';

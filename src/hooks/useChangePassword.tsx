@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { updatePassword } from '@/api/UserSettings';
 import { TOAST_MESSAGES } from '@/constants/Messages';
-import { updatePassword } from '@api/common/UserSettings';
 import { useToastContext } from './useToastContext';
 
 const useChangePassword = () => {
