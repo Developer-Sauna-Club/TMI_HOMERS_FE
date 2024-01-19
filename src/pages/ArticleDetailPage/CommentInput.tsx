@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiQuillPenFill } from 'react-icons/ri';
-import { CommentParams } from '@api/common/Comment';
+import { CommentParams } from '@/api/Comment';
 import Avatar from '@components/Avatar';
 import { LENGTH_LIMIT, MESSAGE } from '@constants/ArticleDetail';
 

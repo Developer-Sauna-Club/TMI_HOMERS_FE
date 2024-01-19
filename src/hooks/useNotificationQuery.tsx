@@ -4,7 +4,7 @@ import {
   readNotifications as readNotice,
   createNotification as createNotice,
   NotificationParam,
-} from '@/api/common/Notification';
+} from '@/api/Notification';
 import type { Notification } from '@/type/Notification';
 
 const useNotificationQuery = (userId?: string) => {

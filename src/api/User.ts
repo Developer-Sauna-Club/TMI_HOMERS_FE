@@ -1,5 +1,5 @@
 import { User } from '@/type/User';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 const FETCH_ALL_USER_URL = '/users/get-users';
 

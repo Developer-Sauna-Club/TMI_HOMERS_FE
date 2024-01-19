@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { checkAuthentication, signUp, login, logout } from '@api/common/Auth';
+import { checkAuthentication, signUp, login, logout } from '@/api/Auth';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { removeItemFromStorage, setItemToStorage } from '@utils/localStorage';
 import { isEmptyUser } from '@utils/user';

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateUser } from '@/api/common/UserSettings';
+import { updateUser } from '@/api/UserSettings';
 import { TOAST_MESSAGES } from '@/constants/Messages';
 import { useToastContext } from './useToastContext';
 

@@ -1,4 +1,4 @@
-import { fetchAllPosts, fetchUserPosts } from '@api/common/Post';
+import { fetchAllPosts, fetchUserPosts } from '@/api/Post';
 import { ARTICLE_FETCH_LIMIT, FOLLOWING_ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
 

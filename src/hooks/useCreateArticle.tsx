@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { saveArticle } from '@api/saveArticle';
+import { createPost } from '@/api/Post';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
@@ -9,7 +9,7 @@ export const useCreateArticle = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const { mutate: createPost, isLoading } = useMutation(saveArticle, {
+  const { mutate: createArticle, isLoading } = useMutation(createPost, {
     onSuccess: () => {
       Promise.all([
         queryClient.invalidateQueries(['newestArticles']),
@@ -23,5 +23,5 @@ export const useCreateArticle = () => {
       showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
-  return { createPost, isLoading };
+  return { createArticle, isLoading };
 };

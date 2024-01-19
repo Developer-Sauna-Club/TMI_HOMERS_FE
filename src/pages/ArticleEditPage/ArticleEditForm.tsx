@@ -2,9 +2,9 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { User } from '@type/User';
 import { BiImageAdd } from 'react-icons/bi';
-import { CHANNEL_ID } from '@api/saveArticle';
 import Avatar from '@components/Avatar';
 import MainButton from '@components/MainButton';
+import { API } from '@constants/Article';
 import { DROPDOWN_OPTIONS, LENGTH_LIMIT, MESSAGE } from '@constants/NewArticle';
 import { useEditPost } from '@hooks/useEdit';
 import { useToastContext } from '@hooks/useToastContext';
@@ -78,11 +78,11 @@ const ArticleEditForm = ({
         postId,
         title: stringifiedTitle,
         image,
-        channelId: CHANNEL_ID,
+        channelId: API.CHANNEL_ID,
         imageToDeletePublicId: imagePublicId,
       });
     } else {
-      editPost({ postId, title: stringifiedTitle, image, channelId: CHANNEL_ID });
+      editPost({ postId, title: stringifiedTitle, image, channelId: API.CHANNEL_ID });
     }
   };
 

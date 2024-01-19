@@ -1,5 +1,5 @@
 import type { Follow } from '@type/Follow';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 export const followUser = async (userId: string) => {
   const FOLLOW_URL = '/follow/create';

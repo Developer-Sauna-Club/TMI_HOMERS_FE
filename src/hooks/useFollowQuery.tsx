@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '@type/User';
-import { followUser, unFollowUser } from '@api/common/Follow';
-import { createNotification } from '@api/common/Notification';
+import { followUser, unFollowUser } from '@/api/Follow';
+import { createNotification } from '@/api/Notification';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 

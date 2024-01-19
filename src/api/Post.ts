@@ -1,6 +1,6 @@
 import type { Post } from '@type/Post';
 import { API } from '@constants/Article';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from './axiosClient';
 
 type InfinityScrollParams = {
   offset: number;
@@ -32,26 +32,24 @@ export const fetchUserPosts = async ({
 
 type CreatePostParams = {
   title: string;
+  body: string;
   image: File | null;
-  channelId: string;
 };
 
-export const createPost = async ({ title, image, channelId }: CreatePostParams) => {
+export const createPost = async ({ title, body, image }: CreatePostParams) => {
   const CREATE_POST_URL = '/posts/create';
-  const { data } = await axiosClient.post<Post>(
-    CREATE_POST_URL,
-    {
-      title,
-      image,
-      channelId,
+  const formData = new FormData();
+  formData.append('title', JSON.stringify({ title, body }));
+  formData.append('channelId', API.CHANNEL_ID);
+  if (image) {
+    formData.append('image', image);
+  }
+
+  return await axiosClient.post<Post>(CREATE_POST_URL, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    },
-  );
-  return data;
+  });
 };
 
 export const fetchPost = async (postId: string) => {

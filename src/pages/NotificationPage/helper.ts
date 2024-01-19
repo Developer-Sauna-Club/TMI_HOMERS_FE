@@ -1,4 +1,4 @@
-import type { NotificationType } from '@/api/common/Notification';
+import type { NotificationType } from '@/api/Notification';
 import type { Notification } from '@/type/Notification';
 
 type NoticeMessage = {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '@type/User';
-import { updateProfileImage } from '@api/common/User';
+import { updateProfileImage } from '@/api/User';
 import { TOAST_MESSAGES } from '@constants/Messages';
 
 type ImageMutationOptions = {
