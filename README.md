@@ -19,11 +19,9 @@
 ## 주요 기능
 | 회원가입        |           글작성            |            글, 유저 검색            |
 | -------------- | ----------------------------------- |----------------------------------- |
-|  <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/7624352a-27d3-4206-8326-74ad571bb172">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/c82f2873-22e1-4705-87d5-bd244f26d6d1">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/0607494f-f41f-4feb-89dc-9b759547eba2">  |
+|  <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/977a781e-9794-4ff3-9dd4-3abe3198cdba">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/63f846f7-cf4b-4513-a4cf-06a0b6fb371c">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/77aec5d1-0997-4562-acb2-0a5c5c3f4b91">  |
 
-
-
-
+![
 ## 멤버
 
 
