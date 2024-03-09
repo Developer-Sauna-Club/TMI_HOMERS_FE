@@ -43,7 +43,7 @@ jobs:
           #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/design-systems-for-developers/react/ko/review/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          onlyChanged: true
+          # onlyChanged: true
           # exitZeroOnChanges: true
           # autoAcceptChanges: true
 
