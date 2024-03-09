@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           onlyChanged: true
           # exitZeroOnChanges: true
-          autoAcceptChanges: true
+          # autoAcceptChanges: true
 
       - name: comment PR
         uses: thollander/actions-comment-pull-request@v1
