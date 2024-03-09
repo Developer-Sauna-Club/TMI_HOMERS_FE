@@ -11,7 +11,7 @@ type AvatarProps = {
 
 const Avatar = ({ width, profileImage, isLoggedIn, onClick }: AvatarProps) => {
   const PROFILE_STYLE = `relative rounded-full border-[0.1rem] border-lazy-gray bg-profile-bg object-cover`;
-  const userIconWidth = width * 0.55;
+  const userIconWidth = width * 0.6;
   const editIconWidth = width * 0.1875;
   const editPencilWidth = width * 0.125;
   const editPencilPosition = width * 0.0625;
