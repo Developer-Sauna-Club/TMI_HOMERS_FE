@@ -1,12 +1,12 @@
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const ImagePreview = ({
-  image,
-  onRemove,
-}: {
+type ImagePreviewProps = {
   image: string | File | null | undefined;
   onRemove?: () => void;
-}) => {
+};
+
+const ImagePreview = ({ image, onRemove }: ImagePreviewProps) => {
+  // TODO : showImage 삭제 => Boolean(image)
   const showImage = image !== null && image !== undefined && image !== '';
 
   return (

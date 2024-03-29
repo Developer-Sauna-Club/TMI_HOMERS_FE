@@ -8,9 +8,6 @@ type CommentInputProps = {
   onAddComment: (comment: CommentParams) => void;
   postId: string;
   userImage: string;
-};
-
-export type NotificationInputProps = {
   userId: string;
 };
 
@@ -18,12 +15,7 @@ type FormValueType = {
   comment: string;
 };
 
-const CommentInput = ({
-  onAddComment,
-  postId,
-  userId,
-  userImage,
-}: CommentInputProps & NotificationInputProps) => {
+const CommentInput = ({ onAddComment, postId, userId, userImage }: CommentInputProps) => {
   const {
     register,
     handleSubmit,

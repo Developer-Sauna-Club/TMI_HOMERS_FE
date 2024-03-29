@@ -1,5 +1,4 @@
-import { Conversation } from '@/type/Conversation';
-import { Message } from '@/type/Message';
+import { Conversation, Message } from '@/type';
 import { axiosClient } from './axiosClient';
 
 export const fetchMessageList = async () => {

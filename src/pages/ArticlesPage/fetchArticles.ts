@@ -2,7 +2,7 @@ import { fetchAllPosts, fetchUserPosts } from '@/api/Post';
 import { ARTICLE_FETCH_LIMIT, FOLLOWING_ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
 
-type FetchArticlesParams = {
+type FetchArticlesProps = {
   type: TAB_CONSTANTS.NEWEST | TAB_CONSTANTS.SUBSCRIBED;
   followingUsersIds?: string[];
   pageParam?: number;
@@ -12,7 +12,7 @@ export const fetchArticles = async ({
   type,
   followingUsersIds,
   pageParam = 0,
-}: FetchArticlesParams) => {
+}: FetchArticlesProps) => {
   if (type === TAB_CONSTANTS.NEWEST) {
     return await fetchAllPosts({ offset: pageParam, limit: ARTICLE_FETCH_LIMIT });
   }

@@ -4,15 +4,13 @@ import type { Notification } from '@/type/Notification';
 import { getTimeDelta } from '@/utils/getTimeDelta';
 import { getNotificationMessage, getNotificationUrl, getProfileUrl } from './helper';
 
-const NoticeList = ({
-  notifications,
-  handleClickAvatar,
-  handleClickNotice,
-}: {
+type NoticeListProps = {
   notifications?: Notification[];
   handleClickAvatar: (url: string) => void;
   handleClickNotice: (url: string) => void;
-}) => {
+};
+
+const NoticeList = ({ notifications, handleClickAvatar, handleClickNotice }: NoticeListProps) => {
   return notifications?.length === 0 ? (
     NoNotification()
   ) : (

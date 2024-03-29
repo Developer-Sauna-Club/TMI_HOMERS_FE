@@ -10,19 +10,21 @@ import safeJSONParse from '@utils/safeJSONParse';
 import { FormValueType } from '../NewArticlePage';
 import ImagePreview from './ImagePreview';
 
+type ArticleEditFormProps = {
+  articleInfo: string;
+  articleImage: string;
+  user: User | null | undefined;
+  postId: string;
+  imagePublicId: string;
+};
+
 const ArticleEditForm = ({
   articleInfo,
   articleImage,
   user,
   postId,
   imagePublicId,
-}: {
-  articleInfo: string;
-  articleImage: string;
-  user: User | null | undefined;
-  postId: string;
-  imagePublicId: string;
-}) => {
+}: ArticleEditFormProps) => {
   const {
     watch,
     register,
