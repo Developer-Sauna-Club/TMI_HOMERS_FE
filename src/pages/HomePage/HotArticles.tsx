@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Post } from '@type/Post';
-import SubButton from '@/components/SubButton';
+import { Article, SubButton } from '@/components';
 import { ROUTES } from '@/constants/Article';
-import Article from '@components/Article';
 import useAuthQuery from '@hooks/useAuthQuery';
 
 type ArticlesProps = {

@@ -1,10 +1,8 @@
+import { useAuthQuery, useFetchArticles, useFilteredArticles } from '@/hooks';
 import Article from '@components/Article';
 import SearchSkeleton from '@components/SearchSkeleton';
 import { API } from '@constants/Article';
 import { TAB_CONSTANTS } from '@constants/Tab';
-import useAuthQuery from '@hooks/useAuthQuery';
-import { useFetchArticles } from '@hooks/useFetchArticles';
-import { useFilteredArticles } from '@hooks/useFilteredArticles';
 
 const RenderHottestArticles = () => {
   const {

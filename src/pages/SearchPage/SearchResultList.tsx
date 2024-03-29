@@ -1,9 +1,8 @@
 import type { SearchData } from '@type/search';
+import { useFilteredSearchResult, useTabContext } from '@/hooks';
 import Article from '@components/Article';
 import { SearchType } from '@constants/Search';
 import { TAB_CONSTANTS } from '@constants/Tab';
-import useFilteredSearchResult from '@hooks/useFilteredSearchResult';
-import { useTabContext } from '@hooks/useTabContext';
 import UserListItem from './UserListItem';
 
 const searchResultString =

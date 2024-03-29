@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import MainButton from '@/components/MainButton';
+import { FormInput, MainButton } from '@/components';
 import useAuthQuery from '@/hooks/useAuthQuery';
-import FormInput from '@components/FormInput';
 
 type SignUpFormValues = {
   email: string;

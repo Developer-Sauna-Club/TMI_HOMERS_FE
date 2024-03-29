@@ -4,8 +4,7 @@ import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
 import { BottomNavigation, HeaderText, Tab, TabItem } from '@/components';
-import { useScrollToTop } from '@/hooks';
-import useTab from '@/hooks/useTab';
+import { useScrollToTop, useTab } from '@/hooks';
 import {
   CURRENT_NEWS_TAB_KEY,
   TAB_CONSTANTS,

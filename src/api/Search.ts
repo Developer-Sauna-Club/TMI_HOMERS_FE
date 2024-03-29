@@ -1,5 +1,4 @@
-import { Post } from '@type/Post';
-import { User } from '@type/User';
+import { Post, User } from '@/type';
 import { axiosClient } from './axiosClient';
 
 export const searchUsers = async (query: string) => {

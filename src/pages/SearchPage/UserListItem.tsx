@@ -1,12 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { UserListItemParams } from '@type/search';
-import { User } from '@type/User';
-import Avatar from '@components/Avatar';
-import Confirm from '@components/Modals/Confirm';
-import SubButton from '@components/SubButton';
+import { Avatar, Confirm, SubButton } from '@/components';
+import { useAuthQuery, useFollowQuery } from '@/hooks';
+import { User, UserListItemParams } from '@/type';
 import { ARTICLE_TITLE_MAX_LENGTH } from '@constants/Article';
-import useAuthQuery from '@hooks/useAuthQuery';
-import useFollowQuery from '@hooks/useFollowQuery';
 import useModal from '@hooks/useModal';
 
 const SEARCH_RESULT_CLASS =

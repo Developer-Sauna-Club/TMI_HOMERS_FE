@@ -5,7 +5,6 @@ import { useFetchArticles, useFilteredArticles, useTab } from '@/hooks';
 import { API } from '@constants/Article';
 import { MESSAGE, POST_COUNT } from '@constants/Home';
 import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
-
 import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
 

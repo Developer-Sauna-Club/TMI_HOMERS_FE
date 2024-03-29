@@ -1,7 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPost } from '@/api/Post';
-import Loader from '@components/Loader';
-import SearchSkeleton from '@components/SearchSkeleton';
+import { Loader, SearchSkeleton } from '@/components';
 import { ARTICLE_FETCH_LIMIT } from '@constants/Article';
 import RenderArticles from '@pages/ArticlesPage/RenderArticles';
 import InfiniteScroll from '../ArticlesPage/InfiniteScroll';
