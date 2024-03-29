@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import MainButton from '@/components/MainButton';
 import { TOAST_MESSAGES } from '@/constants/Messages';
-import useEditProfile from '@/hooks/useEditProfile';
-import { useToastContext } from '@/hooks/useToastContext';
+import { useEditProfile, useToastContext } from '@/hooks';
 import { User } from '@/type/User';
 
 type FormValue = {
