@@ -1,20 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineSearch } from 'react-icons/md';
+import { CloseButton, HeaderText, SearchSkeleton, SubButton, Tab, TabItem } from '@/components';
+import { useRecentResult, useSearch, useTab } from '@/hooks';
+import useDebounceValue from '@/hooks/useDebounce';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
-import CloseButton from '@components/CloseButton';
-import HeaderText from '@components/HeaderText';
-import SearchSkeleton from '@components/SearchSkeleton';
-import SubButton from '@components/SubButton';
-import Tab from '@components/Tab';
-import TabItem from '@components/TabItem';
 import { DEBOUNCE_TIME, MINIMUM__DATA } from '@constants/Search';
 import { CURRENT_SEARCH_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
-import useDebounceValue from '@hooks/useDebounce';
-import useRecentResult from '@hooks/useRecentResult';
-import useSearch from '@hooks/useSearch';
-import useTab from '@hooks/useTab';
 import SearchResultList from './SearchPage/SearchResultList';
 const INPUT_CLASS =
   'w-[90%] p-3.5 bg-input-white outline-none placeholder:text-lazy-gray rounded-lg font-Cafe24SurroundAir shadow-s pl-14';

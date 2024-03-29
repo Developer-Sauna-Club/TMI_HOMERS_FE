@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { TOAST_MESSAGES } from '@/constants/Messages';
-import useAuthQuery from '@/hooks/useAuthQuery';
-import { useToastContext } from '@/hooks/useToastContext';
+import { useAuthQuery, useToastContext } from '@/hooks';
 import { LoadingPage } from '.';
 
 const ProtectedRouter = ({ children }: { children: ReactNode }) => {

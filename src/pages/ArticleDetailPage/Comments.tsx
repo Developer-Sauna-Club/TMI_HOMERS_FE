@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Comment as CommentType } from '@type/Comment';
+import { useArticleDetail } from '@/hooks';
 import Comment from '@components/Comment';
-import { useArticleDetail } from '@hooks/useArticleDetail';
 
 type CommentsProps = {
   comments: CommentType[];

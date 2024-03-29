@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import CloseButton from '@/components/CloseButton';
-import FormInput from '@/components/FormInput';
-import HeaderText from '@/components/HeaderText';
-import MainButton from '@/components/MainButton';
-import Confirm from '@/components/Modals/Confirm';
+import { CloseButton, Confirm, FormInput, HeaderText, MainButton } from '@/components';
 import { MODAL_MESSAGE } from '@/constants/Messages';
-import useModal from '@/hooks/useModal';
-import useChangePassword from '@hooks/useChangePassword';
+import { useChangePassword, useModal } from '@/hooks';
 
 type PasswordFormValues = {
   password: string;

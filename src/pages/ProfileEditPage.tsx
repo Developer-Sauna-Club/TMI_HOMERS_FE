@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import CloseButton from '@/components/CloseButton';
-import HeaderText from '@/components/HeaderText';
-import Confirm from '@/components/Modals/Confirm';
+import { CloseButton, Confirm, HeaderText } from '@/components';
 import { MODAL_MESSAGE } from '@/constants/Messages';
-import useAuthQuery from '@/hooks/useAuthQuery';
-import useModal from '@/hooks/useModal';
+import { useAuthQuery, useModal } from '@/hooks';
 import type { User } from '@/type/User';
 import EditForm from './ProfileEditPage/EditForm';
 

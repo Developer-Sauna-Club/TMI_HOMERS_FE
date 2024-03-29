@@ -7,7 +7,7 @@ import { deletePost, fetchPost } from '@/api/Post';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
-export const useArticleDetail = () => {
+const useArticleDetail = () => {
   const queryClient = useQueryClient();
   const params = useParams();
   const postId = params.postId as string;
@@ -89,3 +89,5 @@ export const useArticleDetail = () => {
 
   return { data, isLoading, addComment, deletePostArticle, deleteMyComment };
 };
+
+export default useArticleDetail;

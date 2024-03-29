@@ -4,7 +4,7 @@ import { createPost } from '@/api/Post';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { useToastContext } from './useToastContext';
 
-export const useCreateArticle = () => {
+const useCreateArticle = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
@@ -25,3 +25,5 @@ export const useCreateArticle = () => {
   });
   return { createArticle, isLoading };
 };
+
+export default useCreateArticle;

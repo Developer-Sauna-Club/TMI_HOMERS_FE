@@ -1,11 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import CloseButton from '@components/CloseButton';
-import HeaderText from '@components/HeaderText';
-import Confirm from '@components/Modals/Confirm';
+import { CloseButton, Confirm, HeaderText } from '@/components';
+import { useAuthQuery, useModal } from '@/hooks';
 import { MODAL_MESSAGE } from '@constants/Messages';
 import { ETC } from '@constants/NewArticle';
-import useAuthQuery from '@hooks/useAuthQuery';
-import useModal from '@hooks/useModal';
 import ArticleEditForm from './ArticleEditPage/ArticleEditForm';
 
 const ArticleEditPage = () => {

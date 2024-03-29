@@ -4,14 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { User } from '@type/User';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
-import Avatar from '@components/Avatar';
-import CloseButton from '@components/CloseButton';
-import HeaderText from '@components/HeaderText';
-import MainButton from '@components/MainButton';
+import { Avatar, CloseButton, HeaderText, MainButton } from '@/components';
+import { useCreateArticle, useToastContext } from '@/hooks';
 import { DROPDOWN_OPTIONS, ETC, LENGTH_LIMIT, MESSAGE } from '@constants/NewArticle';
 import useAuthQuery from '@hooks/useAuthQuery';
-import { useCreateArticle } from '@hooks/useCreateArticle';
-import { useToastContext } from '@hooks/useToastContext';
 
 export type FormValueType = {
   title: string;

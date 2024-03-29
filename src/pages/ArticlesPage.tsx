@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { BsFire } from 'react-icons/bs';
 import { MdOutlineSearch, MdStars } from 'react-icons/md';
-import BottomNavigation from '@components/BottomNavigation';
-import HeaderText from '@components/HeaderText';
-import Tab from '@components/Tab';
-import TabItem from '@components/TabItem';
+import { BottomNavigation, HeaderText, Tab, TabItem } from '@/components';
+import { useScrollToTop } from '@/hooks';
+import useTab from '@/hooks/useTab';
 import {
   CURRENT_NEWS_TAB_KEY,
   TAB_CONSTANTS,
@@ -14,8 +13,6 @@ import {
   TRIPLE_TAB_WIDTH,
 } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
-import useScrollToTop from '@hooks/useScrollToTop';
-import useTab from '@hooks/useTab';
 import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
 import RenderFollowingArticles from './ArticlesPage/RenderFollowingArticles';
 import RenderHottestArticles from './ArticlesPage/RenderHottestArticles';

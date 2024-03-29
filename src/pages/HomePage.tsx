@@ -1,16 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { HiFire } from 'react-icons/hi2';
-import HomeBanner from '@components/Banner/HomeBanner';
-import BottomNavigation from '@components/BottomNavigation';
-import DarkModeButton from '@components/DarkModeButton';
-import HeaderText from '@components/HeaderText';
-import Loader from '@components/Loader';
+import { BottomNavigation, DarkModeButton, HeaderText, HomeBanner, Loader } from '@/components';
+import { useFetchArticles, useFilteredArticles, useTab } from '@/hooks';
 import { API } from '@constants/Article';
 import { MESSAGE, POST_COUNT } from '@constants/Home';
 import { CURRENT_NEWS_TAB_KEY, TAB_CONSTANTS } from '@constants/Tab';
-import { useFetchArticles } from '@hooks/useFetchArticles';
-import { useFilteredArticles } from '@hooks/useFilteredArticles';
-import useTab from '@hooks/useTab';
+
 import RenderArticles from './ArticlesPage/RenderArticles';
 import HotArticles from './HomePage/HotArticles';
 

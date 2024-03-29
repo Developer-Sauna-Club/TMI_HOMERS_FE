@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import Toast from '@components/Toast';
+import { Toast } from '@/components';
 
 type ToastStateTypes = {
   message: string;

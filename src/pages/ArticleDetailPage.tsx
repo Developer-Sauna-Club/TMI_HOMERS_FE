@@ -2,19 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import { ArticleDetail, ArticleInfoIcon, BackButton, Confirm, SubButton } from '@/components';
+import {
+  useArticleDetail,
+  useAuthQuery,
+  useLikeCreateMutation,
+  useLikeDeleteMutation,
+  useModal,
+  useNotification,
+  useToastContext,
+} from '@/hooks';
 import { getOptimizedImageURL } from '@/utils/imageURL';
-import ArticleDetail from '@components/ArticleDetail';
-import ArticleInfoIcon from '@components/ArticleInfoIcon';
-import BackButton from '@components/BackButton';
-import Confirm from '@components/Modals/Confirm';
-import SubButton from '@components/SubButton';
 import { BUTTON, MESSAGE } from '@constants/ArticleDetail';
-import { useArticleDetail } from '@hooks/useArticleDetail';
-import useAuthQuery from '@hooks/useAuthQuery';
-import { useLikeCreateMutation, useLikeDeleteMutation } from '@hooks/useLikeMutation';
-import useModal from '@hooks/useModal';
-import { useNotification } from '@hooks/useNotification';
-import { useToastContext } from '@hooks/useToastContext';
 import CommentInput from './ArticleDetailPage/CommentInput';
 import Comments from './ArticleDetailPage/Comments';
 import { LoadingPage } from '.';

@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import BottomNavigation from '@/components/BottomNavigation';
-import HeaderText from '@/components/HeaderText';
-import useAuthQuery from '@/hooks/useAuthQuery';
-import useNotificationQuery from '@/hooks/useNotificationQuery';
+import { BottomNavigation, HeaderText } from '@/components';
+import { useAuthQuery, useNotificationQuery } from '@/hooks';
 import NoticeList from './NotificationPage/NoticeList';
 
 type Filter = '새 알림' | '모든 알림' | '읽은 알림';

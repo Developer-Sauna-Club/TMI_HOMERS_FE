@@ -4,21 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import { BiSolidUser } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 import { fetchUser } from '@/api/User';
+import {
+  BackButton,
+  BottomNavigation,
+  ScrollToTopButton,
+  SubscribeInfo,
+  Tab,
+  TabItem,
+} from '@/components';
+import { useAuthQuery, useImageMutation, useScrollToTop, useTab, useToastContext } from '@/hooks';
 import { getOptimizedImageURL } from '@/utils/imageURL';
-import BackButton from '@components/BackButton';
-import BottomNavigation from '@components/BottomNavigation';
-import ScrollToTopButton from '@components/ScrollToTopButton';
-import SubscribeInfo from '@components/SubscribeInfo';
-import Tab from '@components/Tab';
-import TabItem from '@components/TabItem';
 import { CURRENT_PROFILE_TAB_KEY, TAB_CONSTANTS, TOTAL_TAB_WIDTH } from '@constants/Tab';
 import { DOUBLE_TAB_WIDTH } from '@constants/Tab';
 import { TabContextProvider } from '@context/TabContext';
-import useAuthQuery from '@hooks/useAuthQuery';
-import useImageMutation from '@hooks/useImageMutation';
-import useScrollToTop from '@hooks/useScrollToTop';
-import useTab from '@hooks/useTab';
-import { useToastContext } from '@hooks/useToastContext';
+
 import { getItemFromStorage, setItemToStorage } from '@utils/localStorage';
 import DropdownMenu from './ProfilePage/DropdownMenu';
 import FollowButton from './ProfilePage/FollowButton';

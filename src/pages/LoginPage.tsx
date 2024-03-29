@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import FormInput from '@/components/FormInput';
-import HeaderText from '@/components/HeaderText';
-import MainButton from '@/components/MainButton';
+import { FormInput, HeaderText, MainButton } from '@/components';
 import useAuthQuery from '@/hooks/useAuthQuery';
 
 type LoginFormValues = {
