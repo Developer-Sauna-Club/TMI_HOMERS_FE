@@ -4,7 +4,7 @@ type ErrorTextProps = {
 
 const ErrorText = ({ text }: ErrorTextProps) => {
   return (
-    <small className="self-end p-1 text-error-red font-light font-Cafe24SurroundAir text-xs">
+    <small className="self-end p-2 text-error-red font-light font-Cafe24SurroundAir text-xs">
       {text}
     </small>
   );
