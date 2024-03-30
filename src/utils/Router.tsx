@@ -5,7 +5,7 @@ import App from '@/App';
 import { HomePage, LandingPage, NotFoundPage } from '@pages/index';
 
 const SignUpPage = lazy(() => import('@/pages/SignupPage'));
-const SearchPage = lazy(() => import('@/pages/SearchPage'));
+const SearchPage = lazy(() => import('@/pages/Search/Page/index'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const NewArticlePage = lazy(() => import('@/pages/NewArticlePage'));
