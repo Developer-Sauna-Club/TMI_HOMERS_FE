@@ -1,8 +1,8 @@
 import Article from '@/components/Article';
 import { Post } from '@/type/Post';
 import { User } from '@/type/User';
-import NoResult from './NoResult';
-import UserItem from './UserItem';
+import NoResult from '../NoResult';
+import UserItem from '../UserItem';
 
 type SearchResultProps = {
   searchResList: (Post | User)[] | undefined;
@@ -21,7 +21,9 @@ const SearchResult = ({ searchResList, type }: SearchResultProps) => {
       {filteredSearchResList && (
         <div className="font-Cafe24Surround text-[0.875rem] text-wall-street dark:text-lazy-gray">{`${filteredSearchResList.length}건의 검색 결과 `}</div>
       )}
-      <div className={`${type === 'role' && 'flex flex-col gap-6 pl-5 pr-5 pt-2'}`}>
+      <div
+        className={`${type === 'role' && searchResList && 'flex flex-col gap-6 pl-5 pr-5 pt-2'}`}
+      >
         {filteredSearchResList?.map((searchRes) => {
           if (type === 'title') {
             const { _id, title, author, createdAt, likes, image, comments } = searchRes as Post;
