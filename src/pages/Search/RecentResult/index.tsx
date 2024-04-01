@@ -7,11 +7,11 @@ type RecentResultProps = {
 
 const RecentResult = ({ recentResult, onClick }: RecentResultProps) => {
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <h2 className="font-Cafe24Surround text-[1.125rem] text-tricorn-black dark:text-extra-white">
         최근 검색어
       </h2>
-      <hr className="mt-2 mb-5" />
+      <hr className="pb-2" />
       <div className="flex flex-wrap gap-2">
         {recentResult.map((item, index) => (
           <div key={index}>
@@ -26,7 +26,7 @@ const RecentResult = ({ recentResult, onClick }: RecentResultProps) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

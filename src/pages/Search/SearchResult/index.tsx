@@ -1,10 +1,8 @@
-import { Fragment } from 'react';
 import Article from '@/components/Article';
-import UserListItem from '@/pages/SearchPage/UserListItem';
 import { Post } from '@/type/Post';
 import { User } from '@/type/User';
-import CountSearchResult from './CountSearchResult';
 import NoResult from './NoResult';
+import UserItem from './UserItem';
 
 type SearchResultProps = {
   searchResList: (Post | User)[] | undefined;
@@ -19,16 +17,19 @@ const SearchResult = ({ searchResList, type }: SearchResultProps) => {
   }
 
   return (
-    <>
-      {filteredSearchResList?.map((searchRes, index) => {
-        if (type === 'title') {
-          const { _id, title, author, createdAt, likes, image, comments } = searchRes as Post;
-          const { title: articleTitle } = title ? JSON.parse(title) : { title: '' };
+    <div className="flex flex-col gap-3">
+      {filteredSearchResList && (
+        <div className="font-Cafe24Surround text-[0.875rem] text-wall-street dark:text-lazy-gray">{`${filteredSearchResList.length}건의 검색 결과 `}</div>
+      )}
+      <div className={`${type === 'role' && 'flex flex-col gap-6 pl-5 pr-5 pt-2'}`}>
+        {filteredSearchResList?.map((searchRes) => {
+          if (type === 'title') {
+            const { _id, title, author, createdAt, likes, image, comments } = searchRes as Post;
+            const { title: articleTitle } = title ? JSON.parse(title) : { title: '' };
 
-          return (
-            <div key={_id}>
-              <CountSearchResult index={index} length={filteredSearchResList.length} />
+            return (
               <Article
+                key={_id}
                 id={_id}
                 title={articleTitle ? articleTitle : '제목이 없습니다.'}
                 nickname={author.fullName ? `@${author.fullName}` : ''}
@@ -37,19 +38,14 @@ const SearchResult = ({ searchResList, type }: SearchResultProps) => {
                 likes={likes?.length || 0}
                 comments={comments?.length || 0}
               />
-            </div>
-          );
-        } else {
-          const { _id, fullName, image } = searchRes as User;
-          return (
-            <div key={_id}>
-              <CountSearchResult index={index} length={filteredSearchResList.length} />
-              <UserListItem fullName={fullName} id={_id} image={image ? image : ''} />
-            </div>
-          );
-        }
-      })}
-    </>
+            );
+          } else {
+            const { _id, fullName, image } = searchRes as User;
+            return <UserItem key={_id} fullName={fullName} id={_id} image={image ? image : ''} />;
+          }
+        })}
+      </div>
+    </div>
   );
 };
 
