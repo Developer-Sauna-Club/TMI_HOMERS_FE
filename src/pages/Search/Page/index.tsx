@@ -12,12 +12,12 @@ import SearchResult from '../SearchResult';
 const SEARCH_RESULT_TABS = [
   {
     INDEX: 0,
-    VALUE: 'title',
+    VALUE: 'article',
     LABEL: '글 제목',
   },
   {
     INDEX: 1,
-    VALUE: 'role',
+    VALUE: 'user',
     LABEL: '닉네임',
   },
 ] as const;
@@ -35,7 +35,7 @@ const SearchPage = () => {
   };
 
   return (
-    <Tabs defaultValue="title">
+    <Tabs defaultValue="article">
       <section className="max-w-[25.875rem] mx-auto h-screen w-screen flex flex-col font-Cafe24SurroundAir">
         <div className="bg-cooled-blue dark:bg-dark-primary flex flex-col pt-[2.75rem] pl-6 pr-6 gap-4">
           <Header label="search" type="close" />

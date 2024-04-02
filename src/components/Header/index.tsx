@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { MdOutlineSearch } from 'react-icons/md';
 import CloseButton from '../CloseButton';
 import HeaderText from '../HeaderText';
 
 type HeaderProps = {
-  label: 'search';
-  type?: 'close';
+  label: 'search' | 'news';
+  type?: 'close' | 'search';
   path?: string;
 };
 
@@ -12,10 +13,17 @@ const Header = ({ label, type, path }: HeaderProps) => {
   const navigate = useNavigate();
   const HEADER_LABEL = {
     search: '검색',
+    news: '뉴스',
   };
 
   const HEADER_TYPE = {
     close: <CloseButton onClick={() => (path ? navigate(path) : navigate(-1))} />,
+    search: (
+      <MdOutlineSearch
+        className="w-[1.8rem] h-[1.8rem] cursor-pointer text-tricorn-black dark:text-extra-white"
+        onClick={() => (path ? navigate(path) : navigate(-1))}
+      />
+    ),
   };
 
   return (
