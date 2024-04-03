@@ -13,7 +13,12 @@ const FilteredData = ({ data, type }: FilteredData) => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
-  return data?.map((dataValue) => {
+
+  const removeDuplicatedData = data?.filter(
+    (article, index, self) => index === self.findIndex((a) => a._id === article._id),
+  );
+
+  return removeDuplicatedData?.map((dataValue) => {
     if (type === 'article') {
       const { _id, title, author, createdAt, likes, image, comments } = dataValue as Post;
       const myLike = likes.find((like) => (user ? like.user === user._id : false));
