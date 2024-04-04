@@ -35,10 +35,12 @@ const RenderArticles = ({ type }: RenderArticlesProps) => {
         </FailedMessage>
       );
     } else if (!followingUsersIds.length) {
+     return (
       <FailedMessage path="/search" label="구독하기">
         앗 구독한 글들이 없습니다. <br />
         다른 사용자를 팔로우하러 가시겠습니까?
-      </FailedMessage>;
+      </FailedMessage>
+     )
     }
   }
 

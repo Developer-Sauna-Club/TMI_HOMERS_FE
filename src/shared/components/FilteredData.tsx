@@ -13,7 +13,7 @@ const FilteredData = ({ data, type }: FilteredData) => {
   const {
     userQuery: { data: user },
   } = useAuthQuery();
-
+  
   const removeDuplicatedData = data?.filter(
     (article, index, self) => index === self.findIndex((a) => a._id === article._id),
   );

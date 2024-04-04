@@ -9,9 +9,10 @@ type SearchResultProps = {
 };
 
 const SearchResult = ({ searchResList, type }: SearchResultProps) => {
-  const filteredSearchResList = searchResList?.filter((searchRes) => type in searchRes);
+  const reDefinedType = type === "article" ? "title"  : "role"
+  const filteredSearchResList = searchResList?.filter((searchRes) =>  reDefinedType in searchRes);
 
-  if (Array.isArray(filteredSearchResList) && !filteredSearchResList.length) {
+  if (!filteredSearchResList?.length) {
     return <NoResult />;
   }
 
