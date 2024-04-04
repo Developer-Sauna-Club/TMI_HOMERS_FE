@@ -8,10 +8,10 @@ const HEADER_LABEL = {
   news: '뉴스',
 } as const
  
-type label = keyof typeof HEADER_LABEL;
+type Label = keyof typeof HEADER_LABEL;
 
 type HeaderProps = {
-  label: label ;
+  label: Label ;
   type?: 'close' | 'search';
   path?: string;
 };
