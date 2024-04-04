@@ -3,18 +3,21 @@ import { MdOutlineSearch } from 'react-icons/md';
 import CloseButton from '../CloseButton';
 import HeaderText from '../HeaderText';
 
+const HEADER_LABEL = {
+  search: '검색',
+  news: '뉴스',
+} as const
+ 
+type label = keyof typeof HEADER_LABEL;
+
 type HeaderProps = {
-  label: 'search' | 'news';
+  label: label ;
   type?: 'close' | 'search';
   path?: string;
 };
 
 const Header = ({ label, type, path }: HeaderProps) => {
   const navigate = useNavigate();
-  const HEADER_LABEL = {
-    search: '검색',
-    news: '뉴스',
-  };
 
   const HEADER_TYPE = {
     close: <CloseButton onClick={() => (path ? navigate(path) : navigate(-1))} />,
