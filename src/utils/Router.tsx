@@ -5,13 +5,13 @@ import App from '@/App';
 import { HomePage, LandingPage, NotFoundPage } from '@pages/index';
 
 const SignUpPage = lazy(() => import('@/pages/SignupPage'));
-const SearchPage = lazy(() => import('@/pages/Search/Page/index'));
+const SearchPage = lazy(() => import('@/pages/Search/Page'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const NewArticlePage = lazy(() => import('@/pages/NewArticlePage'));
 const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));
 const NotificationPage = lazy(() => import('@/pages/NotificationPage'));
-const ArticlesPage = lazy(() => import('@/pages/ArticlesPage'));
+const ArticlesPage = lazy(() => import('@/pages/Articles/Page'));
 const ProfileEditPage = lazy(() => import('@/pages/ProfileEditPage'));
 const ChangePasswordPage = lazy(() => import('@/pages/ChangePasswordPage'));
 const ProtectedRouter = lazy(() => import('@/pages/ProtectedRouter'));
