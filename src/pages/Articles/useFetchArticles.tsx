@@ -6,25 +6,27 @@ type useFetchArticlesProps = {
   followingUsersIds: string[];
 };
 
-const useFetchArticles = ({ type, followingUsersIds }: useFetchArticlesProps) => {
-  const LIMIT = {
-    newest: 10,
-    subscribed: 3,
-  };
+const ARTICLES_LIMIT = {
+  newest: 10,
+  subscribed: 3,
+};
 
-  const QUERY_KEY = {
-    newest: 'newestArticles',
-    subscribed: 'followingArticles',
-  };
+const QUERY_KEY = {
+  newest: 'newestArticles',
+  subscribed: 'followingArticles',
+};
+
+const useFetchArticles = ({ type, followingUsersIds }: useFetchArticlesProps) => {
+
 
   const FETCH_API = {
     newest: async ({ pageParam = 0 }) => {
-      return await fetchAllPosts({ offset: pageParam, limit: LIMIT[type] });
+      return await fetchAllPosts({ offset: pageParam, limit: ARTICLES_LIMIT[type] });
     },
     subscribed: async ({ pageParam = 0 }) => {
       const newArticles = await Promise.all(
         followingUsersIds.map((user) =>
-          fetchUserPosts({ offset: pageParam, limit: LIMIT[type], authorId: user }),
+          fetchUserPosts({ offset: pageParam, limit: ARTICLES_LIMIT[type], authorId: user }),
         ),
       );
       return newArticles.flat();
@@ -35,9 +37,8 @@ const useFetchArticles = ({ type, followingUsersIds }: useFetchArticlesProps) =>
     [QUERY_KEY[type]],
     FETCH_API[type],
     {
-      getNextPageParam: (lastPage, pages) => {
-        return lastPage.length < LIMIT[type] ? undefined : pages.length * LIMIT[type];
-      },
+      getNextPageParam: (lastPage, pages) =>  lastPage.length < ARTICLES_LIMIT[type] ? undefined : pages.length * ARTICLES_LIMIT[type]
+ 
     },
   );
 
