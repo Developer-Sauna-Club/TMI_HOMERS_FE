@@ -6,7 +6,7 @@ import { HomePage, LandingPage, NotFoundPage } from '@pages/index';
 
 const SignUpPage = lazy(() => import('@/pages/SignupPage'));
 const SearchPage = lazy(() => import('@/pages/Search/Page'));
-const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
+const ProfilePage = lazy(() => import('@/pages/Profile/Page'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const NewArticlePage = lazy(() => import('@/pages/NewArticlePage'));
 const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));

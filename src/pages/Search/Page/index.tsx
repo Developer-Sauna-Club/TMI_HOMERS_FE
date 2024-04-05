@@ -36,7 +36,7 @@ const SearchPage = () => {
 
   return (
     <Tabs defaultValue="article">
-      <section className="max-w-[25.875rem] mx-auto h-screen w-screen flex flex-col font-Cafe24SurroundAir">
+      <section className="max-w-[25.875rem] h-screen w-screen flex flex-col font-Cafe24SurroundAir">
         <div className="bg-cooled-blue dark:bg-dark-primary flex flex-col pt-[2.75rem] pl-6 pr-6 gap-4">
           <Header label="search" type="close" />
           <div className="bg-input-white rounded-lg flex flex-col gap-4 pt-1">
