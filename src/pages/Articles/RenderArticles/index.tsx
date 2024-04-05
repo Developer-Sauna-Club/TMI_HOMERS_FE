@@ -4,7 +4,7 @@ import useAuthQuery from '@/hooks/useAuthQuery';
 import InfiniteScroll from '@/pages/ArticlesPage/InfiniteScroll.tsx';
 import FilteredData from '@/shared/components/FilteredData';
 import FailedMessage from '../FailedMessage.tsx';
-import useFetchArticles from '../useFetchArticles';
+import useFetchArticles from '../hooks/useFetchArticles.tsx';
 
 type RenderArticlesProps = {
   type: 'newest' | 'subscribed';
@@ -35,12 +35,12 @@ const RenderArticles = ({ type }: RenderArticlesProps) => {
         </FailedMessage>
       );
     } else if (!followingUsersIds.length) {
-     return (
-      <FailedMessage path="/search" label="구독하기">
-        앗 구독한 글들이 없습니다. <br />
-        다른 사용자를 팔로우하러 가시겠습니까?
-      </FailedMessage>
-     )
+      return (
+        <FailedMessage path="/search" label="구독하기">
+          앗 구독한 글들이 없습니다. <br />
+          다른 사용자를 팔로우하러 가시겠습니까?
+        </FailedMessage>
+      );
     }
   }
 
