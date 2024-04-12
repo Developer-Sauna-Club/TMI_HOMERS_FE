@@ -18,7 +18,7 @@ export const getTimeDelta = (postedDate: string) => {
 
   switch (true) {
     case seconds < 60:
-      result = `${seconds}초 전`;
+      result = `방금 전`;
       break;
     case minutes < 60:
       result = `${minutes}분 전`;
