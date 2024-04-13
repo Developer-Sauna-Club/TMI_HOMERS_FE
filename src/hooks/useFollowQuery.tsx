@@ -9,9 +9,12 @@ const useFollowQuery = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const followMutation = useMutation(followUser, {
+  const followMutation = useMutation({
+    mutationFn: followUser,
     onMutate: async (id) => {
-      queryClient.cancelQueries(['user']);
+      queryClient.cancelQueries({
+        queryKey: ['user'],
+      });
       const preData = queryClient.getQueryData<User>(['user']);
       if (!preData) {
         return;
@@ -28,9 +31,15 @@ const useFollowQuery = () => {
     },
     onSettled: (data) => {
       Promise.all([
-        queryClient.invalidateQueries(['user']),
-        queryClient.invalidateQueries(['userInfo', data?.user]),
-        queryClient.invalidateQueries(['followingArticles']),
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['userInfo', data?.user],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['followingArticles'],
+        }),
       ]);
     },
     onSuccess: (data) => {
@@ -44,9 +53,12 @@ const useFollowQuery = () => {
     },
   });
 
-  const unFollowMutation = useMutation(unFollowUser, {
+  const unFollowMutation = useMutation({
+    mutationFn: unFollowUser,
     onMutate: async (id) => {
-      queryClient.cancelQueries(['user']);
+      queryClient.cancelQueries({
+        queryKey: ['user'],
+      });
       const preData = queryClient.getQueryData<User>(['user']);
       if (!preData) {
         return;
@@ -63,9 +75,15 @@ const useFollowQuery = () => {
     },
     onSettled: (data) => {
       Promise.all([
-        queryClient.invalidateQueries(['user']),
-        queryClient.invalidateQueries(['userInfo', data?.user]),
-        queryClient.invalidateQueries(['followingArticles']),
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['userInfo', data?.user],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['followingArticles'],
+        }),
       ]);
     },
     onSuccess: () => {

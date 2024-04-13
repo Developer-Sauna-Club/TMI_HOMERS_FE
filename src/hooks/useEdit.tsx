@@ -10,7 +10,8 @@ export const useEditProfile = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const { mutate: editProfile, isLoading } = useMutation(updateUser, {
+  const { mutate: editProfile, isPending } = useMutation({
+    mutationFn: updateUser,
     onSuccess: (user) => {
       queryClient.setQueryData(['user'], user);
       showToast(TOAST_MESSAGES.EDIT_PROFILE_SUCCESS, 'success');
@@ -20,7 +21,7 @@ export const useEditProfile = () => {
       showToast(TOAST_MESSAGES.EDIT_PROFILE_FAILED, 'error');
     },
   });
-  return { editProfile, isLoading };
+  return { editProfile, isPending };
 };
 
 export const useEditPost = () => {
@@ -28,12 +29,19 @@ export const useEditPost = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const { mutate: editPost, isLoading } = useMutation(updatePost, {
+  const { mutate: editPost, isPending } = useMutation({
+    mutationFn: updatePost,
     onSuccess: (post) => {
       Promise.all([
-        queryClient.invalidateQueries(['newestArticles']),
-        queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['followingArticles']),
+        queryClient.invalidateQueries({
+          queryKey: ['newestArticles'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['articles'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['followingArticles'],
+        }),
       ]);
       showToast(TOAST_MESSAGES.EDIT_POST_SUCCESS, 'success');
       navigate(`/news/${post._id}`);
@@ -42,5 +50,5 @@ export const useEditPost = () => {
       showToast(TOAST_MESSAGES.EDIT_POST_FAILED, 'error');
     },
   });
-  return { editPost, isLoading };
+  return { editPost, isPending };
 };

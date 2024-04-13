@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { infiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
 import { fetchAllPosts, fetchUserPosts } from '@/api/Post';
 
 type useFetchArticlesProps = {
@@ -17,16 +17,18 @@ const QUERY_KEY = {
 };
 
 const useFetchArticles = ({ type, followingUsersIds }: useFetchArticlesProps) => {
-
-
   const FETCH_API = {
-    newest: async ({ pageParam = 0 }) => {
+    newest: async ({ pageParam }: { pageParam: number }) => {
       return await fetchAllPosts({ offset: pageParam, limit: ARTICLES_LIMIT[type] });
     },
-    subscribed: async ({ pageParam = 0 }) => {
+    subscribed: async ({ pageParam }: { pageParam: number }) => {
       const newArticles = await Promise.all(
         followingUsersIds.map((user) =>
-          fetchUserPosts({ offset: pageParam, limit: ARTICLES_LIMIT[type], authorId: user }),
+          fetchUserPosts({
+            offset: pageParam,
+            limit: ARTICLES_LIMIT[type],
+            authorId: user,
+          }),
         ),
       );
       return newArticles.flat();
@@ -34,12 +36,13 @@ const useFetchArticles = ({ type, followingUsersIds }: useFetchArticlesProps) =>
   };
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery(
-    [QUERY_KEY[type]],
-    FETCH_API[type],
-    {
-      getNextPageParam: (lastPage, pages) =>  lastPage.length < ARTICLES_LIMIT[type] ? undefined : pages.length * ARTICLES_LIMIT[type]
- 
-    },
+    infiniteQueryOptions({
+      queryKey: [QUERY_KEY[type]],
+      queryFn: FETCH_API[type],
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, pages) =>
+        lastPage.length < ARTICLES_LIMIT[type] ? undefined : pages.length * ARTICLES_LIMIT[type],
+    }),
   );
 
   return {

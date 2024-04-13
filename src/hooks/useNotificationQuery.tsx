@@ -9,13 +9,18 @@ import type { Notification } from '@/type/Notification';
 
 const useNotificationQuery = (userId?: string) => {
   const queryClient = useQueryClient();
-  const notificationQuery = useQuery(['notification', userId || ''], fetchNotifications, {
+  const notificationQuery = useQuery({
+    queryKey: ['notification', userId || ''],
+    queryFn: fetchNotifications,
     enabled: !!userId,
     refetchInterval: 1000 * 5,
   });
-  const readNotifications = useMutation(readNotice, {
+  const readNotifications = useMutation({
+    mutationFn: readNotice,
     onMutate: async () => {
-      await queryClient.cancelQueries(['notification', userId]);
+      await queryClient.cancelQueries({
+        queryKey: ['notification', userId],
+      });
       const previousNotifications = queryClient.getQueryData<Notification[]>([
         'notification',
         userId,
@@ -29,12 +34,14 @@ const useNotificationQuery = (userId?: string) => {
       queryClient.setQueryData(['notification', userId], newNotifications);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(['notification', userId]);
+      queryClient.invalidateQueries({
+        queryKey: ['notification', userId],
+      });
     },
   });
-  const createNotification = useMutation((notificationParam: NotificationParam) =>
-    createNotice(notificationParam),
-  );
+  const createNotification = useMutation({
+    mutationFn: (notificationParam: NotificationParam) => createNotice(notificationParam),
+  });
 
   const unseenNotifications = notificationQuery.data?.filter(({ seen }) => !seen).length;
 

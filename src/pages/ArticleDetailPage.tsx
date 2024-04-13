@@ -29,9 +29,9 @@ const ArticleDetailPage = () => {
     userQuery: { data: user },
   } = useAuthQuery();
   const { data: article, isLoading, addComment, deletePostArticle } = useArticleDetail();
-  const { mutate: likeCreateMutate, isLoading: isLikeCreateLoading } = useLikeCreateMutation();
-  const { mutate: likeDeleteMutate, isLoading: isLikeDeleteLoading } = useLikeDeleteMutation();
-  const { mutate: likeNotificationMutate, isLoading: isLikeNotificationLoading } =
+  const { mutate: likeCreateMutate, isPending: isLikeCreateLoading } = useLikeCreateMutation();
+  const { mutate: likeDeleteMutate, isPending: isLikeDeleteLoading } = useLikeDeleteMutation();
+  const { mutate: likeNotificationMutate, isPending: isLikeNotificationLoading } =
     useNotification();
 
   if (isLoading) {

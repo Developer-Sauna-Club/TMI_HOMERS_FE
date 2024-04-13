@@ -30,19 +30,18 @@ const RenderFollowingArticles = () => {
     [followingUsersIds],
   );
 
-  const { data, fetchNextPage, hasNextPage, status, isFetching } = useInfiniteQuery(
-    ['followingArticles'],
-    fetchFollowingArticles,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length < FOLLOWING_ARTICLE_FETCH_LIMIT) {
-          return undefined;
-        }
-        return pages.length * FOLLOWING_ARTICLE_FETCH_LIMIT;
-      },
-      enabled: !!followingUsersIds.length,
+  const { data, fetchNextPage, hasNextPage, status, isFetching } = useInfiniteQuery({
+    queryKey: ['followingArticles'],
+    queryFn: fetchFollowingArticles,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.length < FOLLOWING_ARTICLE_FETCH_LIMIT) {
+        return undefined;
+      }
+      return pages.length * FOLLOWING_ARTICLE_FETCH_LIMIT;
     },
-  );
+    enabled: !!followingUsersIds.length,
+    initialPageParam: 0,
+  });
 
   if (user === undefined) {
     return <SearchSkeleton SkeletonType="title" />;
@@ -84,10 +83,10 @@ const RenderFollowingArticles = () => {
 
   return (
     <>
-      {status === 'loading' && !data && <SearchSkeleton SkeletonType="title" />}
+      {status === 'pending' && !data && <SearchSkeleton SkeletonType="title" />}
       <RenderArticles articles={data?.pages.flat() || []} />
       <InfiniteScroll fetchData={fetchNextPage} canFetchMore={hasNextPage} />
-      {isFetching && status !== 'loading' && (
+      {isFetching && status !== 'pending' && (
         <div className="flex justify-center">
           <Loader />
         </div>

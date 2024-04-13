@@ -45,7 +45,7 @@ const ChangePasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { showModal, modalOpen, modalClose } = useModal();
-  const { changePasswordMutate, isLoading } = useChangePassword();
+  const { changePasswordMutate, isPending: isLoading } = useChangePassword();
 
   const onSubmit: SubmitHandler<PasswordFormValues> = () => {
     modalOpen();

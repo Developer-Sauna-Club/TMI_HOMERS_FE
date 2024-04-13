@@ -51,7 +51,7 @@ const SignUpForm = () => {
   const methods = useForm<SignUpFormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const {
-    signUpQuery: { mutate: signUpMutate, isLoading },
+    signUpQuery: { mutate: signUpMutate, isPending: isLoading },
   } = useAuthQuery();
 
   const onSubmit: SubmitHandler<SignUpFormValues> = ({ email, password, nickname }) => {
