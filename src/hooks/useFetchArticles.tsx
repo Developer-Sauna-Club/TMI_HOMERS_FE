@@ -11,9 +11,9 @@ type UseArticlesProps = {
 const ARTICLES_STALE_TIME = 1000 * 60;
 
 export const useFetchArticles = ({ id, type }: UseArticlesProps) => {
-  const { data = [], isLoading } = useQuery<Post[]>(
-    ['articles', id, type],
-    async () => {
+  const { data = [], isLoading } = useQuery<Post[]>({
+    queryKey: ['articles', id, type],
+    queryFn: async () => {
       const requestUrl =
         type === 'user'
           ? `${API.ARTICLES_URL}${API.AUTHOR_URL}/${id}`
@@ -21,10 +21,8 @@ export const useFetchArticles = ({ id, type }: UseArticlesProps) => {
       const { data } = await axiosClient.get(requestUrl);
       return data;
     },
-    {
-      staleTime: ARTICLES_STALE_TIME,
-    },
-  );
+    staleTime: ARTICLES_STALE_TIME,
+  });
 
   return { data, isLoading };
 };

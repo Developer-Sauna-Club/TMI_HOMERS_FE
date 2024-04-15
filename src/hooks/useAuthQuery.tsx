@@ -4,7 +4,6 @@ import { AxiosError } from 'axios';
 import { checkAuthentication, signUp, login, logout } from '@/api/Auth';
 import { TOAST_MESSAGES } from '@constants/Messages';
 import { removeItemFromStorage, setItemToStorage } from '@utils/localStorage';
-import { isEmptyUser } from '@utils/user';
 import { useToastContext } from './useToastContext';
 
 const useAuthQuery = () => {
@@ -12,20 +11,14 @@ const useAuthQuery = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const userQuery = useQuery(['user'], checkAuthentication, {
+  const userQuery = useQuery({
+    queryKey: ['user'],
+    queryFn: checkAuthentication,
     staleTime: Infinity,
-    onSuccess: (user) => {
-      if (isEmptyUser(user)) {
-        removeItemFromStorage('token');
-      }
-    },
-    onError: () => {
-      removeItemFromStorage('token');
-      showToast(TOAST_MESSAGES.AUTH_USER_FAILED, 'error');
-    },
   });
 
-  const signUpQuery = useMutation(signUp, {
+  const signUpQuery = useMutation({
+    mutationFn: signUp,
     onSuccess: ({ user, token }) => {
       queryClient.setQueryData(['user'], user);
       setItemToStorage('token', token);
@@ -43,7 +36,8 @@ const useAuthQuery = () => {
     },
   });
 
-  const loginQuery = useMutation(login, {
+  const loginQuery = useMutation({
+    mutationFn: login,
     onSuccess: ({ user, token }) => {
       queryClient.setQueryData(['user'], user);
       setItemToStorage('token', token);
@@ -57,7 +51,8 @@ const useAuthQuery = () => {
 
   const EMPTY_USER = '';
 
-  const logoutQuery = useMutation(logout, {
+  const logoutQuery = useMutation({
+    mutationFn: logout,
     onSuccess: () => {
       showToast(TOAST_MESSAGES.LOGOUT_SUCCESS, 'success');
       removeItemFromStorage('token');

@@ -7,7 +7,8 @@ import { useToastContext } from './useToastContext';
 const useChangePassword = () => {
   const navigate = useNavigate();
   const { showToast } = useToastContext();
-  const { mutate: changePasswordMutate, isLoading } = useMutation(updatePassword, {
+  const { mutate: changePasswordMutate, isPending } = useMutation({
+    mutationFn: updatePassword,
     onSuccess: () => {
       showToast(TOAST_MESSAGES.CHANGE_PASSWORD_SUCCESS, 'success');
       navigate('/home', { replace: true });
@@ -17,7 +18,7 @@ const useChangePassword = () => {
     },
   });
 
-  return { changePasswordMutate, isLoading };
+  return { changePasswordMutate, isPending };
 };
 
 export default useChangePassword;

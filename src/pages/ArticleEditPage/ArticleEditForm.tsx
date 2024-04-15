@@ -41,7 +41,7 @@ const ArticleEditForm = ({
     },
     mode: 'onChange',
   });
-  const { editPost, isLoading } = useEditPost();
+  const { editPost, isPending: isLoading } = useEditPost();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { showToast } = useToastContext();
   const [selectedText, setSelectedText] = useState(DROPDOWN_OPTIONS[0]);

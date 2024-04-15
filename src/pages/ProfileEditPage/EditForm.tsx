@@ -17,7 +17,7 @@ type EditFormProps = {
 
 const EditForm = ({ user }: EditFormProps) => {
   const { showToast } = useToastContext();
-  const { editProfile, isLoading } = useEditProfile();
+  const { editProfile, isPending: isLoading } = useEditProfile();
 
   const {
     watch,

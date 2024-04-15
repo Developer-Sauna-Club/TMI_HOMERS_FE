@@ -7,13 +7,27 @@ export const useLikeCreateMutation = () => {
   return useMutation({
     mutationFn: likePost,
     onSuccess: (like) => {
-      queryClient.invalidateQueries(['article', like.post]);
-      queryClient.invalidateQueries(['userInfo', like.user]);
-      queryClient.invalidateQueries(['newestArticles']);
-      queryClient.invalidateQueries(['articles']);
-      queryClient.invalidateQueries(['likedArticles']);
-      queryClient.invalidateQueries(['followingArticles']);
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries({
+        queryKey: ['article', like.post]
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', like.user]
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['newestArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likedArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['followingArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['user']
+      });
     },
   });
 };
@@ -24,13 +38,27 @@ export const useLikeDeleteMutation = () => {
   return useMutation({
     mutationFn: deleteLikePost,
     onSuccess: (like) => {
-      queryClient.invalidateQueries(['article', like.post]);
-      queryClient.invalidateQueries(['userInfo', like.user]);
-      queryClient.invalidateQueries(['newestArticles']);
-      queryClient.invalidateQueries(['articles']);
-      queryClient.invalidateQueries(['likedArticles']);
-      queryClient.invalidateQueries(['followingArticles']);
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries({
+        queryKey: ['article', like.post]
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', like.user]
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['newestArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likedArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['followingArticles']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['user']
+      });
     },
   });
 };

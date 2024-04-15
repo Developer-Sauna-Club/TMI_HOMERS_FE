@@ -5,13 +5,11 @@ import type { SearchParams } from '@/type/search';
 import type { User } from '@/type/User';
 
 const useSearch = ({ keyword }: SearchParams) => {
-  const { data, isFetching, isSuccess } = useQuery<(User | Post)[]>(
-    ['search', keyword],
-    () => searchAllResults(keyword),
-    {
-      enabled: !!keyword,
-    },
-  );
+  const { data, isFetching, isSuccess } = useQuery<(Post | User)[]>({
+    queryKey: ['search', keyword],
+    queryFn: () => searchAllResults(keyword),
+    enabled: !!keyword,
+  });
   return { data, isFetching, isSuccess };
 };
 
