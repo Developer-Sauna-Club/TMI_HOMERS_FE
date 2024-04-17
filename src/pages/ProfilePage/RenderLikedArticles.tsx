@@ -30,13 +30,16 @@ const RenderLikedArticles = ({ postIds }: { postIds: string[] }) => {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteQuery(['likedArticles', postIds.length], fetchArticlesByIdx, {
+  } = useInfiniteQuery({
+    queryKey: ['likedArticles', postIds.length],
+    queryFn: fetchArticlesByIdx,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {
         return undefined;
       }
       return pages.length + 1;
     },
+    initialPageParam: 1,
   });
 
   return (

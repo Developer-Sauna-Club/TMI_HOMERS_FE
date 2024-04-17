@@ -43,7 +43,7 @@ const NewArticlePage = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const { showToast } = useToastContext();
-  const { createArticle, isLoading } = useCreateArticle();
+  const { createArticle, isPending: isLoading } = useCreateArticle();
   const [articleTitle, articleBody] = [watch('title'), watch('body')];
 
   const { fullName, image: profileImage } = user! as User;

@@ -14,25 +14,36 @@ export const useArticleDetail = () => {
   const { showToast } = useToastContext();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery<Post>(
-    ['article', postId],
-    async () => {
+  const { data, isLoading } = useQuery<Post>({
+    queryKey: ['article', postId],
+    queryFn: async () => {
       const response = await fetchPost(postId);
       return response;
     },
-    {
-      staleTime: 1000 * 5,
-    },
-  );
+    staleTime: 1000 * 5,
+  });
 
-  const deletePostMutation = useMutation(deletePost, {
+  const deletePostMutation = useMutation({
+    mutationFn: deletePost,
     onSuccess: () => {
-      queryClient.invalidateQueries(['article', postId]);
-      queryClient.invalidateQueries(['articles']);
-      queryClient.invalidateQueries(['userArticles']);
-      queryClient.invalidateQueries(['likedArticles']);
-      queryClient.invalidateQueries(['newestArticles']);
-      queryClient.invalidateQueries(['followingArticles']);
+      queryClient.invalidateQueries({
+        queryKey: ['article', postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likedArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['newestArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['followingArticles'],
+      });
       showToast('게시물이 삭제되었습니다', 'success');
       navigate(-1);
     },
@@ -42,15 +53,30 @@ export const useArticleDetail = () => {
     deletePostMutation.mutate(postId);
   };
 
-  const commentMutation = useMutation(createComment, {
+  const commentMutation = useMutation({
+    mutationFn: createComment,
     onSuccess: (returnData, variables) => {
-      queryClient.invalidateQueries(['article', postId]);
-      queryClient.invalidateQueries(['articles']);
-      queryClient.invalidateQueries(['userInfo', returnData.author._id]);
-      queryClient.invalidateQueries(['userArticles']);
-      queryClient.invalidateQueries(['likedArticles']);
-      queryClient.invalidateQueries(['newestArticles']);
-      queryClient.invalidateQueries(['followingArticles']);
+      queryClient.invalidateQueries({
+        queryKey: ['article', postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', returnData.author._id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likedArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['newestArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['followingArticles'],
+      });
 
       const { userId } = variables;
       const commentId = returnData._id;
@@ -70,15 +96,30 @@ export const useArticleDetail = () => {
     commentMutation.mutate(newComment);
   };
 
-  const deleteCommentMutation = useMutation(deleteComment, {
+  const deleteCommentMutation = useMutation({
+    mutationFn: deleteComment,
     onSuccess: (returnData) => {
-      queryClient.invalidateQueries(['article', postId]);
-      queryClient.invalidateQueries(['articles']);
-      queryClient.invalidateQueries(['userInfo', returnData.author]);
-      queryClient.invalidateQueries(['userArticles']);
-      queryClient.invalidateQueries(['likedArticles']);
-      queryClient.invalidateQueries(['newestArticles']);
-      queryClient.invalidateQueries(['followingArticles']);
+      queryClient.invalidateQueries({
+        queryKey: ['article', postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', returnData.author],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['userArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likedArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['newestArticles'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['followingArticles'],
+      });
       showToast('댓글이 삭제되었습니다', 'success');
     },
   });

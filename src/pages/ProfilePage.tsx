@@ -37,9 +37,12 @@ const ProfilePage = () => {
     userQuery: { data: user },
     logoutQuery: { mutate: logoutMutate },
   } = useAuthQuery();
-  const { data: userInfo, isLoading: userInfoLoading } = useQuery(['userInfo', lastSegment], () =>
-    fetchUser(lastSegment),
-  );
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery({
+    queryKey: ['userInfo', lastSegment],
+
+    queryFn: () =>
+      fetchUser(lastSegment)
+  });
 
   const { showToast } = useToastContext();
   const { ref, showScrollToTopButton, scrollToTop } = useScrollToTop();

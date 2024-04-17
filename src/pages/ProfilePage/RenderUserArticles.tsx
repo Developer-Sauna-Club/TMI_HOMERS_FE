@@ -36,13 +36,16 @@ const RenderUserArticles = ({ posts }: UserArticlesProps) => {
     isFetchingNextPage,
     isLoading,
     refetch,
-  } = useInfiniteQuery(['userArticles', posts.length], fetchArticlesByIdx, {
+  } = useInfiniteQuery({
+    queryKey: ['userArticles', posts.length],
+    queryFn: fetchArticlesByIdx,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {
         return undefined;
       }
       return pages.length + 1;
     },
+    initialPageParam: 1,
   });
 
   useEffect(() => {

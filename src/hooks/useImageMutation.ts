@@ -12,7 +12,8 @@ const useImageMutation = (options: ImageMutationOptions) => {
   const queryClient = useQueryClient();
   const { queryKey, showToast } = options;
 
-  return useMutation(updateProfileImage, {
+  return useMutation({
+    mutationFn: updateProfileImage,
     onMutate: async (newImage) => {
       await queryClient.cancelQueries({ queryKey });
       const previousData: User | undefined = queryClient.getQueryData(queryKey);
@@ -30,7 +31,7 @@ const useImageMutation = (options: ImageMutationOptions) => {
       return { previousData };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries({ queryKey: queryKey });
       showToast(TOAST_MESSAGES.CHANGE_PROFILE_IMAGE_SUCCESS, 'success');
     },
     onError: (_, __, context) => {

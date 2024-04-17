@@ -34,7 +34,7 @@ const LoginPage = () => {
   const methods = useForm<LoginFormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const {
-    loginQuery: { mutate: loginMutate, isLoading },
+    loginQuery: { mutate: loginMutate, isPending: isLoading },
   } = useAuthQuery();
 
   const onSubmit: SubmitHandler<LoginFormValues> = ({ email, password }) => {

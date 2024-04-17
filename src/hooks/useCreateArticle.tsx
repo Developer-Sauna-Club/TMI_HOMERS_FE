@@ -9,12 +9,19 @@ export const useCreateArticle = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
 
-  const { mutate: createArticle, isLoading } = useMutation(createPost, {
+  const { mutate: createArticle, isPending } = useMutation({
+    mutationFn: createPost,
     onSuccess: () => {
       Promise.all([
-        queryClient.invalidateQueries(['newestArticles']),
-        queryClient.invalidateQueries(['articles']),
-        queryClient.invalidateQueries(['followingArticles']),
+        queryClient.invalidateQueries({
+          queryKey: ['newestArticles'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['articles'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['followingArticles'],
+        }),
       ]);
       showToast(TOAST_MESSAGES.POST_SUCCESS, 'success');
       navigate('/news');
@@ -23,5 +30,5 @@ export const useCreateArticle = () => {
       showToast(TOAST_MESSAGES.POST_FAILED, 'error');
     },
   });
-  return { createArticle, isLoading };
+  return { createArticle, isPending };
 };

@@ -13,18 +13,17 @@ const RenderNewestArticles = () => {
     return fetchArticles({ type: TAB_CONSTANTS.NEWEST, pageParam });
   }, []);
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery(
-    ['newestArticles'],
-    fetchNewest,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length < ARTICLE_FETCH_LIMIT) {
-          return undefined;
-        }
-        return pages.length * ARTICLE_FETCH_LIMIT;
-      },
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useInfiniteQuery({
+    queryKey: ['newestArticles'],
+    queryFn: fetchNewest,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.length < ARTICLE_FETCH_LIMIT) {
+        return undefined;
+      }
+      return pages.length * ARTICLE_FETCH_LIMIT;
     },
-  );
+    initialPageParam: 0,
+  });
 
   return (
     <>

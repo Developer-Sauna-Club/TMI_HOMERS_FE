@@ -8,10 +8,13 @@ const useEditProfile = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
-  const { mutate: editProfile, isLoading } = useMutation(updateUser, {
+  const { mutate: editProfile, isPending } = useMutation({
+    mutationFn: updateUser,
     onSuccess: (user) => {
       queryClient.setQueryData(['user'], user);
-      queryClient.invalidateQueries(['userInfo', user._id]);
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', user._id],
+      });
       showToast(TOAST_MESSAGES.EDIT_PROFILE_SUCCESS, 'success');
       navigate(`/profile/${user._id}`);
     },
@@ -19,7 +22,7 @@ const useEditProfile = () => {
       showToast(TOAST_MESSAGES.EDIT_PROFILE_FAILED, 'error');
     },
   });
-  return { editProfile, isLoading };
+  return { editProfile, isPending };
 };
 
 export default useEditProfile;
