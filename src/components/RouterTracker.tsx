@@ -13,7 +13,7 @@ const RouteChangeTracker = () => {
   // 구글 애널리틱스 운영서버만 적용
   useEffect(() => {
     if (import.meta.env.REACT_APP_GOOGLE_ANALYTICS) {
-      ReactGA.initialize(import.meta.env.REACT_APP_GOOGLE_ANALYTICS);
+      ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS);
       setInitialized(true);
     }
   }, []);
