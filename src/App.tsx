@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getItemFromStorage, setItemToStorage } from '@/utils/localStorage';
+import RouteChangeTracker from '@components/RouterTracker';
 import { useThemeContext } from '@hooks/useThemeContext';
 import { ToastContextProvider } from './context/ToastContext';
 import { LoadingPage } from './pages';
@@ -8,6 +9,8 @@ import MockUpPage from './pages/MockUpPage';
 
 const App = () => {
   const { theme, updateDarkMode } = useThemeContext();
+
+  RouteChangeTracker();
 
   useEffect(
     () => {
