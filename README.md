@@ -1,5 +1,9 @@
 # FEDC4_TMI_HOMERS_OFF
 
+## 백엔드 지원 종료로 프론트엔드 개발자들끼리 API 개발중!
+
+[BE repo](https://github.com/Developer-Sauna-Club/TMI_HOMERS_BE)
+
 ## 프로젝트 세팅 방법
 
 다음 명령어를 입력하면 프로젝트 설치 후 실행됩니다.
