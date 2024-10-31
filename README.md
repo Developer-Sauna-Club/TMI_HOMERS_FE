@@ -5,7 +5,7 @@
    <span>핀잔 맞을 까봐 남들에게 말하지 못한 사소한 이야기들을 공유하세요!</span><br>
 </div>
 
-**백엔드 지원 종료로 프론트엔드 개발자들끼리 API 개발중!**
+## 백엔드 지원 종료로 프론트엔드 개발자들끼리 API 개발중
 
 [BE repo](https://github.com/Developer-Sauna-Club/TMI_HOMERS_BE)
 
