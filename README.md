@@ -22,7 +22,7 @@ npm run dev
 
 ## 프로젝트 소개
 
-> **TMI HOMERS** 는 'TMI (Too Much Information)'와 'HOMERS (전서구)'를 결합한 독특한 소셜 네트워크 플랫폼으로, 사용자들이 흥미로운 이야기와 정보를 자유롭게 공유하고 즐길 수 있는 공간을 제공합니다. [발표 자료](https://docs.google.com/presentation/d/1ad7gy4-F7XuWfotjmdqsUmEuv5nuP0WS0aBQGHLYXOM/edit#slide=id.g2848580536a_5_0) [발표 영상](https://drive.google.com/drive/u/0/my-drive)
+> **TMI HOMERS** 는 'TMI (Too Much Information)'와 'HOMERS (전서구)'를 결합한 독특한 소셜 네트워크 플랫폼으로, 사용자들이 흥미로운 이야기와 정보를 자유롭게 공유하고 즐길 수 있는 공간을 제공합니다. [발표 자료](https://docs.google.com/presentation/d/1ad7gy4-F7XuWfotjmdqsUmEuv5nuP0WS0aBQGHLYXOM/edit#slide=id.g2848580536a_5_0) [발표 영상](https://drive.google.com/file/d/15HYyPH7PNsG0JhWQnrQ3_9uGTDanSaRV/view?usp=sharing)
 
 ## ✨ 기획 배경
 
