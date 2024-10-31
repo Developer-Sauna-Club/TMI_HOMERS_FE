@@ -1,6 +1,11 @@
-# FEDC4_TMI_HOMERS_OFF
+<div align="center">
+  <img width="400px" src="https://raw.githubusercontent.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/649aa133826b24bb8e545579d1c8f4c5e2d5c5fd/public/img/logo.svg"/>
+  <h3>쓸데없는 걸 쓰고 싶은데 어디 쓸 데 없나?</h3>
+  <span>쓸데 없는 거 쓸때, <strong>티엠아이 호머스</strong></span><br>
+   <span>핀잔 맞을 까봐 남들에게 말하지 못한 사소한 이야기들을 공유하세요!</span><br>
+</div>
 
-## 백엔드 지원 종료로 프론트엔드 개발자들끼리 API 개발중!
+**백엔드 지원 종료로 프론트엔드 개발자들끼리 API 개발중!**
 
 [BE repo](https://github.com/Developer-Sauna-Club/TMI_HOMERS_BE)
 
@@ -43,7 +48,10 @@ npm run dev
 
 2023.10 - 2023.11
 
-## 시연 영상
+## 주요 기능
+| 회원가입        |           글작성            |            글, 유저 검색            |
+| -------------- | ----------------------------------- |----------------------------------- |
+|  <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/977a781e-9794-4ff3-9dd4-3abe3198cdba">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/63f846f7-cf4b-4513-a4cf-06a0b6fb371c">  |   <img height="500px" src="https://github.com/prgrms-fe-devcourse/FEDC4_TMI_HOMERS_OFF/assets/104294861/77aec5d1-0997-4562-acb2-0a5c5c3f4b91">  |
 
 - 추후 추가 예정
 
